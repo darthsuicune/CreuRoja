@@ -17,14 +17,11 @@ import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
 public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
-	private Context mContext;
-
 	public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios.cr/preventivo.json";
 	public static final String PUNTOS_VARIABLES = "http://direcion.del/json2";
 
 	public ConnectionLoader(Context context, Bundle args) {
 		super(context);
-		mContext = context;
 	}
 
 	@Override

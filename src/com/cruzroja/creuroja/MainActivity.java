@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,12 +20,9 @@ public class MainActivity extends FragmentActivity implements
 		LoaderCallbacks<ArrayList<Location>> {
 	public static final int LOADER_CONNECTION = 1;
 
-	public static final double INITIAL_LAT = 41.3958;
-	public static final double INITIAL_LNG = 2.1739;
+	// public static final double INITIAL_LAT = 41.3958;
+	// public static final double INITIAL_LNG = 2.1739;
 
-	private static final String FRAGMENT_TAG = "mapFragment";
-
-	SupportMapFragment mMapFragment;
 	GoogleMap mGoogleMap;
 	ArrayList<Location> mLocationsList;
 
@@ -33,9 +30,6 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		if (savedInstanceState != null) {
-			return;
-		}
 
 		setMap();
 
@@ -43,11 +37,11 @@ public class MainActivity extends FragmentActivity implements
 			// If the device is connected to the internet, start the connection
 			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
 					this);
-
 		} else {
 			// TODO: Here comes what to do without a valid connection, such as
 			// showing old markers or whatever
 		}
+
 	}
 
 	@Override
@@ -57,53 +51,46 @@ public class MainActivity extends FragmentActivity implements
 		return true;
 	}
 
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		// case R.id.menu_settings:
+		// return true;
+		case R.id.menu_refresh:
+			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
+					this);
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+
 	private boolean isConnected() {
 		ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 		return manager.getActiveNetworkInfo().isConnected();
 	}
 
 	private void setMap() {
-		// Create the fragment if it doesn't exist yet and attach it to the
-		// screen
-		mMapFragment = (SupportMapFragment) getSupportFragmentManager()
-				.findFragmentByTag(FRAGMENT_TAG);
-
-		FragmentTransaction transaction = getSupportFragmentManager()
-				.beginTransaction();
-		if (mMapFragment == null) {
-			mMapFragment = new SupportMapFragment();
-			transaction.add(R.id.map_container, mMapFragment, FRAGMENT_TAG);
-		} else {
-			transaction.attach(mMapFragment);
-		}
-		transaction.commit();
-	}
-
-	private void configureMap() {
-		// Load the map from the fragment.
-		// If the map is still null we have a problem here
 		if (mGoogleMap == null) {
-			mGoogleMap = mMapFragment.getMap();
-
-			if (mGoogleMap == null) {
-				return;
-			}
+			mGoogleMap = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(R.id.map)).getMap();
 		}
-		mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-		mGoogleMap.moveCamera(CameraUpdateFactory.zoomTo(13));
 	}
 
 	private void setExtraMapElements() {
-		configureMap();
 		// TODO add markers to the map
+		if (mGoogleMap == null) {
+			return;
+		}
 		for (int i = 0; i < mLocationsList.size(); i++) {
 			mGoogleMap.addMarker(new MarkerOptions().position(
 					mLocationsList.get(i).mPosition).title(
 					mLocationsList.get(i).mContenido));
 		}
 
-		mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(
-				INITIAL_LAT, INITIAL_LNG)));
+		// mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(
+		// INITIAL_LAT, INITIAL_LNG)));
 	}
 
 	public void showProgress(boolean show) {
