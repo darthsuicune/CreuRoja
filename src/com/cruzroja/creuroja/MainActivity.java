@@ -20,9 +20,6 @@ public class MainActivity extends FragmentActivity implements
 		LoaderCallbacks<ArrayList<Location>> {
 	public static final int LOADER_CONNECTION = 1;
 
-	// public static final double INITIAL_LAT = 41.3958;
-	// public static final double INITIAL_LNG = 2.1739;
-
 	GoogleMap mGoogleMap;
 	ArrayList<Location> mLocationsList;
 
@@ -34,7 +31,7 @@ public class MainActivity extends FragmentActivity implements
 		setMap();
 
 		if (isConnected()) {
-			// If the device is connected to the internet, start the connection
+			// If the device is connected to the internet, start the download
 			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
 					this);
 		} else {
@@ -79,8 +76,8 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	private void setExtraMapElements() {
-		// TODO add markers to the map
-		if (mGoogleMap == null) {
+		// TODO add markers to the map.
+		if (mGoogleMap == null && mLocationsList == null) {
 			return;
 		}
 		for (int i = 0; i < mLocationsList.size(); i++) {
@@ -88,9 +85,6 @@ public class MainActivity extends FragmentActivity implements
 					mLocationsList.get(i).mPosition).title(
 					mLocationsList.get(i).mContenido));
 		}
-
-		// mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(
-		// INITIAL_LAT, INITIAL_LNG)));
 	}
 
 	public void showProgress(boolean show) {
