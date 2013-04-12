@@ -1,0 +1,85 @@
+[{
+			position:{lat : 41.379767,lng : 2.119350}, icon: 'futbol.png', contenido: "<strong>FCB Sala - Puertollano</strong><br />&nbsp;&nbsp;Palau Blaugrana<br />&nbsp;&nbsp;23 de marÃ§ de 10:00 a 14:00"
+		},{
+			position:{lat : 41.380645,lng : 2.118007}, icon: 'futbol.png', contenido: "<strong>FCB B - Huesca</strong><br />&nbsp;&nbsp;Mini Estadi<br />&nbsp;&nbsp;23 de marÃ§ de 16:00 a 20:00"
+		},{
+			position:{lat : 41.362112,lng : 2.151595}, icon: 'concert.png', contenido: "<strong>Concert Vitalic</strong><br />&nbsp;&nbsp;Palau Sant Jordi Club<br />&nbsp;&nbsp;22 de marÃ§ de 19:45 a 01:30"
+		},{
+			position:{lat : 41.395836,lng : 2.151595}, icon: 'cursa.png', contenido: "<strong>Cursa Sant Paul</strong><br />&nbsp;&nbsp;Avinguda Pearson - Font de LleÃ²<br />&nbsp;&nbsp;23 de marÃ§ de 08:00 a 10:30"
+		},{
+			position:{lat : 41.375706,lng : 2.135022}, icon: 'casteller.png', contenido: "<strong>Castellers Sants</strong><br />&nbsp;&nbsp;Carrer Sants - Carrer Joan GÃ¼ell<br />&nbsp;&nbsp;24 de marÃ§ de 10:30 a 15:00"
+		},{
+			position:{lat : 41.373560,lng : 2.156370}, icon: 'casteller.png', contenido: "<strong>Castellers Poble Sec</strong><br />&nbsp;&nbsp;PlaÃ§a de Santa Madrona<br />&nbsp;&nbsp;24 de marÃ§ de 10.30 a 15:00"
+		},{
+			position:{lat : 41.385909,lng : 2.172857}, icon: 'cca.png', contenido: "<strong>Creu Roja Barcelona</strong><br />&nbsp;Av. Portal de l'Ã€ngel, 24, 2Âº 2Âª<br />&nbsp;934 816 088"
+		},{
+			position:{lat : 41.396118,lng : 2.187631}, icon: 'cca.png', contenido: "<strong>Creu Roja Catalunya (CCA)</strong><br />&nbsp;Carrer Joan d''Austria, 120-124<br />&nbsp;933 006 565"
+		},{
+			position:{lat : 41.372459,lng : 2.189023}, icon: 'bravo.png', contenido: "<strong>Bravo 5.0</strong><br />&nbsp;&nbsp;Platja de Sant SebastiÃ <br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{
+			position:{lat : 41.379005,lng : 2.192419}, icon: 'bravo.png', contenido: "<strong>Bravo 5.1</strong><br />&nbsp;&nbsp;Platja de la Barceloneta<br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{
+			position:{lat : 41.382408,lng : 2.194515}, icon: 'bravo.png', contenido: "<strong>Bravo 5.2</strong><br />&nbsp;&nbsp;Platja del Somorrostro<br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{
+			position:{lat : 41.391815,lng : 2.204741}, icon: 'bravo.png', contenido: "<strong>Bravo 5.3</strong><br />&nbsp;&nbsp;Platja de Nova IcÃ ria y Bogatell<br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{
+			position:{lat : 41.398209,lng : 2.211429}, icon: 'bravo.png', contenido: "<strong>Bavo 5.4</strong><br />&nbsp;&nbsp;Platja de la Mar Bella<br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{	
+			position:{lat : 41.402142,lng : 2.214900}, icon: 'bravo.png', contenido: "<strong>Bravo 5.5</strong><br />&nbsp;&nbsp;Platja de la Nova Mar Bella<br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{
+			position:{lat : 41.405693,lng : 2.219397}, icon: 'bravo.png', contenido: "<strong>Bavo 5.6</strong><br />&nbsp;&nbsp;Platja del Llevant<br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{
+			position:{lat : 41.408401,lng : 2.225706}, icon: 'bravo.png', contenido: "<strong>Bravo 5.7</strong><br />&nbsp;&nbsp;Area de banys del FÃ²rum<br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{
+			position:{lat : 41.384796,lng : 2.201211}, icon: 'bpo.png', contenido: "<strong>Base Puerto OlÃ­mpico (BPO)</strong><br />&nbsp;&nbsp;Port OlÃ­mpic<br />&nbsp;&nbsp;Tots el dies de 09:50 a 19:00"
+		},{
+			position:{lat : 41.364651,lng : 2.182532}, icon: 'bpo.png', contenido: "<strong>Carpa de embarcaciones</strong>"
+		},{
+			position:{lat : 41.384159,lng : 2.195297}, icon: 'hospital.png', contenido: "<strong>Hospital del Mar</strong><br />&nbsp;&nbsp;Passeig MarÃ­tim, 25-29<br />&nbsp;&nbsp;932 483 000"
+		},{
+			position:{lat : 41.400719,lng : 2.142323}, icon: 'hospital.png', contenido: "<strong>Hospital PlatÃ³</strong><br />&nbsp;&nbsp;PlatÃ³, 21<br />&nbsp;&nbsp;933 069 900"
+		},{
+			position:{lat : 41.410648,lng : 2.154026}, icon: 'hospital.png', contenido: "<strong>Hospital de l&#39;EsperanÃ§a</strong><br />&nbsp;&nbsp;Sant Josep de la Muntanya, 12<br />&nbsp;&nbsp;933 674 100"
+		},{
+			position:{lat : 41.411003,lng : 2.176516}, icon: 'hospital.png', contenido: "<strong>Hospital Dos de Maig</strong><br />&nbsp;&nbsp;Dos de Maig, 301<br />&nbsp;&nbsp;935 072 700"
+		},{
+			position:{lat : 41.385147,lng : 2.125372}, icon: 'hospital.png', contenido: "<strong>Hospital Casa de Maternitat</strong><br />&nbsp;&nbsp;Sabino de Arana, 1<br />&nbsp;&nbsp;932 275 600"
+		},{	
+			position:{lat : 41.388824,lng : 2.145291}, icon: 'hospital.png', contenido: "<strong>Hospital Sagrat Cor</strong><br />&nbsp;&nbsp;Viladomat, 288<br />&nbsp;&nbsp;934 169 700"
+		},{
+			position:{lat : 41.425308,lng : 2.141358}, icon: 'hospital.png', contenido: "<strong>Hospital Sant Rafael</strong><br />&nbsp;&nbsp;P. de la Vall d'Hebron, 107<br />&nbsp;&nbsp;934 169 700"
+		},{
+			position:{lat : 41.389015,lng : 2.153896}, icon: 'hospital.png', contenido: "<strong>Hospital Clinic</strong><br />&nbsp;&nbsp;Villaroel, 170<br />&nbsp;&nbsp;934 169 700"
+		},{
+			position:{lat : 41.383621,lng : 2.101559}, icon: 'hospital.png', contenido: "<strong>Hospital Sant Joan de DÃ©u</strong><br />&nbsp;&nbsp;Passeig de Sant Joan de DÃ©u, 2<br />&nbsp;&nbsp;932 532 100"
+		},{
+			position:{lat : 41.397331,lng : 2.173907}, icon: 'hospital.png', contenido: "<strong>Hospital de Nens</strong><br >&nbsp;&nbsp;Consell de Cent, 437<br />&nbsp;&nbsp;932 310 512"
+		},{
+			position:{lat : 41.412617,lng : 2.172463}, icon: 'hospital.png', contenido: "<strong>FundaciÃ² Puigvert</strong><br />&nbsp;&nbsp;Cartagena, 340<br />&nbsp;&nbsp;934 169 700"
+		},{
+			position:{lat : 41.415775,lng : 2.175062}, icon: 'hospital.png', contenido: "<strong>Hospital de Santa Creu i Sant Pau</strong><br />&nbsp;&nbsp;Sant QuintÃ­, 89<br />&nbsp;&nbsp;935 537 160"
+		},{
+			position:{lat : 41.427990,lng : 2.141535}, icon: 'hospital.png', contenido: "<strong>Hospital de la Vall d&#39;Hebron</strong><br />&nbsp;&nbsp;P. de la Vall d'Hebron, 119-129<br />&nbsp;&nbsp;934 893 000"
+		},{
+			position:{lat : 41.450027,lng : 2.245277}, icon: 'hospital.png', contenido: "<strong>Hospital Municipal de Badalona</strong><br />&nbsp;&nbsp;Via Augusta, 9-13<br />&nbsp;&nbsp;934 648 300"
+		},{
+			position:{lat : 41.438080,lng : 2.213761}, icon: 'hospital.png', contenido: "<strong>FundaciÃ³ Hospital Esperit Sant</strong><br />&nbsp;&nbsp;MossÃ©n Josep Pons i RobadÃ , s/n<br />&nbsp;&nbsp;934 169 700"
+		},{
+			position:{lat : 41.480633,lng : 2.237113}, icon: 'hospital.png', contenido: "<strong>Germans Trias i Pujol</strong><br />&nbsp;&nbsp;Canyet, s/n<br />&nbsp;&nbsp;934 651 200"
+		},{	
+			position:{lat : 41.344284,lng : 2.104349}, icon: 'hospital.png', contenido: "<strong>Hospital de Bellvitge</strong><br />&nbsp;&nbsp;Feixa Llarga, s/n<br />&nbsp;&nbsp;932 607 500"
+		},{
+			position:{lat : 41.374110,lng : 2.106421}, icon: 'hospital.png', contenido: "<strong>Hospital de l'Hospitalet</strong><br />&nbsp;&nbsp;Josep Molins, 29<br />&nbsp;&nbsp;934 407 500"
+		},{
+			position:{lat : 41.376260,lng : 2.159910}, icon: 'cuap.png', contenido: "<strong>CUAP Manso</strong><br />&nbsp;&nbsp;Manso, 19<br />&nbsp;&nbsp;935 517 283"
+		},{
+			position:{lat : 41.434848,lng : 2.157480}, icon: 'cuap.png', contenido: "<strong>CUAP Horta</strong><br />&nbsp;&nbsp;Sant Gaudenci, 21-23<br />&nbsp;&nbsp;934 230 813"
+		},{
+			position:{lat : 41.376171,lng : 2.173726}, icon: 'cuap.png', contenido: "<strong>CUAP Peracamps</strong><br />&nbsp;&nbsp;Av. de Drassanes, 13-15<br />&nbsp;&nbsp;934 410 600"
+		},{
+			position:{lat : 41.414306,lng : 2.197346}, icon: 'cuap.png', contenido: "<strong>CUAP Sant MartÃ­</strong><br />&nbsp;&nbsp;Fluvia, 211<br />&nbsp;&nbsp; 933 070 766"
+		},{
+			position:{lat : 41.426332,lng : 2.176170}, icon: 'cuap.png', contenido: "<strong>CUAP Cotxeres</strong><br />&nbsp;&nbsp;Av. BorbÃ², 18-30<br />&nbsp;&nbsp;932 438 989"
+		},{
+			position:{lat : 41.442870,lng : 2.192860}, icon: 'cuap.png', contenido: "<strong>CUAP Casernes</strong><br />&nbsp;&nbsp;Fernando Pessoa, 51<br />&nbsp;&nbsp;932 747 950"
+		}]
