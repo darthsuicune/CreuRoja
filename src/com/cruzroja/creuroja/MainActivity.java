@@ -10,10 +10,9 @@ import android.support.v4.content.Loader;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends FragmentActivity implements
@@ -81,9 +80,21 @@ public class MainActivity extends FragmentActivity implements
 			return;
 		}
 		for (int i = 0; i < mLocationsList.size(); i++) {
-			mGoogleMap.addMarker(new MarkerOptions().position(
-					mLocationsList.get(i).mPosition).title(
-					mLocationsList.get(i).mContenido));
+			MarkerOptions marker = new MarkerOptions().position(mLocationsList
+					.get(i).mPosition);
+			if (mLocationsList.get(i).mIcono != 0) {
+				marker.icon(BitmapDescriptorFactory.fromResource(mLocationsList
+						.get(i).mIcono));
+			}
+			if (mLocationsList.get(i).mContenido != null) {
+				if (mLocationsList.get(i).mContenido.mNombre != null) {
+					marker.title(mLocationsList.get(i).mContenido.mNombre);
+				}
+				if (mLocationsList.get(i).mContenido.mSnippet != null) {
+					marker.snippet(mLocationsList.get(i).mContenido.mSnippet);
+				}
+			}
+			mGoogleMap.addMarker(marker);
 		}
 	}
 
