@@ -9,10 +9,14 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends FragmentActivity implements
@@ -80,21 +84,42 @@ public class MainActivity extends FragmentActivity implements
 			return;
 		}
 		for (int i = 0; i < mLocationsList.size(); i++) {
-			MarkerOptions marker = new MarkerOptions().position(mLocationsList
-					.get(i).mPosition);
-			if (mLocationsList.get(i).mIcono != 0) {
-				marker.icon(BitmapDescriptorFactory.fromResource(mLocationsList
-						.get(i).mIcono));
-			}
-			if (mLocationsList.get(i).mContenido != null) {
-				if (mLocationsList.get(i).mContenido.mNombre != null) {
-					marker.title(mLocationsList.get(i).mContenido.mNombre);
-				}
-				if (mLocationsList.get(i).mContenido.mSnippet != null) {
-					marker.snippet(mLocationsList.get(i).mContenido.mSnippet);
-				}
+			final Location location = mLocationsList.get(i);
+			MarkerOptions marker = new MarkerOptions()
+					.position(location.mPosition);
+			if (location.mIcono != 0) {
+				marker.icon(BitmapDescriptorFactory
+						.fromResource(location.mIcono));
 			}
 			mGoogleMap.addMarker(marker);
+
+			mGoogleMap.setInfoWindowAdapter(new InfoWindowAdapter() {
+
+				@Override
+				public View getInfoWindow(Marker arg0) {
+					return null;
+				}
+
+				@Override
+				public View getInfoContents(Marker marker) {
+					View v = getLayoutInflater().inflate(R.layout.map_marker,
+							null);
+					if (location.mContenido != null) {
+						if (location.mContenido.mNombre != null) {
+							TextView title = (TextView) v
+									.findViewById(R.id.location);
+							title.setText(location.mContenido.mNombre);
+							title.setTextAppearance(MainActivity.this,
+									android.R.attr.textAppearanceLarge);
+						}
+						if (location.mContenido.mSnippet != null) {
+							((TextView) v.findViewById(R.id.other_information))
+									.setText(location.mContenido.mSnippet);
+						}
+					}
+					return v;
+				}
+			});
 		}
 	}
 
@@ -131,4 +156,5 @@ public class MainActivity extends FragmentActivity implements
 	public void onLoaderReset(Loader<ArrayList<Location>> loader) {
 		mLocationsList = null;
 	}
+
 }
