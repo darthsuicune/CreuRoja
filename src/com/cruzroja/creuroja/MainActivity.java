@@ -2,7 +2,11 @@ package com.cruzroja.creuroja;
 
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
@@ -26,12 +30,17 @@ public class MainActivity extends FragmentActivity implements
 	GoogleMap mGoogleMap;
 	ArrayList<Location> mLocationsList;
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		setMap();
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			getActionBar().setBackgroundDrawable(new ColorDrawable(Color.RED));
+		}
 
 		if (isConnected()) {
 			// If the device is connected to the internet, start the download
