@@ -67,7 +67,7 @@ public class Location {
 			mNombre = nombre;
 			mLugar = lugar;
 			mHorario = horario;
-			mSnippet = mLugar + "\n" + mHorario;
+			mSnippet = mLugar + MARKER_NEW_LINE + mHorario;
 		}
 	}
 }

@@ -84,43 +84,22 @@ public class MainActivity extends FragmentActivity implements
 			return;
 		}
 		for (int i = 0; i < mLocationsList.size(); i++) {
-			final Location location = mLocationsList.get(i);
-			MarkerOptions marker = new MarkerOptions()
-					.position(location.mPosition);
-			if (location.mIcono != 0) {
-				marker.icon(BitmapDescriptorFactory
-						.fromResource(location.mIcono));
+			MarkerOptions marker = new MarkerOptions().position(mLocationsList
+					.get(i).mPosition);
+			if (mLocationsList.get(i).mIcono != 0) {
+				marker.icon(BitmapDescriptorFactory.fromResource(mLocationsList
+						.get(i).mIcono));
 			}
+			if (mLocationsList.get(i).mContenido.mNombre != null) {
+				marker.title(mLocationsList.get(i).mContenido.mNombre);
+			}
+			if (mLocationsList.get(i).mContenido.mSnippet != null) {
+				marker.snippet(mLocationsList.get(i).mContenido.mSnippet);
+			}
+
 			mGoogleMap.addMarker(marker);
-
-			mGoogleMap.setInfoWindowAdapter(new InfoWindowAdapter() {
-
-				@Override
-				public View getInfoWindow(Marker arg0) {
-					return null;
-				}
-
-				@Override
-				public View getInfoContents(Marker marker) {
-					View v = getLayoutInflater().inflate(R.layout.map_marker,
-							null);
-					if (location.mContenido != null) {
-						if (location.mContenido.mNombre != null) {
-							TextView title = (TextView) v
-									.findViewById(R.id.location);
-							title.setText(location.mContenido.mNombre);
-							title.setTextAppearance(MainActivity.this,
-									android.R.attr.textAppearanceLarge);
-						}
-						if (location.mContenido.mSnippet != null) {
-							((TextView) v.findViewById(R.id.other_information))
-									.setText(location.mContenido.mSnippet);
-						}
-					}
-					return v;
-				}
-			});
 		}
+		mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
 	}
 
 	public void showProgress(boolean show) {
@@ -157,4 +136,32 @@ public class MainActivity extends FragmentActivity implements
 		mLocationsList = null;
 	}
 
+	private class MarkerAdapter implements InfoWindowAdapter {
+		@Override
+		public View getInfoWindow(Marker marker) {
+			return null;
+		}
+
+		@Override
+		public View getInfoContents(Marker marker) {
+			View v = getLayoutInflater().inflate(R.layout.map_marker, null);
+
+			((TextView) v.findViewById(R.id.location)).setText(marker
+					.getTitle());
+
+			if (marker.getSnippet() != null) {
+				String address = marker.getSnippet().substring(0,
+						marker.getSnippet().indexOf(Location.MARKER_NEW_LINE));
+				String other = marker.getSnippet().substring(
+						marker.getSnippet().indexOf(Location.MARKER_NEW_LINE)
+								+ Location.MARKER_NEW_LINE.length(),
+						marker.getSnippet().length());
+				((TextView) v.findViewById(R.id.address)).setText(address);
+				((TextView) v.findViewById(R.id.other_information))
+						.setText(other);
+			}
+
+			return v;
+		}
+	}
 }
