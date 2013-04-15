@@ -33,7 +33,7 @@
 
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyC_eeaFAw7-u9ha7njs7YPI-gvM3Pmil74" />
+            android:value="AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ" />
 
         <activity
             android:name="com.cruzroja.creuroja.MainActivity"
