@@ -92,6 +92,9 @@ public class MainActivity extends FragmentActivity implements
 		if (mGoogleMap == null && mLocationsList == null) {
 			return;
 		}
+		
+		mGoogleMap.clear();
+		
 		for (int i = 0; i < mLocationsList.size(); i++) {
 			MarkerOptions marker = new MarkerOptions().position(mLocationsList
 					.get(i).mPosition);
