@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.ActionBar.OnNavigationListener;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -16,6 +17,7 @@ import android.support.v4.content.Loader;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +31,10 @@ public class MainActivity extends FragmentActivity implements
 		LoaderCallbacks<ArrayList<Location>> {
 	public static final int LOADER_CONNECTION = 1;
 	public static final String LOCATIONS = "Locations";
+	protected static final int MAP_STYLE_NORMAL = 0;
+	protected static final int MAP_STYLE_HYBRID = 1;
+	protected static final int MAP_STYLE_TERRAIN = 2;
+	protected static final int MAP_STYLE_SATELLITE = 3;
 
 	GoogleMap mGoogleMap;
 	ArrayList<Location> mLocationsList;
@@ -124,6 +130,34 @@ public class MainActivity extends FragmentActivity implements
 	private void setActionBar() {
 		ActionBar actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
+
+		actionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_dropdown_item, android.R.id.text1,
+				getResources().getStringArray(R.array.map_styles)),
+				new OnNavigationListener() {
+					@Override
+					public boolean onNavigationItemSelected(int itemPosition,
+							long itemId) {
+						switch (itemPosition) {
+						case MAP_STYLE_NORMAL:
+							mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+							return true;
+						case MAP_STYLE_HYBRID:
+							mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+							return true;
+						case MAP_STYLE_SATELLITE:
+							mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+							return true;
+						case MAP_STYLE_TERRAIN:
+							mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+							return true;
+						default:
+							return false;
+						}
+
+					}
+				});
 	}
 
 	private void drawMarkers() {
