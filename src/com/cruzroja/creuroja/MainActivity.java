@@ -132,32 +132,38 @@ public class MainActivity extends FragmentActivity implements
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
-		actionBar.setListNavigationCallbacks(new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_dropdown_item, android.R.id.text1,
-				getResources().getStringArray(R.array.map_styles)),
+		actionBar.setListNavigationCallbacks(
+				new ArrayAdapter<String>(this,
+						android.R.layout.simple_spinner_dropdown_item,
+						android.R.id.text1, getResources().getStringArray(
+								R.array.map_styles)),
 				new OnNavigationListener() {
 					@Override
 					public boolean onNavigationItemSelected(int itemPosition,
 							long itemId) {
-						switch (itemPosition) {
-						case MAP_STYLE_NORMAL:
-							mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-							return true;
-						case MAP_STYLE_HYBRID:
-							mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-							return true;
-						case MAP_STYLE_SATELLITE:
-							mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-							return true;
-						case MAP_STYLE_TERRAIN:
-							mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-							return true;
-						default:
-							return false;
-						}
+						return setMapStyle(itemPosition);
 
 					}
 				});
+	}
+
+	protected boolean setMapStyle(int itemPosition) {
+		switch (itemPosition) {
+		case MAP_STYLE_NORMAL:
+			mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+			return true;
+		case MAP_STYLE_HYBRID:
+			mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+			return true;
+		case MAP_STYLE_SATELLITE:
+			mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+			return true;
+		case MAP_STYLE_TERRAIN:
+			mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+			return true;
+		default:
+			return false;
+		}
 	}
 
 	private void drawMarkers() {
@@ -169,7 +175,7 @@ public class MainActivity extends FragmentActivity implements
 		mGoogleMap.clear();
 		for (int i = 0; i < mLocationsList.size(); i++) {
 			MarkerOptions marker = new MarkerOptions().position(mLocationsList
-					.get(i).mPosition);
+					.get(i).getPosition());
 			if (mLocationsList.get(i).mIcono != 0) {
 				marker.icon(BitmapDescriptorFactory.fromResource(mLocationsList
 						.get(i).mIcono));

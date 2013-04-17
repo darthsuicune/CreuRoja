@@ -4,23 +4,25 @@ import java.io.Serializable;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class Location implements Serializable{
+public class Location implements Serializable {
 	/**
 	 * Required for serializable interface
 	 */
 	private static final long serialVersionUID = -8458158909723127940L;
-	
+
 	public static final String MARKER_NEW_LINE = "<br />";
 	public static final String MARKER_STRONG = "<strong>";
 	public static final String MARKER_STRONG_END = "</strong>";
 	public static final String MARKER_SPACE = "&nbsp;";
 
-	public LatLng mPosition;
+	public double mLat;
+	public double mLong;
 	public int mIcono;
 	public Contenido mContenido;
 
-	public Location(double lat, double longit, String icon, String content) {
-		mPosition = new LatLng(lat, longit);
+	public Location(double lat, double longi, String icon, String content) {
+		mLat = lat;
+		mLong = longi;
 		mIcono = getIcon(icon);
 		mContenido = getContenido(content);
 	}
@@ -39,6 +41,10 @@ public class Location implements Serializable{
 		} else {
 			return 0;
 		}
+	}
+
+	public LatLng getPosition() {
+		return new LatLng(mLat, mLong);
 	}
 
 	public Contenido getContenido(String contenido) {
@@ -60,7 +66,11 @@ public class Location implements Serializable{
 		return new Contenido(nombre, lugar, horario);
 	}
 
-	public static class Contenido {
+	public static class Contenido implements Serializable {
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 4795241208160111739L;
 		public String mNombre;
 		public String mLugar;
 		public String mHorario;
