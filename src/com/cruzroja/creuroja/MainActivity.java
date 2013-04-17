@@ -3,6 +3,8 @@ package com.cruzroja.creuroja;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
@@ -26,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends FragmentActivity implements
 		LoaderCallbacks<ArrayList<Location>> {
 	public static final int LOADER_CONNECTION = 1;
+	public static final String LOCATIONS = "Locations";
 
 	GoogleMap mGoogleMap;
 	ArrayList<Location> mLocationsList;
@@ -39,16 +42,31 @@ public class MainActivity extends FragmentActivity implements
 		setMap();
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			getActionBar().setBackgroundDrawable(new ColorDrawable(Color.RED));
+			setActionBar();
+		} else {
+			setMapForEclair();
 		}
 
-		if (isConnected()) {
-			// If the device is connected to the internet, start the download
-			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
-					this);
+		if (savedInstanceState != null) {
+			if (mLocationsList == null) {
+				mLocationsList = new ArrayList<Location>();
+				for (int i = 0; i < savedInstanceState.getInt(LOCATIONS, 0); i++) {
+					mLocationsList.add((Location) savedInstanceState
+							.getSerializable(Integer.toString(i)));
+				}
+				drawMarkers();
+			}
 		} else {
-			// TODO: Here comes what to do without a valid connection, such as
-			// showing old markers or whatever
+			if (isConnected()) {
+				// If the device is connected to the internet, start the
+				// download
+				getSupportLoaderManager().restartLoader(LOADER_CONNECTION,
+						null, this);
+			} else {
+				// TODO: Here comes what to do without a valid connection, such
+				// as
+				// showing old markers or whatever
+			}
 		}
 
 	}
@@ -58,6 +76,18 @@ public class MainActivity extends FragmentActivity implements
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
 		return true;
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		if (mLocationsList == null) {
+			return;
+		}
+		outState.putInt(LOCATIONS, mLocationsList.size());
+		for (int i = 0; i < mLocationsList.size(); i++) {
+			outState.putSerializable(Integer.toString(i), mLocationsList.get(i));
+		}
 	}
 
 	@Override
@@ -87,7 +117,16 @@ public class MainActivity extends FragmentActivity implements
 		mGoogleMap.setMyLocationEnabled(true);
 	}
 
-	private void setExtraMapElements() {
+	private void setMapForEclair() {
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setActionBar() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
+	}
+
+	private void drawMarkers() {
 		// TODO add markers to the map.
 		if (mGoogleMap == null && mLocationsList == null) {
 			return;
@@ -136,7 +175,7 @@ public class MainActivity extends FragmentActivity implements
 		switch (loader.getId()) {
 		case LOADER_CONNECTION:
 			mLocationsList = locations;
-			setExtraMapElements();
+			drawMarkers();
 			showProgress(false);
 			break;
 		}

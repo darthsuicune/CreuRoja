@@ -18,7 +18,7 @@ import android.support.v4.content.AsyncTaskLoader;
 
 public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 	public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios.cr/preventivo.json";
-	public static final String PUNTOS_VARIABLES = "http://direcion.del/json2";
+//	public static final String PUNTOS_VARIABLES = "http://direccion.del/json2";
 
 	public ConnectionLoader(Context context, Bundle args) {
 		super(context);
