@@ -199,12 +199,23 @@ public class MainActivity extends FragmentActivity implements
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setActionBar() {
 		ActionBar actionBar = getActionBar();
-		actionBar.setBackgroundDrawable(new ColorDrawable(Color.RED));
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color
+				.parseColor("#CC0000")));
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionBar.setDisplayHomeAsUpEnabled(true);
 
 		actionBar.setListNavigationCallbacks(getMapStyleAdapter(),
 				getMapStyleListener());
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (isMarkerPanelShowing) {
+			mMarkerPanel.setVisibility(View.GONE);
+			isMarkerPanelShowing = false;
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 	private SpinnerAdapter getMapStyleAdapter() {
