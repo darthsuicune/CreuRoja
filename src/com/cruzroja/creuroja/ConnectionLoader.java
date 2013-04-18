@@ -17,8 +17,8 @@ import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
 public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
-	public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios.cr/preventivo.json";
-//	public static final String PUNTOS_VARIABLES = "http://direccion.del/json2";
+	public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios.cr/permanentes.json";
+	public static final String PUNTOS_VARIABLES = "http://r0uzic.net/voluntarios.cr/temporales.json";
 
 	public ConnectionLoader(Context context, Bundle args) {
 		super(context);
@@ -34,17 +34,17 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 	public ArrayList<Location> loadInBackground() {
 		DefaultHttpClient httpClient = createHttpClient();
 		HttpGet requestFijos = new HttpGet(PUNTOS_FIJOS);
-		// HttpGet requestVariables = new HttpGet(PUNTOS_VARIABLES);
+		HttpGet requestVariables = new HttpGet(PUNTOS_VARIABLES);
 
 		ArrayList<Location> locationList = null;
 		try {
 			locationList = getLocations(requestFijos, httpClient);
-			// locationList.addAll(getLocations(requestVariables, httpClient));
+			locationList.addAll(getLocations(requestVariables, httpClient));
 
 		} catch (ClientProtocolException e) {
-			e.printStackTrace();
+			return null;
 		} catch (IOException e) {
-			e.printStackTrace();
+			return null;
 		}
 		return locationList;
 	}
@@ -57,7 +57,6 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 	ArrayList<Location> getLocations(HttpGet request, DefaultHttpClient client)
 			throws ClientProtocolException, IOException {
 		HttpResponse response = client.execute(request);
-		// TODO Make the connection and return the response
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				response.getEntity().getContent()));
 
