@@ -38,7 +38,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends FragmentActivity implements
 		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener {
 	public static final int LOADER_CONNECTION = 1;
-	private static String SAVE_LOCATION = "saveLocation";
 	public static final String LOCATIONS = "Locations";
 	protected static final int MAP_STYLE_NORMAL = 0;
 	protected static final int MAP_STYLE_HYBRID = 1;
@@ -64,7 +63,6 @@ public class MainActivity extends FragmentActivity implements
 	View mMarkerPanel;
 
 	boolean isMarkerPanelShowing;
-	boolean showMyLocation;
 
 	SharedPreferences prefs;
 
@@ -85,7 +83,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		if (savedInstanceState != null) {
-			showMyLocation = savedInstanceState.getBoolean(SAVE_LOCATION);
 
 			if (mLocationsList == null) {
 				mLocationsList = new ArrayList<Location>();
@@ -121,7 +118,6 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putBoolean(SAVE_LOCATION, showMyLocation);
 		if (mLocationsList == null) {
 			return;
 		}
@@ -135,23 +131,15 @@ public class MainActivity extends FragmentActivity implements
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_locate:
-			if (showMyLocation) {
-				showMyLocation = false;
-				mGoogleMap.setMyLocationEnabled(false);
-			} else {
-				showMyLocation = true;
-				mGoogleMap.setMyLocationEnabled(true);
-				if (mGoogleMap != null) {
-					if (mGoogleMap.getMyLocation() != null) {
-						mGoogleMap.animateCamera(CameraUpdateFactory
-								.newLatLng(new LatLng(mGoogleMap
-										.getMyLocation().getLatitude(),
-										mGoogleMap.getMyLocation()
-												.getLongitude())));
-					}
+			if (mGoogleMap != null) {
+				if (mGoogleMap.getMyLocation() != null) {
+					mGoogleMap.animateCamera(CameraUpdateFactory
+							.newLatLng(new LatLng(mGoogleMap.getMyLocation()
+									.getLatitude(), mGoogleMap.getMyLocation()
+									.getLongitude())));
 				}
-
 			}
+
 			return true;
 		case android.R.id.home:
 			showMarkerPanel();
