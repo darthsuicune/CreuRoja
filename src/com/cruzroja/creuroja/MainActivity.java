@@ -38,6 +38,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MainActivity extends FragmentActivity implements
 		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener {
 	public static final int LOADER_CONNECTION = 1;
+	private static String SAVE_LOCATION = "saveLocation";
 	public static final String LOCATIONS = "Locations";
 	protected static final int MAP_STYLE_NORMAL = 0;
 	protected static final int MAP_STYLE_HYBRID = 1;
@@ -63,6 +64,7 @@ public class MainActivity extends FragmentActivity implements
 	View mMarkerPanel;
 
 	boolean isMarkerPanelShowing;
+	boolean showMyLocation;
 
 	SharedPreferences prefs;
 
@@ -75,10 +77,6 @@ public class MainActivity extends FragmentActivity implements
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		setMap();
-		if (savedInstanceState == null) {
-			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-					41.3958, 2.1739), 12));
-		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setActionBar();
@@ -87,6 +85,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		if (savedInstanceState != null) {
+			showMyLocation = savedInstanceState.getBoolean(SAVE_LOCATION);
+
 			if (mLocationsList == null) {
 				mLocationsList = new ArrayList<Location>();
 				for (int i = 0; i < savedInstanceState.getInt(LOCATIONS, 0); i++) {
@@ -96,6 +96,8 @@ public class MainActivity extends FragmentActivity implements
 				drawMarkers();
 			}
 		} else {
+			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+					41.3958, 2.1739), 12));
 			if (isConnected()) {
 				// If the device is connected to the internet, start the
 				// download
@@ -103,8 +105,7 @@ public class MainActivity extends FragmentActivity implements
 						null, this);
 			} else {
 				// TODO: Here comes what to do without a valid connection, such
-				// as
-				// showing old markers or whatever
+				// as showing old markers or whatever
 			}
 		}
 
@@ -120,6 +121,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		outState.putBoolean(SAVE_LOCATION, showMyLocation);
 		if (mLocationsList == null) {
 			return;
 		}
@@ -132,6 +134,25 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case R.id.menu_locate:
+			if (showMyLocation) {
+				showMyLocation = false;
+				mGoogleMap.setMyLocationEnabled(false);
+			} else {
+				showMyLocation = true;
+				mGoogleMap.setMyLocationEnabled(true);
+				if (mGoogleMap != null) {
+					if (mGoogleMap.getMyLocation() != null) {
+						mGoogleMap.animateCamera(CameraUpdateFactory
+								.newLatLng(new LatLng(mGoogleMap
+										.getMyLocation().getLatitude(),
+										mGoogleMap.getMyLocation()
+												.getLongitude())));
+					}
+				}
+
+			}
+			return true;
 		case android.R.id.home:
 			showMarkerPanel();
 			return true;

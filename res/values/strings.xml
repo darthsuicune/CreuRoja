@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">Creu Roja</string>
-    <string name="menu_markers">Marcadores</string>
+    <string name="menu_locate">Posición</string>
     <string name="menu_refresh">Actualizar</string>
     <string name="google_maps_api_key">"AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ"</string>
     <string name="google_maps_api_key_zuhause">"AIzaSyC_eeaFAw7-u9ha7njs7YPI-gvM3Pmil74"</string>
