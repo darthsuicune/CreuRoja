@@ -38,6 +38,8 @@ public class Location implements Serializable {
 			return R.drawable.embarcacion;
 		} else if (icon.equals("hospital.png")) {
 			return R.drawable.hospital;
+		} else if (icon.equals("preventivo.png")){
+			return R.drawable.preventivo;
 		} else {
 			return 0;
 		}

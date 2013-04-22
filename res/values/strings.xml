@@ -11,11 +11,14 @@
     <string name="map_style_satellite">Satélite</string>
     <string name="map_style_hybrid">Híbrido</string>
 
+    <string name="locating">Localizando posicion, espere un momento y vuelva a intentarlo.</string>
+    
     <string name="marker_type_asamblea">Asamblea</string>
     <string name="marker_type_cuap">Cuap</string>
     <string name="marker_type_embarcacion">Embarcacion</string>
     <string name="marker_type_bravo">Bravo</string>
     <string name="marker_type_hospital">Hospital</string>
+    <string name="marker_type_preventivo">Preventivo</string>
 
     <string-array name="map_styles">
         <item>@string/map_style_normal</item>

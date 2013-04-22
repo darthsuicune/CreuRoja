@@ -25,6 +25,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -49,6 +50,7 @@ public class MainActivity extends FragmentActivity implements
 	private static final String SHOW_CUAP = "showCuap";
 	private static final String SHOW_EMBARCACION = "showEmbarcacion";
 	private static final String SHOW_HOSPITAL = "showHospital";
+	private static final String SHOW_PREVENTIVO = "showPreventivo";
 	private static final String MAP_STYLE = "mapStyle";
 
 	GoogleMap mGoogleMap;
@@ -59,6 +61,7 @@ public class MainActivity extends FragmentActivity implements
 	CheckBox mCuapCheckBox;
 	CheckBox mEmbarcacionCheckBox;
 	CheckBox mHospitalCheckBox;
+	CheckBox mPreventivoCheckBox;
 
 	View mMarkerPanel;
 
@@ -137,6 +140,8 @@ public class MainActivity extends FragmentActivity implements
 							.newLatLng(new LatLng(mGoogleMap.getMyLocation()
 									.getLatitude(), mGoogleMap.getMyLocation()
 									.getLongitude())));
+				} else {
+					Toast.makeText(this, R.string.locating, Toast.LENGTH_SHORT).show();
 				}
 			}
 
@@ -173,6 +178,7 @@ public class MainActivity extends FragmentActivity implements
 			mCuapCheckBox = (CheckBox) findViewById(R.id.checkbox_cuap);
 			mEmbarcacionCheckBox = (CheckBox) findViewById(R.id.checkbox_embarcacion);
 			mHospitalCheckBox = (CheckBox) findViewById(R.id.checkbox_hospital);
+			mPreventivoCheckBox = (CheckBox) findViewById(R.id.checkbox_preventivo);
 
 			mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
 			mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
@@ -180,12 +186,14 @@ public class MainActivity extends FragmentActivity implements
 			mEmbarcacionCheckBox.setChecked(prefs.getBoolean(SHOW_EMBARCACION,
 					true));
 			mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
+			mPreventivoCheckBox.setChecked(prefs.getBoolean(SHOW_PREVENTIVO, true));
 
 			mAsambleaCheckBox.setOnCheckedChangeListener(this);
 			mBravoCheckBox.setOnCheckedChangeListener(this);
 			mCuapCheckBox.setOnCheckedChangeListener(this);
 			mEmbarcacionCheckBox.setOnCheckedChangeListener(this);
 			mHospitalCheckBox.setOnCheckedChangeListener(this);
+			mPreventivoCheckBox.setOnCheckedChangeListener(this);
 		}
 	}
 
@@ -311,6 +319,8 @@ public class MainActivity extends FragmentActivity implements
 			return prefs.getBoolean(SHOW_EMBARCACION, true);
 		case R.drawable.hospital:
 			return prefs.getBoolean(SHOW_HOSPITAL, true);
+		case R.drawable.preventivo:
+			return prefs.getBoolean(SHOW_PREVENTIVO, true);
 		default:
 			return true;
 		}
@@ -393,6 +403,9 @@ public class MainActivity extends FragmentActivity implements
 			break;
 		case R.id.checkbox_hospital:
 			editor.putBoolean(SHOW_HOSPITAL, isChecked);
+			break;
+		case R.id.checkbox_preventivo:
+			editor.putBoolean(SHOW_PREVENTIVO, isChecked);
 			break;
 		}
 		editor.commit();
