@@ -75,6 +75,10 @@ public class MainActivity extends FragmentActivity implements
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		setMap();
+		if (savedInstanceState == null) {
+			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+					41.3958, 2.1739), 12));
+		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setActionBar();
@@ -189,8 +193,7 @@ public class MainActivity extends FragmentActivity implements
 		mGoogleMap.setMyLocationEnabled(true);
 		mGoogleMap.setMapType(prefs
 				.getInt(MAP_STYLE, GoogleMap.MAP_TYPE_NORMAL));
-		mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-				41.3958, 2.1739), 12));
+
 	}
 
 	private void setMapForEclair() {
