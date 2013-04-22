@@ -193,7 +193,9 @@ public class MainActivity extends FragmentActivity implements
 		mGoogleMap.setMyLocationEnabled(true);
 		mGoogleMap.setMapType(prefs
 				.getInt(MAP_STYLE, GoogleMap.MAP_TYPE_NORMAL));
-
+		mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+		mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+		mGoogleMap.getUiSettings().setAllGesturesEnabled(true);
 	}
 
 	private void setMapForEclair() {
