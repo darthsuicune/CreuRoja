@@ -4,15 +4,18 @@
     <string name="app_name">Creu Roja</string>
     <string name="menu_locate">Posición</string>
     <string name="menu_refresh">Actualizar</string>
+    <string name="menu_show_panel">Leyenda</string>
+    <string name="menu_show_map">Mapa</string>
+    <string name="menu_show_satellite">Satélite</string>
+    <string name="menu_show_terrain">Terreno</string>
+    <string name="menu_show_hybrid">Híbrido</string>
     <string name="google_maps_api_key">"AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ"</string>
     <string name="google_maps_api_key_zuhause">"AIzaSyC_eeaFAw7-u9ha7njs7YPI-gvM3Pmil74"</string>
     <string name="map_style_normal">Mapa</string>
     <string name="map_style_terrain">Terreno</string>
     <string name="map_style_satellite">Satélite</string>
     <string name="map_style_hybrid">Híbrido</string>
-
     <string name="locating">Localizando posicion, espere un momento y vuelva a intentarlo.</string>
-    
     <string name="marker_type_asamblea">Asamblea</string>
     <string name="marker_type_cuap">Cuap</string>
     <string name="marker_type_embarcacion">Embarcacion</string>
@@ -26,7 +29,6 @@
         <item>@string/map_style_terrain</item>
         <item>@string/map_style_satellite</item>
     </string-array>
-    
     <string-array name="marker_types">
         <item>@string/marker_type_asamblea</item>
         <item>@string/marker_type_cuap</item>

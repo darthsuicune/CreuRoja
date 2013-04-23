@@ -52,6 +52,7 @@ public class MainActivity extends FragmentActivity implements
 	private static final String SHOW_HOSPITAL = "showHospital";
 	private static final String SHOW_PREVENTIVO = "showPreventivo";
 	private static final String MAP_STYLE = "mapStyle";
+	private static final String IS_FIRST_RUN = "isFirstRun";
 
 	GoogleMap mGoogleMap;
 	ArrayList<Location> mLocationsList;
@@ -73,11 +74,12 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-
-		setMap();
+		if(prefs.getBoolean(IS_FIRST_RUN, true)){
+			makeFirstRun();
+		}
+		
+		setContentView(R.layout.activity_main);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setActionBar();
@@ -86,7 +88,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		if (savedInstanceState != null) {
-
 			if (mLocationsList == null) {
 				mLocationsList = new ArrayList<Location>();
 				for (int i = 0; i < savedInstanceState.getInt(LOCATIONS, 0); i++) {
@@ -96,6 +97,8 @@ public class MainActivity extends FragmentActivity implements
 				drawMarkers();
 			}
 		} else {
+			setMap();
+
 			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 					41.3958, 2.1739), 12));
 			if (isConnected()) {
@@ -156,6 +159,10 @@ public class MainActivity extends FragmentActivity implements
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	private void makeFirstRun(){
+		prefs.edit().putBoolean(IS_FIRST_RUN, false).commit();
 	}
 
 	private void showMarkerPanel() {
