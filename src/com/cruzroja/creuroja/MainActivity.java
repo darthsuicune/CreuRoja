@@ -75,17 +75,16 @@ public class MainActivity extends FragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		if(prefs.getBoolean(IS_FIRST_RUN, true)){
+		if (prefs.getBoolean(IS_FIRST_RUN, true)) {
 			makeFirstRun();
 		}
-		
+
 		setContentView(R.layout.activity_main);
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setActionBar();
-		} else {
-			setMapForEclair();
 		}
+		setMap();
 
 		if (savedInstanceState != null) {
 			if (mLocationsList == null) {
@@ -97,15 +96,13 @@ public class MainActivity extends FragmentActivity implements
 				drawMarkers();
 			}
 		} else {
-			setMap();
 
 			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 					41.3958, 2.1739), 12));
 			if (isConnected()) {
 				// If the device is connected to the internet, start the
 				// download
-				getSupportLoaderManager().restartLoader(LOADER_CONNECTION,
-						null, this);
+				downloadData();
 			} else {
 				// TODO: Here comes what to do without a valid connection, such
 				// as showing old markers or whatever
@@ -134,34 +131,60 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	@Override
+	public void onBackPressed() {
+		if (isMarkerPanelShowing) {
+			mMarkerPanel.setVisibility(View.GONE);
+			isMarkerPanelShowing = false;
+		} else {
+			super.onBackPressed();
+		}
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_locate:
-			if (mGoogleMap != null) {
-				if (mGoogleMap.getMyLocation() != null) {
-					mGoogleMap.animateCamera(CameraUpdateFactory
-							.newLatLng(new LatLng(mGoogleMap.getMyLocation()
-									.getLatitude(), mGoogleMap.getMyLocation()
-									.getLongitude())));
-				} else {
-					Toast.makeText(this, R.string.locating, Toast.LENGTH_SHORT).show();
-				}
-			}
-
+			moveToLocation();
 			return true;
 		case android.R.id.home:
+		case R.id.menu_show_panel:
 			showMarkerPanel();
 			return true;
 		case R.id.menu_refresh:
-			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
-					this);
+			downloadData();
 			return true;
+		case R.id.menu_show_hybrid:
+			return setMapStyle(MAP_STYLE_HYBRID);
+		case R.id.menu_show_normal:
+			return setMapStyle(MAP_STYLE_NORMAL);
+		case R.id.menu_show_satellite:
+			return setMapStyle(MAP_STYLE_SATELLITE);
+		case R.id.menu_show_terrain:
+			return setMapStyle(MAP_STYLE_TERRAIN);
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	private void makeFirstRun(){
+
+	private void moveToLocation() {
+		if (mGoogleMap != null) {
+			if (mGoogleMap.getMyLocation() != null) {
+				mGoogleMap.animateCamera(CameraUpdateFactory
+						.newLatLng(new LatLng(mGoogleMap.getMyLocation()
+								.getLatitude(), mGoogleMap.getMyLocation()
+								.getLongitude())));
+			} else {
+				Toast.makeText(this, R.string.locating, Toast.LENGTH_SHORT)
+						.show();
+			}
+		}
+	}
+
+	private void downloadData() {
+		getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null, this);
+	}
+
+	private void makeFirstRun() {
 		prefs.edit().putBoolean(IS_FIRST_RUN, false).commit();
 	}
 
@@ -193,7 +216,8 @@ public class MainActivity extends FragmentActivity implements
 			mEmbarcacionCheckBox.setChecked(prefs.getBoolean(SHOW_EMBARCACION,
 					true));
 			mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
-			mPreventivoCheckBox.setChecked(prefs.getBoolean(SHOW_PREVENTIVO, true));
+			mPreventivoCheckBox.setChecked(prefs.getBoolean(SHOW_PREVENTIVO,
+					true));
 
 			mAsambleaCheckBox.setOnCheckedChangeListener(this);
 			mBravoCheckBox.setOnCheckedChangeListener(this);
@@ -214,15 +238,11 @@ public class MainActivity extends FragmentActivity implements
 			mGoogleMap = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map)).getMap();
 		}
+		setMapStyle(prefs.getInt(MAP_STYLE, MAP_STYLE_NORMAL));
 		mGoogleMap.setMyLocationEnabled(true);
-		mGoogleMap.setMapType(prefs
-				.getInt(MAP_STYLE, GoogleMap.MAP_TYPE_NORMAL));
 		mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
 		mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
 		mGoogleMap.getUiSettings().setAllGesturesEnabled(true);
-	}
-
-	private void setMapForEclair() {
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -232,19 +252,10 @@ public class MainActivity extends FragmentActivity implements
 				.parseColor("#CC0000")));
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
+		int myPosition = prefs.getInt(MAP_STYLE, MAP_STYLE_NORMAL);
 		actionBar.setListNavigationCallbacks(getMapStyleAdapter(),
 				getMapStyleListener());
-	}
-
-	@Override
-	public void onBackPressed() {
-		if (isMarkerPanelShowing) {
-			mMarkerPanel.setVisibility(View.GONE);
-			isMarkerPanelShowing = false;
-		} else {
-			super.onBackPressed();
-		}
+		actionBar.setSelectedNavigationItem(myPosition);
 	}
 
 	private SpinnerAdapter getMapStyleAdapter() {
@@ -259,34 +270,39 @@ public class MainActivity extends FragmentActivity implements
 			@Override
 			public boolean onNavigationItemSelected(int itemPosition,
 					long itemId) {
-				prefs.edit().putInt(MAP_STYLE, itemPosition);
 				return setMapStyle(itemPosition);
 			}
 		};
 	}
 
-	private boolean setMapStyle(int itemPosition) {
-		switch (itemPosition) {
+	private boolean setMapStyle(int mapStyle) {
+		if (mGoogleMap == null) {
+			return false;
+		}
+
+		switch (mapStyle) {
 		case MAP_STYLE_NORMAL:
 			mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-			return true;
+			break;
 		case MAP_STYLE_HYBRID:
 			mGoogleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-			return true;
+			break;
 		case MAP_STYLE_SATELLITE:
 			mGoogleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-			return true;
+			break;
 		case MAP_STYLE_TERRAIN:
 			mGoogleMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
-			return true;
+			break;
 		default:
 			return false;
 		}
+		prefs.edit().putInt(MAP_STYLE, mapStyle).commit();
+		return true;
 	}
 
 	private void drawMarkers() {
 		// TODO add markers to the map.
-		if (mGoogleMap == null && mLocationsList == null) {
+		if (mGoogleMap == null || mLocationsList == null) {
 			return;
 		}
 
@@ -360,7 +376,6 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onLoaderReset(Loader<ArrayList<Location>> loader) {
-		mLocationsList = null;
 	}
 
 	private class MarkerAdapter implements InfoWindowAdapter {

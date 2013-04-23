@@ -13,21 +13,20 @@
     <item
         android:id="@+id/menu_show_panel"
         android:title="@string/menu_show_panel"/>
-
-    <menu
-        android:title="@string/menu_show_panel">
-        <item
-            android:id="@+id/menu_show_map"
-            android:title="@string/menu_show_map"/>
-        <item
-            android:id="@+id/menu_show_satellite"
-            android:title="@string/menu_show_satellite"/>
-        <item
-            android:id="@+id/menu_show_terrain"
-            android:title="@string/menu_show_terrain"/>
-        <item
-            android:id="@+id/menu_show_hybrid"
-            android:title="@string/menu_show_hybrid"/>
-    </menu>
-
+    <item android:title="@string/menu_show_map">
+        <menu>
+            <item
+                android:id="@+id/menu_show_normal"
+                android:title="@string/map_style_normal"/>
+            <item
+                android:id="@+id/menu_show_satellite"
+                android:title="@string/map_style_satellite"/>
+            <item
+                android:id="@+id/menu_show_terrain"
+                android:title="@string/map_style_terrain"/>
+            <item
+                android:id="@+id/menu_show_hybrid"
+                android:title="@string/map_style_hybrid"/>
+        </menu>
+    </item>
 </menu>
