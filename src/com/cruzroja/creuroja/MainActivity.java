@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.ActionBar.OnNavigationListener;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,11 +18,9 @@ import android.support.v4.content.Loader;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,7 +101,7 @@ public class MainActivity extends FragmentActivity implements
 			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 					41.3958, 2.1739), 12));
 			mLocationsList = JSONParser.getFromDisk(this);
-			if(mLocationsList != null){
+			if (mLocationsList != null) {
 				drawMarkers();
 			}
 			downloadData();
@@ -173,13 +170,8 @@ public class MainActivity extends FragmentActivity implements
 
 	private void downloadData() {
 		if (isConnected()) {
-			// If the device is connected to the internet, start the
-			// download
 			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
 					this);
-		} else {
-			// TODO: Here comes what to do without a valid connection, such
-			// as showing old markers or whatever
 		}
 	}
 
@@ -208,32 +200,7 @@ public class MainActivity extends FragmentActivity implements
 		ActionBar actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color
 				.parseColor("#CC0000")));
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionBar.setDisplayHomeAsUpEnabled(true);
-
-		// Prepare the original mapStyle, which would get overwritten when
-		// creating the list callbacks
-		int myPosition = prefs.getInt(MAP_STYLE, MAP_STYLE_NORMAL);
-		actionBar.setListNavigationCallbacks(getMapStyleAdapter(),
-				getMapStyleListener());
-		actionBar.setSelectedNavigationItem(myPosition);
-	}
-
-	private SpinnerAdapter getMapStyleAdapter() {
-		return new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_dropdown_item,
-				android.R.id.text1, getResources().getStringArray(
-						R.array.map_styles));
-	}
-
-	private OnNavigationListener getMapStyleListener() {
-		return new OnNavigationListener() {
-			@Override
-			public boolean onNavigationItemSelected(int itemPosition,
-					long itemId) {
-				return setMapStyle(itemPosition);
-			}
-		};
 	}
 
 	private boolean setMapStyle(int mapStyle) {

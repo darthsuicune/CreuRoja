@@ -74,12 +74,12 @@ public class JSONParser {
 	public static ArrayList<Location> getFromDisk(Context context) {
 		ArrayList<Location> locationList = null;
 
-		String data = getData(context, FILE_NAME_FIJOS);
+		String data = getDataFromFile(context, FILE_NAME_FIJOS);
 		if (data.equals("")) {
 			return null;
 		}
 		locationList = parseJson(data);
-		data = getData(context, FILE_NAME_VARIABLES);
+		data = getDataFromFile(context, FILE_NAME_VARIABLES);
 		if (data.equals("")) {
 			return null;
 		}
@@ -88,7 +88,7 @@ public class JSONParser {
 		return locationList;
 	}
 
-	public static String getData(Context context, String fileName) {
+	public static String getDataFromFile(Context context, String fileName) {
 		String data = "";
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
