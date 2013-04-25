@@ -38,9 +38,9 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 
 		ArrayList<Location> locationList = null;
 		try {
-			locationList = getLocations(requestFijos, httpClient);
-			locationList.addAll(getLocations(requestVariables, httpClient));
-
+			locationList = getLocations(requestFijos, httpClient, true);
+			locationList.addAll(getLocations(requestVariables, httpClient,
+					false));
 		} catch (ClientProtocolException e) {
 			return null;
 		} catch (IOException e) {
@@ -54,19 +54,20 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 		return new DefaultHttpClient(params);
 	}
 
-	ArrayList<Location> getLocations(HttpGet request, DefaultHttpClient client)
-			throws ClientProtocolException, IOException {
+	ArrayList<Location> getLocations(HttpGet request, DefaultHttpClient client,
+			boolean isFijo) throws ClientProtocolException, IOException {
 		HttpResponse response = client.execute(request);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				response.getEntity().getContent()));
 
-		String result = "";
+		String data = "";
 		String line = "";
 
 		while ((line = reader.readLine()) != null) {
-			result = result + line;
+			data = data + line;
 		}
-
-		return JSONParser.parseJson(result);
+		data = data.replace("\t", "");
+		JSONParser.saveToDisk(getContext(), data, isFijo);
+		return JSONParser.parseJson(data);
 	}
 }

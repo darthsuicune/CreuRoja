@@ -81,10 +81,11 @@ public class MainActivity extends FragmentActivity implements
 
 		setContentView(R.layout.activity_main);
 
+		setMap();
+
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setActionBar();
 		}
-		setMap();
 
 		if (savedInstanceState != null) {
 			if (mLocationsList == null) {
@@ -100,9 +101,12 @@ public class MainActivity extends FragmentActivity implements
 				}
 			}
 		} else {
-
 			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 					41.3958, 2.1739), 12));
+			mLocationsList = JSONParser.getFromDisk(this);
+			if(mLocationsList != null){
+				drawMarkers();
+			}
 			downloadData();
 		}
 
@@ -206,6 +210,9 @@ public class MainActivity extends FragmentActivity implements
 				.parseColor("#CC0000")));
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 		actionBar.setDisplayHomeAsUpEnabled(true);
+
+		// Prepare the original mapStyle, which would get overwritten when
+		// creating the list callbacks
 		int myPosition = prefs.getInt(MAP_STYLE, MAP_STYLE_NORMAL);
 		actionBar.setListNavigationCallbacks(getMapStyleAdapter(),
 				getMapStyleListener());
