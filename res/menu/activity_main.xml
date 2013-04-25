@@ -1,12 +1,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <item
+        android:id="@+id/menu_locate"
+        android:icon="@drawable/ic_action_locate"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_locate"/>
+    <item
         android:icon="@drawable/location_map"
         android:showAsAction="ifRoom"
         android:title="@string/menu_show_map">
         <menu>
             <item
                 android:id="@+id/menu_show_normal"
+                android:icon="@drawable/ic_action_leyenda"
                 android:title="@string/map_style_normal"/>
             <item
                 android:id="@+id/menu_show_satellite"
@@ -20,19 +26,14 @@
         </menu>
     </item>
     <item
-        android:id="@+id/menu_locate"
-        android:icon="@drawable/ic_action_locate"
+        android:id="@+id/menu_show_panel"
+        android:icon="@drawable/ic_action_leyenda"
         android:showAsAction="ifRoom"
-        android:title="@string/menu_locate"/>
+        android:title="@string/menu_show_panel"/>
     <item
         android:id="@+id/menu_refresh"
         android:icon="@drawable/ic_action_refresh"
         android:showAsAction="ifRoom"
         android:title="@string/menu_refresh"/>
-    <item
-        android:id="@+id/menu_show_panel"
-        android:icon="@drawable/ic_action_leyenda"
-        android:showAsAction="ifRoom"
-        android:title="@string/menu_show_panel"/>
 
 </menu>
