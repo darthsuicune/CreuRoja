@@ -99,14 +99,7 @@ public class MainActivity extends FragmentActivity implements
 
 			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
 					41.3958, 2.1739), 12));
-			if (isConnected()) {
-				// If the device is connected to the internet, start the
-				// download
-				downloadData();
-			} else {
-				// TODO: Here comes what to do without a valid connection, such
-				// as showing old markers or whatever
-			}
+			downloadData();
 		}
 
 	}
@@ -181,7 +174,15 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	private void downloadData() {
-		getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null, this);
+		if (isConnected()) {
+			// If the device is connected to the internet, start the
+			// download
+			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
+					this);
+		} else {
+			// TODO: Here comes what to do without a valid connection, such
+			// as showing old markers or whatever
+		}
 	}
 
 	private void makeFirstRun() {
@@ -230,6 +231,9 @@ public class MainActivity extends FragmentActivity implements
 
 	private boolean isConnected() {
 		ConnectivityManager manager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+		if (manager.getActiveNetworkInfo() == null) {
+			return false;
+		}
 		return manager.getActiveNetworkInfo().isConnected();
 	}
 
