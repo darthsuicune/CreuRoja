@@ -88,12 +88,16 @@ public class MainActivity extends FragmentActivity implements
 
 		if (savedInstanceState != null) {
 			if (mLocationsList == null) {
-				mLocationsList = new ArrayList<Location>();
-				for (int i = 0; i < savedInstanceState.getInt(LOCATIONS, 0); i++) {
-					mLocationsList.add((Location) savedInstanceState
-							.getSerializable(Integer.toString(i)));
+				if (savedInstanceState.containsKey(LOCATIONS)) {
+					mLocationsList = new ArrayList<Location>();
+					for (int i = 0; i < savedInstanceState.getInt(LOCATIONS, 0); i++) {
+						mLocationsList.add((Location) savedInstanceState
+								.getSerializable(Integer.toString(i)));
+					}
+					drawMarkers();
+				} else {
+					downloadData();
 				}
-				drawMarkers();
 			}
 		} else {
 
@@ -159,18 +163,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	private void moveToLocation() {
-		if (mGoogleMap != null) {
-			if (mGoogleMap.getMyLocation() != null) {
-				mGoogleMap.animateCamera(CameraUpdateFactory
-						.newLatLng(new LatLng(mGoogleMap.getMyLocation()
-								.getLatitude(), mGoogleMap.getMyLocation()
-								.getLongitude())));
-			} else {
-				Toast.makeText(this, R.string.locating, Toast.LENGTH_SHORT)
-						.show();
-			}
-		}
+	private void makeFirstRun() {
+		prefs.edit().putBoolean(IS_FIRST_RUN, false).commit();
 	}
 
 	private void downloadData() {
@@ -182,50 +176,6 @@ public class MainActivity extends FragmentActivity implements
 		} else {
 			// TODO: Here comes what to do without a valid connection, such
 			// as showing old markers or whatever
-		}
-	}
-
-	private void makeFirstRun() {
-		prefs.edit().putBoolean(IS_FIRST_RUN, false).commit();
-	}
-
-	private void showMarkerPanel() {
-		if (isMarkerPanelShowing) {
-			mMarkerPanel.setVisibility(View.GONE);
-			isMarkerPanelShowing = false;
-		} else {
-			prepareMarkerPanel();
-			isMarkerPanelShowing = true;
-			mMarkerPanel.setVisibility(View.VISIBLE);
-		}
-
-	}
-
-	private void prepareMarkerPanel() {
-		if (mMarkerPanel == null) {
-			mMarkerPanel = findViewById(R.id.marker_panel);
-			mAsambleaCheckBox = (CheckBox) findViewById(R.id.checkbox_asamblea);
-			mBravoCheckBox = (CheckBox) findViewById(R.id.checkbox_bravo);
-			mCuapCheckBox = (CheckBox) findViewById(R.id.checkbox_cuap);
-			mEmbarcacionCheckBox = (CheckBox) findViewById(R.id.checkbox_embarcacion);
-			mHospitalCheckBox = (CheckBox) findViewById(R.id.checkbox_hospital);
-			mPreventivoCheckBox = (CheckBox) findViewById(R.id.checkbox_preventivo);
-
-			mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
-			mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
-			mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
-			mEmbarcacionCheckBox.setChecked(prefs.getBoolean(SHOW_EMBARCACION,
-					true));
-			mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
-			mPreventivoCheckBox.setChecked(prefs.getBoolean(SHOW_PREVENTIVO,
-					true));
-
-			mAsambleaCheckBox.setOnCheckedChangeListener(this);
-			mBravoCheckBox.setOnCheckedChangeListener(this);
-			mCuapCheckBox.setOnCheckedChangeListener(this);
-			mEmbarcacionCheckBox.setOnCheckedChangeListener(this);
-			mHospitalCheckBox.setOnCheckedChangeListener(this);
-			mPreventivoCheckBox.setOnCheckedChangeListener(this);
 		}
 	}
 
@@ -353,6 +303,60 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
+	private void moveToLocation() {
+		if (mGoogleMap != null) {
+			if (mGoogleMap.getMyLocation() != null) {
+				mGoogleMap.animateCamera(CameraUpdateFactory
+						.newLatLng(new LatLng(mGoogleMap.getMyLocation()
+								.getLatitude(), mGoogleMap.getMyLocation()
+								.getLongitude())));
+			} else {
+				Toast.makeText(this, R.string.locating, Toast.LENGTH_SHORT)
+						.show();
+			}
+		}
+	}
+
+	private void showMarkerPanel() {
+		if (isMarkerPanelShowing) {
+			mMarkerPanel.setVisibility(View.GONE);
+			isMarkerPanelShowing = false;
+		} else {
+			prepareMarkerPanel();
+			isMarkerPanelShowing = true;
+			mMarkerPanel.setVisibility(View.VISIBLE);
+		}
+
+	}
+
+	private void prepareMarkerPanel() {
+		if (mMarkerPanel == null) {
+			mMarkerPanel = findViewById(R.id.marker_panel);
+			mAsambleaCheckBox = (CheckBox) findViewById(R.id.checkbox_asamblea);
+			mBravoCheckBox = (CheckBox) findViewById(R.id.checkbox_bravo);
+			mCuapCheckBox = (CheckBox) findViewById(R.id.checkbox_cuap);
+			mEmbarcacionCheckBox = (CheckBox) findViewById(R.id.checkbox_embarcacion);
+			mHospitalCheckBox = (CheckBox) findViewById(R.id.checkbox_hospital);
+			mPreventivoCheckBox = (CheckBox) findViewById(R.id.checkbox_preventivo);
+
+			mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
+			mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
+			mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
+			mEmbarcacionCheckBox.setChecked(prefs.getBoolean(SHOW_EMBARCACION,
+					true));
+			mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
+			mPreventivoCheckBox.setChecked(prefs.getBoolean(SHOW_PREVENTIVO,
+					true));
+
+			mAsambleaCheckBox.setOnCheckedChangeListener(this);
+			mBravoCheckBox.setOnCheckedChangeListener(this);
+			mCuapCheckBox.setOnCheckedChangeListener(this);
+			mEmbarcacionCheckBox.setOnCheckedChangeListener(this);
+			mHospitalCheckBox.setOnCheckedChangeListener(this);
+			mPreventivoCheckBox.setOnCheckedChangeListener(this);
+		}
+	}
+
 	@Override
 	public Loader<ArrayList<Location>> onCreateLoader(int id, Bundle args) {
 		Loader<ArrayList<Location>> loader = null;
@@ -382,6 +386,33 @@ public class MainActivity extends FragmentActivity implements
 	public void onLoaderReset(Loader<ArrayList<Location>> loader) {
 	}
 
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		SharedPreferences.Editor editor = prefs.edit();
+		switch (buttonView.getId()) {
+		case R.id.checkbox_asamblea:
+			editor.putBoolean(SHOW_ASAMBLEA, isChecked);
+			break;
+		case R.id.checkbox_bravo:
+			editor.putBoolean(SHOW_BRAVO, isChecked);
+			break;
+		case R.id.checkbox_cuap:
+			editor.putBoolean(SHOW_CUAP, isChecked);
+			break;
+		case R.id.checkbox_embarcacion:
+			editor.putBoolean(SHOW_EMBARCACION, isChecked);
+			break;
+		case R.id.checkbox_hospital:
+			editor.putBoolean(SHOW_HOSPITAL, isChecked);
+			break;
+		case R.id.checkbox_preventivo:
+			editor.putBoolean(SHOW_PREVENTIVO, isChecked);
+			break;
+		}
+		editor.commit();
+		drawMarkers();
+	}
+
 	private class MarkerAdapter implements InfoWindowAdapter {
 		@Override
 		public View getInfoWindow(Marker marker) {
@@ -409,32 +440,5 @@ public class MainActivity extends FragmentActivity implements
 
 			return v;
 		}
-	}
-
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		SharedPreferences.Editor editor = prefs.edit();
-		switch (buttonView.getId()) {
-		case R.id.checkbox_asamblea:
-			editor.putBoolean(SHOW_ASAMBLEA, isChecked);
-			break;
-		case R.id.checkbox_bravo:
-			editor.putBoolean(SHOW_BRAVO, isChecked);
-			break;
-		case R.id.checkbox_cuap:
-			editor.putBoolean(SHOW_CUAP, isChecked);
-			break;
-		case R.id.checkbox_embarcacion:
-			editor.putBoolean(SHOW_EMBARCACION, isChecked);
-			break;
-		case R.id.checkbox_hospital:
-			editor.putBoolean(SHOW_HOSPITAL, isChecked);
-			break;
-		case R.id.checkbox_preventivo:
-			editor.putBoolean(SHOW_PREVENTIVO, isChecked);
-			break;
-		}
-		editor.commit();
-		drawMarkers();
 	}
 }
