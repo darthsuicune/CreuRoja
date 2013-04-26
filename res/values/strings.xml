@@ -15,7 +15,7 @@
     <string name="locating">Localizando posicion, espere un momento y vuelva a intentarlo.</string>
     <string name="marker_type_asamblea">Asamblea</string>
     <string name="marker_type_cuap">CUAP</string>
-    <string name="marker_type_embarcacion">Embarcacion</string>
+    <string name="marker_type_embarcacion">Embarcación</string>
     <string name="marker_type_bravo">Bravo</string>
     <string name="marker_type_hospital">Hospital</string>
     <string name="marker_type_preventivo">Preventivo</string>
