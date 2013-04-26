@@ -2,12 +2,16 @@ package com.cruzroja.creuroja;
 
 import java.util.ArrayList;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -67,7 +71,6 @@ public class MainActivity extends FragmentActivity implements
 
 	SharedPreferences prefs;
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -285,8 +288,13 @@ public class MainActivity extends FragmentActivity implements
 								.getLatitude(), mGoogleMap.getMyLocation()
 								.getLongitude())));
 			} else {
-				Toast.makeText(this, R.string.locating, Toast.LENGTH_SHORT)
-						.show();
+				LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+				if (manager.getProviders(true).size() > 1) {
+					Toast.makeText(this, R.string.locating, Toast.LENGTH_SHORT)
+							.show();
+				} else {
+					locationUnavailable();
+				}
 			}
 		}
 	}
@@ -329,6 +337,22 @@ public class MainActivity extends FragmentActivity implements
 			mHospitalCheckBox.setOnCheckedChangeListener(this);
 			mPreventivoCheckBox.setOnCheckedChangeListener(this);
 		}
+	}
+
+	private void locationUnavailable() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setTitle(R.string.location_disabled_title);
+		builder.setMessage(R.string.location_disabled_message);
+		builder.setPositiveButton(R.string.open_location_settings,
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialogInterface, int i) {
+						startActivity(new Intent(
+								android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+					}
+				});
+		builder.setNegativeButton(R.string.cancel, null);
+		builder.create().show();
+		return;
 	}
 
 	@Override
