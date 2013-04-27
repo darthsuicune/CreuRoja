@@ -163,7 +163,9 @@ public class MainActivity extends FragmentActivity implements
 			moveToLocation();
 			return true;
 		case R.id.search:
-			onSearchRequested();
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+				onSearchRequested();
+			}
 			return true;
 		case android.R.id.home:
 		case R.id.menu_show_panel:
