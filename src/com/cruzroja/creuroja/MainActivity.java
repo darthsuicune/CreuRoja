@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,12 +20,15 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +42,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends FragmentActivity implements
-		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener {
+		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener,
+		OnQueryTextListener {
 	public static final int LOADER_CONNECTION = 1;
 	public static final String LOCATIONS = "Locations";
 	protected static final int MAP_STYLE_NORMAL = 0;
@@ -74,6 +79,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		handleIntent(getIntent());
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		if (prefs.getBoolean(IS_FIRST_RUN, true)) {
 			makeFirstRun();
@@ -95,7 +101,7 @@ public class MainActivity extends FragmentActivity implements
 						mLocationsList.add((Location) savedInstanceState
 								.getSerializable(Integer.toString(i)));
 					}
-					drawMarkers();
+					drawMarkers(null);
 				} else {
 					downloadData();
 				}
@@ -105,7 +111,7 @@ public class MainActivity extends FragmentActivity implements
 					41.3958, 2.1739), 12));
 			mLocationsList = JSONParser.getFromDisk(this);
 			if (mLocationsList != null) {
-				drawMarkers();
+				drawMarkers(null);
 			}
 			downloadData();
 		}
@@ -116,6 +122,9 @@ public class MainActivity extends FragmentActivity implements
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			setSearchOptions(menu);
+		}
 		return true;
 	}
 
@@ -231,7 +240,7 @@ public class MainActivity extends FragmentActivity implements
 		return true;
 	}
 
-	private void drawMarkers() {
+	private void drawMarkers(String filter) {
 		// TODO add markers to the map.
 		if (mGoogleMap == null || mLocationsList == null) {
 			return;
@@ -239,7 +248,7 @@ public class MainActivity extends FragmentActivity implements
 
 		mGoogleMap.clear();
 		for (int i = 0; i < mLocationsList.size(); i++) {
-			if (!shouldShowMarker(mLocationsList.get(i))) {
+			if (!shouldShowMarker(mLocationsList.get(i), filter)) {
 				continue;
 			}
 
@@ -261,22 +270,79 @@ public class MainActivity extends FragmentActivity implements
 		mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
 	}
 
-	private boolean shouldShowMarker(Location location) {
+	private boolean shouldShowMarker(Location location, String filter) {
+		boolean show = true;
+		if(!matchFilter(location, filter)){
+			return false;
+		}
 		switch (location.mIcono) {
 		case R.drawable.asamblea:
-			return prefs.getBoolean(SHOW_ASAMBLEA, true);
+			show = prefs.getBoolean(SHOW_ASAMBLEA, true);
+			break;
 		case R.drawable.bravo:
-			return prefs.getBoolean(SHOW_BRAVO, true);
+			show = prefs.getBoolean(SHOW_BRAVO, true);
+			break;
 		case R.drawable.cuap:
-			return prefs.getBoolean(SHOW_CUAP, true);
+			show = prefs.getBoolean(SHOW_CUAP, true);
+			break;
 		case R.drawable.embarcacion:
-			return prefs.getBoolean(SHOW_EMBARCACION, true);
+			show = prefs.getBoolean(SHOW_EMBARCACION, true);
+			break;
 		case R.drawable.hospital:
-			return prefs.getBoolean(SHOW_HOSPITAL, true);
+			show = prefs.getBoolean(SHOW_HOSPITAL, true);
+			break;
 		case R.drawable.preventivo:
-			return prefs.getBoolean(SHOW_PREVENTIVO, true);
+			show = prefs.getBoolean(SHOW_PREVENTIVO, true);
+			break;
 		default:
 			return true;
+		}
+		return show;
+	}
+	
+	private boolean matchFilter(Location location, String filter){
+		if (filter != null) {
+			filter = dehyphenize(filter);
+			String nombre = dehyphenize(location.mContenido.mNombre);
+			String lugar = null;
+			if(location.mContenido.mLugar != null){
+				lugar = dehyphenize(location.mContenido.mLugar);
+			}
+			if(!nombre.contains(filter)){
+				if(lugar == null || !lugar.contains(filter)){
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	private String dehyphenize(String input){
+		input = input.toLowerCase();
+		return input.replace("á", "a").replace("à", "a")
+				.replace("é", "e").replace("è", "e")
+				.replace("í", "i").replace("ì", "i")
+				.replace("ó", "o").replace("ò", "o")
+				.replace("ú", "u").replace("ù", "u");
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setSearchOptions(Menu menu) {
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.search)
+				.getActionView();
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getComponentName()));
+		searchView.setOnQueryTextListener(this);
+
+	}
+
+	private void handleIntent(Intent intent) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			if (!TextUtils.isEmpty(query)) {
+				drawMarkers(query);
+			}
 		}
 	}
 
@@ -375,7 +441,7 @@ public class MainActivity extends FragmentActivity implements
 				return;
 			}
 			mLocationsList = locations;
-			drawMarkers();
+			drawMarkers(null);
 			break;
 		}
 	}
@@ -408,7 +474,7 @@ public class MainActivity extends FragmentActivity implements
 			break;
 		}
 		editor.commit();
-		drawMarkers();
+		drawMarkers(null);
 	}
 
 	private class MarkerAdapter implements InfoWindowAdapter {
@@ -438,5 +504,17 @@ public class MainActivity extends FragmentActivity implements
 
 			return v;
 		}
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText) {
+		drawMarkers(newText);
+		return false;
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query) {
+		drawMarkers(query);
+		return false;
 	}
 }
