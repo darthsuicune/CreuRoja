@@ -42,8 +42,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 public class MainActivity extends FragmentActivity implements
-		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener,
-		OnQueryTextListener {
+		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener {
 	public static final int LOADER_CONNECTION = 1;
 	public static final String LOCATIONS = "Locations";
 	protected static final int MAP_STYLE_NORMAL = 0;
@@ -119,6 +118,13 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	@Override
+	protected void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		setIntent(intent);
+		handleIntent(intent);
+	}
+
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.activity_main, menu);
@@ -155,6 +161,9 @@ public class MainActivity extends FragmentActivity implements
 		switch (item.getItemId()) {
 		case R.id.menu_locate:
 			moveToLocation();
+			return true;
+		case R.id.search:
+			onSearchRequested();
 			return true;
 		case android.R.id.home:
 		case R.id.menu_show_panel:
@@ -241,7 +250,6 @@ public class MainActivity extends FragmentActivity implements
 	}
 
 	private void drawMarkers(String filter) {
-		// TODO add markers to the map.
 		if (mGoogleMap == null || mLocationsList == null) {
 			return;
 		}
@@ -272,7 +280,7 @@ public class MainActivity extends FragmentActivity implements
 
 	private boolean shouldShowMarker(Location location, String filter) {
 		boolean show = true;
-		if(!matchFilter(location, filter)){
+		if (!matchFilter(location, filter)) {
 			return false;
 		}
 		switch (location.mIcono) {
@@ -299,31 +307,30 @@ public class MainActivity extends FragmentActivity implements
 		}
 		return show;
 	}
-	
-	private boolean matchFilter(Location location, String filter){
+
+	private boolean matchFilter(Location location, String filter) {
 		if (filter != null) {
 			filter = dehyphenize(filter);
 			String nombre = dehyphenize(location.mContenido.mNombre);
 			String lugar = null;
-			if(location.mContenido.mLugar != null){
+			if (location.mContenido.mLugar != null) {
 				lugar = dehyphenize(location.mContenido.mLugar);
 			}
-			if(!nombre.contains(filter)){
-				if(lugar == null || !lugar.contains(filter)){
+			if (!nombre.contains(filter)) {
+				if (lugar == null || !lugar.contains(filter)) {
 					return false;
 				}
 			}
 		}
 		return true;
 	}
-	
-	private String dehyphenize(String input){
+
+	private String dehyphenize(String input) {
 		input = input.toLowerCase();
-		return input.replace("á", "a").replace("à", "a")
-				.replace("é", "e").replace("è", "e")
-				.replace("í", "i").replace("ì", "i")
-				.replace("ó", "o").replace("ò", "o")
-				.replace("ú", "u").replace("ù", "u");
+		return input.replace("á", "a").replace("à", "a").replace("é", "e")
+				.replace("è", "e").replace("í", "i").replace("ì", "i")
+				.replace("ó", "o").replace("ò", "o").replace("ú", "u")
+				.replace("ù", "u");
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -333,7 +340,9 @@ public class MainActivity extends FragmentActivity implements
 				.getActionView();
 		searchView.setSearchableInfo(searchManager
 				.getSearchableInfo(getComponentName()));
-		searchView.setOnQueryTextListener(this);
+
+		// TODO
+		searchView.setOnQueryTextListener(new QueryListener());
 
 	}
 
@@ -506,15 +515,17 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	@Override
-	public boolean onQueryTextChange(String newText) {
-		drawMarkers(newText);
-		return false;
-	}
+	private class QueryListener implements OnQueryTextListener {
+		@Override
+		public boolean onQueryTextChange(String newText) {
+			drawMarkers(newText);
+			return false;
+		}
 
-	@Override
-	public boolean onQueryTextSubmit(String query) {
-		drawMarkers(query);
-		return false;
+		@Override
+		public boolean onQueryTextSubmit(String query) {
+			drawMarkers(query);
+			return false;
+		}
 	}
 }
