@@ -51,7 +51,6 @@ public class MainActivity extends FragmentActivity implements
 	public static final int LOADER_CONNECTION = 1;
 	public static final int LOADER_DIRECTIONS = 2;
 
-	public static final String LOCATIONS = "Locations";
 	protected static final int MAP_STYLE_NORMAL = 0;
 	protected static final int MAP_STYLE_HYBRID = 1;
 	protected static final int MAP_STYLE_TERRAIN = 2;
@@ -95,35 +94,21 @@ public class MainActivity extends FragmentActivity implements
 
 		
 
-		setMap();
-
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setActionBar();
 		}
 
-		if (savedInstanceState != null) {
-			if (mLocationsList == null) {
-				if (savedInstanceState.containsKey(LOCATIONS)) {
-					mLocationsList = new ArrayList<Location>();
-					for (int i = 0; i < savedInstanceState.getInt(LOCATIONS, 0); i++) {
-						mLocationsList.add((Location) savedInstanceState
-								.getSerializable(Integer.toString(i)));
-					}
-					drawMarkers(null);
-				} else {
-					downloadData();
-				}
-			}
-		} else {
-			mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-					41.3958, 2.1739), 12));
-			mLocationsList = JSONParser.getFromDisk(this);
-			if (mLocationsList != null) {
-				drawMarkers(null);
-			}
-			downloadData();
-		}
+		SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+				.findFragmentById(R.id.map);
 
+		if (savedInstanceState == null) {
+			mapFragment.setRetainInstance(true);
+			downloadData();
+		} else {
+			mGoogleMap = mapFragment.getMap();
+		}
+		
+		setMap();
 	}
 
 	@Override
@@ -141,19 +126,6 @@ public class MainActivity extends FragmentActivity implements
 			setSearchOptions(menu);
 		}
 		return true;
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-
-		if (mLocationsList == null) {
-			return;
-		}
-		outState.putInt(LOCATIONS, mLocationsList.size());
-		for (int i = 0; i < mLocationsList.size(); i++) {
-			outState.putSerializable(Integer.toString(i), mLocationsList.get(i));
-		}
 	}
 
 	@Override
@@ -218,12 +190,17 @@ public class MainActivity extends FragmentActivity implements
 		if (mGoogleMap == null) {
 			mGoogleMap = ((SupportMapFragment) getSupportFragmentManager()
 					.findFragmentById(R.id.map)).getMap();
+			if (mGoogleMap != null) {
+				setMapStyle(prefs.getInt(MAP_STYLE, MAP_STYLE_NORMAL));
+				mGoogleMap.setMyLocationEnabled(true);
+				mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+				mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+				mGoogleMap.getUiSettings().setAllGesturesEnabled(true);
+				mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
+						41.3958, 2.1739), 12));
+			}
 		}
-		setMapStyle(prefs.getInt(MAP_STYLE, MAP_STYLE_NORMAL));
-		mGoogleMap.setMyLocationEnabled(true);
-		mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
-		mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
-		mGoogleMap.getUiSettings().setAllGesturesEnabled(true);
+
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)

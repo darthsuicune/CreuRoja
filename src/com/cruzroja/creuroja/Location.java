@@ -1,15 +1,8 @@
 package com.cruzroja.creuroja;
 
-import java.io.Serializable;
-
 import com.google.android.gms.maps.model.LatLng;
 
-public class Location implements Serializable {
-	/**
-	 * Required for serializable interface
-	 */
-	private static final long serialVersionUID = -8458158909723127940L;
-
+public class Location{
 	public static final String MARKER_NEW_LINE = "<br />";
 	public static final String MARKER_STRONG = "<strong>";
 	public static final String MARKER_STRONG_END = "</strong>";
@@ -76,11 +69,7 @@ public class Location implements Serializable {
 		return new Contenido(nombre, lugar, horario);
 	}
 
-	public static class Contenido implements Serializable {
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 4795241208160111739L;
+	public static class Contenido{
 		public String mNombre;
 		public String mLugar;
 		public String mHorario;
