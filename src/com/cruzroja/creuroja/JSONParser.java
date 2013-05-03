@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
  * Structure for the JSON: Array with repeatable objects with the following

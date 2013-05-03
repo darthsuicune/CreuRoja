@@ -448,10 +448,7 @@ public class MainActivity extends FragmentActivity implements
 		if (mGoogleMap == null || points == null) {
 			return;
 		}
-		PolylineOptions drawingPoints = new PolylineOptions();
-		for (LatLng point : points) {
-			drawingPoints.add(point);
-		}
+		PolylineOptions drawingPoints = new PolylineOptions().addAll(points);
 		mPolyline = mGoogleMap.addPolyline(drawingPoints);
 	}
 
@@ -513,6 +510,9 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
+		if(marker.getPosition() == null || mGoogleMap.getMyLocation() == null){
+			Toast.makeText(getApplicationContext(), R.string.locating, Toast.LENGTH_SHORT).show();
+		}
 		Bundle args = new Bundle();
 		args.putDouble(DirectionsLoader.ARG_ORIGIN_LAT, mGoogleMap
 				.getMyLocation().getLatitude());
