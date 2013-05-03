@@ -86,13 +86,14 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		handleIntent(getIntent());
+		setContentView(R.layout.activity_main);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		handleIntent(getIntent());
 		if (prefs.getBoolean(IS_FIRST_RUN, true)) {
 			makeFirstRun();
 		}
 
-		setContentView(R.layout.activity_main);
+		
 
 		setMap();
 
@@ -145,6 +146,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+
 		if (mLocationsList == null) {
 			return;
 		}
@@ -446,6 +448,10 @@ public class MainActivity extends FragmentActivity implements
 		if (mGoogleMap == null || points == null) {
 			return;
 		}
+		if (points.size() == 0) {
+			Toast.makeText(getApplicationContext(), R.string.limit_reached,
+					Toast.LENGTH_LONG).show();
+		}
 		PolylineOptions drawingPoints = new PolylineOptions().addAll(points)
 				.color(Color.parseColor("#3399FF"));
 
@@ -513,6 +519,7 @@ public class MainActivity extends FragmentActivity implements
 		if (marker.getPosition() == null || mGoogleMap.getMyLocation() == null) {
 			Toast.makeText(getApplicationContext(), R.string.locating,
 					Toast.LENGTH_SHORT).show();
+			return;
 		}
 		Bundle args = new Bundle();
 		args.putDouble(DirectionsLoader.ARG_ORIGIN_LAT, mGoogleMap

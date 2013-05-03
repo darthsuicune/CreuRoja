@@ -44,6 +44,7 @@ public class JSONParser {
 
 	public static final int STATUS_OK = 0;
 	public static final int STATUS_NOT_OK = 1;
+	public static final int STATUS_LIMIT_REACHED = 2;
 
 	public static ArrayList<Location> parseLocations(String data) {
 		try {
@@ -125,39 +126,26 @@ public class JSONParser {
 	public static ArrayList<LatLng> getPoints(String fullResponse) {
 		ArrayList<LatLng> points = new ArrayList<LatLng>();
 		try {
+			
 			JSONObject response = new JSONObject(fullResponse);
-			if (parseStatus(response.getString(sStatus)) == STATUS_OK) {
+			int status = parseStatus(response.getString(sStatus));
+			if (status == STATUS_OK) {
 				JSONArray routes = response.getJSONArray(sRoutes);
 				for (int i = 0; i < routes.length(); i++) {
 					JSONObject route = routes.getJSONObject(i);
-					// JSONArray legs = route.getJSONArray(sLegs);
-					// for (int j = 0; j < legs.length(); j++) {
-					// JSONObject leg = legs.getJSONObject(j);
-					// JSONArray steps = leg.getJSONArray(sSteps);
-					// for (int k = 0; k < steps.length(); k++) {
-					// JSONObject step = steps.getJSONObject(k);
-					// JSONObject startLocation = step
-					// .getJSONObject(sStartLocation);
-					// JSONObject endLocation = step
-					// .getJSONObject(sEndLocation);
-					// points.add(new LatLng(
-					// startLocation.getDouble(sLat),
-					// startLocation.getDouble(sLong)));
-					// points.add(new LatLng(
-					// endLocation.getDouble(sLat),
-					// endLocation.getDouble(sLong)));
-					// }
-					// }
 					points.addAll(decodePoly(route.getJSONObject(
 							sOverviewPolyline).getString(sPoints)));
 				}
-			} else {
+			} else if (status == STATUS_LIMIT_REACHED) {
 				// Handle error
+				return points;
+			} else {
 				return null;
 			}
 		} catch (JSONException e) {
 			return null;
 		}
+		
 		return points;
 	}
 
@@ -193,6 +181,8 @@ public class JSONParser {
 	public static int parseStatus(String status) {
 		if (status.equals("OK") || status.equals("ZERO_RESULTS")) {
 			return STATUS_OK;
+		} else if (status.equals("OVER_QUERY_LIMIT")) {
+			return STATUS_LIMIT_REACHED;
 		} else {
 			return STATUS_NOT_OK;
 		}
