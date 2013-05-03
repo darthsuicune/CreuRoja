@@ -1,7 +1,9 @@
 package com.cruzroja.creuroja;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -35,15 +37,21 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.Polyline;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 public class MainActivity extends FragmentActivity implements
-		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener {
+		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener,
+		OnInfoWindowClickListener {
 	public static final int LOADER_CONNECTION = 1;
+	public static final int LOADER_DIRECTIONS = 2;
+
 	public static final String LOCATIONS = "Locations";
 	protected static final int MAP_STYLE_NORMAL = 0;
 	protected static final int MAP_STYLE_HYBRID = 1;
@@ -61,6 +69,7 @@ public class MainActivity extends FragmentActivity implements
 
 	GoogleMap mGoogleMap;
 	ArrayList<Location> mLocationsList;
+	Polyline mPolyline;
 
 	CheckBox mAsambleaCheckBox;
 	CheckBox mBravoCheckBox;
@@ -276,6 +285,7 @@ public class MainActivity extends FragmentActivity implements
 			mGoogleMap.addMarker(marker);
 		}
 		mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
+		mGoogleMap.setOnInfoWindowClickListener(this);
 	}
 
 	private boolean shouldShowMarker(Location location, String filter) {
@@ -325,6 +335,7 @@ public class MainActivity extends FragmentActivity implements
 		return true;
 	}
 
+	@SuppressLint("DefaultLocale")
 	private String dehyphenize(String input) {
 		input = input.toLowerCase();
 		return input.replace("á", "a").replace("à", "a").replace("é", "e")
@@ -430,6 +441,20 @@ public class MainActivity extends FragmentActivity implements
 		return;
 	}
 
+	private void drawLine(ArrayList<LatLng> points) {
+		if (mPolyline != null) {
+			mPolyline.remove();
+		}
+		if (mGoogleMap == null || points == null) {
+			return;
+		}
+		PolylineOptions drawingPoints = new PolylineOptions();
+		for (LatLng point : points) {
+			drawingPoints.add(point);
+		}
+		mPolyline = mGoogleMap.addPolyline(drawingPoints);
+	}
+
 	@Override
 	public Loader<ArrayList<Location>> onCreateLoader(int id, Bundle args) {
 		Loader<ArrayList<Location>> loader = null;
@@ -486,6 +511,21 @@ public class MainActivity extends FragmentActivity implements
 		drawMarkers(null);
 	}
 
+	@Override
+	public void onInfoWindowClick(Marker marker) {
+		Bundle args = new Bundle();
+		args.putDouble(DirectionsLoader.ARG_ORIGIN_LAT, mGoogleMap
+				.getMyLocation().getLatitude());
+		args.putDouble(DirectionsLoader.ARG_ORIGIN_LNG, mGoogleMap
+				.getMyLocation().getLongitude());
+		args.putDouble(DirectionsLoader.ARG_DESTINATION_LAT,
+				marker.getPosition().latitude);
+		args.putDouble(DirectionsLoader.ARG_DESTINATION_LNG,
+				marker.getPosition().longitude);
+		getSupportLoaderManager().restartLoader(LOADER_DIRECTIONS, args,
+				new DirectionsLoaderHelper());
+	}
+
 	private class MarkerAdapter implements InfoWindowAdapter {
 		@Override
 		public View getInfoWindow(Marker marker) {
@@ -526,6 +566,30 @@ public class MainActivity extends FragmentActivity implements
 		public boolean onQueryTextSubmit(String query) {
 			drawMarkers(query);
 			return false;
+		}
+	}
+
+	private class DirectionsLoaderHelper implements LoaderCallbacks<String> {
+
+		@Override
+		public Loader<String> onCreateLoader(int id, Bundle args) {
+			if (id == LOADER_DIRECTIONS) {
+				return new DirectionsLoader(getApplicationContext(), args);
+			} else {
+				return null;
+			}
+		}
+
+		@Override
+		public void onLoadFinished(Loader<String> loader, String response) {
+			if (loader.getId() == LOADER_DIRECTIONS) {
+				drawLine(JSONParser.getPoints(response));
+			}
+		}
+
+		@Override
+		public void onLoaderReset(Loader<String> loader) {
+
 		}
 	}
 }

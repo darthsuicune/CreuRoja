@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 
+import com.google.android.gms.maps.model.LatLng;
+
 /**
  * Structure for the JSON: Array with repeatable objects with the following
  * content:
@@ -31,7 +33,17 @@ public class JSONParser {
 	public static final String sIcon = "icon";
 	public static final String sContent = "contenido";
 
-	public static ArrayList<Location> parseJson(String data) {
+	public static final String sStatus = "status";
+	public static final String sRoutes = "routes";
+	public static final String sLegs = "legs";
+	public static final String sSteps = "steps";
+	public static final String sStartLocation = "start_location";
+	public static final String sEndLocation = "end_location";
+
+	public static final int STATUS_OK = 0;
+	public static final int STATUS_NOT_OK = 1;
+
+	public static ArrayList<Location> parseLocations(String data) {
 		try {
 			JSONArray array = new JSONArray(data);
 
@@ -78,12 +90,12 @@ public class JSONParser {
 		if (data.equals("")) {
 			return null;
 		}
-		locationList = parseJson(data);
+		locationList = parseLocations(data);
 		data = getDataFromFile(context, FILE_NAME_VARIABLES);
 		if (data.equals("")) {
 			return null;
 		}
-		locationList.addAll(parseJson(data));
+		locationList.addAll(parseLocations(data));
 
 		return locationList;
 	}
@@ -106,5 +118,50 @@ public class JSONParser {
 			return "";
 		}
 		return data;
+	}
+
+	public static ArrayList<LatLng> getPoints(String fullResponse) {
+		ArrayList<LatLng> points = new ArrayList<LatLng>();
+		try {
+			JSONObject response = new JSONObject(fullResponse);
+			if (parseStatus(response.getString(sStatus)) == STATUS_OK) {
+				JSONArray routes = response.getJSONArray(sRoutes);
+				for (int i = 0; i < routes.length(); i++) {
+					JSONObject route = routes.getJSONObject(i);
+					JSONArray legs = route.getJSONArray(sLegs);
+					for (int j = 0; j < legs.length(); j++) {
+						JSONObject leg = legs.getJSONObject(j);
+						JSONArray steps = leg.getJSONArray(sSteps);
+						for (int k = 0; k < steps.length(); k++) {
+							JSONObject step = steps.getJSONObject(k);
+							JSONObject startLocation = step
+									.getJSONObject(sStartLocation);
+							JSONObject endLocation = step
+									.getJSONObject(sEndLocation);
+							points.add(new LatLng(
+									startLocation.getDouble(sLat),
+									startLocation.getDouble(sLong)));
+							points.add(new LatLng(
+									endLocation.getDouble(sLat),
+									endLocation.getDouble(sLong)));
+						}
+					}
+				}
+			} else {
+				// Handle error
+				return null;
+			}
+		} catch (JSONException e) {
+			return null;
+		}
+		return points;
+	}
+
+	public static int parseStatus(String status) {
+		if (status.equals("OK") || status.equals("ZERO_RESULTS")) {
+			return STATUS_OK;
+		} else {
+			return STATUS_NOT_OK;
+		}
 	}
 }

@@ -68,6 +68,6 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 		}
 		data = data.replace("\t", "");
 		JSONParser.saveToDisk(getContext(), data, isFijo);
-		return JSONParser.parseJson(data);
+		return JSONParser.parseLocations(data);
 	}
 }
