@@ -1,6 +1,7 @@
 package com.cruzroja.creuroja;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
@@ -92,8 +93,6 @@ public class MainActivity extends FragmentActivity implements
 			makeFirstRun();
 		}
 
-		
-
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setActionBar();
 		}
@@ -107,7 +106,7 @@ public class MainActivity extends FragmentActivity implements
 		} else {
 			mGoogleMap = mapFragment.getMap();
 		}
-		
+
 		setMap();
 	}
 
@@ -196,8 +195,8 @@ public class MainActivity extends FragmentActivity implements
 				mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
 				mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
 				mGoogleMap.getUiSettings().setAllGesturesEnabled(true);
-				mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(
-						41.3958, 2.1739), 12));
+				mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+						new LatLng(41.3958, 2.1739), 12));
 			}
 		}
 
@@ -242,6 +241,11 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		mGoogleMap.clear();
+
+		if (mPolyline != null) {
+			drawLine(mPolyline.getPoints());
+		}
+
 		for (int i = 0; i < mLocationsList.size(); i++) {
 			if (!shouldShowMarker(mLocationsList.get(i), filter)) {
 				continue;
@@ -264,6 +268,27 @@ public class MainActivity extends FragmentActivity implements
 		}
 		mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
 		mGoogleMap.setOnInfoWindowClickListener(this);
+
+		if (mPolyline != null) {
+			mGoogleMap.addPolyline(new PolylineOptions().addAll(
+					mPolyline.getPoints()).color(mPolyline.getColor()));
+		}
+	}
+
+	private void drawLine(Collection<LatLng> points) {
+		if (mPolyline != null) {
+			mPolyline.remove();
+		}
+		if (mGoogleMap == null || points == null) {
+			return;
+		}
+		if (points.size() == 0) {
+			Toast.makeText(getApplicationContext(), R.string.limit_reached,
+					Toast.LENGTH_LONG).show();
+		}
+
+		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(points)
+				.color(Color.parseColor("#3399FF")));
 	}
 
 	private boolean shouldShowMarker(Location location, String filter) {
@@ -416,23 +441,6 @@ public class MainActivity extends FragmentActivity implements
 		builder.setNegativeButton(R.string.cancel, null);
 		builder.create().show();
 		return;
-	}
-
-	private void drawLine(ArrayList<LatLng> points) {
-		if (mPolyline != null) {
-			mPolyline.remove();
-		}
-		if (mGoogleMap == null || points == null) {
-			return;
-		}
-		if (points.size() == 0) {
-			Toast.makeText(getApplicationContext(), R.string.limit_reached,
-					Toast.LENGTH_LONG).show();
-		}
-		PolylineOptions drawingPoints = new PolylineOptions().addAll(points)
-				.color(Color.parseColor("#3399FF"));
-
-		mPolyline = mGoogleMap.addPolyline(drawingPoints);
 	}
 
 	@Override
