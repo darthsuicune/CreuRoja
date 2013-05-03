@@ -1,6 +1,5 @@
 package com.cruzroja.creuroja;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -338,7 +337,7 @@ public class MainActivity extends FragmentActivity implements
 	@SuppressLint("DefaultLocale")
 	private String dehyphenize(String input) {
 		input = input.toLowerCase();
-		return input.replace("á", "a").replace("à", "a").replace("é", "e")
+		return input.replace("à", "a").replace("á", "a").replace("é", "e")
 				.replace("è", "e").replace("í", "i").replace("ì", "i")
 				.replace("ó", "o").replace("ò", "o").replace("ú", "u")
 				.replace("ù", "u");
@@ -352,7 +351,6 @@ public class MainActivity extends FragmentActivity implements
 		searchView.setSearchableInfo(searchManager
 				.getSearchableInfo(getComponentName()));
 
-		// TODO
 		searchView.setOnQueryTextListener(new QueryListener());
 
 	}
@@ -448,7 +446,9 @@ public class MainActivity extends FragmentActivity implements
 		if (mGoogleMap == null || points == null) {
 			return;
 		}
-		PolylineOptions drawingPoints = new PolylineOptions().addAll(points);
+		PolylineOptions drawingPoints = new PolylineOptions().addAll(points)
+				.color(Color.parseColor("#3399FF"));
+
 		mPolyline = mGoogleMap.addPolyline(drawingPoints);
 	}
 
@@ -510,8 +510,9 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		if(marker.getPosition() == null || mGoogleMap.getMyLocation() == null){
-			Toast.makeText(getApplicationContext(), R.string.locating, Toast.LENGTH_SHORT).show();
+		if (marker.getPosition() == null || mGoogleMap.getMyLocation() == null) {
+			Toast.makeText(getApplicationContext(), R.string.locating,
+					Toast.LENGTH_SHORT).show();
 		}
 		Bundle args = new Bundle();
 		args.putDouble(DirectionsLoader.ARG_ORIGIN_LAT, mGoogleMap

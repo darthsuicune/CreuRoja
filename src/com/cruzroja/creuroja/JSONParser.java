@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import android.content.Context;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
  * Structure for the JSON: Array with repeatable objects with the following
@@ -40,6 +39,8 @@ public class JSONParser {
 	public static final String sSteps = "steps";
 	public static final String sStartLocation = "start_location";
 	public static final String sEndLocation = "end_location";
+	public static final String sOverviewPolyline = "overview_polyline";
+	public static final String sPoints = "points";
 
 	public static final int STATUS_OK = 0;
 	public static final int STATUS_NOT_OK = 1;
@@ -129,24 +130,26 @@ public class JSONParser {
 				JSONArray routes = response.getJSONArray(sRoutes);
 				for (int i = 0; i < routes.length(); i++) {
 					JSONObject route = routes.getJSONObject(i);
-					JSONArray legs = route.getJSONArray(sLegs);
-					for (int j = 0; j < legs.length(); j++) {
-						JSONObject leg = legs.getJSONObject(j);
-						JSONArray steps = leg.getJSONArray(sSteps);
-						for (int k = 0; k < steps.length(); k++) {
-							JSONObject step = steps.getJSONObject(k);
-							JSONObject startLocation = step
-									.getJSONObject(sStartLocation);
-							JSONObject endLocation = step
-									.getJSONObject(sEndLocation);
-							points.add(new LatLng(
-									startLocation.getDouble(sLat),
-									startLocation.getDouble(sLong)));
-							points.add(new LatLng(
-									endLocation.getDouble(sLat),
-									endLocation.getDouble(sLong)));
-						}
-					}
+					// JSONArray legs = route.getJSONArray(sLegs);
+					// for (int j = 0; j < legs.length(); j++) {
+					// JSONObject leg = legs.getJSONObject(j);
+					// JSONArray steps = leg.getJSONArray(sSteps);
+					// for (int k = 0; k < steps.length(); k++) {
+					// JSONObject step = steps.getJSONObject(k);
+					// JSONObject startLocation = step
+					// .getJSONObject(sStartLocation);
+					// JSONObject endLocation = step
+					// .getJSONObject(sEndLocation);
+					// points.add(new LatLng(
+					// startLocation.getDouble(sLat),
+					// startLocation.getDouble(sLong)));
+					// points.add(new LatLng(
+					// endLocation.getDouble(sLat),
+					// endLocation.getDouble(sLong)));
+					// }
+					// }
+					points.addAll(decodePoly(route.getJSONObject(
+							sOverviewPolyline).getString(sPoints)));
 				}
 			} else {
 				// Handle error
@@ -156,6 +159,35 @@ public class JSONParser {
 			return null;
 		}
 		return points;
+	}
+
+	private static ArrayList<LatLng> decodePoly(String encoded) {
+		ArrayList<LatLng> poly = new ArrayList<LatLng>();
+		int index = 0, len = encoded.length();
+		int lat = 0, lng = 0;
+		while (index < len) {
+			int b, shift = 0, result = 0;
+			do {
+				b = encoded.charAt(index++) - 63;
+				result |= (b & 0x1f) << shift;
+				shift += 5;
+			} while (b >= 0x20);
+			int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+			lat += dlat;
+			shift = 0;
+			result = 0;
+			do {
+				b = encoded.charAt(index++) - 63;
+				result |= (b & 0x1f) << shift;
+				shift += 5;
+			} while (b >= 0x20);
+			int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+			lng += dlng;
+
+			LatLng position = new LatLng((double) lat / 1E5, (double) lng / 1E5);
+			poly.add(position);
+		}
+		return poly;
 	}
 
 	public static int parseStatus(String status) {
