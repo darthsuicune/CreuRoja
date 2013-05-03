@@ -506,6 +506,14 @@ public class MainActivity extends FragmentActivity implements
 					Toast.LENGTH_SHORT).show();
 			return;
 		}
+
+//		Intent navigation = new Intent(Intent.ACTION_VIEW,
+//				Uri.parse("http://maps.google.com/maps?saddr="
+//						+ mGoogleMap.getMyLocation().getLatitude() + ","
+//						+ mGoogleMap.getMyLocation().getLongitude() + "&daddr="
+//						+ marker.getPosition().latitude + ","
+//						+ marker.getPosition().longitude));
+//		startActivity(navigation);
 		Bundle args = new Bundle();
 		args.putDouble(DirectionsLoader.ARG_ORIGIN_LAT, mGoogleMap
 				.getMyLocation().getLatitude());
