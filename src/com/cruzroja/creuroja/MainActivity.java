@@ -173,6 +173,25 @@ public class MainActivity extends FragmentActivity implements
 		prefs.edit().putBoolean(IS_FIRST_RUN, false).commit();
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setActionBar() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setBackgroundDrawable(new ColorDrawable(Color
+				.parseColor("#CC0000")));
+		actionBar.setDisplayHomeAsUpEnabled(true);
+	}
+
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private void setSearchOptions(Menu menu) {
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.search)
+				.getActionView();
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getComponentName()));
+
+		searchView.setOnQueryTextListener(new QueryListener());
+	}
+
 	private void downloadData() {
 		if (isConnected()) {
 			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
@@ -203,14 +222,6 @@ public class MainActivity extends FragmentActivity implements
 			}
 		}
 
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setActionBar() {
-		ActionBar actionBar = getActionBar();
-		actionBar.setBackgroundDrawable(new ColorDrawable(Color
-				.parseColor("#CC0000")));
-		actionBar.setDisplayHomeAsUpEnabled(true);
 	}
 
 	private boolean setMapStyle(int mapStyle) {
@@ -348,18 +359,6 @@ public class MainActivity extends FragmentActivity implements
 				.replace("è", "e").replace("í", "i").replace("ì", "i")
 				.replace("ó", "o").replace("ò", "o").replace("ú", "u")
 				.replace("ù", "u");
-	}
-
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
-	private void setSearchOptions(Menu menu) {
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.search)
-				.getActionView();
-		searchView.setSearchableInfo(searchManager
-				.getSearchableInfo(getComponentName()));
-
-		searchView.setOnQueryTextListener(new QueryListener());
-
 	}
 
 	private void handleIntent(Intent intent) {
