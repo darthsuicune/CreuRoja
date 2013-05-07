@@ -89,6 +89,7 @@ public class MainActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_main);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		handleIntent(getIntent());
+
 		if (prefs.getBoolean(IS_FIRST_RUN, true)) {
 			makeFirstRun();
 		}
@@ -144,7 +145,9 @@ public class MainActivity extends FragmentActivity implements
 			moveToLocation();
 			return true;
 		case R.id.search:
-			onSearchRequested();
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+				onSearchRequested();
+			}
 			return true;
 		case android.R.id.home:
 		case R.id.menu_show_panel:
@@ -507,13 +510,13 @@ public class MainActivity extends FragmentActivity implements
 			return;
 		}
 
-//		Intent navigation = new Intent(Intent.ACTION_VIEW,
-//				Uri.parse("http://maps.google.com/maps?saddr="
-//						+ mGoogleMap.getMyLocation().getLatitude() + ","
-//						+ mGoogleMap.getMyLocation().getLongitude() + "&daddr="
-//						+ marker.getPosition().latitude + ","
-//						+ marker.getPosition().longitude));
-//		startActivity(navigation);
+		// Intent navigation = new Intent(Intent.ACTION_VIEW,
+		// Uri.parse("http://maps.google.com/maps?saddr="
+		// + mGoogleMap.getMyLocation().getLatitude() + ","
+		// + mGoogleMap.getMyLocation().getLongitude() + "&daddr="
+		// + marker.getPosition().latitude + ","
+		// + marker.getPosition().longitude));
+		// startActivity(navigation);
 		Bundle args = new Bundle();
 		args.putDouble(DirectionsLoader.ARG_ORIGIN_LAT, mGoogleMap
 				.getMyLocation().getLatitude());
