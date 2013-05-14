@@ -222,6 +222,8 @@ public class MainActivity extends FragmentActivity implements
 			}
 		}
 
+		mLocationsList = JSONParser.getFromDisk(this);
+		drawMarkers(null);
 	}
 
 	private boolean setMapStyle(int mapStyle) {
