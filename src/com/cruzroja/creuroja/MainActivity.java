@@ -282,11 +282,6 @@ public class MainActivity extends FragmentActivity implements
 		}
 		mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
 		mGoogleMap.setOnInfoWindowClickListener(this);
-
-		if (mPolyline != null) {
-			mGoogleMap.addPolyline(new PolylineOptions().addAll(
-					mPolyline.getPoints()).color(mPolyline.getColor()));
-		}
 	}
 
 	private void drawLine(Collection<LatLng> points) {
