@@ -196,6 +196,9 @@ public class MainActivity extends FragmentActivity implements
 		if (isConnected()) {
 			getSupportLoaderManager().restartLoader(LOADER_CONNECTION, null,
 					this);
+		} else {
+			Toast.makeText(getApplicationContext(), R.string.no_connection,
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -299,7 +302,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(points)
-				.color(Color.parseColor("#3399FF")));
+				.color(Color.parseColor("#CC0000")));
 	}
 
 	private boolean shouldShowMarker(Location location, String filter) {

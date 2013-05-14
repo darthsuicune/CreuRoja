@@ -26,6 +26,7 @@
     <string name="open_location_settings">Ajustes</string>
     <string name="cancel">Cancelar</string>
     <string name="limit_reached">Se ha alcanzado el límite de usos permitidos hoy para esta funcionalidad. Contacte con el administrador.</string>
+    <string name="no_connection">No está conectado a internet. Se han cargado los últimos marcadores disponibles.</string>
 
     <string-array name="map_styles">
         <item>@string/map_style_normal</item>
