@@ -36,11 +36,18 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 		HttpGet requestFijos = new HttpGet(PUNTOS_FIJOS);
 		HttpGet requestVariables = new HttpGet(PUNTOS_VARIABLES);
 
-		ArrayList<Location> locationList = null;
+		ArrayList<Location> locationList = new ArrayList<Location>();
 		try {
-			locationList = getLocations(requestFijos, httpClient, true);
-			locationList.addAll(getLocations(requestVariables, httpClient,
-					false));
+			ArrayList<Location> aux;
+			aux = getLocations(requestFijos, httpClient,
+					true);
+			if (aux != null) {
+				locationList.addAll(aux);
+			}
+			aux = getLocations(requestVariables, httpClient, false);
+			if (aux != null) {
+				locationList.addAll(aux);
+			}
 		} catch (ClientProtocolException e) {
 			return null;
 		} catch (IOException e) {
