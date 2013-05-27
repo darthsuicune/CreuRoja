@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_creuroja" default="compile.module.creuroja">
+  <dirname property="module.creuroja.basedir" file="${ant.file.module_creuroja}"/>
+  
+  <property name="module.jdk.home.creuroja" value="${jdk.home.android_4.2.2}"/>
+  <property name="module.jdk.bin.creuroja" value="${jdk.bin.android_4.2.2}"/>
+  <property name="module.jdk.classpath.creuroja" value="jdk.classpath.android_4.2.2"/>
+  
+  <property name="compiler.args.creuroja" value="${compiler.args}"/>
+  
+  <property name="creuroja.output.dir" value="${module.creuroja.basedir}/out/production/CreuRoja"/>
+  <property name="creuroja.testoutput.dir" value="${module.creuroja.basedir}/out/test/CreuRoja"/>
+  
+  <path id="creuroja.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="creuroja.module.production.classpath">
+    <path refid="${module.jdk.classpath.creuroja}"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.google-play-services.classpath"/>
+  </path>
+  
+  <path id="creuroja.runtime.production.module.classpath">
+    <pathelement location="${creuroja.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.google-play-services.classpath"/>
+  </path>
+  
+  <path id="creuroja.module.classpath">
+    <path refid="${module.jdk.classpath.creuroja}"/>
+    <pathelement location="${creuroja.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.google-play-services.classpath"/>
+  </path>
+  
+  <path id="creuroja.runtime.module.classpath">
+    <pathelement location="${creuroja.testoutput.dir}"/>
+    <pathelement location="${creuroja.output.dir}"/>
+    <path refid="library.android-support-v4.classpath"/>
+    <path refid="library.google-play-services.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.creuroja">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.creuroja">
+    <patternset refid="excluded.from.module.creuroja"/>
+  </patternset>
+  
+  <path id="creuroja.module.sourcepath">
+    <dirset dir="${module.creuroja.basedir}">
+      <include name="gen"/>
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.creuroja" depends="compile.module.creuroja.production,compile.module.creuroja.tests" description="Compile module CreuRoja"/>
+  
+  <target name="compile.module.creuroja.production" depends="register.custom.compilers" description="Compile module CreuRoja; production classes">
+    <mkdir dir="${creuroja.output.dir}"/>
+    <javac2 destdir="${creuroja.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.creuroja}/javac">
+      <compilerarg line="${compiler.args.creuroja}"/>
+      <bootclasspath refid="creuroja.module.bootclasspath"/>
+      <classpath refid="creuroja.module.production.classpath"/>
+      <src refid="creuroja.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.creuroja"/>
+    </javac2>
+    
+    <copy todir="${creuroja.output.dir}">
+      <fileset dir="${module.creuroja.basedir}/gen">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+      <fileset dir="${module.creuroja.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.creuroja.tests" depends="register.custom.compilers,compile.module.creuroja.production" description="compile module CreuRoja; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.creuroja" description="cleanup module">
+    <delete dir="${creuroja.output.dir}"/>
+    <delete dir="${creuroja.testoutput.dir}"/>
+  </target>
+</project>

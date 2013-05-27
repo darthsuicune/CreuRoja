@@ -1,10 +1,7 @@
 package com.cruzroja.creuroja;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
+import android.content.Context;
+import android.support.v4.content.AsyncTaskLoader;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
@@ -12,15 +9,16 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 
-import android.content.Context;
-import android.os.Bundle;
-import android.support.v4.content.AsyncTaskLoader;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 	public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios.cr/permanentes.json";
 	public static final String PUNTOS_VARIABLES = "http://r0uzic.net/voluntarios.cr/temporales.json";
 
-	public ConnectionLoader(Context context, Bundle args) {
+	public ConnectionLoader(Context context) {
 		super(context);
 	}
 
@@ -36,11 +34,18 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 		HttpGet requestFijos = new HttpGet(PUNTOS_FIJOS);
 		HttpGet requestVariables = new HttpGet(PUNTOS_VARIABLES);
 
-		ArrayList<Location> locationList = null;
+		ArrayList<Location> locationList = new ArrayList<Location>();
 		try {
-			locationList = getLocations(requestFijos, httpClient, true);
-			locationList.addAll(getLocations(requestVariables, httpClient,
-					false));
+            ArrayList<Location> aux;
+            aux = getLocations(requestFijos, httpClient,
+                    true);
+            if (aux != null) {
+                locationList.addAll(aux);
+            }
+            aux = getLocations(requestVariables, httpClient, false);
+            if (aux != null) {
+                locationList.addAll(aux);
+            }
 		} catch (ClientProtocolException e) {
 			return null;
 		} catch (IOException e) {
@@ -54,14 +59,14 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 		return new DefaultHttpClient(params);
 	}
 
-	ArrayList<Location> getLocations(HttpGet request, DefaultHttpClient client,
-			boolean isFijo) throws ClientProtocolException, IOException {
+	private ArrayList<Location> getLocations(HttpGet request, DefaultHttpClient client,
+			boolean isFijo) throws IOException {
 		HttpResponse response = client.execute(request);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
 				response.getEntity().getContent()));
 
 		String data = "";
-		String line = "";
+		String line;
 
 		while ((line = reader.readLine()) != null) {
 			data = data + line;
