@@ -14,24 +14,28 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
-	public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios.cr/permanentes.json";
+public class LocationsLoader extends AsyncTaskLoader<ArrayList<Location>> {
+    public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios.cr/permanentes.json";
 	public static final String PUNTOS_VARIABLES = "http://r0uzic.net/voluntarios.cr/temporales.json";
 
-	public ConnectionLoader(Context context) {
-		super(context);
+    private DefaultHttpClient httpClient = null;
+
+    public LocationsLoader(Context context) {
+        super(context);
 	}
 
 	@Override
 	protected void onStartLoading() {
-		forceLoad();
-		super.onStartLoading();
+        if (httpClient == null) {
+            forceLoad();
+        }
+        super.onStartLoading();
 	}
 
 	@Override
 	public ArrayList<Location> loadInBackground() {
-		DefaultHttpClient httpClient = createHttpClient();
-		HttpGet requestFijos = new HttpGet(PUNTOS_FIJOS);
+        createHttpClient();
+        HttpGet requestFijos = new HttpGet(PUNTOS_FIJOS);
 		HttpGet requestVariables = new HttpGet(PUNTOS_VARIABLES);
 
 		ArrayList<Location> locationList = new ArrayList<Location>();
@@ -54,10 +58,10 @@ public class ConnectionLoader extends AsyncTaskLoader<ArrayList<Location>> {
 		return locationList;
 	}
 
-	private DefaultHttpClient createHttpClient() {
-		HttpParams params = new BasicHttpParams();
-		return new DefaultHttpClient(params);
-	}
+    private void createHttpClient() {
+        HttpParams params = new BasicHttpParams();
+        httpClient = new DefaultHttpClient(params);
+    }
 
 	private ArrayList<Location> getLocations(HttpGet request, DefaultHttpClient client,
 			boolean isFijo) throws IOException {

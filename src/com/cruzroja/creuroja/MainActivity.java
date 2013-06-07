@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.*;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SearchView.OnQueryTextListener;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -55,7 +54,6 @@ public class MainActivity extends FragmentActivity implements
 	private static final String SHOW_HOSPITAL = "showHospital";
 	private static final String SHOW_PREVENTIVO = "showPreventivo";
 	private static final String MAP_STYLE = "mapStyle";
-	private static final String IS_FIRST_RUN = "isFirstRun";
 
 	GoogleMap mGoogleMap;
 	ArrayList<Location> mLocationsList;
@@ -80,10 +78,6 @@ public class MainActivity extends FragmentActivity implements
 		setContentView(R.layout.activity_main);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		handleIntent(getIntent());
-
-		if (prefs.getBoolean(IS_FIRST_RUN, true)) {
-			makeFirstRun();
-		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
 			setActionBar();
@@ -158,10 +152,6 @@ public class MainActivity extends FragmentActivity implements
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	private void makeFirstRun() {
-		prefs.edit().putBoolean(IS_FIRST_RUN, false).commit();
 	}
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -441,8 +431,8 @@ public class MainActivity extends FragmentActivity implements
 		Loader<ArrayList<Location>> loader = null;
 		switch (id) {
 		case LOADER_CONNECTION:
-			loader = new ConnectionLoader(this);
-			break;
+            loader = new LocationsLoader(this);
+            break;
 		}
 		return loader;
 	}
@@ -577,8 +567,8 @@ public class MainActivity extends FragmentActivity implements
 		@Override
 		public void onLoadFinished(Loader<String> loader, String response) {
 			if (loader.getId() == LOADER_DIRECTIONS) {
-				drawLine(JSONParser.getPoints(response));
-			}
+                drawLine(JSONParser.parseDirections(response));
+            }
 		}
 
 		@Override

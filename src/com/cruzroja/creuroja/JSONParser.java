@@ -1,19 +1,13 @@
 package com.cruzroja.creuroja;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
-import java.util.ArrayList;
-
+import android.content.Context;
+import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-
-import com.google.android.gms.maps.model.LatLng;
+import java.io.*;
+import java.util.ArrayList;
 
 /**
  * Structure for the JSON: Array with repeatable objects with the following
@@ -123,8 +117,8 @@ public class JSONParser {
 		return data;
 	}
 
-	public static ArrayList<LatLng> getPoints(String fullResponse) {
-		ArrayList<LatLng> points = new ArrayList<LatLng>();
+    public static ArrayList<LatLng> parseDirections(String fullResponse) {
+        ArrayList<LatLng> points = new ArrayList<LatLng>();
 		try {
 			
 			JSONObject response = new JSONObject(fullResponse);
