@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.text.TextUtils;
+import android.util.Log;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
@@ -39,10 +41,10 @@ import java.io.UnsupportedEncodingException;
  */
 public class LoginLoader extends AsyncTaskLoader<String> {
     //Args for the loader
-    public static final String ARG_USERNAME = "username";
-    public static final String ARG_PASSWORD = "password";
+    public static final String ARG_USERNAME = "user";
+    public static final String ARG_PASSWORD = "pass";
     //URL for the login
-    public static final String LOGIN_URL = "http://r0uzic.net/voluntarios.cr/user/login";
+    public static final String LOGIN_URL = "http://r0uzic.net/voluntarios.cr/user/login?q=android";
     //XML tags
     public static final String TAG_HEADER = "<?xml version=\"1.0\"?>";
     public static final String TAG_METHOD_CALL = "<methodCall>";
@@ -138,14 +140,16 @@ public class LoginLoader extends AsyncTaskLoader<String> {
     }
 
     private String parseResponse(HttpResponse response) {
+        String result = "";
         try {
             if (response.getStatusLine().getStatusCode() == 200) {
-                String result = "";
+                Log.i("WORKS!", response.toString());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
                 while ((line = reader.readLine()) != null) {
                     result += line;
                 }
+                reader.close();
                 return result;
             } else if (response.getStatusLine().getStatusCode() == 401) {
                 return RESPONSE_401;

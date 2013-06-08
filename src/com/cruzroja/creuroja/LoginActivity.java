@@ -110,7 +110,9 @@ public class LoginActivity extends FragmentActivity implements
         if (s.equals(LoginLoader.RESPONSE_401)) {
         } else if (s.equals(LoginLoader.RESPONSE_406)) {
         } else if (s.equals(LoginLoader.RESPONSE_IO_EXCEPTION)) {
+            showMap(s);
         } else if (s.equals(LoginLoader.RESPONSE_NO_ID)) {
+            showMap(s);
         } else if (s.equals(LoginLoader.RESPONSE_PROTOCOL_EXCEPTION)) {
         } else {
             prefs.edit().putBoolean(IS_FIRST_RUN, false).putString(USERNAME, username)
