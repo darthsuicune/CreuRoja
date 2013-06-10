@@ -42,7 +42,7 @@ public class LoginLoader extends AsyncTaskLoader<String> {
     public static final String ARG_USERNAME = "username";
     public static final String ARG_PASSWORD = "password";
     //URL for the login
-    public static final String LOGIN_URL = "http://r0uzic.net/voluntarios.cr/user/login";
+    public static final String LOGIN_URL = "http://r0uzic.net/voluntarios.cr/user/login?q=android";
     //XML tags
     public static final String TAG_HEADER = "<?xml version=\"1.0\"?>";
     public static final String TAG_METHOD_CALL = "<methodCall>";
@@ -78,6 +78,7 @@ public class LoginLoader extends AsyncTaskLoader<String> {
     public static final String CONTENT_TYPE_XML = "text/xml";
 
     //Responses for errors during the loader process
+    public static final String RESPONSE_WRONG_ID = "wrong id";
     public static final String RESPONSE_401 = "401";
     public static final String RESPONSE_406 = "406";
     public static final String RESPONSE_NO_ID = "no id";
@@ -139,6 +140,7 @@ public class LoginLoader extends AsyncTaskLoader<String> {
 
     private String parseResponse(HttpResponse response) {
         try {
+            int status = response.getStatusLine().getStatusCode();
             if (response.getStatusLine().getStatusCode() == 200) {
                 String result = "";
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
@@ -146,7 +148,11 @@ public class LoginLoader extends AsyncTaskLoader<String> {
                 while ((line = reader.readLine()) != null) {
                     result += line;
                 }
-                return result;
+                if (isCorrectLogin(result)) {
+                    return result;
+                } else {
+                    return RESPONSE_WRONG_ID;
+                }
             } else if (response.getStatusLine().getStatusCode() == 401) {
                 return RESPONSE_401;
             } else if (response.getStatusLine().getStatusCode() == 406) {
@@ -159,5 +165,9 @@ public class LoginLoader extends AsyncTaskLoader<String> {
         } catch (IOException e) {
             return RESPONSE_IO_EXCEPTION;
         }
+    }
+
+    private boolean isCorrectLogin(String s) {
+        return s.contains("session_name");
     }
 }

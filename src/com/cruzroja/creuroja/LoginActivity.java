@@ -11,10 +11,8 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
-/**
- * Created by lapuente on 07.06.13.
- */
 public class LoginActivity extends FragmentActivity implements
         LoaderManager.LoaderCallbacks<String> {
 
@@ -50,14 +48,14 @@ public class LoginActivity extends FragmentActivity implements
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+        getMenuInflater().inflate(R.menu.activity_login, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.address: //TODO: add action and perform login
+            case R.id.action_login: //TODO: add action and perform login
                 doLogin();
                 return true;
             default:
@@ -71,20 +69,23 @@ public class LoginActivity extends FragmentActivity implements
 
 
     private void showLogin() {
-        //UNCOMMENT!!
-//        setContentView(0); //TODO Add actual login layout
-//        usernameView = (EditText) findViewById(R.id.address);
-//        passwordView = (EditText) findViewById(R.id.address);
-        doLogin();
+        setContentView(R.layout.login);
+        usernameView = (EditText) findViewById(R.id.username);
+//        usernameView.setText(TEST_USER);
+        passwordView = (EditText) findViewById(R.id.password);
+//        passwordView.setText(TEST_PASS);
     }
 
     private void doLogin() {
-        //UNCOMMENT!!
-//        username = usernameView.getText().toString();
-//        password = passwordView.getText().toString();
-        username = TEST_USER;
-        password = TEST_PASS;
+        if (usernameView != null) {
+            username = usernameView.getText().toString();
+            password = passwordView.getText().toString();
+        } else {
+            username = prefs.getString(LoginLoader.ARG_USERNAME, "");
+            password = prefs.getString(LoginLoader.ARG_PASSWORD, "");
+        }
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+            showErrorMessage(R.string.no_credentials);
             return;
         }
         Bundle args = new Bundle();
@@ -108,15 +109,33 @@ public class LoginActivity extends FragmentActivity implements
     @Override
     public void onLoadFinished(Loader<String> stringLoader, String s) {
         if (s.equals(LoginLoader.RESPONSE_401)) {
+            showErrorMessage(R.string.error_401);
+        } else if (s.equals(LoginLoader.RESPONSE_WRONG_ID)) {
+            showErrorMessage(R.string.error_wrong_id);
+            cleanCredentials();
         } else if (s.equals(LoginLoader.RESPONSE_406)) {
+            showErrorMessage(R.string.error_406);
         } else if (s.equals(LoginLoader.RESPONSE_IO_EXCEPTION)) {
+            showErrorMessage(R.string.error_io_exc);
         } else if (s.equals(LoginLoader.RESPONSE_NO_ID)) {
+            showErrorMessage(R.string.error_no_id);
         } else if (s.equals(LoginLoader.RESPONSE_PROTOCOL_EXCEPTION)) {
+            showErrorMessage(R.string.error_prot_exc);
         } else {
             prefs.edit().putBoolean(IS_FIRST_RUN, false).putString(USERNAME, username)
                     .putString(PASSWORD, password).commit();
             showMap(s);
+            return;
         }
+        showLogin();
+    }
+
+    private void showErrorMessage(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
+    }
+
+    private void cleanCredentials() {
+        prefs.edit().clear().commit();
     }
 
     @Override
