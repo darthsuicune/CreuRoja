@@ -140,31 +140,28 @@ public class LoginLoader extends AsyncTaskLoader<String> {
 
     private String parseResponse(HttpResponse response) {
         try {
-            int status = response.getStatusLine().getStatusCode();
             if (response.getStatusLine().getStatusCode() == 200) {
-                String result = "";
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    result += line;
+                    if (isCorrectLogin(line)) {
+                        return line;
+                    } else {
+                        return RESPONSE_WRONG_ID;
+                    }
                 }
-                if (isCorrectLogin(result)) {
-                    return result;
-                } else {
-                    return RESPONSE_WRONG_ID;
-                }
+
             } else if (response.getStatusLine().getStatusCode() == 401) {
                 return RESPONSE_401;
             } else if (response.getStatusLine().getStatusCode() == 406) {
                 return RESPONSE_406;
-            } else {
-                return RESPONSE_NO_ID;
             }
         } catch (ClientProtocolException e) {
             return RESPONSE_PROTOCOL_EXCEPTION;
         } catch (IOException e) {
             return RESPONSE_IO_EXCEPTION;
         }
+        return RESPONSE_NO_ID;
     }
 
     private boolean isCorrectLogin(String s) {
