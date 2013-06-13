@@ -146,11 +146,9 @@ public class LoginLoader extends AsyncTaskLoader<String> {
                 while ((line = reader.readLine()) != null) {
                     if (isCorrectLogin(line)) {
                         return line;
-                    } else {
-                        return RESPONSE_WRONG_ID;
                     }
                 }
-
+                return RESPONSE_WRONG_ID;
             } else if (response.getStatusLine().getStatusCode() == 401) {
                 return RESPONSE_401;
             } else if (response.getStatusLine().getStatusCode() == 406) {

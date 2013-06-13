@@ -22,10 +22,11 @@
     <string name="marker_type_hospital">Hospital</string>
     <string name="marker_type_preventivo">Preventivo</string>
     <string name="location_disabled_title">Servicios de localización desactivados</string>
-    <string name="location_disabled_message">¿Desea activar los servicios de localización ahora?</string>
+    <string name="location_disabled_message">¿Desea activar los servicios de localización ahora?
+    </string>
     <string name="open_location_settings">Ajustes</string>
     <string name="cancel">Cancelar</string>
-
+    <string name="login_progress_signing_in">Validando datos en el servidor...</string>
 
     <string name="username">Usuario</string>
     <string name="password">Contraseña</string>
