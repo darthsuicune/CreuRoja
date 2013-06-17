@@ -42,16 +42,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
-
-            <meta-data
-                    android:name="android.app.searchable"
-                    android:resource="@xml/menu_search"/>
-        </activity>
-        <activity android:name="LoginActivity" android:label="Creu Roja">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+            <meta-data
+                    android:name="android.app.searchable"
+                    android:resource="@xml/menu_search"/>
         </activity>
     </application>
 

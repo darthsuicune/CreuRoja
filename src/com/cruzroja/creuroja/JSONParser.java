@@ -97,7 +97,15 @@ public class JSONParser {
 		return locationList;
 	}
 
-	public static String getDataFromFile(Context context, String fileName) {
+    public static boolean removeFromDisk() {
+        if (new File(FILE_NAME_FIJOS).delete() && new File(FILE_NAME_VARIABLES).delete()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static String getDataFromFile(Context context, String fileName) {
 		String data = "";
 		try {
 			BufferedReader reader = new BufferedReader(new InputStreamReader(
