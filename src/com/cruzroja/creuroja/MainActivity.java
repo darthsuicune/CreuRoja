@@ -4,11 +4,9 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.SearchManager;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.content.*;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
@@ -16,6 +14,7 @@ import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -26,6 +25,10 @@ import android.view.View;
 import android.widget.*;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SearchView.OnQueryTextListener;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
@@ -38,11 +41,15 @@ import java.util.Collection;
 
 public class MainActivity extends FragmentActivity implements
 		LoaderCallbacks<ArrayList<Location>>, OnCheckedChangeListener,
-		OnInfoWindowClickListener {
-	public static final int LOADER_CONNECTION = 1;
-	public static final int LOADER_DIRECTIONS = 2;
+        OnInfoWindowClickListener, GooglePlayServicesClient.ConnectionCallbacks,
+        GooglePlayServicesClient.OnConnectionFailedListener {
+    private final static int
+            CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-	protected static final int MAP_STYLE_NORMAL = 0;
+    private static final int LOADER_CONNECTION = 1;
+    private static final int LOADER_DIRECTIONS = 2;
+
+    protected static final int MAP_STYLE_NORMAL = 0;
 	protected static final int MAP_STYLE_HYBRID = 1;
 	protected static final int MAP_STYLE_TERRAIN = 2;
 	protected static final int MAP_STYLE_SATELLITE = 3;
@@ -56,7 +63,8 @@ public class MainActivity extends FragmentActivity implements
 	private static final String MAP_STYLE = "mapStyle";
 
 	GoogleMap mGoogleMap;
-	ArrayList<Location> mLocationsList;
+    LocationClient mLocationClient;
+    ArrayList<Location> mLocationsList;
 	Polyline mPolyline;
 
 	CheckBox mAsambleaCheckBox;
@@ -73,10 +81,12 @@ public class MainActivity extends FragmentActivity implements
 	SharedPreferences prefs;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        requestGooglePlayServicesAvailability();
+
+        setContentView(R.layout.activity_main);
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		handleIntent(getIntent());
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -94,9 +104,25 @@ public class MainActivity extends FragmentActivity implements
 		}
 
 		setMap();
-	}
 
-	@Override
+        mLocationClient = new LocationClient(this, this, this);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // Connect the client.
+        mLocationClient.connect();
+    }
+
+    @Override
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        mLocationClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
 	protected void onNewIntent(Intent intent) {
 		super.onNewIntent(intent);
 		setIntent(intent);
@@ -123,8 +149,25 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
+    @Override
+    protected void onActivityResult(
+            int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case CONNECTION_FAILURE_RESOLUTION_REQUEST:
+                /*
+                 * If the result code is Activity.RESULT_OK, try
+                 * to connect again
+                 */
+                switch (resultCode) {
+                    case RESULT_OK:
+                        requestGooglePlayServicesAvailability();
+                        break;
+                }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.menu_locate:
 			moveToLocation();
@@ -154,7 +197,38 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private boolean requestGooglePlayServicesAvailability() {
+        // Check that Google Play services is available
+        int resultCode =
+                GooglePlayServicesUtil.
+                        isGooglePlayServicesAvailable(this);
+        // If Google Play services is available
+        if (ConnectionResult.SUCCESS == resultCode) {
+            return true;
+            // Google Play services was not available for some reason
+        } else {
+            // Get the error dialog from Google Play services
+            Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(
+                    resultCode,
+                    this,
+                    CONNECTION_FAILURE_RESOLUTION_REQUEST);
+
+            // If Google Play services can provide an error dialog
+            if (errorDialog != null) {
+                // Create a new DialogFragment for the error dialog
+                ErrorDialogFragment errorFragment =
+                        new ErrorDialogFragment();
+                // Set the dialog in the DialogFragment
+                errorFragment.setDialog(errorDialog);
+                // Show the error dialog in the DialogFragment
+                errorFragment.show(getSupportFragmentManager(),
+                        "Location Updates");
+            }
+        }
+        return false;
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setActionBar() {
 		ActionBar actionBar = getActionBar();
 		actionBar.setBackgroundDrawable(new ColorDrawable(Color
@@ -353,24 +427,30 @@ public class MainActivity extends FragmentActivity implements
 
 	private void moveToLocation() {
 		if (mGoogleMap != null) {
-			if (mGoogleMap.getMyLocation() != null) {
-				mGoogleMap.animateCamera(CameraUpdateFactory
-						.newLatLng(new LatLng(mGoogleMap.getMyLocation()
-								.getLatitude(), mGoogleMap.getMyLocation()
-								.getLongitude())));
-			} else {
-				LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-				if (manager.getProviders(true).size() > 1) {
-					Toast.makeText(this, R.string.locating, Toast.LENGTH_SHORT)
-							.show();
-				} else {
-					locationUnavailable();
-				}
-			}
+            if (locationServicesAreEnabled()) {
+                if (mLocationClient.getLastLocation() != null) {
+                    mGoogleMap.animateCamera(CameraUpdateFactory
+                            .newLatLng(new LatLng(mLocationClient.getLastLocation()
+                                    .getLatitude(), mLocationClient.getLastLocation()
+                                    .getLongitude())));
+                } else {
+                    Toast.makeText(getApplicationContext(), R.string.locating, Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                showLocationSettings();
+            }
 		}
 	}
 
-	private void showMarkerPanel() {
+    private boolean locationServicesAreEnabled() {
+        LocationManager lm = (LocationManager) getSystemService(LOCATION_SERVICE);
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            return true;
+        }
+        return false;
+    }
+
+    private void showMarkerPanel() {
 		if (isMarkerPanelShowing) {
 			mMarkerPanel.setVisibility(View.GONE);
 			isMarkerPanelShowing = false;
@@ -410,8 +490,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	private void locationUnavailable() {
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    private void showLocationSettings() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
 		builder.setTitle(R.string.location_disabled_title);
 		builder.setMessage(R.string.location_disabled_message);
 		builder.setPositiveButton(R.string.open_location_settings,
@@ -484,34 +564,69 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onInfoWindowClick(Marker marker) {
-		if (marker.getPosition() == null || mGoogleMap.getMyLocation() == null) {
-			Toast.makeText(getApplicationContext(), R.string.locating,
-					Toast.LENGTH_SHORT).show();
-			return;
-		}
+        if (marker.getPosition() == null || !mGoogleMap.isMyLocationEnabled()) {
+            return;
+        }
+        if (locationServicesAreEnabled()) {
+            if (mLocationClient.getLastLocation() != null) {
+                Bundle args = new Bundle();
+                args.putDouble(DirectionsLoader.ARG_ORIGIN_LAT, mLocationClient.getLastLocation()
+                        .getLatitude());
+                args.putDouble(DirectionsLoader.ARG_ORIGIN_LNG, mLocationClient.getLastLocation()
+                        .getLongitude());
+                args.putDouble(DirectionsLoader.ARG_DESTINATION_LAT,
+                        marker.getPosition().latitude);
+                args.putDouble(DirectionsLoader.ARG_DESTINATION_LNG,
+                        marker.getPosition().longitude);
+                getSupportLoaderManager().restartLoader(LOADER_DIRECTIONS, args,
+                        new DirectionsLoaderHelper());
+            } else {
+                Toast.makeText(getApplicationContext(), R.string.locating, Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            showLocationSettings();
+        }
+    }
 
-		// Intent navigation = new Intent(Intent.ACTION_VIEW,
-		// Uri.parse("http://maps.google.com/maps?saddr="
-		// + mGoogleMap.getMyLocation().getLatitude() + ","
-		// + mGoogleMap.getMyLocation().getLongitude() + "&daddr="
-		// + marker.getPosition().latitude + ","
-		// + marker.getPosition().longitude));
-		// startActivity(navigation);
-		Bundle args = new Bundle();
-		args.putDouble(DirectionsLoader.ARG_ORIGIN_LAT, mGoogleMap
-				.getMyLocation().getLatitude());
-		args.putDouble(DirectionsLoader.ARG_ORIGIN_LNG, mGoogleMap
-				.getMyLocation().getLongitude());
-		args.putDouble(DirectionsLoader.ARG_DESTINATION_LAT,
-				marker.getPosition().latitude);
-		args.putDouble(DirectionsLoader.ARG_DESTINATION_LNG,
-				marker.getPosition().longitude);
-		getSupportLoaderManager().restartLoader(LOADER_DIRECTIONS, args,
-				new DirectionsLoaderHelper());
-	}
+    @Override
+    public void onConnected(Bundle bundle) {
+        //Nothing to do here.
+    }
 
-	private class MarkerAdapter implements InfoWindowAdapter {
-		@Override
+    @Override
+    public void onDisconnected() {
+        //Nothing to do here.
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        /*
+         * Google Play services can resolve some errors it detects.
+         * If the error has a resolution, try sending an Intent to
+         * start a Google Play services activity that can resolve
+         * error.
+         */
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(
+                        this,
+                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
+                /*
+                 * Thrown if Google Play services canceled the original
+                 * PendingIntent
+                 */
+            } catch (IntentSender.SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), R.string.location_unavailable, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private class MarkerAdapter implements InfoWindowAdapter {
+        @Override
 		public View getInfoWindow(Marker marker) {
 			return null;
 		}
@@ -539,7 +654,8 @@ public class MainActivity extends FragmentActivity implements
 		}
 	}
 
-	private class QueryListener implements OnQueryTextListener {
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private class QueryListener implements OnQueryTextListener {
 		@Override
 		public boolean onQueryTextChange(String newText) {
 			drawMarkers(newText);
@@ -576,4 +692,27 @@ public class MainActivity extends FragmentActivity implements
 
 		}
 	}
+
+    // Define a DialogFragment that displays the error dialog
+    public static class ErrorDialogFragment extends DialogFragment {
+        // Global field to contain the error dialog
+        private Dialog mDialog;
+
+        // Default constructor. Sets the dialog field to null
+        public ErrorDialogFragment() {
+            super();
+            mDialog = null;
+        }
+
+        // Set the dialog to display
+        public void setDialog(Dialog dialog) {
+            mDialog = dialog;
+        }
+
+        // Return a Dialog to the DialogFragment.
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            return mDialog;
+        }
+    }
 }
