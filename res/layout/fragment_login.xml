@@ -2,6 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
+              android:background="@android:color/background_light"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
     <!-- Login progress -->
@@ -36,41 +37,46 @@
             android:id="@+id/login_form"
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout
+            android:layout_height="match_parent"
+            android:paddingBottom="50dp">
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:paddingBottom="20dp"
+                android:id="@+id/imageView"
+                android:layout_gravity="center"
+                android:src="@drawable/logologin"/>
+
+        <EditText
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|top">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/username"
-                    android:id="@+id/usernameText"/>
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/username"
-                    android:ems="10"
-                    android:layout_gravity="center_horizontal|top"/>
-        </LinearLayout>
-        <LinearLayout
+                android:hint="@string/username"
+                android:id="@+id/username"
+                android:ems="10"
+                android:layout_gravity="center_horizontal"/>
+
+        <EditText
                 android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal|top">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/password"
-                    android:id="@+id/passwordText"/>
-            <EditText
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:ems="10"
-                    android:id="@+id/password"
-                    android:layout_gravity="center_horizontal|top"/>
-        </LinearLayout>
+                android:hint="@string/password"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/password"
+                android:layout_gravity="center_horizontal"/>
+        <Button
+                android:id="@+id/login_button"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:text="@string/validate"
+                android:background="@android:color/transparent"
+                android:layout_gravity="right"/>
     </LinearLayout>
 </LinearLayout>

@@ -2,6 +2,9 @@ package com.cruzroja.creuroja;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -9,6 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<String>,
         LoginFragment.LoginCallbacks {
@@ -30,6 +34,10 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         setContentView(R.layout.activity_main);
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#CC0000")));
+        }
+
         if (savedInstanceState != null) {
             return;
         }
@@ -38,6 +46,11 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
 
         if (prefs.getBoolean(LoginFragment.IS_VALID_USER, false)) {
             showMap();
+
+            Bundle args = new Bundle();
+            args.putString(LoginFragment.USERNAME, prefs.getString(LoginFragment.USERNAME, ""));
+            args.putString(LoginFragment.PASSWORD, prefs.getString(LoginFragment.PASSWORD, ""));
+            getSupportLoaderManager().restartLoader(LOADER_LOGIN, args, this);
         } else {
             showLogin();
         }
@@ -67,11 +80,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         }
         mMapFragment.setHasOptionsMenu(true);
         mMapFragment.setRetainInstance(true);
-        Bundle args = new Bundle();
-        args.putString(LoginFragment.USERNAME, prefs.getString(LoginFragment.USERNAME, ""));
-        args.putString(LoginFragment.PASSWORD, prefs.getString(LoginFragment.PASSWORD, ""));
-        getSupportLoaderManager().restartLoader(LOADER_LOGIN, args, this);
-        fm.beginTransaction().replace(R.id.fragment_holder, mMapFragment, mapFragmentTag).commitAllowingStateLoss();
+        fm.beginTransaction().replace(R.id.fragment_holder, mMapFragment, mapFragmentTag)
+                .commitAllowingStateLoss();
     }
 
     private void showLogin() {
@@ -81,7 +91,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
         mLoginFragment.setHasOptionsMenu(true);
         mLoginFragment.setRetainInstance(true);
         mLoginFragment.setCallbacks(this);
-        fm.beginTransaction().replace(R.id.fragment_holder, mLoginFragment, loginFragmentTag).commitAllowingStateLoss();
+        fm.beginTransaction().replace(R.id.fragment_holder, mLoginFragment, loginFragmentTag)
+                .commitAllowingStateLoss();
     }
 
     @Override
@@ -100,6 +111,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     private void cleanData() {
         prefs.edit().clear().commit();
         JSONParser.removeFromDisk();
+        Toast.makeText(this, R.string.error_wrong_id, Toast.LENGTH_LONG).show();
     }
 
     @Override

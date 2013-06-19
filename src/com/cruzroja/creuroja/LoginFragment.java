@@ -12,6 +12,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.*;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -22,6 +23,7 @@ public class LoginFragment extends Fragment implements
 
     private EditText usernameView;
     private EditText passwordView;
+    private Button loginButtonView;
 
     private String username;
     private String password;
@@ -47,13 +49,24 @@ public class LoginFragment extends Fragment implements
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         usernameView = (EditText) v.findViewById(R.id.username);
         passwordView = (EditText) v.findViewById(R.id.password);
+        loginButtonView = (Button) v.findViewById(R.id.login_button);
         return v;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+        } else {
+            loginButtonView.setVisibility(View.VISIBLE);
+            loginButtonView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    doLogin();
+                }
+            });
+        }
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 

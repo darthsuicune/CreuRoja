@@ -2,10 +2,12 @@ package com.cruzroja.creuroja;
 
 import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
-import android.app.*;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.SearchManager;
 import android.content.*;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
@@ -216,10 +218,7 @@ public class CRMapFragment extends Fragment implements
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void setActionBar() {
-        ActionBar actionBar = getActivity().getActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color
-                .parseColor("#CC0000")));
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
