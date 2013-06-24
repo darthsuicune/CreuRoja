@@ -17,7 +17,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
-import android.text.TextUtils;
 import android.view.*;
 import android.widget.*;
 import com.google.android.gms.common.ConnectionResult;
@@ -48,24 +47,26 @@ public class CRMapFragment extends Fragment implements
     private static final int MAP_STYLE_TERRAIN = 2;
     private static final int MAP_STYLE_SATELLITE = 3;
 
+    private static final String SHOW_ALPHA = "showAlpha";
     private static final String SHOW_ASAMBLEA = "showAsamblea";
+    private static final String SHOW_AVISO = "showAviso";
     private static final String SHOW_BRAVO = "showBravo";
     private static final String SHOW_CUAP = "showCuap";
-    private static final String SHOW_EMBARCACION = "showEmbarcacion";
     private static final String SHOW_HOSPITAL = "showHospital";
-    private static final String SHOW_PREVENTIVO = "showPreventivo";
+    private static final String SHOW_MIKE = "showMike";
 
     private GoogleMap mGoogleMap;
     private LocationClient mLocationClient;
     private ArrayList<Location> mLocationsList;
     private Polyline mPolyline;
 
+    private CheckBox mAlphaCheckBox;
     private CheckBox mAsambleaCheckBox;
+    private CheckBox mAvisoCheckBox;
     private CheckBox mBravoCheckBox;
     private CheckBox mCuapCheckBox;
-    private CheckBox mEmbarcacionCheckBox;
     private CheckBox mHospitalCheckBox;
-    private CheckBox mPreventivoCheckBox;
+    private CheckBox mMikeCheckBox;
 
     private View mMarkerPanel;
 
@@ -79,7 +80,16 @@ public class CRMapFragment extends Fragment implements
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_map, container, false);
+        View v = inflater.inflate(R.layout.fragment_map, container, false);
+        mMarkerPanel = v.findViewById(R.id.marker_panel);
+        mAlphaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_alpha);
+        mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
+        mAvisoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_aviso);
+        mBravoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_bravo);
+        mCuapCheckBox = (CheckBox) v.findViewById(R.id.checkbox_cuap);
+        mHospitalCheckBox = (CheckBox) v.findViewById(R.id.checkbox_hospital);
+        mMikeCheckBox = (CheckBox) v.findViewById(R.id.checkbox_mike);
+        return v;
     }
 
     @Override
@@ -244,10 +254,7 @@ public class CRMapFragment extends Fragment implements
 
     private boolean isConnected() {
         ConnectivityManager manager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
-        if (manager.getActiveNetworkInfo() == null) {
-            return false;
-        }
-        return manager.getActiveNetworkInfo().isConnected();
+        return manager.getActiveNetworkInfo() != null && manager.getActiveNetworkInfo().isConnected();
     }
 
     private void setMap() {
@@ -294,7 +301,7 @@ public class CRMapFragment extends Fragment implements
         return true;
     }
 
-    private void drawMarkers(String filter) {
+    public void drawMarkers(String filter) {
         if (mGoogleMap == null || mLocationsList == null) {
             return;
         }
@@ -305,22 +312,20 @@ public class CRMapFragment extends Fragment implements
             drawLine(mPolyline.getPoints());
         }
 
-        for (int i = 0; i < mLocationsList.size(); i++) {
-            if (!shouldShowMarker(mLocationsList.get(i), filter)) {
+        for (Location location : mLocationsList) {
+            if (!shouldShowMarker(location, filter)) {
                 continue;
             }
 
-            MarkerOptions marker = new MarkerOptions().position(mLocationsList
-                    .get(i).getPosition());
-            if (mLocationsList.get(i).mIcono != 0) {
-                marker.icon(BitmapDescriptorFactory.fromResource(mLocationsList
-                        .get(i).mIcono));
+            MarkerOptions marker = new MarkerOptions().position(location.getPosition());
+            if (location.mIcono != 0) {
+                marker.icon(BitmapDescriptorFactory.fromResource(location.mIcono));
             }
-            if (mLocationsList.get(i).mContenido.mNombre != null) {
-                marker.title(mLocationsList.get(i).mContenido.mNombre);
+            if (location.mContenido.mNombre != null) {
+                marker.title(location.mContenido.mNombre);
             }
-            if (mLocationsList.get(i).mContenido.mSnippet != null) {
-                marker.snippet(mLocationsList.get(i).mContenido.mSnippet);
+            if (location.mContenido.mSnippet != null) {
+                marker.snippet(location.mContenido.mSnippet);
             }
 
             mGoogleMap.addMarker(marker);
@@ -346,33 +351,27 @@ public class CRMapFragment extends Fragment implements
     }
 
     private boolean shouldShowMarker(Location location, String filter) {
-        boolean show = true;
         if (!matchFilter(location, filter)) {
             return false;
         }
         switch (location.mIcono) {
+            case R.drawable.alfa:
+                return prefs.getBoolean(SHOW_ALPHA, true);
             case R.drawable.asamblea:
-                show = prefs.getBoolean(SHOW_ASAMBLEA, true);
-                break;
+                return prefs.getBoolean(SHOW_ASAMBLEA, true);
+            case R.drawable.aviso:
+                return prefs.getBoolean(SHOW_AVISO, true);
             case R.drawable.bravo:
-                show = prefs.getBoolean(SHOW_BRAVO, true);
-                break;
+                return prefs.getBoolean(SHOW_BRAVO, true);
             case R.drawable.cuap:
-                show = prefs.getBoolean(SHOW_CUAP, true);
-                break;
-            case R.drawable.embarcacion:
-                show = prefs.getBoolean(SHOW_EMBARCACION, true);
-                break;
+                return prefs.getBoolean(SHOW_CUAP, true);
             case R.drawable.hospital:
-                show = prefs.getBoolean(SHOW_HOSPITAL, true);
-                break;
-            case R.drawable.preventivo:
-                show = prefs.getBoolean(SHOW_PREVENTIVO, true);
-                break;
+                return prefs.getBoolean(SHOW_HOSPITAL, true);
+            case R.drawable.mike:
+                return prefs.getBoolean(SHOW_MIKE, true);
             default:
                 return true;
         }
-        return show;
     }
 
     private boolean matchFilter(Location location, String filter) {
@@ -418,18 +417,10 @@ public class CRMapFragment extends Fragment implements
         }
     }
 
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            if (!TextUtils.isEmpty(query)) {
-                drawMarkers(query);
-            }
-        }
-    }
-
     private boolean locationServicesAreEnabled() {
         LocationManager lm = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER) || lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+        if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             return true;
         }
         return false;
@@ -449,29 +440,21 @@ public class CRMapFragment extends Fragment implements
 
     private void prepareMarkerPanel() {
         if (mMarkerPanel == null) {
-            mMarkerPanel = getActivity().findViewById(R.id.marker_panel);
-            mAsambleaCheckBox = (CheckBox) getActivity().findViewById(R.id.checkbox_asamblea);
-            mBravoCheckBox = (CheckBox) getActivity().findViewById(R.id.checkbox_bravo);
-            mCuapCheckBox = (CheckBox) getActivity().findViewById(R.id.checkbox_cuap);
-            mEmbarcacionCheckBox = (CheckBox) getActivity().findViewById(R.id.checkbox_embarcacion);
-            mHospitalCheckBox = (CheckBox) getActivity().findViewById(R.id.checkbox_hospital);
-            mPreventivoCheckBox = (CheckBox) getActivity().findViewById(R.id.checkbox_preventivo);
-
+            mAlphaCheckBox.setChecked(prefs.getBoolean(SHOW_ALPHA, true));
             mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
+            mAvisoCheckBox.setChecked(prefs.getBoolean(SHOW_AVISO, true));
             mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
             mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
-            mEmbarcacionCheckBox.setChecked(prefs.getBoolean(SHOW_EMBARCACION,
-                    true));
             mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
-            mPreventivoCheckBox.setChecked(prefs.getBoolean(SHOW_PREVENTIVO,
-                    true));
+            mMikeCheckBox.setChecked(prefs.getBoolean(SHOW_MIKE, true));
 
+            mAlphaCheckBox.setOnCheckedChangeListener(this);
             mAsambleaCheckBox.setOnCheckedChangeListener(this);
+            mAvisoCheckBox.setOnCheckedChangeListener(this);
             mBravoCheckBox.setOnCheckedChangeListener(this);
             mCuapCheckBox.setOnCheckedChangeListener(this);
-            mEmbarcacionCheckBox.setOnCheckedChangeListener(this);
             mHospitalCheckBox.setOnCheckedChangeListener(this);
-            mPreventivoCheckBox.setOnCheckedChangeListener(this);
+            mMikeCheckBox.setOnCheckedChangeListener(this);
         }
     }
 
@@ -488,7 +471,6 @@ public class CRMapFragment extends Fragment implements
                 });
         builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
-        return;
     }
 
     @Override
@@ -524,8 +506,14 @@ public class CRMapFragment extends Fragment implements
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         SharedPreferences.Editor editor = prefs.edit();
         switch (buttonView.getId()) {
+            case R.id.checkbox_alpha:
+                editor.putBoolean(SHOW_ALPHA, isChecked);
+                break;
             case R.id.checkbox_asamblea:
                 editor.putBoolean(SHOW_ASAMBLEA, isChecked);
+                break;
+            case R.id.checkbox_aviso:
+                editor.putBoolean(SHOW_AVISO, isChecked);
                 break;
             case R.id.checkbox_bravo:
                 editor.putBoolean(SHOW_BRAVO, isChecked);
@@ -533,14 +521,11 @@ public class CRMapFragment extends Fragment implements
             case R.id.checkbox_cuap:
                 editor.putBoolean(SHOW_CUAP, isChecked);
                 break;
-            case R.id.checkbox_embarcacion:
-                editor.putBoolean(SHOW_EMBARCACION, isChecked);
-                break;
             case R.id.checkbox_hospital:
                 editor.putBoolean(SHOW_HOSPITAL, isChecked);
                 break;
-            case R.id.checkbox_preventivo:
-                editor.putBoolean(SHOW_PREVENTIVO, isChecked);
+            case R.id.checkbox_mike:
+                editor.putBoolean(SHOW_MIKE, isChecked);
                 break;
         }
         editor.commit();
@@ -571,16 +556,6 @@ public class CRMapFragment extends Fragment implements
         } else {
             showLocationSettings();
         }
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        //Nothing to do here.
-    }
-
-    @Override
-    public void onDisconnected() {
-        //Nothing to do here.
     }
 
     @Override
@@ -618,7 +593,8 @@ public class CRMapFragment extends Fragment implements
 
         @Override
         public View getInfoContents(Marker marker) {
-            View v = ((LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+            View v = ((LayoutInflater) getActivity()
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                     .inflate(R.layout.map_marker, null);
 
             ((TextView) v.findViewById(R.id.location)).setText(marker
@@ -700,5 +676,18 @@ public class CRMapFragment extends Fragment implements
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             return mDialog;
         }
+    }
+
+    /*
+     * Mandatory overrides for the google location services interface. Nothing to do here.
+     */
+    @Override
+    public void onConnected(Bundle bundle) {
+        //Nothing to do here.
+    }
+
+    @Override
+    public void onDisconnected() {
+        //Nothing to do here.
     }
 }

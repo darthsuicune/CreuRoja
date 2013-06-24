@@ -57,19 +57,6 @@
                     android:padding="8dp">
 
                 <TextView
-                        android:drawableLeft="@drawable/embarcacion"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_embarcacion"/>
-
-                <CheckBox android:id="@+id/checkbox_embarcacion"/>
-            </TableRow>
-
-            <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
-
-                <TextView
                         android:drawableLeft="@drawable/hospital"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
@@ -83,12 +70,12 @@
                     android:padding="8dp">
 
                 <TextView
-                        android:drawableLeft="@drawable/preventivo"
+                        android:drawableLeft="@drawable/mike"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
-                        android:text="@string/marker_type_preventivo"/>
+                        android:text="@string/marker_type_mike"/>
 
-                <CheckBox android:id="@+id/checkbox_preventivo"/>
+                <CheckBox android:id="@+id/checkbox_mike"/>
             </TableRow>
         </TableLayout>
     </ScrollView>

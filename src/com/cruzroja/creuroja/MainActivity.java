@@ -1,5 +1,6 @@
 package com.cruzroja.creuroja;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.text.TextUtils;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements LoaderManager.LoaderCallbacks<String>,
@@ -60,6 +62,19 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (mMapFragment == null || !mMapFragment.isVisible()) {
+            return;
+        }
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            if (!TextUtils.isEmpty(query)) {
+                mMapFragment.drawMarkers(query);
+            }
+        }
     }
 
     @Override
@@ -74,9 +89,9 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void showMap() {
+        mMapFragment = (CRMapFragment) getSupportFragmentManager().findFragmentByTag(mapFragmentTag);
         if (mMapFragment == null) {
             mMapFragment = (CRMapFragment) Fragment.instantiate(this, CRMapFragment.class.getName());
-
         }
         mMapFragment.setHasOptionsMenu(true);
         mMapFragment.setRetainInstance(true);
@@ -85,6 +100,7 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     }
 
     private void showLogin() {
+        mLoginFragment = (LoginFragment) getSupportFragmentManager().findFragmentByTag(loginFragmentTag);
         if (mLoginFragment == null) {
             mLoginFragment = (LoginFragment) Fragment.instantiate(this, LoginFragment.class.getName());
         }
