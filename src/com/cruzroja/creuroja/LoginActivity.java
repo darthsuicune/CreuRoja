@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * Created by lapuente on 07.06.13.
@@ -110,15 +111,17 @@ public class LoginActivity extends FragmentActivity implements
         if (s.equals(LoginLoader.RESPONSE_401)) {
         } else if (s.equals(LoginLoader.RESPONSE_406)) {
         } else if (s.equals(LoginLoader.RESPONSE_IO_EXCEPTION)) {
-            showMap(s);
         } else if (s.equals(LoginLoader.RESPONSE_NO_ID)) {
-            showMap(s);
         } else if (s.equals(LoginLoader.RESPONSE_PROTOCOL_EXCEPTION)) {
         } else {
             prefs.edit().putBoolean(IS_FIRST_RUN, false).putString(USERNAME, username)
                     .putString(PASSWORD, password).commit();
             showMap(s);
         }
+    }
+
+    private void showErrorMessage(int resId) {
+        Toast.makeText(this, resId, Toast.LENGTH_LONG).show();
     }
 
     @Override
