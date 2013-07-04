@@ -94,9 +94,6 @@ public class LoginFragment extends Fragment implements
         if (usernameView != null) {
             username = usernameView.getText().toString();
             password = passwordView.getText().toString();
-        } else {
-            username = prefs.getString(LoginLoader.ARG_USERNAME, "");
-            password = prefs.getString(LoginLoader.ARG_PASSWORD, "");
         }
         if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
             Toast.makeText(getActivity(), R.string.no_credentials, Toast.LENGTH_LONG).show();

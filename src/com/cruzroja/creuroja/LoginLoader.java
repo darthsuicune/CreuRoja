@@ -77,6 +77,10 @@ public class LoginLoader extends AsyncTaskLoader<String> {
     public static final String CONTENT_TYPE = "content-type";
     public static final String CONTENT_TYPE_XML = "text/xml";
 
+    //User roles defined in the server:
+    public static final String ROLE_ADMIN = "admin";
+    public static final String ROLE_USER = "user";
+
     //Responses for errors during the loader process
     public static final String RESPONSE_WRONG_ID = "wrong id";
     public static final String RESPONSE_401 = "401";
@@ -144,8 +148,9 @@ public class LoginLoader extends AsyncTaskLoader<String> {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    if (isCorrectLogin(line)) {
-                        return line;
+                    String userRole = isCorrectLogin(line);
+                    if (!userRole.equals("")) {
+                        return userRole;
                     }
                 }
                 return RESPONSE_WRONG_ID;
@@ -162,7 +167,13 @@ public class LoginLoader extends AsyncTaskLoader<String> {
         return RESPONSE_NO_ID;
     }
 
-    private boolean isCorrectLogin(String s) {
-        return s.contains("session_name");
+    private String isCorrectLogin(String s) {
+        if (s.contains("session_name")) {
+            return ROLE_ADMIN;
+        } else if (s.contains("user")) {
+            return ROLE_USER;
+        } else {
+            return "";
+        }
     }
 }
