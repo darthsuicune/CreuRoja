@@ -58,15 +58,14 @@ public class LoginFragment extends Fragment implements
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
-        } else {
-            loginButtonView.setVisibility(View.VISIBLE);
-            loginButtonView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    doLogin();
-                }
-            });
         }
+        loginButtonView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doLogin();
+            }
+        });
+
         prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
     }
 
