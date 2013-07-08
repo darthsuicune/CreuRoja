@@ -119,8 +119,8 @@ public class MainActivity extends FragmentActivity implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader<String> loader, String s) {
         if (s.equals(LoginLoader.RESPONSE_WRONG_ID)) {
-            showLogin();
             cleanData();
+            finish();
         }
     }
 
