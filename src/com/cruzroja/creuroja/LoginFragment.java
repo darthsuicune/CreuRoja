@@ -30,7 +30,7 @@ public class LoginFragment extends Fragment implements
     private String username;
     private String password;
 
-    public final static String IS_VALID_USER = "isValidUser";
+    public static final String IS_VALID_USER = "isValidUser";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
 
