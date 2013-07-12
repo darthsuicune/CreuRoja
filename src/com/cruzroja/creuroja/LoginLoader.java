@@ -170,7 +170,7 @@ public class LoginLoader extends AsyncTaskLoader<String> {
     private String isCorrectLogin(String s) {
         if (s.contains("session_name")) {
             return ROLE_ADMIN;
-        } else if (s.contains("user")) {
+        } else if (s.contains("authenticated")) {
             return ROLE_USER;
         } else {
             return "";

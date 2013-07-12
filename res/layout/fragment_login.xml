@@ -46,7 +46,6 @@
                 android:layout_weight="4"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
-                android:paddingBottom="20dp"
                 android:id="@+id/imageView"
                 android:layout_gravity="center"
                 android:src="@drawable/logologin"/>
@@ -58,7 +57,11 @@
                 android:hint="@string/username"
                 android:id="@+id/username"
                 android:ems="10"
+                android:inputType="textNoSuggestions"
+                android:singleLine="true"
                 android:layout_gravity="center_horizontal"
+                android:nextFocusDown="@+id/password"
+                android:imeOptions="actionNext"
                 android:textColor="@android:color/black"/>
 
         <EditText
@@ -69,8 +72,11 @@
                 android:inputType="textPassword"
                 android:ems="10"
                 android:id="@+id/password"
+                android:maxLines="1"
                 android:layout_gravity="center_horizontal"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:nextFocusUp="@id/username"
+                android:imeOptions="actionGo"/>
         <Button
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"

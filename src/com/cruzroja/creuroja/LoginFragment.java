@@ -12,12 +12,14 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.*;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginFragment extends Fragment implements
-        LoaderManager.LoaderCallbacks<String> {
+        LoaderManager.LoaderCallbacks<String>, TextView.OnEditorActionListener {
 
     SharedPreferences prefs;
 
@@ -35,7 +37,6 @@ public class LoginFragment extends Fragment implements
     private static final int LOADER_LOGIN = 1;
 
     public LoginFragment() {
-
     }
 
     public interface LoginCallbacks {
@@ -48,7 +49,9 @@ public class LoginFragment extends Fragment implements
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         usernameView = (EditText) v.findViewById(R.id.username);
+        usernameView.setOnEditorActionListener(this);
         passwordView = (EditText) v.findViewById(R.id.password);
+        passwordView.setOnEditorActionListener(this);
         loginButtonView = (Button) v.findViewById(R.id.login_button);
         return v;
     }
@@ -82,6 +85,25 @@ public class LoginFragment extends Fragment implements
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+        switch (textView.getId()) {
+            case R.id.username:
+                if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                    passwordView.requestFocus();
+                    return true;
+                }
+            case R.id.password:
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    doLogin();
+                    return true;
+
+                }
+            default:
+                return false;
         }
     }
 

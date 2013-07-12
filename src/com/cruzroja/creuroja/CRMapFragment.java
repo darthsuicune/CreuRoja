@@ -81,7 +81,10 @@ public class CRMapFragment extends Fragment implements
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
         mMarkerPanel = v.findViewById(R.id.marker_panel);
+
         mAlphaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_alpha);
         mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
         mAvisoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_aviso);
@@ -89,6 +92,22 @@ public class CRMapFragment extends Fragment implements
         mCuapCheckBox = (CheckBox) v.findViewById(R.id.checkbox_cuap);
         mHospitalCheckBox = (CheckBox) v.findViewById(R.id.checkbox_hospital);
         mMikeCheckBox = (CheckBox) v.findViewById(R.id.checkbox_mike);
+
+        mAlphaCheckBox.setChecked(prefs.getBoolean(SHOW_ALPHA, true));
+        mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
+        mAvisoCheckBox.setChecked(prefs.getBoolean(SHOW_AVISO, true));
+        mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
+        mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
+        mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
+        mMikeCheckBox.setChecked(prefs.getBoolean(SHOW_MIKE, true));
+
+        mAlphaCheckBox.setOnCheckedChangeListener(this);
+        mAsambleaCheckBox.setOnCheckedChangeListener(this);
+        mAvisoCheckBox.setOnCheckedChangeListener(this);
+        mBravoCheckBox.setOnCheckedChangeListener(this);
+        mCuapCheckBox.setOnCheckedChangeListener(this);
+        mHospitalCheckBox.setOnCheckedChangeListener(this);
+        mMikeCheckBox.setOnCheckedChangeListener(this);
         return v;
     }
 
@@ -97,7 +116,6 @@ public class CRMapFragment extends Fragment implements
         super.onActivityCreated(savedInstanceState);
         requestGooglePlayServicesAvailability();
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
             setActionBar();
@@ -195,8 +213,10 @@ public class CRMapFragment extends Fragment implements
         }
     }
 
+    /**
+     * Check that Google Play services is available
+     */
     private boolean requestGooglePlayServicesAvailability() {
-        // Check that Google Play services is available
         int resultCode =
                 GooglePlayServicesUtil.
                         isGooglePlayServicesAvailable(getActivity());
@@ -431,31 +451,10 @@ public class CRMapFragment extends Fragment implements
             mMarkerPanel.setVisibility(View.GONE);
             isMarkerPanelShowing = false;
         } else {
-            prepareMarkerPanel();
             isMarkerPanelShowing = true;
             mMarkerPanel.setVisibility(View.VISIBLE);
         }
 
-    }
-
-    private void prepareMarkerPanel() {
-        if (mMarkerPanel == null) {
-            mAlphaCheckBox.setChecked(prefs.getBoolean(SHOW_ALPHA, true));
-            mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
-            mAvisoCheckBox.setChecked(prefs.getBoolean(SHOW_AVISO, true));
-            mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
-            mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
-            mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
-            mMikeCheckBox.setChecked(prefs.getBoolean(SHOW_MIKE, true));
-
-            mAlphaCheckBox.setOnCheckedChangeListener(this);
-            mAsambleaCheckBox.setOnCheckedChangeListener(this);
-            mAvisoCheckBox.setOnCheckedChangeListener(this);
-            mBravoCheckBox.setOnCheckedChangeListener(this);
-            mCuapCheckBox.setOnCheckedChangeListener(this);
-            mHospitalCheckBox.setOnCheckedChangeListener(this);
-            mMikeCheckBox.setOnCheckedChangeListener(this);
-        }
     }
 
     private void showLocationSettings() {
