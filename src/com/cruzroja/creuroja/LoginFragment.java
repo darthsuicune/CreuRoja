@@ -3,6 +3,7 @@ package com.cruzroja.creuroja;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.view.*;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -120,6 +122,10 @@ public class LoginFragment extends Fragment implements
             Toast.makeText(getActivity(), R.string.no_credentials, Toast.LENGTH_LONG).show();
             return;
         }
+        InputMethodManager inputManager = (InputMethodManager)
+                getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                InputMethodManager.HIDE_NOT_ALWAYS);
         showProgress(true);
         Bundle args = new Bundle();
         args.putString(LoginLoader.ARG_USERNAME, username);

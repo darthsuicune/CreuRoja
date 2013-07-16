@@ -85,29 +85,31 @@ public class CRMapFragment extends Fragment implements
 
         mMarkerPanel = v.findViewById(R.id.marker_panel);
 
-        mAlphaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_alpha);
-        mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
-        mAvisoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_aviso);
-        mBravoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_bravo);
-        mCuapCheckBox = (CheckBox) v.findViewById(R.id.checkbox_cuap);
-        mHospitalCheckBox = (CheckBox) v.findViewById(R.id.checkbox_hospital);
-        mMikeCheckBox = (CheckBox) v.findViewById(R.id.checkbox_mike);
+        if (mMarkerPanel != null) {
+            mAlphaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_alpha);
+            mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
+            mAvisoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_aviso);
+            mBravoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_bravo);
+            mCuapCheckBox = (CheckBox) v.findViewById(R.id.checkbox_cuap);
+            mHospitalCheckBox = (CheckBox) v.findViewById(R.id.checkbox_hospital);
+            mMikeCheckBox = (CheckBox) v.findViewById(R.id.checkbox_mike);
 
-        mAlphaCheckBox.setChecked(prefs.getBoolean(SHOW_ALPHA, true));
-        mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
-        mAvisoCheckBox.setChecked(prefs.getBoolean(SHOW_AVISO, true));
-        mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
-        mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
-        mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
-        mMikeCheckBox.setChecked(prefs.getBoolean(SHOW_MIKE, true));
+            mAlphaCheckBox.setChecked(prefs.getBoolean(SHOW_ALPHA, true));
+            mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
+            mAvisoCheckBox.setChecked(prefs.getBoolean(SHOW_AVISO, true));
+            mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
+            mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
+            mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
+            mMikeCheckBox.setChecked(prefs.getBoolean(SHOW_MIKE, true));
 
-        mAlphaCheckBox.setOnCheckedChangeListener(this);
-        mAsambleaCheckBox.setOnCheckedChangeListener(this);
-        mAvisoCheckBox.setOnCheckedChangeListener(this);
-        mBravoCheckBox.setOnCheckedChangeListener(this);
-        mCuapCheckBox.setOnCheckedChangeListener(this);
-        mHospitalCheckBox.setOnCheckedChangeListener(this);
-        mMikeCheckBox.setOnCheckedChangeListener(this);
+            mAlphaCheckBox.setOnCheckedChangeListener(this);
+            mAsambleaCheckBox.setOnCheckedChangeListener(this);
+            mAvisoCheckBox.setOnCheckedChangeListener(this);
+            mBravoCheckBox.setOnCheckedChangeListener(this);
+            mCuapCheckBox.setOnCheckedChangeListener(this);
+            mHospitalCheckBox.setOnCheckedChangeListener(this);
+            mMikeCheckBox.setOnCheckedChangeListener(this);
+        }
         return v;
     }
 
