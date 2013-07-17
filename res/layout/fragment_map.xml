@@ -1,5 +1,5 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:baselineAligned="false">
     <ScrollView
@@ -17,38 +17,12 @@
                     android:padding="8dp">
 
                 <TextView
-                        android:drawableLeft="@drawable/alfa"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_alpha"/>
-
-                <CheckBox android:id="@+id/checkbox_alpha"/>
-            </TableRow>
-
-            <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
-
-                <TextView
                         android:drawableLeft="@drawable/asamblea"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
                         android:text="@string/marker_type_asamblea"/>
 
                 <CheckBox android:id="@+id/checkbox_asamblea"/>
-            </TableRow>
-
-            <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
-
-                <TextView
-                        android:drawableLeft="@drawable/aviso"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_aviso"/>
-
-                <CheckBox android:id="@+id/checkbox_aviso"/>
             </TableRow>
 
             <TableRow
@@ -95,12 +69,24 @@
                     android:padding="8dp">
 
                 <TextView
-                        android:drawableLeft="@drawable/mike"
+                        android:drawableLeft="@drawable/maritimo"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
-                        android:text="@string/marker_type_mike"/>
+                        android:text="@string/marker_type_maritimo"/>
 
-                <CheckBox android:id="@+id/checkbox_mike"/>
+                <CheckBox android:id="@+id/checkbox_maritimo"/>
+            </TableRow>
+            <TableRow
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:drawableLeft="@drawable/terrestre"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/marker_type_terrestre"/>
+
+                <CheckBox android:id="@+id/checkbox_terrestre"/>
             </TableRow>
         </TableLayout>
     </ScrollView>
@@ -111,6 +97,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            class="com.google.android.gms.maps.SupportMapFragment"/>
+            class="com.google.android.gms.maps.SupportMapFragment"
+            tools:layout="@layout/fragment_map"/>
 
 </LinearLayout>

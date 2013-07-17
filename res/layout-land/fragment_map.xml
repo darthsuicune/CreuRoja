@@ -18,38 +18,12 @@
                     android:padding="8dp">
 
                 <TextView
-                        android:drawableLeft="@drawable/alfa"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_alpha"/>
-
-                <CheckBox android:id="@+id/checkbox_alpha"/>
-            </TableRow>
-
-            <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
-
-                <TextView
                         android:drawableLeft="@drawable/asamblea"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
                         android:text="@string/marker_type_asamblea"/>
 
                 <CheckBox android:id="@+id/checkbox_asamblea"/>
-            </TableRow>
-
-            <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
-
-                <TextView
-                        android:drawableLeft="@drawable/aviso"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_aviso"/>
-
-                <CheckBox android:id="@+id/checkbox_aviso"/>
             </TableRow>
 
             <TableRow
@@ -96,12 +70,24 @@
                     android:padding="8dp">
 
                 <TextView
-                        android:drawableLeft="@drawable/mike"
+                        android:drawableLeft="@drawable/maritimo"
                         android:drawablePadding="8dp"
                         android:gravity="center_vertical"
-                        android:text="@string/marker_type_mike"/>
+                        android:text="@string/marker_type_maritimo"/>
 
-                <CheckBox android:id="@+id/checkbox_mike"/>
+                <CheckBox android:id="@+id/checkbox_maritimo"/>
+            </TableRow>
+            <TableRow
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:drawableLeft="@drawable/terrestre"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/marker_type_terrestre"/>
+
+                <CheckBox android:id="@+id/checkbox_terrestre"/>
             </TableRow>
         </TableLayout>
     </ScrollView>

@@ -47,26 +47,24 @@ public class CRMapFragment extends Fragment implements
     private static final int MAP_STYLE_TERRAIN = 2;
     private static final int MAP_STYLE_SATELLITE = 3;
 
-    private static final String SHOW_ALPHA = "showAlpha";
     private static final String SHOW_ASAMBLEA = "showAsamblea";
-    private static final String SHOW_AVISO = "showAviso";
     private static final String SHOW_BRAVO = "showBravo";
     private static final String SHOW_CUAP = "showCuap";
     private static final String SHOW_HOSPITAL = "showHospital";
-    private static final String SHOW_MIKE = "showMike";
+    private static final String SHOW_MARITIMO = "showMaritimo";
+    private static final String SHOW_TERRESTRE = "showTerrestre";
 
     private GoogleMap mGoogleMap;
     private LocationClient mLocationClient;
     private ArrayList<Location> mLocationsList;
     private Polyline mPolyline;
 
-    private CheckBox mAlphaCheckBox;
     private CheckBox mAsambleaCheckBox;
-    private CheckBox mAvisoCheckBox;
     private CheckBox mBravoCheckBox;
     private CheckBox mCuapCheckBox;
     private CheckBox mHospitalCheckBox;
-    private CheckBox mMikeCheckBox;
+    private CheckBox mMaritimoCheckBox;
+    private CheckBox mTerrestreCheckBox;
 
     private View mMarkerPanel;
 
@@ -86,29 +84,27 @@ public class CRMapFragment extends Fragment implements
         mMarkerPanel = v.findViewById(R.id.marker_panel);
 
         if (mMarkerPanel != null) {
-            mAlphaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_alpha);
             mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
-            mAvisoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_aviso);
             mBravoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_bravo);
             mCuapCheckBox = (CheckBox) v.findViewById(R.id.checkbox_cuap);
             mHospitalCheckBox = (CheckBox) v.findViewById(R.id.checkbox_hospital);
-            mMikeCheckBox = (CheckBox) v.findViewById(R.id.checkbox_mike);
+            mMaritimoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_maritimo);
+            mTerrestreCheckBox = (CheckBox) v.findViewById(R.id.checkbox_terrestre);
 
-            mAlphaCheckBox.setChecked(prefs.getBoolean(SHOW_ALPHA, true));
+
             mAsambleaCheckBox.setChecked(prefs.getBoolean(SHOW_ASAMBLEA, true));
-            mAvisoCheckBox.setChecked(prefs.getBoolean(SHOW_AVISO, true));
             mBravoCheckBox.setChecked(prefs.getBoolean(SHOW_BRAVO, true));
             mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
             mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
-            mMikeCheckBox.setChecked(prefs.getBoolean(SHOW_MIKE, true));
+            mMaritimoCheckBox.setChecked(prefs.getBoolean(SHOW_MARITIMO, true));
+            mMaritimoCheckBox.setChecked(prefs.getBoolean(SHOW_TERRESTRE, true));
 
-            mAlphaCheckBox.setOnCheckedChangeListener(this);
             mAsambleaCheckBox.setOnCheckedChangeListener(this);
-            mAvisoCheckBox.setOnCheckedChangeListener(this);
             mBravoCheckBox.setOnCheckedChangeListener(this);
             mCuapCheckBox.setOnCheckedChangeListener(this);
             mHospitalCheckBox.setOnCheckedChangeListener(this);
-            mMikeCheckBox.setOnCheckedChangeListener(this);
+            mMaritimoCheckBox.setOnCheckedChangeListener(this);
+            mTerrestreCheckBox.setOnCheckedChangeListener(this);
         }
         return v;
     }
@@ -377,20 +373,18 @@ public class CRMapFragment extends Fragment implements
             return false;
         }
         switch (location.mIcono) {
-            case R.drawable.alfa:
-                return prefs.getBoolean(SHOW_ALPHA, true);
             case R.drawable.asamblea:
                 return prefs.getBoolean(SHOW_ASAMBLEA, true);
-            case R.drawable.aviso:
-                return prefs.getBoolean(SHOW_AVISO, true);
             case R.drawable.bravo:
                 return prefs.getBoolean(SHOW_BRAVO, true);
             case R.drawable.cuap:
                 return prefs.getBoolean(SHOW_CUAP, true);
             case R.drawable.hospital:
                 return prefs.getBoolean(SHOW_HOSPITAL, true);
-            case R.drawable.mike:
-                return prefs.getBoolean(SHOW_MIKE, true);
+            case R.drawable.maritimo:
+                return prefs.getBoolean(SHOW_MARITIMO, true);
+            case R.drawable.terrestre:
+                return prefs.getBoolean(SHOW_TERRESTRE, true);
             default:
                 return true;
         }
@@ -507,14 +501,8 @@ public class CRMapFragment extends Fragment implements
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         SharedPreferences.Editor editor = prefs.edit();
         switch (buttonView.getId()) {
-            case R.id.checkbox_alpha:
-                editor.putBoolean(SHOW_ALPHA, isChecked);
-                break;
             case R.id.checkbox_asamblea:
                 editor.putBoolean(SHOW_ASAMBLEA, isChecked);
-                break;
-            case R.id.checkbox_aviso:
-                editor.putBoolean(SHOW_AVISO, isChecked);
                 break;
             case R.id.checkbox_bravo:
                 editor.putBoolean(SHOW_BRAVO, isChecked);
@@ -525,8 +513,11 @@ public class CRMapFragment extends Fragment implements
             case R.id.checkbox_hospital:
                 editor.putBoolean(SHOW_HOSPITAL, isChecked);
                 break;
-            case R.id.checkbox_mike:
-                editor.putBoolean(SHOW_MIKE, isChecked);
+            case R.id.checkbox_maritimo:
+                editor.putBoolean(SHOW_MARITIMO, isChecked);
+                break;
+            case R.id.checkbox_terrestre:
+                editor.putBoolean(SHOW_TERRESTRE, isChecked);
                 break;
         }
         editor.commit();

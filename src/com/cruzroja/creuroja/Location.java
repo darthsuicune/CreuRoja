@@ -8,13 +8,12 @@ public class Location {
     public static final String MARKER_STRONG_END = "</strong>";
     public static final String MARKER_SPACE = "&nbsp;";
 
-    public static final String ICON_ALPHA = "alfa.png";
     public static final String ICON_ASAMBLEA = "asamblea.png";
-    public static final String ICON_AVISO = "aviso.png";
     public static final String ICON_BRAVO = "bravo.png";
     public static final String ICON_CUAP = "cuap.png";
     public static final String ICON_HOSPITAL = "hospital.png";
-    public static final String ICON_MIKE = "mike.png";
+    public static final String ICON_MARITIMO = "maritimo.png";
+    public static final String ICON_TERRESTRE = "terrestre.png";
     public static final int NO_ICON = 0;
 
     public double mLat;
@@ -30,20 +29,18 @@ public class Location {
     }
 
     public int getIcon(String icon) {
-        if (icon.equals(ICON_ALPHA)) {
-            return R.drawable.alfa;
-        } else if (icon.equals(ICON_ASAMBLEA)) {
+        if (icon.equals(ICON_ASAMBLEA)) {
             return R.drawable.asamblea;
-        } else if (icon.equals(ICON_AVISO)) {
-            return R.drawable.aviso;
         } else if (icon.equals(ICON_BRAVO)) {
             return R.drawable.bravo;
         } else if (icon.equals(ICON_CUAP)) {
             return R.drawable.cuap;
         } else if (icon.equals(ICON_HOSPITAL)) {
             return R.drawable.hospital;
-        } else if (icon.equals(ICON_MIKE)) {
-            return R.drawable.mike;
+        } else if (icon.equals(ICON_MARITIMO)) {
+            return R.drawable.maritimo;
+        } else if (icon.equals(ICON_TERRESTRE)) {
+            return R.drawable.terrestre;
         } else {
             return NO_ICON;
         }
