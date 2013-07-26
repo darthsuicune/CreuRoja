@@ -246,6 +246,7 @@ public class CRMapFragment extends Fragment implements
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void setActionBar() {
+        getActivity().getActionBar().show();
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

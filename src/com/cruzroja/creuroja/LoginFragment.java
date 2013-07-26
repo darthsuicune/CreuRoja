@@ -23,38 +23,29 @@ import android.widget.Toast;
 public class LoginFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<String>, TextView.OnEditorActionListener {
 
-    SharedPreferences prefs;
-
-    private EditText usernameView;
-    private EditText passwordView;
-    private Button loginButtonView;
-
-    private String username;
-    private String password;
-
     public static final String IS_VALID_USER = "isValidUser";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";
-
     private static final int LOADER_LOGIN = 1;
+    private SharedPreferences prefs;
+    private EditText mUsernameView;
+    private EditText mPasswordView;
+    private Button mLoginButtonView;
+    private String mUsername;
+    private String mPassword;
+    private LoginCallbacks mLoginCallbacks;
 
     public LoginFragment() {
     }
 
-    public interface LoginCallbacks {
-        public void doLogin();
-    }
-
-    private LoginCallbacks mLoginCallbacks;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-        usernameView = (EditText) v.findViewById(R.id.username);
-        usernameView.setOnEditorActionListener(this);
-        passwordView = (EditText) v.findViewById(R.id.password);
-        passwordView.setOnEditorActionListener(this);
-        loginButtonView = (Button) v.findViewById(R.id.login_button);
+        mUsernameView = (EditText) v.findViewById(R.id.username);
+        mUsernameView.setOnEditorActionListener(this);
+        mPasswordView = (EditText) v.findViewById(R.id.password);
+        mPasswordView.setOnEditorActionListener(this);
+        mLoginButtonView = (Button) v.findViewById(R.id.login_button);
         return v;
     }
 
@@ -62,9 +53,9 @@ public class LoginFragment extends Fragment implements
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            getActivity().getActionBar().setDisplayHomeAsUpEnabled(false);
+            getActivity().getActionBar().hide();
         }
-        loginButtonView.setOnClickListener(new View.OnClickListener() {
+        mLoginButtonView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 doLogin();
@@ -95,7 +86,7 @@ public class LoginFragment extends Fragment implements
         switch (textView.getId()) {
             case R.id.username:
                 if (actionId == EditorInfo.IME_ACTION_NEXT) {
-                    passwordView.requestFocus();
+                    mPasswordView.requestFocus();
                     return true;
                 }
             case R.id.password:
@@ -114,22 +105,25 @@ public class LoginFragment extends Fragment implements
     }
 
     private void doLogin() {
-        if (usernameView != null) {
-            username = usernameView.getText().toString();
-            password = passwordView.getText().toString();
+        if (mUsernameView != null) {
+            mUsername = mUsernameView.getText().toString();
+            mPassword = mPasswordView.getText().toString();
         }
-        if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(mUsername) || TextUtils.isEmpty(mPassword)) {
             Toast.makeText(getActivity(), R.string.no_credentials, Toast.LENGTH_LONG).show();
             return;
         }
         InputMethodManager inputManager = (InputMethodManager)
                 getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
-                InputMethodManager.HIDE_NOT_ALWAYS);
+        if (inputManager != null && getActivity().getCurrentFocus() != null &&
+                getActivity().getCurrentFocus().getWindowToken() != null) {
+            inputManager.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                    InputMethodManager.HIDE_NOT_ALWAYS);
+        }
         showProgress(true);
         Bundle args = new Bundle();
-        args.putString(LoginLoader.ARG_USERNAME, username);
-        args.putString(LoginLoader.ARG_PASSWORD, password);
+        args.putString(LoginLoader.ARG_USERNAME, mUsername);
+        args.putString(LoginLoader.ARG_PASSWORD, mPassword);
         getLoaderManager().restartLoader(LOADER_LOGIN, args, this);
 
     }
@@ -206,13 +200,23 @@ public class LoginFragment extends Fragment implements
         } else if (s.equals(LoginLoader.RESPONSE_PROTOCOL_EXCEPTION)) {
             Toast.makeText(getActivity(), R.string.error_prot_exc, Toast.LENGTH_LONG).show();
         } else {
-            prefs.edit().putBoolean(IS_VALID_USER, true).putString(USERNAME, username)
-                    .putString(PASSWORD, password).commit();
+            prefs.edit().putBoolean(IS_VALID_USER, true).putString(USERNAME, mUsername)
+                    .putString(PASSWORD, mPassword).commit();
             mLoginCallbacks.doLogin();
+            return;
         }
+        failedLogin();
+    }
+
+    private void failedLogin() {
+        mPasswordView.setText("");
     }
 
     @Override
     public void onLoaderReset(Loader<String> stringLoader) {
+    }
+
+    public interface LoginCallbacks {
+        public void doLogin();
     }
 }

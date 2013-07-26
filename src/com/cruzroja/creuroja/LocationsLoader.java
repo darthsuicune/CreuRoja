@@ -15,8 +15,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 public class LocationsLoader extends AsyncTaskLoader<ArrayList<Location>> {
-    public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios.cr/permanentes.json";
-	public static final String PUNTOS_VARIABLES = "http://r0uzic.net/voluntarios.cr/temporales.json";
+    public static final String PUNTOS_FIJOS = "http://r0uzic.net/voluntarios/permanentes.json";
+	public static final String PUNTOS_VARIABLES = "http://r0uzic.net/voluntarios/temporales.json";
 
     private DefaultHttpClient httpClient = null;
 
