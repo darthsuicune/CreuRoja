@@ -40,11 +40,16 @@ public class JSONParser {
 	public static final int STATUS_NOT_OK = 1;
 	public static final int STATUS_LIMIT_REACHED = 2;
 
+    /**
+     *
+     * @param data
+     * @return
+     */
 	public static ArrayList<Location> parseLocations(String data) {
-		try {
-			JSONArray array = new JSONArray(data);
+        ArrayList<Location> locationsList = new ArrayList<Location>();
 
-			ArrayList<Location> locationsList = new ArrayList<Location>();
+        try {
+			JSONArray array = new JSONArray(data);
 
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject jsonLocation = array.getJSONObject(i);
@@ -55,11 +60,11 @@ public class JSONParser {
 						jsonLocation.getString(sContent));
 				locationsList.add(location);
 			}
-			return locationsList;
 		} catch (JSONException e) {
 			e.printStackTrace();
-			return null;
+            return null;
 		}
+        return locationsList;
 	}
 
 	public static void saveToDisk(Context context, String data, boolean isFijo) {
@@ -81,18 +86,22 @@ public class JSONParser {
 	}
 
 	public static ArrayList<Location> getFromDisk(Context context) {
-		ArrayList<Location> locationList = null;
+		ArrayList<Location> locationList;
+        try {
+            String data = getDataFromFile(context, FILE_NAME_FIJOS);
+            if (data.equals("")) {
+                return null;
+            }
+            locationList = parseLocations(data);
 
-		String data = getDataFromFile(context, FILE_NAME_FIJOS);
-		if (data.equals("")) {
-			return null;
-		}
-		locationList = parseLocations(data);
-		data = getDataFromFile(context, FILE_NAME_VARIABLES);
-		if (data.equals("")) {
-			return null;
-		}
-		locationList.addAll(parseLocations(data));
+            data = getDataFromFile(context, FILE_NAME_VARIABLES);
+            if (data.equals("")) {
+                return null;
+            }
+            locationList.addAll(parseLocations(data));
+        } catch (NullPointerException e){
+            return null;
+        }
 
 		return locationList;
 	}
