@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
 
-    <string name="app_name">Creu Roja</string>
+    <string name="app_name">Cruz Roja</string>
     <string name="menu_locate">Posición</string>
     <string name="menu_refresh">Actualizar</string>
     <string name="menu_show_panel">Leyenda</string>
