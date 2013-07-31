@@ -97,7 +97,7 @@ public class CRMapFragment extends Fragment implements
             mCuapCheckBox.setChecked(prefs.getBoolean(SHOW_CUAP, true));
             mHospitalCheckBox.setChecked(prefs.getBoolean(SHOW_HOSPITAL, true));
             mMaritimoCheckBox.setChecked(prefs.getBoolean(SHOW_MARITIMO, true));
-            mMaritimoCheckBox.setChecked(prefs.getBoolean(SHOW_TERRESTRE, true));
+            mTerrestreCheckBox.setChecked(prefs.getBoolean(SHOW_TERRESTRE, true));
 
             mAsambleaCheckBox.setOnCheckedChangeListener(this);
             mBravoCheckBox.setOnCheckedChangeListener(this);
@@ -160,6 +160,7 @@ public class CRMapFragment extends Fragment implements
         if (isMarkerPanelShowing) {
             mMarkerPanel.setVisibility(View.GONE);
             isMarkerPanelShowing = false;
+            return true;
         }
         return isMarkerPanelShowing;
     }

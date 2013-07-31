@@ -41,11 +41,11 @@ public class LocationsLoader extends AsyncTaskLoader<ArrayList<Location>> {
 		ArrayList<Location> locationList = new ArrayList<Location>();
 		try {
             ArrayList<Location> aux;
-            aux = getLocations(requestFijos, httpClient);
+            aux = getLocations(requestFijos, httpClient, true);
             if (aux != null) {
                 locationList.addAll(aux);
             }
-            aux = getLocations(requestVariables, httpClient);
+            aux = getLocations(requestVariables, httpClient, false);
             if (aux != null) {
                 locationList.addAll(aux);
             }
@@ -62,7 +62,7 @@ public class LocationsLoader extends AsyncTaskLoader<ArrayList<Location>> {
         httpClient = new DefaultHttpClient(params);
     }
 
-	private ArrayList<Location> getLocations(HttpGet request, DefaultHttpClient client)
+	private ArrayList<Location> getLocations(HttpGet request, DefaultHttpClient client, boolean isFijo)
             throws IOException {
 		HttpResponse response = client.execute(request);
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -75,6 +75,10 @@ public class LocationsLoader extends AsyncTaskLoader<ArrayList<Location>> {
 			data = data + line;
 		}
 		data = data.replace("\t", "");
-		return JSONParser.parseLocations(data);
+        ArrayList<Location> locations = JSONParser.parseLocations(data);
+		if(locations != null && !locations.isEmpty()){
+            JSONParser.saveToDisk(getContext(), data, isFijo);
+        }
+        return locations;
 	}
 }
