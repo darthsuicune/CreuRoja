@@ -30,6 +30,12 @@ public class DirectionsLoader extends AsyncTaskLoader<ArrayList<LatLng>> {
 			mOriginLongitud = 0;
 			mDestinationLatitud = 0;
 			mDestinationLongitud = 0;
+		} else {
+			mOriginLatitud = args.getDouble(ARG_ORIG_LAT);
+			mOriginLongitud = args.getDouble(ARG_ORIG_LONG);
+			mDestinationLatitud = args.getDouble(ARG_DEST_LAT);
+			mDestinationLongitud= args.getDouble(ARG_DEST_LONG);
+			
 		}
 	}
 

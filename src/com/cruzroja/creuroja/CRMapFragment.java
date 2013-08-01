@@ -606,7 +606,19 @@ public class CRMapFragment extends Fragment implements
 	}
 
 	private void drawPolyline(ArrayList<LatLng> directions) {
+		if (mPolyline != null) {
+            mPolyline.remove();
+        }
+        if (mGoogleMap == null || directions == null) {
+            return;
+        }
+        if (directions.size() == 0) {
+            Toast.makeText(getActivity(), R.string.error_limit_reached,
+                    Toast.LENGTH_LONG).show();
+        }
 
+        mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(directions)
+                .color(Color.parseColor("#CC0000")));
 	}
 
 	/*****************************
