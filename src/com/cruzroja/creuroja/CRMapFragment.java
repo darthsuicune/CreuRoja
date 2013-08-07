@@ -49,6 +49,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+/**
+ * This methods should be modified when new kinds of locations are introduced.
+ * -Variable definitions
+ * onCreateView
+ * onCheckedChanged
+ * shouldShowMarker
+ *
+ */
 public class CRMapFragment extends Fragment implements
 		GoogleMap.OnInfoWindowClickListener,
 		GooglePlayServicesClient.ConnectionCallbacks,
