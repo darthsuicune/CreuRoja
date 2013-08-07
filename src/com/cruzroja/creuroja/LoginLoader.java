@@ -4,8 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 import android.text.TextUtils;
-import android.util.Log;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
@@ -41,8 +39,8 @@ import java.io.UnsupportedEncodingException;
  */
 public class LoginLoader extends AsyncTaskLoader<String> {
     //Args for the loader
-    public static final String ARG_USERNAME = "user";
-    public static final String ARG_PASSWORD = "pass";
+    public static final String ARG_USERNAME = "username";
+    public static final String ARG_PASSWORD = "password";
     //URL for the login
     public static final String LOGIN_URL = "http://r0uzic.net/voluntarios.cr/user/login?q=android";
     //XML tags
@@ -80,6 +78,7 @@ public class LoginLoader extends AsyncTaskLoader<String> {
     public static final String CONTENT_TYPE_XML = "text/xml";
 
     //Responses for errors during the loader process
+    public static final String RESPONSE_WRONG_ID = "wrong id";
     public static final String RESPONSE_401 = "401";
     public static final String RESPONSE_406 = "406";
     public static final String RESPONSE_NO_ID = "no id";
@@ -140,28 +139,30 @@ public class LoginLoader extends AsyncTaskLoader<String> {
     }
 
     private String parseResponse(HttpResponse response) {
-        String result = "";
         try {
             if (response.getStatusLine().getStatusCode() == 200) {
-                Log.i("WORKS!", response.toString());
                 BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    result += line;
+                    if (isCorrectLogin(line)) {
+                        return line;
+                    }
                 }
-                reader.close();
-                return result;
+                return RESPONSE_WRONG_ID;
             } else if (response.getStatusLine().getStatusCode() == 401) {
                 return RESPONSE_401;
             } else if (response.getStatusLine().getStatusCode() == 406) {
                 return RESPONSE_406;
-            } else {
-                return RESPONSE_NO_ID;
             }
         } catch (ClientProtocolException e) {
             return RESPONSE_PROTOCOL_EXCEPTION;
         } catch (IOException e) {
             return RESPONSE_IO_EXCEPTION;
         }
+        return RESPONSE_NO_ID;
+    }
+
+    private boolean isCorrectLogin(String s) {
+        return s.contains("session_name");
     }
 }

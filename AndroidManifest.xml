@@ -33,17 +33,12 @@
 
         <meta-data
                 android:name="com.google.android.maps.v2.API_KEY"
-                android:value="AIzaSyC_eeaFAw7-u9ha7njs7YPI-gvM3Pmil74"/>
+                android:value="AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ"/>
 
         <activity
                 android:name="com.cruzroja.creuroja.MainActivity"
                 android:label="@string/app_name"
                 android:launchMode="singleTop">
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN" />-->
-
-            <!--<category android:name="android.intent.category.LAUNCHER" />-->
-            <!--</intent-filter>-->
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
@@ -52,9 +47,7 @@
                     android:name="android.app.searchable"
                     android:resource="@xml/menu_search"/>
         </activity>
-        <activity
-                android:name="LoginActivity"
-                android:label="LoginActivity">
+        <activity android:name="LoginActivity" android:label="Creu Roja">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
