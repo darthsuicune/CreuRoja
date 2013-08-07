@@ -37,12 +37,12 @@
             android:value="AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ" />
 
         <activity
-            android:name="com.cruzroja.creuroja.LoginActivity"
+            android:name="com.cruzroja.creuroja.ui.LoginActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.cruzroja.creuroja.CRMapActivity"
+            android:name="com.cruzroja.creuroja.ui.CRMapActivityity"
             android:label="@string/app_name" 
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:launchMode="singleTop" >
