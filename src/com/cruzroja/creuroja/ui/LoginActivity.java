@@ -1,4 +1,4 @@
-package com.cruzroja.creuroja;
+package com.cruzroja.creuroja.ui;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,6 +21,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
+
+import com.cruzroja.creuroja.ConnectionClient;
+import com.cruzroja.creuroja.LoginLoader;
+import com.cruzroja.creuroja.R;
+import com.cruzroja.creuroja.Settings;
 
 public class LoginActivity extends FragmentActivity implements
 		LoaderCallbacks<Integer> {

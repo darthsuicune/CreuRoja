@@ -1,4 +1,4 @@
-package com.cruzroja.creuroja;
+package com.cruzroja.creuroja.ui;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -35,6 +35,12 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cruzroja.creuroja.ConnectionClient;
+import com.cruzroja.creuroja.DirectionsLoader;
+import com.cruzroja.creuroja.Location;
+import com.cruzroja.creuroja.LocationsLoader;
+import com.cruzroja.creuroja.R;
+import com.cruzroja.creuroja.Settings;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;

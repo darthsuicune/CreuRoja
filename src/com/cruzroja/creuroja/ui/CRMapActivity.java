@@ -1,4 +1,4 @@
-package com.cruzroja.creuroja;
+package com.cruzroja.creuroja.ui;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +11,11 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+
+import com.cruzroja.creuroja.ConnectionClient;
+import com.cruzroja.creuroja.LoginLoader;
+import com.cruzroja.creuroja.R;
+import com.cruzroja.creuroja.Settings;
 
 public class CRMapActivity extends ActionBarActivity implements
 		LoaderCallbacks<Integer> {
