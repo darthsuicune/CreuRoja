@@ -1,25 +1,18 @@
 package com.cruzroja.creuroja;
 
-import android.content.Context;
-import com.google.android.gms.maps.model.LatLng;
+import java.util.ArrayList;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.*;
-import java.util.ArrayList;
+import com.google.android.gms.maps.model.LatLng;
 
-/**
- * Structure for the JSON: Array with repeatable objects with the following
- * content:
- * 
- * [{position:{lat:<double> latitud, lng:<double> longitud},icon:'<String>
- * name', <contenido>:"String html"}, {same as before, different values}, ...,
- * {}]
- */
 public class JSONParser {
-	private static final String FILE_NAME_FIJOS = "fijos";
-	private static final String FILE_NAME_VARIABLES = "variables";
+
+	public static final int STATUS_OK = 0;
+	public static final int STATUS_NOT_OK = 1;
+	public static final int STATUS_LIMIT_REACHED = 2;
 
 	public static final String sPos = "position";
 	public static final String sLat = "lat";
@@ -29,23 +22,14 @@ public class JSONParser {
 
 	public static final String sStatus = "status";
 	public static final String sRoutes = "routes";
-	public static final String sLegs = "legs";
-	public static final String sSteps = "steps";
-	public static final String sStartLocation = "start_location";
-	public static final String sEndLocation = "end_location";
 	public static final String sOverviewPolyline = "overview_polyline";
 	public static final String sPoints = "points";
-
-	public static final int STATUS_OK = 0;
-	public static final int STATUS_NOT_OK = 1;
-	public static final int STATUS_LIMIT_REACHED = 2;
 
 	public static ArrayList<Location> parseLocations(String data) {
 		try {
 			JSONArray array = new JSONArray(data);
 
 			ArrayList<Location> locationsList = new ArrayList<Location>();
-
 			for (int i = 0; i < array.length(); i++) {
 				JSONObject jsonLocation = array.getJSONObject(i);
 				JSONObject jsonPosition = jsonLocation.getJSONObject(sPos);
@@ -62,66 +46,10 @@ public class JSONParser {
 		}
 	}
 
-	public static void saveToDisk(Context context, String data, boolean isFijo) {
-		PrintStream ps = null;
+	public static ArrayList<LatLng> parseDirections(String data) {
 		try {
-			if (isFijo) {
-				ps = new PrintStream(context.openFileOutput(FILE_NAME_FIJOS,
-						Context.MODE_PRIVATE));
-			} else {
-				ps = new PrintStream(context.openFileOutput(
-						FILE_NAME_VARIABLES, Context.MODE_PRIVATE));
-			}
-			ps.print(data);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} finally {
-			ps.close();
-		}
-	}
-
-	public static ArrayList<Location> getFromDisk(Context context) {
-		ArrayList<Location> locationList = null;
-
-		String data = getDataFromFile(context, FILE_NAME_FIJOS);
-		if (data.equals("")) {
-			return null;
-		}
-		locationList = parseLocations(data);
-		data = getDataFromFile(context, FILE_NAME_VARIABLES);
-		if (data.equals("")) {
-			return null;
-		}
-		locationList.addAll(parseLocations(data));
-
-		return locationList;
-	}
-
-	public static String getDataFromFile(Context context, String fileName) {
-		String data = "";
-		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					context.openFileInput(fileName)));
-			String line = "";
-
-			while ((line = reader.readLine()) != null) {
-				data = data + line;
-			}
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			return "";
-		} catch (IOException e) {
-			e.printStackTrace();
-			return "";
-		}
-		return data;
-	}
-
-    public static ArrayList<LatLng> parseDirections(String fullResponse) {
-        ArrayList<LatLng> points = new ArrayList<LatLng>();
-		try {
-			
-			JSONObject response = new JSONObject(fullResponse);
+			JSONObject response = new JSONObject(data);
+			ArrayList<LatLng> points = new ArrayList<LatLng>();
 			int status = parseStatus(response.getString(sStatus));
 			if (status == STATUS_OK) {
 				JSONArray routes = response.getJSONArray(sRoutes);
@@ -130,6 +58,7 @@ public class JSONParser {
 					points.addAll(decodePoly(route.getJSONObject(
 							sOverviewPolyline).getString(sPoints)));
 				}
+				return points;
 			} else if (status == STATUS_LIMIT_REACHED) {
 				// Handle error
 				return points;
@@ -139,8 +68,7 @@ public class JSONParser {
 		} catch (JSONException e) {
 			return null;
 		}
-		
-		return points;
+
 	}
 
 	private static ArrayList<LatLng> decodePoly(String encoded) {
@@ -172,7 +100,7 @@ public class JSONParser {
 		return poly;
 	}
 
-	public static int parseStatus(String status) {
+	private static int parseStatus(String status) {
 		if (status.equals("OK") || status.equals("ZERO_RESULTS")) {
 			return STATUS_OK;
 		} else if (status.equals("OVER_QUERY_LIMIT")) {
