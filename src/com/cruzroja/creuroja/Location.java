@@ -1,8 +1,11 @@
 package com.cruzroja.creuroja;
 
-import com.cruzroja.creuroja.database.CreuRojaContract;
-
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
+
+import com.cruzroja.creuroja.database.CreuRojaContract;
+import com.cruzroja.creuroja.database.CreuRojaProvider;
 
 public class Location {
 	public static final String MARKER_NEW_LINE = "<br />";
@@ -35,7 +38,7 @@ public class Location {
 					.getColumnIndex(CreuRojaContract.Locations.NAME)));
 			mContenido.mLugar = c.getString(c
 					.getColumnIndex(CreuRojaContract.Locations.ADDRESS));
-			mContenido.mHorario = c.getString(c
+			mContenido.mDetalles = c.getString(c
 					.getColumnIndex(CreuRojaContract.Locations.DETAILS));
 		}
 	}
@@ -46,9 +49,28 @@ public class Location {
 		mIcono = getIcon(icon);
 		mContenido = getContenido(content);
 	}
+	
+	public Location(double lat, double longitud, String icon, String name, String address, String details) {
+		mLat = lat;
+		mLong = longitud;
+		mIcono = getIcon(icon);
+		mContenido = new Contenido(name, address, details);
+	}
 
-	public void saveToDb() {
-
+	public void saveToDb(ContentResolver cr) {
+		
+		ContentValues values = new ContentValues();
+		if(mContenido.mLugar != null) {
+			values.put(CreuRojaContract.Locations.ADDRESS, mContenido.mLugar);	
+		}
+		if(mContenido.mDetalles != null) {
+			values.put(CreuRojaContract.Locations.DETAILS, mContenido.mDetalles);
+		}
+		values.put(CreuRojaContract.Locations.ICON, mIcono);
+		values.put(CreuRojaContract.Locations.LATITUD, mLat);
+		values.put(CreuRojaContract.Locations.LONGITUD, mLong);
+		values.put(CreuRojaContract.Locations.NAME, mContenido.mNombre);
+		cr.insert(CreuRojaProvider.CONTENT_LOCATIONS, values);
 	}
 
 	public int getIcon(String icon) {
@@ -91,7 +113,7 @@ public class Location {
 	public static class Contenido {
 		public String mNombre;
 		public String mLugar;
-		public String mHorario;
+		public String mDetalles;
 		public String mSnippet;
 
 		public Contenido(String nombre) {
@@ -101,12 +123,12 @@ public class Location {
 		public Contenido(String nombre, String lugar, String horario) {
 			mNombre = nombre;
 			mLugar = lugar;
-			mHorario = horario;
-			mSnippet = mLugar + MARKER_NEW_LINE + mHorario;
+			mDetalles = horario;
+			mSnippet = mLugar + MARKER_NEW_LINE + mDetalles;
 		}
 		
 		public void createSnippet(){
-			mSnippet = mLugar + MARKER_NEW_LINE + mHorario;
+			mSnippet = mLugar + MARKER_NEW_LINE + mDetalles;
 		}
 	}
 }

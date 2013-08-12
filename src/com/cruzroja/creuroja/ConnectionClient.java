@@ -38,9 +38,7 @@ public class ConnectionClient {
 	// URLs
 	private static final String BASE_URL = "http://r0uzic.net/voluntarios/";
 	public static final String URL_LOGIN = BASE_URL + "user/login?q=android";
-	public static final String URL_PUNTOS_FIJOS = BASE_URL + "permanentes.json";
-	public static final String URL_PUNTOS_VARIABLES = BASE_URL
-			+ "temporales.json";
+	public static final String URL_PUNTOS = BASE_URL + "map/marcadores.json";
 
 	public static final String DIRECTIONS_API_BASE_URL = "https://maps.googleapis.com/maps/api/directions/json?region=es&";
 
@@ -91,15 +89,9 @@ public class ConnectionClient {
 				password)));
 	}
 
-	public static ArrayList<Location> downloadLocations(Context context) {
-		ArrayList<Location> result = null;
-		result = parseLocationsResponse(context, makeConnection(new HttpGet(
-				URL_PUNTOS_FIJOS)), true);
-		if (result != null) {
-			result.addAll(parseLocationsResponse(context,
-					makeConnection(new HttpGet(URL_PUNTOS_VARIABLES)), false));
-		}
-		return result;
+	public static void downloadLocations(Context context) {
+		parseLocationsResponse(context, makeConnection(new HttpGet(
+				URL_PUNTOS)));
 	}
 
 	public static ArrayList<LatLng> getDirections(double originLatitud,
@@ -181,6 +173,7 @@ public class ConnectionClient {
 		String line;
 		while ((line = reader.readLine()) != null) {
 			if (line.contains("session_name")) {
+				//TODO: Modify session_name for user roles
 				return LoginLoader.USER_REGISTERED;
 			}
 			// Insert all possible remaining cases here
@@ -192,14 +185,13 @@ public class ConnectionClient {
 	 * Location specific methods *
 	 *****************************/
 
-	private static ArrayList<Location> parseLocationsResponse(Context context,
-			HttpResponse response, boolean isFijo) {
-		ArrayList<Location> result = null;
+	private static void parseLocationsResponse(Context context,
+			HttpResponse response) {
 		if (response.getStatusLine() != null) {
 			switch (response.getStatusLine().getStatusCode()) {
 			case 200:
 				// Get everything as a string ready to parse and save later to
-				// disk.
+				// db.
 				BufferedReader reader;
 				try {
 					reader = new BufferedReader(new InputStreamReader(response
@@ -214,10 +206,7 @@ public class ConnectionClient {
 						reader.close();
 					}
 					// Parse the resulting string. Save to disk if its correct
-					result = JSONParser.parseLocations(data);
-					if (result != null && !result.isEmpty()) {
-						FileUtils.writeToFile(context, data, isFijo);
-					}
+					JSONParser.parseLocations(data);
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -228,7 +217,6 @@ public class ConnectionClient {
 				break;
 			}
 		}
-		return result;
 	}
 
 	/******************************

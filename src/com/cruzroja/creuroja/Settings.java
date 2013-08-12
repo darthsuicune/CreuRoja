@@ -24,7 +24,6 @@ public class Settings {
 	public static final int MAP_STYLE_SATELLITE = 3;
 
 	public static void clean(Context context) {
-		FileUtils.removeFiles();
 		PreferenceManager.getDefaultSharedPreferences(context).edit().clear()
 				.commit();
 	}

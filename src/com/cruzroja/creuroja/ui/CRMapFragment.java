@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.location.LocationManager;
 import android.os.Build;
@@ -22,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
+import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
@@ -38,9 +40,10 @@ import android.widget.Toast;
 import com.cruzroja.creuroja.ConnectionClient;
 import com.cruzroja.creuroja.DirectionsLoader;
 import com.cruzroja.creuroja.Location;
-import com.cruzroja.creuroja.LocationsLoader;
 import com.cruzroja.creuroja.R;
 import com.cruzroja.creuroja.Settings;
+import com.cruzroja.creuroja.database.CreuRojaContract;
+import com.cruzroja.creuroja.database.CreuRojaProvider;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -57,11 +60,8 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
  * This methods should be modified when new kinds of locations are introduced.
- * -Variable definitions
- * onCreateView
- * onCheckedChanged
- * shouldShowMarker
- *
+ * -Variable definitions onCreateView onCheckedChanged shouldShowMarker
+ * 
  */
 public class CRMapFragment extends Fragment implements
 		GoogleMap.OnInfoWindowClickListener,
@@ -71,7 +71,7 @@ public class CRMapFragment extends Fragment implements
 
 	private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
-	private static final int LOCATIONS_FILE_LOADER = 1;
+	private static final int LOCATIONS_DB_LOADER = 1;
 	private static final int LOCATIONS_DOWNLOAD_LOADER = 2;
 	private static final int DIRECTIONS_LOADER = 3;
 
@@ -157,7 +157,7 @@ public class CRMapFragment extends Fragment implements
 			mGoogleMap = mapFragment.getMap();
 		}
 
-		loadDataFromFile();
+		loadDataFromDB();
 		setMap();
 
 		mLocationClient = new LocationClient(getActivity(), this, this);
@@ -177,8 +177,6 @@ public class CRMapFragment extends Fragment implements
 		mLocationClient.disconnect();
 		super.onStop();
 	}
-	
-	
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -273,8 +271,8 @@ public class CRMapFragment extends Fragment implements
 		return false;
 	}
 
-	private void loadDataFromFile() {
-		getLoaderManager().restartLoader(LOCATIONS_FILE_LOADER, null,
+	private void loadDataFromDB() {
+		getLoaderManager().restartLoader(LOCATIONS_DB_LOADER, null,
 				new LocationsLoaderHelper());
 	}
 
@@ -508,30 +506,50 @@ public class CRMapFragment extends Fragment implements
 		drawMarkers();
 	}
 
-	private class LocationsLoaderHelper implements
-			LoaderCallbacks<ArrayList<Location>> {
+	private class LocationsLoaderHelper implements LoaderCallbacks<Cursor> {
 
 		@Override
-		public Loader<ArrayList<Location>> onCreateLoader(int id, Bundle args) {
+		public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 			switch (id) {
-			case LOCATIONS_DOWNLOAD_LOADER:
-				return new LocationsLoader(getActivity(), false);
-			case LOCATIONS_FILE_LOADER:
-				return new LocationsLoader(getActivity(), true);
+			case LOCATIONS_DB_LOADER:
+
+				return new CursorLoader(getActivity(),
+						CreuRojaProvider.CONTENT_LOCATIONS, null, null, null,
+						null);
 			default:
 				return null;
 			}
 		}
 
 		@Override
-		public void onLoadFinished(Loader<ArrayList<Location>> loader,
-				ArrayList<Location> locations) {
-			mLocationList = locations;
-			drawMarkers();
+		public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+			if (cursor.moveToFirst()) {
+				if (mLocationList == null) {
+					mLocationList = new ArrayList<Location>();
+				}
+				do {
+				mLocationList
+						.add(new Location(
+								cursor.getDouble(cursor
+										.getColumnIndex(CreuRojaContract.Locations.LATITUD)),
+								cursor.getDouble(cursor
+										.getColumnIndex(CreuRojaContract.Locations.LONGITUD)),
+								cursor.getString(cursor
+										.getColumnIndex(CreuRojaContract.Locations.ICON)),
+								cursor.getString(cursor
+										.getColumnIndex(CreuRojaContract.Locations.NAME)),
+								cursor.getString(cursor
+										.getColumnIndex(CreuRojaContract.Locations.ADDRESS)),
+								cursor.getString(cursor
+										.getColumnIndex(CreuRojaContract.Locations.DETAILS))));
+				} while (cursor.moveToNext());
+				drawMarkers();
+			}
 		}
 
 		@Override
-		public void onLoaderReset(Loader<ArrayList<Location>> loader) {
+		public void onLoaderReset(Loader<Cursor> loader) {
+			// Nothing to do here
 		}
 
 	}
@@ -621,18 +639,18 @@ public class CRMapFragment extends Fragment implements
 
 	private void drawPolyline(ArrayList<LatLng> directions) {
 		if (mPolyline != null) {
-            mPolyline.remove();
-        }
-        if (mGoogleMap == null || directions == null) {
-            return;
-        }
-        if (directions.size() == 0) {
-            Toast.makeText(getActivity(), R.string.error_limit_reached,
-                    Toast.LENGTH_LONG).show();
-        }
+			mPolyline.remove();
+		}
+		if (mGoogleMap == null || directions == null) {
+			return;
+		}
+		if (directions.size() == 0) {
+			Toast.makeText(getActivity(), R.string.error_limit_reached,
+					Toast.LENGTH_LONG).show();
+		}
 
-        mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(directions)
-                .color(Color.parseColor("#CC0000")));
+		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(
+				directions).color(Color.parseColor("#CC0000")));
 	}
 
 	/*****************************
