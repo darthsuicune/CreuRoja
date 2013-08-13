@@ -42,7 +42,7 @@
             android:theme="@android:style/Theme.NoTitleBar" >
         </activity>
         <activity
-            android:name="com.cruzroja.creuroja.CRMapActivityity"
+            android:name="com.cruzroja.creuroja.CRMapActivity"
             android:label="@string/app_name" 
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
             android:launchMode="singleTop" >
