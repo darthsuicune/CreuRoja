@@ -35,6 +35,8 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.cruzroja.creuroja.utils.Settings;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -49,6 +51,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+/**
+ * This methods should be modified when new kinds of locations are introduced.
+ * -Variable definitions
+ * onCreateView
+ * onCheckedChanged
+ * shouldShowMarker
+ *
+ */
 public class CRMapFragment extends Fragment implements
 		GoogleMap.OnInfoWindowClickListener,
 		GooglePlayServicesClient.ConnectionCallbacks,

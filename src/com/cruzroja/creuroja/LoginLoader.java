@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.cruzroja.creuroja.utils.Settings;
+
 public class LoginLoader extends AsyncTaskLoader<Integer> {
 	public static final int UNKNOWN_ERROR = -1;
 	public static final int INVALID_CREDENTIALS = 1;

@@ -1,4 +1,4 @@
-package com.cruzroja.creuroja;
+package com.cruzroja.creuroja.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +20,8 @@ import org.apache.http.message.BasicHeader;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+import com.cruzroja.creuroja.Location;
+import com.cruzroja.creuroja.LoginLoader;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -36,9 +38,12 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class ConnectionClient {
 	// URLs
-	public static final String URL_LOGIN = "http://r0uzic.net/voluntarios.cr/user/login?q=android";
-	public static final String URL_PUNTOS_FIJOS = "http://r0uzic.net/voluntarios/permanentes.json";
-	public static final String URL_PUNTOS_VARIABLES = "http://r0uzic.net/voluntarios/temporales.json";
+	private static final String BASE_URL = "http://r0uzic.net/voluntarios/";
+	public static final String URL_LOGIN = BASE_URL + "user/login?q=android";
+	public static final String URL_PUNTOS_FIJOS = BASE_URL + "permanentes.json";
+	public static final String URL_PUNTOS_VARIABLES = BASE_URL
+			+ "temporales.json";
+
 	public static final String DIRECTIONS_API_BASE_URL = "https://maps.googleapis.com/maps/api/directions/json?region=es&";
 
 	public static final String ORIGIN_URL = "origin=";
@@ -62,16 +67,17 @@ public class ConnectionClient {
 
 	/**
 	 * Should be always called before using the internet connection.
+	 * 
 	 * @param context
 	 * @return
 	 */
 	public static boolean isConnected(Context context) {
 		ConnectivityManager cm = (ConnectivityManager) context
 				.getSystemService(Context.CONNECTIVITY_SERVICE);
-		if(cm.getActiveNetworkInfo() != null) {
+		if (cm.getActiveNetworkInfo() != null) {
 			return cm.getActiveNetworkInfo().isConnected();
 		}
-		
+
 		return false;
 	}
 

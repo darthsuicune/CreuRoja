@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.cruzroja.creuroja.utils.FileUtils;
+
 public class LocationsLoader extends AsyncTaskLoader<ArrayList<Location>> {
 	
 	private boolean fromFile;
