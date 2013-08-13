@@ -1,4 +1,4 @@
-package com.cruzroja.creuroja;
+package com.cruzroja.creuroja.utils;
 
 import android.content.Context;
 import android.preference.PreferenceManager;

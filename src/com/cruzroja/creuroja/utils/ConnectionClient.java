@@ -1,4 +1,4 @@
-package com.cruzroja.creuroja;
+package com.cruzroja.creuroja.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,6 +20,8 @@ import org.apache.http.message.BasicHeader;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+import com.cruzroja.creuroja.Location;
+import com.cruzroja.creuroja.LoginLoader;
 import com.google.android.gms.maps.model.LatLng;
 
 /**

@@ -12,6 +12,10 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
+import com.cruzroja.creuroja.R;
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.cruzroja.creuroja.utils.Settings;
+
 public class CRMapActivity extends ActionBarActivity implements
 		LoaderCallbacks<Integer> {
 	private static final int ACTIVITY_LOGIN = 1;
@@ -61,12 +65,6 @@ public class CRMapActivity extends ActionBarActivity implements
 		default:
 			break;
 		}
-	}
-
-	@Override
-	protected void onNewIntent(Intent intent) {
-		// TODO Auto-generated method stub
-		super.onNewIntent(intent);
 	}
 
 	@Override

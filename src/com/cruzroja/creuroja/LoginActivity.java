@@ -22,6 +22,10 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
+import com.cruzroja.creuroja.R;
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.cruzroja.creuroja.utils.Settings;
+
 public class LoginActivity extends FragmentActivity implements
 		LoaderCallbacks<Integer> {
 	private static final int LOGIN_LOADER = 1;

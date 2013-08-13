@@ -35,6 +35,9 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.cruzroja.creuroja.R;
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.cruzroja.creuroja.utils.Settings;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
