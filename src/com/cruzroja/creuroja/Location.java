@@ -12,6 +12,7 @@ public class Location {
     public static final String ICON_CUAP = "cuap.png";
     public static final String ICON_HOSPITAL = "hospital.png";
     public static final String ICON_MARITIMO = "maritimo.png";
+    public static final String ICON_NOSTRUM = "nostrum.png";
     public static final String ICON_TERRESTRE = "terrestre.png";
     public static final int NO_ICON = 0;
 
@@ -40,6 +41,8 @@ public class Location {
             return R.drawable.maritimo;
         } else if (icon.equals(ICON_TERRESTRE)) {
             return R.drawable.terrestre;
+        } else if (icon.equals(ICON_NOSTRUM)) {
+        	return R.drawable.nostrum;
         } else {
             return NO_ICON;
         }

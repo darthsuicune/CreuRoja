@@ -116,20 +116,22 @@ public class CRMapActivity extends ActionBarActivity implements
 	@Override
 	public void onLoadFinished(Loader<Integer> loader, Integer result) {
 		switch (result) {
-		case LoginLoader.INVALID_CREDENTIALS:
+		case Settings.INVALID_CREDENTIALS:
 			// The user has been invalidated by the system administrator.
 			Settings.clean(this);
 			finish();
 			break;
-		case LoginLoader.UNKNOWN_ERROR:
+		case Settings.LOGIN_UNKNOWN_ERROR:
 			// An error of other type has happened. We leave a log in the logcat
 			// but allow usage
 			Log.e(Settings.LOG, getString(R.string.error_connection));
 			break;
 		default:
 			// Any type of valid user will be redirected here. Usage is still
-			// allowed.
-			prefs.edit().putInt(Settings.USER_ROLE, result).commit();
+			// allowed. If the user has a new role, it will be changed.
+			if(result != prefs.getInt(Settings.USER_ROLE, 0)){
+				prefs.edit().putInt(Settings.USER_ROLE, result).commit();
+			}
 			return;
 		}
 	}

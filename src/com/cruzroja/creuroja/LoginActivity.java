@@ -172,11 +172,11 @@ public class LoginActivity extends FragmentActivity implements
 	@Override
 	public void onLoadFinished(Loader<Integer> loader, Integer result) {
 		switch (result) {
-		case LoginLoader.INVALID_CREDENTIALS:
+		case Settings.INVALID_CREDENTIALS:
 			mPasswordView.setText("");
 			mPasswordView.setError(getString(R.string.error_invalid_password));
 			break;
-		case LoginLoader.UNKNOWN_ERROR:
+		case Settings.LOGIN_UNKNOWN_ERROR:
 			Toast.makeText(this, getString(R.string.error_connection),
 					Toast.LENGTH_LONG).show();
 			break;

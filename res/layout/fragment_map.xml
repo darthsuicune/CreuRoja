@@ -88,6 +88,18 @@
 
                 <CheckBox android:id="@+id/checkbox_terrestre"/>
             </TableRow>
+            <TableRow
+                    android:gravity="center_vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:drawableLeft="@drawable/nostrum"
+                        android:drawablePadding="8dp"
+                        android:gravity="center_vertical"
+                        android:text="@string/marker_type_nostrum"/>
+
+                <CheckBox android:id="@+id/checkbox_nostrum"/>
+            </TableRow>
         </TableLayout>
     </ScrollView>
 

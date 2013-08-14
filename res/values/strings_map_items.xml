@@ -10,6 +10,7 @@
     <string name="marker_type_hospital">Hospitales</string>
     <string name="marker_type_maritimo">Preventivos marítimos</string>
     <string name="marker_type_terrestre">Preventivos terrestres</string>
+    <string name="marker_type_nostrum">Clave 2</string>
 
     <string-array name="map_styles">
         <item>@string/map_style_normal</item>
@@ -24,6 +25,7 @@
         <item>@string/marker_type_hospital</item>
         <item>@string/marker_type_maritimo</item>
         <item>@string/marker_type_terrestre</item>
+        <item>@string/marker_type_nostrum</item>
     </string-array>
 
 </resources>

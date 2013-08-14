@@ -53,14 +53,10 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
  * This methods should be modified when new kinds of locations are introduced.
- * -Variable definitions
- * onCreateView
- * onCheckedChanged
- * shouldShowMarker
- *
+ * -Variable definitions onCreateView onCheckedChanged shouldShowMarker
+ * 
  */
-public class CRMapFragment extends Fragment implements
-		GoogleMap.OnInfoWindowClickListener,
+public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener,
 		CompoundButton.OnCheckedChangeListener, SearchView.OnQueryTextListener {
@@ -85,6 +81,7 @@ public class CRMapFragment extends Fragment implements
 	private CheckBox mHospitalCheckBox;
 	private CheckBox mMaritimoCheckBox;
 	private CheckBox mTerrestreCheckBox;
+	private CheckBox mNostrumCheckBox;
 
 	public String mFilter = "";
 
@@ -96,37 +93,28 @@ public class CRMapFragment extends Fragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_map, container, false);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 		mMarkerPanel = v.findViewById(R.id.marker_panel);
 
 		if (mMarkerPanel != null) {
-			mAsambleaCheckBox = (CheckBox) v
-					.findViewById(R.id.checkbox_asamblea);
+			mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
 			mBravoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_bravo);
 			mCuapCheckBox = (CheckBox) v.findViewById(R.id.checkbox_cuap);
-			mHospitalCheckBox = (CheckBox) v
-					.findViewById(R.id.checkbox_hospital);
-			mMaritimoCheckBox = (CheckBox) v
-					.findViewById(R.id.checkbox_maritimo);
-			mTerrestreCheckBox = (CheckBox) v
-					.findViewById(R.id.checkbox_terrestre);
+			mHospitalCheckBox = (CheckBox) v.findViewById(R.id.checkbox_hospital);
+			mMaritimoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_maritimo);
+			mTerrestreCheckBox = (CheckBox) v.findViewById(R.id.checkbox_terrestre);
+			mNostrumCheckBox = (CheckBox) v.findViewById(R.id.checkbox_nostrum);
 
-			mAsambleaCheckBox.setChecked(prefs.getBoolean(
-					Settings.SHOW_ASAMBLEA, true));
-			mBravoCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_BRAVO,
-					true));
-			mCuapCheckBox
-					.setChecked(prefs.getBoolean(Settings.SHOW_CUAP, true));
-			mHospitalCheckBox.setChecked(prefs.getBoolean(
-					Settings.SHOW_HOSPITAL, true));
-			mMaritimoCheckBox.setChecked(prefs.getBoolean(
-					Settings.SHOW_MARITIMO, true));
-			mTerrestreCheckBox.setChecked(prefs.getBoolean(
-					Settings.SHOW_TERRESTRE, true));
+			mAsambleaCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_ASAMBLEA, true));
+			mBravoCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_BRAVO, true));
+			mCuapCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_CUAP, true));
+			mHospitalCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_HOSPITAL, true));
+			mMaritimoCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_MARITIMO, true));
+			mTerrestreCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_TERRESTRE, true));
+			mNostrumCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_NOSTRUM, true));
 
 			mAsambleaCheckBox.setOnCheckedChangeListener(this);
 			mBravoCheckBox.setOnCheckedChangeListener(this);
@@ -134,6 +122,7 @@ public class CRMapFragment extends Fragment implements
 			mHospitalCheckBox.setOnCheckedChangeListener(this);
 			mMaritimoCheckBox.setOnCheckedChangeListener(this);
 			mTerrestreCheckBox.setOnCheckedChangeListener(this);
+			mNostrumCheckBox.setOnCheckedChangeListener(this);
 		}
 		return v;
 	}
@@ -173,8 +162,6 @@ public class CRMapFragment extends Fragment implements
 		mLocationClient.disconnect();
 		super.onStop();
 	}
-	
-	
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -244,16 +231,14 @@ public class CRMapFragment extends Fragment implements
 	 * Check that Google Play services is available
 	 */
 	private boolean requestGooglePlayServicesAvailability() {
-		int resultCode = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(getActivity());
+		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
 		// If Google Play services is available
 		if (ConnectionResult.SUCCESS == resultCode) {
 			return true;
 			// Google Play services was not available for some reason
 		} else {
 			// Get the error dialog from Google Play services
-			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(
-					resultCode, getActivity(),
+			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(),
 					CONNECTION_FAILURE_RESOLUTION_REQUEST);
 
 			// If Google Play services can provide an error dialog
@@ -270,8 +255,7 @@ public class CRMapFragment extends Fragment implements
 	}
 
 	private void loadDataFromFile() {
-		getLoaderManager().restartLoader(LOCATIONS_FILE_LOADER, null,
-				new LocationsLoaderHelper());
+		getLoaderManager().restartLoader(LOCATIONS_FILE_LOADER, null, new LocationsLoaderHelper());
 	}
 
 	private void downloadNewData() {
@@ -279,8 +263,7 @@ public class CRMapFragment extends Fragment implements
 			getLoaderManager().restartLoader(LOCATIONS_DOWNLOAD_LOADER, null,
 					new LocationsLoaderHelper());
 		} else {
-			Toast.makeText(getActivity(), R.string.error_no_connection,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -290,11 +273,10 @@ public class CRMapFragment extends Fragment implements
 
 	private void setMap() {
 		if (mGoogleMap == null) {
-			mGoogleMap = ((SupportMapFragment) getFragmentManager()
-					.findFragmentById(R.id.map)).getMap();
+			mGoogleMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
+					.getMap();
 			if (mGoogleMap != null) {
-				setMapStyle(prefs.getInt(Settings.MAP_STYLE,
-						Settings.MAP_STYLE_NORMAL));
+				setMapStyle(prefs.getInt(Settings.MAP_STYLE, Settings.MAP_STYLE_NORMAL));
 				mGoogleMap.setMyLocationEnabled(true);
 				mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
 				mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -335,14 +317,11 @@ public class CRMapFragment extends Fragment implements
 		if (mGoogleMap != null) {
 			if (locationServicesAreEnabled()) {
 				if (mLocationClient.getLastLocation() != null) {
-					mGoogleMap.animateCamera(CameraUpdateFactory
-							.newLatLng(new LatLng(mLocationClient
-									.getLastLocation().getLatitude(),
-									mLocationClient.getLastLocation()
-											.getLongitude())));
+					mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(
+							mLocationClient.getLastLocation().getLatitude(), mLocationClient
+									.getLastLocation().getLongitude())));
 				} else {
-					Toast.makeText(getActivity(), R.string.locating,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), R.string.locating, Toast.LENGTH_SHORT).show();
 				}
 			} else {
 				showLocationSettings();
@@ -380,11 +359,10 @@ public class CRMapFragment extends Fragment implements
 				continue;
 			}
 
-			MarkerOptions marker = new MarkerOptions().position(new LatLng(
-					location.mLat, location.mLong));
+			MarkerOptions marker = new MarkerOptions().position(new LatLng(location.mLat,
+					location.mLong));
 			if (location.mIcono != 0) {
-				marker.icon(BitmapDescriptorFactory
-						.fromResource(location.mIcono));
+				marker.icon(BitmapDescriptorFactory.fromResource(location.mIcono));
 			}
 			if (location.mContenido.mNombre != null) {
 				marker.title(location.mContenido.mNombre);
@@ -407,12 +385,11 @@ public class CRMapFragment extends Fragment implements
 			return;
 		}
 		if (points.size() == 0) {
-			Toast.makeText(getActivity(), R.string.error_limit_reached,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.error_limit_reached, Toast.LENGTH_LONG).show();
 		}
 
-		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(points)
-				.color(Color.parseColor("#CC0000")));
+		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(points).color(
+				Color.parseColor("#CC0000")));
 	}
 
 	private void showMarkerPanel() {
@@ -442,6 +419,8 @@ public class CRMapFragment extends Fragment implements
 			return prefs.getBoolean(Settings.SHOW_MARITIMO, true);
 		case R.drawable.terrestre:
 			return prefs.getBoolean(Settings.SHOW_TERRESTRE, true);
+		case R.drawable.nostrum:
+			return prefs.getBoolean(Settings.SHOW_NOSTRUM, true);
 		default:
 			return true;
 		}
@@ -467,10 +446,9 @@ public class CRMapFragment extends Fragment implements
 	@SuppressLint("DefaultLocale")
 	private String dehyphenize(String input) {
 		input = input.toLowerCase();
-		return input.replace("à", "a").replace("á", "a").replace("é", "e")
-				.replace("è", "e").replace("í", "i").replace("ì", "i")
-				.replace("ó", "o").replace("ò", "o").replace("ú", "u")
-				.replace("ù", "u");
+		return input.replace("à", "a").replace("á", "a").replace("é", "e").replace("è", "e")
+				.replace("í", "i").replace("ì", "i").replace("ó", "o").replace("ò", "o")
+				.replace("ú", "u").replace("ù", "u");
 	}
 
 	/**************************
@@ -499,13 +477,15 @@ public class CRMapFragment extends Fragment implements
 		case R.id.checkbox_terrestre:
 			editor.putBoolean(Settings.SHOW_TERRESTRE, isChecked);
 			break;
+		case R.id.checkbox_nostrum:
+			editor.putBoolean(Settings.SHOW_NOSTRUM, isChecked);
+			break;
 		}
 		editor.commit();
 		drawMarkers();
 	}
 
-	private class LocationsLoaderHelper implements
-			LoaderCallbacks<ArrayList<Location>> {
+	private class LocationsLoaderHelper implements LoaderCallbacks<ArrayList<Location>> {
 
 		@Override
 		public Loader<ArrayList<Location>> onCreateLoader(int id, Bundle args) {
@@ -520,8 +500,7 @@ public class CRMapFragment extends Fragment implements
 		}
 
 		@Override
-		public void onLoadFinished(Loader<ArrayList<Location>> loader,
-				ArrayList<Location> locations) {
+		public void onLoadFinished(Loader<ArrayList<Location>> loader, ArrayList<Location> locations) {
 			mLocationList = locations;
 			drawMarkers();
 		}
@@ -541,22 +520,18 @@ public class CRMapFragment extends Fragment implements
 		@Override
 		public View getInfoContents(Marker marker) {
 			View v = ((LayoutInflater) getActivity().getSystemService(
-					Context.LAYOUT_INFLATER_SERVICE)).inflate(
-					R.layout.map_marker, null);
+					Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.map_marker, null);
 
-			((TextView) v.findViewById(R.id.location)).setText(marker
-					.getTitle());
+			((TextView) v.findViewById(R.id.location)).setText(marker.getTitle());
 
 			if (marker.getSnippet() != null) {
 				String address = marker.getSnippet().substring(0,
 						marker.getSnippet().indexOf(Location.MARKER_NEW_LINE));
 				String other = marker.getSnippet().substring(
 						marker.getSnippet().indexOf(Location.MARKER_NEW_LINE)
-								+ Location.MARKER_NEW_LINE.length(),
-						marker.getSnippet().length());
+								+ Location.MARKER_NEW_LINE.length(), marker.getSnippet().length());
 				((TextView) v.findViewById(R.id.address)).setText(address);
-				((TextView) v.findViewById(R.id.other_information))
-						.setText(other);
+				((TextView) v.findViewById(R.id.other_information)).setText(other);
 			}
 
 			return v;
@@ -575,19 +550,16 @@ public class CRMapFragment extends Fragment implements
 		if (locationServicesAreEnabled()) {
 			if (mLocationClient.getLastLocation() != null) {
 				Bundle args = new Bundle();
-				args.putDouble(DirectionsLoader.ARG_ORIG_LAT, mLocationClient
-						.getLastLocation().getLatitude());
-				args.putDouble(DirectionsLoader.ARG_ORIG_LONG, mLocationClient
-						.getLastLocation().getLongitude());
-				args.putDouble(DirectionsLoader.ARG_DEST_LAT,
-						marker.getPosition().latitude);
-				args.putDouble(DirectionsLoader.ARG_DEST_LONG,
-						marker.getPosition().longitude);
+				args.putDouble(DirectionsLoader.ARG_ORIG_LAT, mLocationClient.getLastLocation()
+						.getLatitude());
+				args.putDouble(DirectionsLoader.ARG_ORIG_LONG, mLocationClient.getLastLocation()
+						.getLongitude());
+				args.putDouble(DirectionsLoader.ARG_DEST_LAT, marker.getPosition().latitude);
+				args.putDouble(DirectionsLoader.ARG_DEST_LONG, marker.getPosition().longitude);
 				getLoaderManager().restartLoader(DIRECTIONS_LOADER, args,
 						new DirectionsLoaderHelper());
 			} else {
-				Toast.makeText(getActivity(), R.string.locating,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.locating, Toast.LENGTH_SHORT).show();
 			}
 		} else {
 			showLocationSettings();
@@ -595,8 +567,7 @@ public class CRMapFragment extends Fragment implements
 
 	}
 
-	private class DirectionsLoaderHelper implements
-			LoaderCallbacks<ArrayList<LatLng>> {
+	private class DirectionsLoaderHelper implements LoaderCallbacks<ArrayList<LatLng>> {
 
 		@Override
 		public Loader<ArrayList<LatLng>> onCreateLoader(int id, Bundle args) {
@@ -604,8 +575,7 @@ public class CRMapFragment extends Fragment implements
 		}
 
 		@Override
-		public void onLoadFinished(Loader<ArrayList<LatLng>> loader,
-				ArrayList<LatLng> directions) {
+		public void onLoadFinished(Loader<ArrayList<LatLng>> loader, ArrayList<LatLng> directions) {
 			drawPolyline(directions);
 		}
 
@@ -617,18 +587,17 @@ public class CRMapFragment extends Fragment implements
 
 	private void drawPolyline(ArrayList<LatLng> directions) {
 		if (mPolyline != null) {
-            mPolyline.remove();
-        }
-        if (mGoogleMap == null || directions == null) {
-            return;
-        }
-        if (directions.size() == 0) {
-            Toast.makeText(getActivity(), R.string.error_limit_reached,
-                    Toast.LENGTH_LONG).show();
-        }
+			mPolyline.remove();
+		}
+		if (mGoogleMap == null || directions == null) {
+			return;
+		}
+		if (directions.size() == 0) {
+			Toast.makeText(getActivity(), R.string.error_limit_reached, Toast.LENGTH_LONG).show();
+		}
 
-        mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(directions)
-                .color(Color.parseColor("#CC0000")));
+		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(directions).color(
+				Color.parseColor("#CC0000")));
 	}
 
 	/*****************************
@@ -656,8 +625,7 @@ public class CRMapFragment extends Fragment implements
 				e.printStackTrace();
 			}
 		} else {
-			Toast.makeText(getActivity(), R.string.location_unavailable,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.location_unavailable, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -719,13 +687,12 @@ public class CRMapFragment extends Fragment implements
 
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setSearchOptions(Menu menu) {
-		SearchManager searchManager = (SearchManager) getActivity()
-				.getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.search)
-				.getActionView();
+		SearchManager searchManager = (SearchManager) getActivity().getSystemService(
+				Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
 		if (searchView != null) {
-			searchView.setSearchableInfo(searchManager
-					.getSearchableInfo(getActivity().getComponentName()));
+			searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity()
+					.getComponentName()));
 
 			searchView.setOnQueryTextListener(this);
 		}
