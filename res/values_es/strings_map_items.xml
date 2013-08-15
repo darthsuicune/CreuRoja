@@ -8,8 +8,8 @@
     <string name="marker_type_cuap">CUAPs</string>
     <string name="marker_type_bravo">Bravos</string>
     <string name="marker_type_hospital">Hospitales</string>
-    <string name="marker_type_maritimo">Preventivos marítimos</string>
-    <string name="marker_type_terrestre">Preventivos terrestres</string>
+    <string name="marker_type_maritimo">Marítimos</string>
+    <string name="marker_type_terrestre">Preventivos</string>
     <string name="marker_type_nostrum">Clave 2</string>
 
     <string-array name="map_styles">
