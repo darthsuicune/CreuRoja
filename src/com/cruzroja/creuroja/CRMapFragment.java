@@ -52,8 +52,8 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
- * This methods should be modified when new kinds of locations are introduced.
- * -Variable definitions onCreateView onCheckedChanged shouldShowMarker
+ * This methods should be modified when new kinds of locations are introduced. -Variable definitions
+ * onCreateView onCheckedChanged shouldShowMarker
  * 
  */
 public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,
@@ -68,6 +68,8 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	private static final int DIRECTIONS_LOADER = 3;
 
 	private SharedPreferences prefs;
+
+	private User mUser;
 
 	private ArrayList<Location> mLocationList;
 
@@ -489,14 +491,20 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
 		@Override
 		public Loader<ArrayList<Location>> onCreateLoader(int id, Bundle args) {
-			switch (id) {
-			case LOCATIONS_DOWNLOAD_LOADER:
-				return new LocationsLoader(getActivity(), false);
-			case LOCATIONS_FILE_LOADER:
-				return new LocationsLoader(getActivity(), true);
-			default:
+			if (ConnectionClient.isConnected(getActivity())) {
+				switch (id) {
+				case LOCATIONS_DOWNLOAD_LOADER:
+					return new LocationsLoader(getActivity(), false);
+				case LOCATIONS_FILE_LOADER:
+					return new LocationsLoader(getActivity(), true);
+				default:
+					return null;
+				}
+			} else {
+				Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
 				return null;
 			}
+
 		}
 
 		@Override
@@ -571,7 +579,12 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
 		@Override
 		public Loader<ArrayList<LatLng>> onCreateLoader(int id, Bundle args) {
-			return new DirectionsLoader(getActivity(), args);
+			if (ConnectionClient.isConnected(getActivity())) {
+				return new DirectionsLoader(getActivity(), args);
+			} else {
+				Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
+				return null;
+			}
 		}
 
 		@Override
@@ -607,9 +620,8 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	public void onConnectionFailed(ConnectionResult connectionResult) {
 
 		/*
-		 * Google Play services can resolve some errors it detects. If the error
-		 * has a resolution, try sending an Intent to start a Google Play
-		 * services activity that can resolve error.
+		 * Google Play services can resolve some errors it detects. If the error has a resolution,
+		 * try sending an Intent to start a Google Play services activity that can resolve error.
 		 */
 		if (connectionResult.hasResolution()) {
 			try {
@@ -617,8 +629,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 				connectionResult.startResolutionForResult(getActivity(),
 						CONNECTION_FAILURE_RESOLUTION_REQUEST);
 				/*
-				 * Thrown if Google Play services canceled the original
-				 * PendingIntent
+				 * Thrown if Google Play services canceled the original PendingIntent
 				 */
 			} catch (IntentSender.SendIntentException e) {
 				// Log the error
@@ -698,9 +709,13 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 		}
 	}
 
-	/***************************************
-	 * Other calls required for interfaces *
-	 ***************************************/
+	/****************
+	 * Other calls  *
+	 ****************/
+	
+	public void setUser(User user){
+		mUser = user;
+	}
 
 	@Override
 	public void onConnected(Bundle args) {

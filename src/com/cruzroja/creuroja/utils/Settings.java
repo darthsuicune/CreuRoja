@@ -3,6 +3,8 @@ package com.cruzroja.creuroja.utils;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
+import com.cruzroja.creuroja.User;
+
 public class Settings {
 	public static final String IS_VALID_USER = "isValidUser";
 	public static final String LOG = "CreuRoja log";
@@ -17,22 +19,32 @@ public class Settings {
 	public static final String SHOW_NOSTRUM = "showNostrum";
 	public static final String SHOW_TERRESTRE = "showTerrestre";
 
-    public static final String MAP_STYLE = "mapStyle";
+	public static final String MAP_STYLE = "mapStyle";
 	public static final int MAP_STYLE_NORMAL = 0;
 	public static final int MAP_STYLE_HYBRID = 1;
 	public static final int MAP_STYLE_TERRAIN = 2;
 	public static final int MAP_STYLE_SATELLITE = 3;
-	
-	public static final String USER_ROLE = "userRole";
-	public static final int LOGIN_UNKNOWN_ERROR = -1;
-	public static final int INVALID_CREDENTIALS = 0;
-	public static final int USER_ROLE_ADMIN = 1;
-	public static final int USER_ROLE_REGISTERED = 2;
-	public static final int USER_ROLE_ACUATICO = 3;
+
+	public static final String LOGIN_UNKNOWN_ERROR = "loginError";
+	public static final String INVALID_CREDENTIALS = "invalidCredentials";
 
 	public static void clean(Context context) {
 		FileUtils.removeFiles();
-		PreferenceManager.getDefaultSharedPreferences(context).edit().clear()
-				.commit();
+		PreferenceManager.getDefaultSharedPreferences(context).edit().clear().commit();
 	}
+
+	public static String getEncodedPassword(String password) {
+		return password;
+	}
+
+	public static String getDecodedPassword(Context context) {
+		return PreferenceManager.getDefaultSharedPreferences(context).getString(PASSWORD, "");
+	}
+
+	public static void saveLoginData(Context context, User user, String password) {
+		PreferenceManager.getDefaultSharedPreferences(context).edit()
+				.putBoolean(Settings.IS_VALID_USER, true).putString(Settings.USERNAME, user.mName)
+				.putString(Settings.PASSWORD, getEncodedPassword(password)).commit();
+	}
+
 }

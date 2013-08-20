@@ -11,12 +11,12 @@ import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.cruzroja.creuroja.utils.ConnectionClient;
 import com.cruzroja.creuroja.utils.Settings;
 
-public class CRMapActivity extends ActionBarActivity implements
-		LoaderCallbacks<Integer> {
+public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<User> {
 	private static final int ACTIVITY_LOGIN = 1;
 	private static final int LOGIN_LOADER = 1;
 
@@ -29,8 +29,7 @@ public class CRMapActivity extends ActionBarActivity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_map);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setBackgroundDrawable(
-				new ColorDrawable(Color.parseColor("#CC0000")));
+		getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#CC0000")));
 
 		if (savedInstanceState != null) {
 			return;
@@ -66,6 +65,9 @@ public class CRMapActivity extends ActionBarActivity implements
 		}
 	}
 
+	/**
+	 * TODO: Needed???
+	 */
 	@Override
 	protected void onNewIntent(Intent intent) {
 		// TODO Auto-generated method stub
@@ -85,8 +87,7 @@ public class CRMapActivity extends ActionBarActivity implements
 
 	private void showMap() {
 
-		mMapFragment = (CRMapFragment) Fragment.instantiate(this,
-				CRMapFragment.class.getName());
+		mMapFragment = (CRMapFragment) Fragment.instantiate(this, CRMapFragment.class.getName());
 		mMapFragment.setHasOptionsMenu(true);
 		mMapFragment.setRetainInstance(true);
 		getSupportFragmentManager().beginTransaction()
@@ -100,43 +101,42 @@ public class CRMapActivity extends ActionBarActivity implements
 	private void checkCredentials() {
 		if (ConnectionClient.isConnected(this)) {
 			Bundle args = new Bundle();
-			args.putString(Settings.USERNAME,
-					prefs.getString(Settings.USERNAME, ""));
-			args.putString(Settings.PASSWORD,
-					prefs.getString(Settings.PASSWORD, ""));
+			args.putString(Settings.USERNAME, prefs.getString(Settings.USERNAME, ""));
+			args.putString(Settings.PASSWORD, prefs.getString(Settings.PASSWORD, ""));
 			getSupportLoaderManager().restartLoader(LOGIN_LOADER, args, this);
 		}
 	}
 
 	@Override
-	public Loader<Integer> onCreateLoader(int id, Bundle args) {
-		return new LoginLoader(this, args);
-	}
-
-	@Override
-	public void onLoadFinished(Loader<Integer> loader, Integer result) {
-		switch (result) {
-		case Settings.INVALID_CREDENTIALS:
-			// The user has been invalidated by the system administrator.
-			Settings.clean(this);
-			finish();
-			break;
-		case Settings.LOGIN_UNKNOWN_ERROR:
-			// An error of other type has happened. We leave a log in the logcat
-			// but allow usage
-			Log.e(Settings.LOG, getString(R.string.error_connection));
-			break;
-		default:
-			// Any type of valid user will be redirected here. Usage is still
-			// allowed. If the user has a new role, it will be changed.
-			if(result != prefs.getInt(Settings.USER_ROLE, 0)){
-				prefs.edit().putInt(Settings.USER_ROLE, result).commit();
-			}
-			return;
+	public Loader<User> onCreateLoader(int id, Bundle args) {
+		if (ConnectionClient.isConnected(this)) {
+			return new LoginLoader(CRMapActivity.this, args);
+		} else {
+			return null;
 		}
 	}
 
 	@Override
-	public void onLoaderReset(Loader<Integer> loader) {
+	public void onLoadFinished(Loader<User> loader, User result) {
+		if (result != null) {
+			if (!result.mName.equals("")) {
+				// Valid user
+				mMapFragment.setUser(result);
+				return;
+			} else { 
+				// The user has been invalidated by the system administrator.
+				Settings.clean(this);
+				Toast.makeText(this, R.string.error_user_invalidated, Toast.LENGTH_LONG).show();
+				finish();
+			}
+
+		} else {
+			// There was a problem with the connection or with the server. Usage is allowed.
+			Log.e(Settings.LOG, getString(R.string.error_connection));
+		}
+	}
+
+	@Override
+	public void onLoaderReset(Loader<User> loader) {
 	}
 }

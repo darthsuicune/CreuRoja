@@ -7,7 +7,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import com.cruzroja.creuroja.utils.ConnectionClient;
 import com.cruzroja.creuroja.utils.Settings;
 
-public class LoginLoader extends AsyncTaskLoader<Integer> {
+public class LoginLoader extends AsyncTaskLoader<User> {
 	private String mUsername;
 	private String mPassword;
 	private boolean isStarted = false;
@@ -28,7 +28,7 @@ public class LoginLoader extends AsyncTaskLoader<Integer> {
 	}
 
 	@Override
-	public Integer loadInBackground() {
+	public User loadInBackground() {
 		return ConnectionClient.doLogin(mUsername, mPassword);
 	}
 

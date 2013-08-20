@@ -2,7 +2,6 @@ package com.cruzroja.creuroja.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -21,6 +20,7 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 
 import com.cruzroja.creuroja.Location;
+import com.cruzroja.creuroja.User;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -39,8 +39,7 @@ public class ConnectionClient {
 	// URLs
 	private static final String BASE_URL = "http://r0uzic.net/voluntarios/";
 	public static final String URL_LOGIN = BASE_URL + "user/login?q=android";
-	public static final String URL_PUNTOS_FIJOS = BASE_URL + "permanentes.json";
-	public static final String URL_PUNTOS_VARIABLES = BASE_URL + "temporales.json";
+	public static final String URL_PUNTOS = BASE_URL + "map/marcadores.json";
 
 	public static final String DIRECTIONS_API_BASE_URL = "https://maps.googleapis.com/maps/api/directions/json?region=es&";
 
@@ -64,6 +63,36 @@ public class ConnectionClient {
 	}
 
 	/**
+	 * 	 * Method to call to perform a credentials validation.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return null with server error. 
+	 */
+	public static User doLogin(String username, String password) {
+		return parseLoginResponse(makeConnection(buildLoginRequest(username, password)));
+	}
+
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static ArrayList<Location> downloadLocations(Context context) {
+		return parseLocationsResponse(context, makeConnection(new HttpGet(URL_PUNTOS)));
+	}
+
+	public static ArrayList<LatLng> getDirections(double originLatitud, double originLongitud,
+			double destinationLatitud, double destinationLongitud) {
+		return parseDirectionsResponse(makeConnection(buildDirectionsRequest(originLatitud,
+				originLongitud, destinationLatitud, destinationLongitud)));
+	}
+	
+	/*******************
+	 * Utility methods *
+	 *******************/
+	
+	/**
 	 * Should be always called before using the internet connection.
 	 * 
 	 * @param context
@@ -77,34 +106,6 @@ public class ConnectionClient {
 		}
 
 		return false;
-	}
-
-	/**
-	 * Method to call to perform a credentials validation.
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	public static int doLogin(String username, String password) {
-		return parseLoginResponse(makeConnection(buildLoginRequest(username, password)));
-	}
-
-	public static ArrayList<Location> downloadLocations(Context context) {
-		ArrayList<Location> result = null;
-		result = parseLocationsResponse(context, makeConnection(new HttpGet(URL_PUNTOS_FIJOS)),
-				true);
-		if (result != null) {
-			result.addAll(parseLocationsResponse(context, makeConnection(new HttpGet(
-					URL_PUNTOS_VARIABLES)), false));
-		}
-		return result;
-	}
-
-	public static ArrayList<LatLng> getDirections(double originLatitud, double originLongitud,
-			double destinationLatitud, double destinationLongitud) {
-		return parseDirectionsResponse(makeConnection(buildDirectionsRequest(originLatitud,
-				originLongitud, destinationLatitud, destinationLongitud)));
 	}
 
 	private static HttpResponse makeConnection(HttpUriRequest request) {
@@ -140,56 +141,26 @@ public class ConnectionClient {
 		return request;
 	}
 
-	private static int parseLoginResponse(HttpResponse response) {
+	private static User parseLoginResponse(HttpResponse response) {
 		if (response != null && response.getStatusLine() != null) {
 			switch (response.getStatusLine().getStatusCode()) {
 			case 200:
 				// Success in the connection. Check response
 				try {
-					return getUserRole(response.getEntity().getContent());
+					return new User(response.getEntity().getContent());
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
-					break;
+					return null;
 				} catch (IOException e) {
 					e.printStackTrace();
-					break;
+					return null;
 				}
 			default:
-				return response.getStatusLine().getStatusCode();
+				return null;
 			}
+		} else {
+			return null;
 		}
-		return Settings.LOGIN_UNKNOWN_ERROR;
-	}
-
-	/**
-	 * 
-	 * @param stream
-	 * @return int defined in LOGIN_LOADER corresponding to the user role.
-	 *         INVALID_CREDENTIALS if user is not registered or used a wrong
-	 *         password
-	 * @throws IOException
-	 *             An error in reading the information should be just catched
-	 *             and printed, done in the previous call
-	 */
-	private static int getUserRole(InputStream stream) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		String line;
-		ArrayList<Integer> roles = new ArrayList<Integer>();
-		while ((line = reader.readLine()) != null) {
-			if (line.contains("authenticated user")) {
-				roles.add(Settings.USER_ROLE_REGISTERED);
-				return Settings.USER_ROLE_REGISTERED; //TODO: REMOVE!!!
-			} else if (line.contains("administrador")) {
-				roles.add(Settings.USER_ROLE_ADMIN);
-				return Settings.USER_ROLE_ADMIN; //TODO: REMOVE!!!
-			} else if (line.contains("acuático")) {
-				roles.add(Settings.USER_ROLE_ACUATICO);
-				return Settings.USER_ROLE_ACUATICO; //TODO: REMOVE!!!
-			}
-
-			// Insert all possible remaining cases here
-		}
-		return Settings.INVALID_CREDENTIALS;
 	}
 
 	/*****************************
@@ -197,7 +168,7 @@ public class ConnectionClient {
 	 *****************************/
 
 	private static ArrayList<Location> parseLocationsResponse(Context context,
-			HttpResponse response, boolean isFijo) {
+			HttpResponse response) {
 		ArrayList<Location> result = null;
 		if (response.getStatusLine() != null) {
 			switch (response.getStatusLine().getStatusCode()) {
@@ -220,7 +191,7 @@ public class ConnectionClient {
 					// Parse the resulting string. Save to disk if its correct
 					result = JSONParser.parseLocations(data);
 					if (result != null && !result.isEmpty()) {
-						FileUtils.writeToFile(context, data, isFijo);
+						FileUtils.writeToFile(context, data);
 					}
 				} catch (IllegalStateException e) {
 					e.printStackTrace();

@@ -3,11 +3,9 @@ package com.cruzroja.creuroja;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -25,11 +23,8 @@ import android.widget.Toast;
 import com.cruzroja.creuroja.utils.ConnectionClient;
 import com.cruzroja.creuroja.utils.Settings;
 
-public class LoginActivity extends FragmentActivity implements
-		LoaderCallbacks<Integer> {
+public class LoginActivity extends FragmentActivity implements LoaderCallbacks<User> {
 	private static final int LOGIN_LOADER = 1;
-
-	private SharedPreferences prefs;
 
 	private EditText mUsernameView;
 	private EditText mPasswordView;
@@ -44,15 +39,13 @@ public class LoginActivity extends FragmentActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
 		mUsernameView = (EditText) findViewById(R.id.username);
 		mPasswordView = (EditText) findViewById(R.id.password);
 		mPasswordView.setOnEditorActionListener(new OnEditorActionListener() {
 
 			@Override
-			public boolean onEditorAction(TextView v, int actionId,
-					KeyEvent event) {
+			public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 				if (actionId == EditorInfo.IME_ACTION_GO) {
 					attemptLogin();
 					return true;
@@ -76,9 +69,9 @@ public class LoginActivity extends FragmentActivity implements
 	}
 
 	/**
-	 * Attempts to sign in the account specified by the login form. If there are
-	 * form errors (invalid username, missing fields, etc.), the errors are
-	 * presented and no actual login attempt is made.
+	 * Attempts to sign in the account specified by the login form. If there are form errors
+	 * (invalid username, missing fields, etc.), the errors are presented and no actual login
+	 * attempt is made.
 	 */
 	public void attemptLogin() {
 
@@ -119,8 +112,7 @@ public class LoginActivity extends FragmentActivity implements
 			args.putString(Settings.PASSWORD, mPassword);
 			getSupportLoaderManager().restartLoader(LOGIN_LOADER, args, this);
 		} else {
-			Toast.makeText(this, R.string.error_login_no_connection,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(this, R.string.error_login_no_connection, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -133,28 +125,23 @@ public class LoginActivity extends FragmentActivity implements
 		// for very easy animations. If available, use these APIs to fade-in
 		// the progress spinner.
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-			int shortAnimTime = getResources().getInteger(
-					android.R.integer.config_shortAnimTime);
+			int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 			mLoginStatusView.setVisibility(View.VISIBLE);
-			mLoginStatusView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 1 : 0)
+			mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0)
 					.setListener(new AnimatorListenerAdapter() {
 						@Override
 						public void onAnimationEnd(Animator animation) {
-							mLoginStatusView.setVisibility(show ? View.VISIBLE
-									: View.GONE);
+							mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
 						}
 					});
 
 			mLoginFormView.setVisibility(View.VISIBLE);
-			mLoginFormView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 0 : 1)
+			mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1)
 					.setListener(new AnimatorListenerAdapter() {
 						@Override
 						public void onAnimationEnd(Animator animation) {
-							mLoginFormView.setVisibility(show ? View.GONE
-									: View.VISIBLE);
+							mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 						}
 					});
 		} else {
@@ -166,32 +153,33 @@ public class LoginActivity extends FragmentActivity implements
 	}
 
 	@Override
-	public Loader<Integer> onCreateLoader(int id, Bundle args) {
-		return new LoginLoader(LoginActivity.this, args);
+	public Loader<User> onCreateLoader(int id, Bundle args) {
+		if(ConnectionClient.isConnected(this)){
+			return new LoginLoader(LoginActivity.this, args);
+		} else {
+			Toast.makeText(this, R.string.error_no_connection, Toast.LENGTH_LONG).show();
+			return null;
+		}
 	}
+
 	@Override
-	public void onLoadFinished(Loader<Integer> loader, Integer result) {
-		switch (result) {
-		case Settings.INVALID_CREDENTIALS:
-			mPasswordView.setText("");
-			mPasswordView.setError(getString(R.string.error_invalid_password));
-			break;
-		case Settings.LOGIN_UNKNOWN_ERROR:
-			Toast.makeText(this, getString(R.string.error_connection),
-					Toast.LENGTH_LONG).show();
-			break;
-		default:
-			prefs.edit().putBoolean(Settings.IS_VALID_USER, true)
-					.putString(Settings.USERNAME, mUsername)
-					.putString(Settings.PASSWORD, mPassword)
-					.putInt(Settings.USER_ROLE, result).commit();
-			showMap();
-			return;
+	public void onLoadFinished(Loader<User> loader, User result) {
+		if (result != null) {
+			if (!result.mName.equals("")) { // Valid user
+				Settings.saveLoginData(this, result, mPassword);
+				showMap();
+				return;
+			} else { // An invalid user/password will send an empty username
+				mPasswordView.setText("");
+				Toast.makeText(this, R.string.error_invalid_password, Toast.LENGTH_LONG).show();
+			}
+		} else {
+			Toast.makeText(this, R.string.error_connection, Toast.LENGTH_LONG).show();
 		}
 		showProgress(false);
 	}
 
 	@Override
-	public void onLoaderReset(Loader<Integer> loader) {
+	public void onLoaderReset(Loader<User> loader) {
 	}
 }

@@ -13,19 +13,13 @@ import com.cruzroja.creuroja.Location;
 import android.content.Context;
 
 public class FileUtils {
-	public static final String FIJOS_FILENAME = "fijos.json";
-	public static final String VARIABLES_FILENAME = "variables.json";
+	public static final String LOCATIONS_FILENAME = "fijos.json";
 
-	public static void writeToFile(Context context, String data, boolean isFijo) {
+	public static void writeToFile(Context context, String data) {
 		PrintStream ps = null;
 		try {
-			if (isFijo) {
-				ps = new PrintStream(context.openFileOutput(FIJOS_FILENAME,
-						Context.MODE_PRIVATE));
-			} else {
-				ps = new PrintStream(context.openFileOutput(VARIABLES_FILENAME,
-						Context.MODE_PRIVATE));
-			}
+			ps = new PrintStream(context.openFileOutput(LOCATIONS_FILENAME, Context.MODE_PRIVATE));
+
 			ps.print(data);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -37,24 +31,16 @@ public class FileUtils {
 	public static ArrayList<Location> readFromFiles(Context context) {
 		ArrayList<Location> locationList;
 
-		String data = getDataFromFile(context, FIJOS_FILENAME);
+		String data = getDataFromFile(context, LOCATIONS_FILENAME);
 		if (data.equals("")) {
 			return null;
 		}
-		locationList = JSONParser.parseLocations(data);
 
-		data = getDataFromFile(context, VARIABLES_FILENAME);
-		if (data.equals("")) {
-			return null;
-		}
-		locationList.addAll(JSONParser.parseLocations(data));
-
-		return locationList;
+		return JSONParser.parseLocations(data);
 	}
 
 	public static boolean removeFiles() {
-		return (new File(FIJOS_FILENAME).delete() && new File(
-				VARIABLES_FILENAME).delete());
+		return new File(LOCATIONS_FILENAME).delete();
 	}
 
 	public static String getDataFromFile(Context context, String fileName) {
