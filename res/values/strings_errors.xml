@@ -16,6 +16,7 @@
     <string name="error_prot_excep">Error en la conexion con el servidor</string>
     <string name="error_field_required">El campo es obligatorio</string>
     <string name="error_invalid_password">La contrasea es incorrecta.</string>
+    <string name="error_user_invalidated">El usuario ha sido dado de baja por el administrador del sistema. Contacte con el administrador si esto se debe a un error.</string>
     <string name="error_connection">Error en la conexión con el servidor</string>
 
 </resources>

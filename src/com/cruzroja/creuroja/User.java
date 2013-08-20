@@ -27,15 +27,16 @@ public class User {
 	}
 
 	public User(InputStream stream) throws IOException {
+		mRoles = new ArrayList<String>();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 		String line;
 		while ((line = reader.readLine()) != null) {
 			if (line.contains("session_name")) {
-				extract_session_name(line);
-			} else if (line.contains("user_name")) {
-				extract_session_id(line);
-			} else if (line.contains("user_name")) {
-				extract_user_name(line);
+				mSessionName = extractValue(line);
+			} else if (line.contains("sessid")) {
+				mSessionId = extractValue(line);
+			} else if (mName == null && line.contains("<name>name</name>")) {
+				mName = extractValue(line);
 			} else if (line.contains(USER_ROLE_REGISTERED)) {
 				mRoles.add(USER_ROLE_REGISTERED);
 			} else if (line.contains(USER_ROLE_ADMIN)) {
@@ -52,16 +53,18 @@ public class User {
 		reader.close();
 	}
 
-	private void extract_session_name(String line) {
-		mSessionName = line;
-	}
-	
-	private void extract_session_id(String line) {
-		mSessionId = line;
+	/**
+	 * <member><name>NAME</name><value><string>VALUE</string></value></member>
+	 * 
+	 * @param line
+	 */
+
+	private String extractValue(String line) {
+		return line.substring(line.indexOf("<string>") + "<string>".length(),
+				line.lastIndexOf("</string"));
 	}
 
-	private void extract_user_name(String line) {
-		mName = line;
-	}
+	public void save() {
 
+	}
 }

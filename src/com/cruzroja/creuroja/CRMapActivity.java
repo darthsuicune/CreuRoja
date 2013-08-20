@@ -65,15 +65,6 @@ public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<
 		}
 	}
 
-	/**
-	 * TODO: Needed???
-	 */
-	@Override
-	protected void onNewIntent(Intent intent) {
-		// TODO Auto-generated method stub
-		super.onNewIntent(intent);
-	}
-
 	@Override
 	public void onBackPressed() {
 		if (mMapFragment != null && mMapFragment.isAdded()) {

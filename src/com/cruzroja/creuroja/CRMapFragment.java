@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -16,13 +15,13 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -168,9 +167,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_map, menu);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			setSearchOptions(menu);
-		}
+		setSearchOptions(menu);
 
 	}
 
@@ -181,9 +178,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 			moveToCurrentLocation();
 			return true;
 		case R.id.search:
-			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-				getActivity().onSearchRequested();
-			}
+			// Nothing needed here thanks to the support library
 			return true;
 		case android.R.id.home:
 		case R.id.menu_show_panel:
@@ -501,7 +496,8 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 					return null;
 				}
 			} else {
-				Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG)
+						.show();
 				return null;
 			}
 
@@ -582,7 +578,8 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 			if (ConnectionClient.isConnected(getActivity())) {
 				return new DirectionsLoader(getActivity(), args);
 			} else {
-				Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
+				Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG)
+						.show();
 				return null;
 			}
 		}
@@ -696,11 +693,11 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 		return false;
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setSearchOptions(Menu menu) {
 		SearchManager searchManager = (SearchManager) getActivity().getSystemService(
 				Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+		MenuItem searchMenuItem = menu.findItem(R.id.search);
+		SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
 		if (searchView != null) {
 			searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity()
 					.getComponentName()));
@@ -710,10 +707,10 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	}
 
 	/****************
-	 * Other calls  *
+	 * Other calls *
 	 ****************/
-	
-	public void setUser(User user){
+
+	public void setUser(User user) {
 		mUser = user;
 	}
 
