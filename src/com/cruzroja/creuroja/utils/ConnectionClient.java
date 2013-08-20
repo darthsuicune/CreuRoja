@@ -26,14 +26,12 @@ import com.google.android.gms.maps.model.LatLng;
 /**
  * LOGIN:
  * 
- * PETITION FORMAT: <\?xml version="1.0"\?> <methodCall>
- * <methodName>user.login</methodName> <params> <param>
- * <value><string>username</string></value> </param> <param>
+ * PETITION FORMAT: <\?xml version="1.0"\?> <methodCall> <methodName>user.login</methodName>
+ * <params> <param> <value><string>username</string></value> </param> <param>
  * <value><string>password</string></value> </param> </params> </methodCall>
  * <p/>
  * 
- * Petition requirements: -Send via POST -Set content-type header to "text/xml"
- * or "application/xml"
+ * Petition requirements: -Send via POST -Set content-type header to "text/xml" or "application/xml"
  */
 public class ConnectionClient {
 	// URLs
@@ -63,11 +61,12 @@ public class ConnectionClient {
 	}
 
 	/**
-	 * 	 * Method to call to perform a credentials validation.
+	 * * Method to call to perform a credentials validation.
 	 * 
 	 * @param username
 	 * @param password
-	 * @return null with server error. 
+	 * @return null with server error. User with "" as name for invalid credentials. User with
+	 *         parameters for valid user.
 	 */
 	public static User doLogin(String username, String password) {
 		return parseLoginResponse(makeConnection(buildLoginRequest(username, password)));
@@ -87,11 +86,11 @@ public class ConnectionClient {
 		return parseDirectionsResponse(makeConnection(buildDirectionsRequest(originLatitud,
 				originLongitud, destinationLatitud, destinationLongitud)));
 	}
-	
+
 	/*******************
 	 * Utility methods *
 	 *******************/
-	
+
 	/**
 	 * Should be always called before using the internet connection.
 	 * 
@@ -167,8 +166,7 @@ public class ConnectionClient {
 	 * Location specific methods *
 	 *****************************/
 
-	private static ArrayList<Location> parseLocationsResponse(Context context,
-			HttpResponse response) {
+	private static ArrayList<Location> parseLocationsResponse(Context context, HttpResponse response) {
 		ArrayList<Location> result = null;
 		if (response.getStatusLine() != null) {
 			switch (response.getStatusLine().getStatusCode()) {
