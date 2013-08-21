@@ -35,8 +35,8 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public class ConnectionClient {
 	// URLs
-	private static final String BASE_URL = "http://r0uzic.net/voluntarios/";
-	public static final String URL_LOGIN = BASE_URL + "user/login?q=android";
+	public static final String BASE_URL = "http://r0uzic.net/voluntarios/";
+	public static final String URL_LOGIN = BASE_URL + "android/user/login";
 	public static final String URL_PUNTOS = BASE_URL + "map/marcadores.json";
 
 	public static final String DIRECTIONS_API_BASE_URL = "https://maps.googleapis.com/maps/api/directions/json?region=es&";
@@ -112,6 +112,7 @@ public class ConnectionClient {
 			return null;
 		}
 		DefaultHttpClient httpClient = new DefaultHttpClient();
+		
 
 		try {
 			return httpClient.execute(request);

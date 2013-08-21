@@ -2,7 +2,7 @@ package com.cruzroja.creuroja;
 
 
 public class Location {
-    public static final String MARKER_NEW_LINE = "<br />";
+    public static final String MARKER_NEW_LINE = "<br>";
     public static final String MARKER_STRONG = "<strong>";
     public static final String MARKER_STRONG_END = "</strong>";
     public static final String MARKER_SPACE = "&nbsp;";
