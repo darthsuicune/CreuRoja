@@ -1,11 +1,8 @@
 package com.cruzroja.creuroja.utils;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -13,7 +10,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicHeader;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.cruzroja.creuroja.User;
 
@@ -116,7 +112,10 @@ public class ReportTool {
 						+ PETITION_PART_2 + createTitle(mUser) + PETITION_PART_3));
 				request.setHeader(new BasicHeader(ConnectionClient.CONTENT_TYPE,
 						ConnectionClient.CONTENT_TYPE_XML));
+				httpClient.execute(request);
 			} catch (UnsupportedEncodingException e) {
+			} catch (ClientProtocolException e) {
+			} catch (IOException e) {
 			}
 		}
 	}

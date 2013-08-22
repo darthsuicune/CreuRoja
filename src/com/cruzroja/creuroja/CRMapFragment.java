@@ -132,7 +132,6 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		requestGooglePlayServicesAvailability();
-
 		SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
 				.findFragmentById(R.id.map);
 
