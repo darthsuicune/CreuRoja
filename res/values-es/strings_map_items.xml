@@ -4,6 +4,7 @@
     <string name="map_style_terrain">Terreno</string>
     <string name="map_style_satellite">Satélite</string>
     <string name="map_style_hybrid">Híbrido</string>
+    <string name="marker_type_adaptadas">Adaptadas</string>
     <string name="marker_type_asamblea">Asambleas</string>
     <string name="marker_type_cuap">CUAPs</string>
     <string name="marker_type_bravo">Bravos</string>
@@ -19,6 +20,7 @@
         <item>@string/map_style_satellite</item>
     </string-array>
     <string-array name="marker_types">
+        <item>@string/marker_type_adaptadas</item>
         <item>@string/marker_type_asamblea</item>
         <item>@string/marker_type_cuap</item>
         <item>@string/marker_type_bravo</item>

@@ -7,6 +7,7 @@ public class Location {
     public static final String MARKER_STRONG_END = "</strong>";
     public static final String MARKER_SPACE = "&nbsp;";
 
+    public static final String ICON_ADAPTADAS = "adaptadas.png";
     public static final String ICON_ASAMBLEA = "asamblea.png";
     public static final String ICON_BRAVO = "bravo.png";
     public static final String ICON_CUAP = "cuap.png";
@@ -29,7 +30,9 @@ public class Location {
     }
 
     public int getIcon(String icon) {
-        if (icon.equals(ICON_ASAMBLEA)) {
+    	if (icon.equals(ICON_ADAPTADAS)) {
+    		return R.drawable.adaptadas;
+    	} else if (icon.equals(ICON_ASAMBLEA)) {
             return R.drawable.asamblea;
         } else if (icon.equals(ICON_BRAVO)) {
             return R.drawable.bravo;

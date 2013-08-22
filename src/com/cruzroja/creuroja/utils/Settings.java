@@ -11,6 +11,7 @@ public class Settings {
 	public static final String USERNAME = "username";
 	public static final String PASSWORD = "password";
 
+	public static final String SHOW_ADAPTADAS = "showAdaptadas";
 	public static final String SHOW_ASAMBLEA = "showAsamblea";
 	public static final String SHOW_BRAVO = "showBravo";
 	public static final String SHOW_CUAP = "showCuap";

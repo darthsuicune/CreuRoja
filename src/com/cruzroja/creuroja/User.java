@@ -10,6 +10,8 @@ public class User {
 	public static final String USER_ROLE_ADMIN = "administrador";
 	public static final String USER_ROLE_REGISTERED = "authenticated user";
 	public static final String USER_ROLE_ACUATICO = "acuático";
+	public static final String USER_ROLE_SOCIAL = "social";
+	public static final String USER_ROLE_SOCORROS = "socorros";
 
 	public String mName;
 	public String mSessionName;
@@ -43,6 +45,10 @@ public class User {
 				mRoles.add(USER_ROLE_ADMIN);
 			} else if (line.contains(USER_ROLE_ACUATICO)) {
 				mRoles.add(USER_ROLE_ACUATICO);
+			} else if (line.contains(USER_ROLE_SOCIAL)) {
+				mRoles.add(USER_ROLE_SOCIAL);
+			} else if (line.contains(USER_ROLE_SOCORROS)) {
+				mRoles.add(USER_ROLE_SOCORROS);
 			} else if (line.contains("<fault>")) {
 				mName = "";
 				reader.close();
@@ -65,6 +71,6 @@ public class User {
 	}
 
 	public void save() {
-		
+
 	}
 }

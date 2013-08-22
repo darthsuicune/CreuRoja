@@ -76,6 +76,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	private LocationClient mLocationClient;
 	private Polyline mPolyline;
 
+	private CheckBox mAdaptadasCheckBox;
 	private CheckBox mAsambleaCheckBox;
 	private CheckBox mBravoCheckBox;
 	private CheckBox mCuapCheckBox;
@@ -101,6 +102,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 		mMarkerPanel = v.findViewById(R.id.marker_panel);
 
 		if (mMarkerPanel != null) {
+			mAdaptadasCheckBox = (CheckBox) v.findViewById(R.id.checkbox_adaptadas);
 			mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
 			mBravoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_bravo);
 			mCuapCheckBox = (CheckBox) v.findViewById(R.id.checkbox_cuap);
@@ -109,6 +111,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 			mTerrestreCheckBox = (CheckBox) v.findViewById(R.id.checkbox_terrestre);
 			mNostrumCheckBox = (CheckBox) v.findViewById(R.id.checkbox_nostrum);
 
+			mAdaptadasCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_ADAPTADAS, true));
 			mAsambleaCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_ASAMBLEA, true));
 			mBravoCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_BRAVO, true));
 			mCuapCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_CUAP, true));
@@ -117,6 +120,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 			mTerrestreCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_TERRESTRE, true));
 			mNostrumCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_NOSTRUM, true));
 
+			mAdaptadasCheckBox.setOnCheckedChangeListener(this);
 			mAsambleaCheckBox.setOnCheckedChangeListener(this);
 			mBravoCheckBox.setOnCheckedChangeListener(this);
 			mCuapCheckBox.setOnCheckedChangeListener(this);
@@ -403,6 +407,8 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 			return false;
 		}
 		switch (location.mIcono) {
+		case R.drawable.adaptadas:
+			return prefs.getBoolean(Settings.SHOW_ADAPTADAS, true);
 		case R.drawable.asamblea:
 			return prefs.getBoolean(Settings.SHOW_ASAMBLEA, true);
 		case R.drawable.bravo:
@@ -455,6 +461,9 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		SharedPreferences.Editor editor = prefs.edit();
 		switch (buttonView.getId()) {
+		case R.id.checkbox_adaptadas:
+			editor.putBoolean(Settings.SHOW_ADAPTADAS, isChecked);
+			break;
 		case R.id.checkbox_asamblea:
 			editor.putBoolean(Settings.SHOW_ASAMBLEA, isChecked);
 			break;
