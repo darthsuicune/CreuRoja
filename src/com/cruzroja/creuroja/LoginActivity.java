@@ -6,6 +6,7 @@ import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.Loader;
@@ -166,7 +167,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<U
 	public void onLoadFinished(Loader<User> loader, User result) {
 		if (result != null) {
 			if (!result.mName.equals("")) { // Valid user
-				Settings.saveLoginData(this, result, mPassword);
+				result.save(PreferenceManager.getDefaultSharedPreferences(this), mPassword);
 				showMap();
 				return;
 			} else { // An invalid user/password will send an empty username

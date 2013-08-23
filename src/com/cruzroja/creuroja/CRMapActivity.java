@@ -112,6 +112,7 @@ public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<
 		if (result != null) {
 			if (!result.mName.equals("")) {
 				// Valid user
+				result.save(prefs);
 				mMapFragment.setUser(result);
 				return;
 			} else { 

@@ -101,6 +101,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
 		mMarkerPanel = v.findViewById(R.id.marker_panel);
 
+		// Prepare all checkboxes for use
 		if (mMarkerPanel != null) {
 			mAdaptadasCheckBox = (CheckBox) v.findViewById(R.id.checkbox_adaptadas);
 			mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
@@ -128,8 +129,47 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 			mMaritimoCheckBox.setOnCheckedChangeListener(this);
 			mTerrestreCheckBox.setOnCheckedChangeListener(this);
 			mNostrumCheckBox.setOnCheckedChangeListener(this);
+
+			setCheckboxesVisibility();
 		}
 		return v;
+	}
+
+	private void setCheckboxesVisibility() {
+		if (mUser == null) {
+			mUser = User.getSavedUser(prefs);
+			if (mUser == null) {
+				return;
+			}
+		}
+		if (mUser.mRoles.contains(User.ROLE_ADMIN)){
+			return;
+		}
+		mAdaptadasCheckBox.setVisibility(View.GONE);
+		mAsambleaCheckBox.setVisibility(View.GONE);
+		mBravoCheckBox.setVisibility(View.GONE);
+		mCuapCheckBox.setVisibility(View.GONE);
+		mHospitalCheckBox.setVisibility(View.GONE);
+		mMaritimoCheckBox.setVisibility(View.GONE);
+		mTerrestreCheckBox.setVisibility(View.GONE);
+		mNostrumCheckBox.setVisibility(View.GONE);
+
+		if (mUser.mRoles.contains(User.ROLE_SOCIAL)) {
+			mAdaptadasCheckBox.setVisibility(View.VISIBLE);
+			mAsambleaCheckBox.setVisibility(View.VISIBLE);
+		}
+		if (mUser.mRoles.contains(User.ROLE_SOCORROS)) {
+			mAsambleaCheckBox.setVisibility(View.VISIBLE);
+			mBravoCheckBox.setVisibility(View.VISIBLE);
+			mCuapCheckBox.setVisibility(View.VISIBLE);
+			mHospitalCheckBox.setVisibility(View.VISIBLE);
+			mTerrestreCheckBox.setVisibility(View.VISIBLE);
+			mNostrumCheckBox.setVisibility(View.VISIBLE);
+		}
+		if (mUser.mRoles.contains(User.ROLE_ACUATICO)) {
+			mMaritimoCheckBox.setVisibility(View.VISIBLE);
+
+		}
 	}
 
 	@Override

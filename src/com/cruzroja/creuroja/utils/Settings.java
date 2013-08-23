@@ -3,8 +3,6 @@ package com.cruzroja.creuroja.utils;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
-import com.cruzroja.creuroja.User;
-
 public class Settings {
 	public static final String IS_VALID_USER = "isValidUser";
 	public static final String LOG = "CreuRoja log";
@@ -40,12 +38,6 @@ public class Settings {
 
 	public static String getDecodedPassword(Context context) {
 		return PreferenceManager.getDefaultSharedPreferences(context).getString(PASSWORD, "");
-	}
-
-	public static void saveLoginData(Context context, User user, String password) {
-		PreferenceManager.getDefaultSharedPreferences(context).edit()
-				.putBoolean(Settings.IS_VALID_USER, true).putString(Settings.USERNAME, user.mName)
-				.putString(Settings.PASSWORD, getEncodedPassword(password)).commit();
 	}
 
 }
