@@ -98,6 +98,9 @@ public class User {
 	}
 	
 	public int canSeeCheckBox(int markerType) {
+		if (mRoles.contains(ROLE_ADMIN)) {
+			return View.VISIBLE;
+		}
 		switch (markerType) {
 		case R.drawable.adaptadas:
 			return (mRoles.contains(ROLE_SOCIAL)) ? View.VISIBLE : View.GONE;
