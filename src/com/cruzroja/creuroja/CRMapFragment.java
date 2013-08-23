@@ -442,7 +442,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	}
 
 	private boolean shouldShowMarker(Location location, String filter) {
-		if (!matchFilter(location, filter) || (mUser == null)) {
+		if ((mUser == null) || !matchFilter(location, filter)) {
 			return false;
 		}
 		switch (location.mIcono) {
