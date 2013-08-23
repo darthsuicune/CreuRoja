@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import android.content.SharedPreferences;
+import android.view.View;
 
 import com.cruzroja.creuroja.utils.Settings;
 
@@ -69,12 +70,12 @@ public class User {
 		return line.substring(line.indexOf("<string>") + "<string>".length(),
 				line.lastIndexOf("</string"));
 	}
-	
+
 	public boolean canSeeMarker(int markerType) {
-		if(mRoles.contains(ROLE_ADMIN)) {
+		if (mRoles.contains(ROLE_ADMIN)) {
 			return true;
 		}
-		switch(markerType) {
+		switch (markerType) {
 		case R.drawable.adaptadas:
 			return mRoles.contains(ROLE_SOCIAL);
 		case R.drawable.asamblea:
@@ -96,20 +97,46 @@ public class User {
 		}
 	}
 	
+	public int canSeeCheckBox(int markerType) {
+		switch (markerType) {
+		case R.drawable.adaptadas:
+			return (mRoles.contains(ROLE_SOCIAL)) ? View.VISIBLE : View.GONE;
+		case R.drawable.asamblea:
+			return (mRoles.contains(ROLE_SOCIAL) || mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
+		case R.drawable.bravo:
+			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
+		case R.drawable.cuap:
+			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
+		case R.drawable.hospital:
+			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
+		case R.drawable.maritimo:
+			return (mRoles.contains(ROLE_ACUATICO)) ? View.VISIBLE : View.GONE;
+		case R.drawable.terrestre:
+			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
+		case R.drawable.nostrum:
+			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
+		default:
+			return View.GONE;
+		}
+	}
+
 	public void save(SharedPreferences prefs) {
 		prefs.edit().putBoolean(Settings.IS_VALID_USER, true)
-		.putString(Settings.USERNAME, this.mName)
-		.putBoolean(ROLE_ADMIN, mRoles.contains(ROLE_ADMIN))
-		.putBoolean(ROLE_ACUATICO, mRoles.contains(ROLE_ACUATICO))
-		.putBoolean(ROLE_SOCIAL, mRoles.contains(ROLE_SOCIAL))
-		.putBoolean(ROLE_SOCORROS, mRoles.contains(ROLE_SOCORROS))
-		.commit();
+				.putString(Settings.USERNAME, this.mName)
+				.putBoolean(ROLE_ADMIN, mRoles.contains(ROLE_ADMIN))
+				.putBoolean(ROLE_ACUATICO, mRoles.contains(ROLE_ACUATICO))
+				.putBoolean(ROLE_SOCIAL, mRoles.contains(ROLE_SOCIAL))
+				.putBoolean(ROLE_SOCORROS, mRoles.contains(ROLE_SOCORROS)).commit();
 	}
 
 	public void save(SharedPreferences prefs, String password) {
 		prefs.edit().putBoolean(Settings.IS_VALID_USER, true)
 				.putString(Settings.USERNAME, this.mName)
-				.putString(Settings.PASSWORD, Settings.getEncodedPassword(password)).commit();
+				.putString(Settings.PASSWORD, Settings.getEncodedPassword(password))
+				.putBoolean(ROLE_ADMIN, mRoles.contains(ROLE_ADMIN))
+				.putBoolean(ROLE_ACUATICO, mRoles.contains(ROLE_ACUATICO))
+				.putBoolean(ROLE_SOCIAL, mRoles.contains(ROLE_SOCIAL))
+				.putBoolean(ROLE_SOCORROS, mRoles.contains(ROLE_SOCORROS)).commit();
 	}
 
 	public static User getSavedUser(SharedPreferences prefs) {
@@ -118,26 +145,26 @@ public class User {
 		}
 		return null;
 	}
-	
+
 	private static ArrayList<String> getRoles(SharedPreferences prefs) {
 		ArrayList<String> roles = new ArrayList<String>();
-		if(prefs.contains(ROLE_ADMIN)){
-			if(prefs.getBoolean(ROLE_ADMIN, false)){
+		if (prefs.contains(ROLE_ADMIN)) {
+			if (prefs.getBoolean(ROLE_ADMIN, false)) {
 				roles.add(ROLE_ADMIN);
 			}
 		}
-		if(prefs.contains(ROLE_ACUATICO)){
-			if(prefs.getBoolean(ROLE_ACUATICO, false)){
+		if (prefs.contains(ROLE_ACUATICO)) {
+			if (prefs.getBoolean(ROLE_ACUATICO, false)) {
 				roles.add(ROLE_ACUATICO);
 			}
 		}
-		if(prefs.contains(ROLE_SOCIAL)){
-			if(prefs.getBoolean(ROLE_SOCIAL, false)){
+		if (prefs.contains(ROLE_SOCIAL)) {
+			if (prefs.getBoolean(ROLE_SOCIAL, false)) {
 				roles.add(ROLE_SOCIAL);
 			}
 		}
-		if(prefs.contains(ROLE_SOCORROS)){
-			if(prefs.getBoolean(ROLE_SOCORROS, false)){
+		if (prefs.contains(ROLE_SOCORROS)) {
+			if (prefs.getBoolean(ROLE_SOCORROS, false)) {
 				roles.add(ROLE_SOCORROS);
 			}
 		}

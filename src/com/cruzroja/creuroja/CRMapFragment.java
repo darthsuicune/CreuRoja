@@ -161,42 +161,14 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 			}
 		}
 
-		if (mUser.mRoles.contains(User.ROLE_ADMIN)) {
-			mAdaptadasBox.setVisibility(View.VISIBLE);
-			mAsambleaBox.setVisibility(View.VISIBLE);
-			mBravoBox.setVisibility(View.VISIBLE);
-			mCuapBox.setVisibility(View.VISIBLE);
-			mHospitalBox.setVisibility(View.VISIBLE);
-			mMaritimoBox.setVisibility(View.VISIBLE);
-			mTerrestreBox.setVisibility(View.VISIBLE);
-			mNostrumBox.setVisibility(View.VISIBLE);
-			return;
-		}
-		mAdaptadasBox.setVisibility(View.GONE);
-		mAsambleaBox.setVisibility(View.GONE);
-		mBravoBox.setVisibility(View.GONE);
-		mCuapBox.setVisibility(View.GONE);
-		mHospitalBox.setVisibility(View.GONE);
-		mMaritimoBox.setVisibility(View.GONE);
-		mTerrestreBox.setVisibility(View.GONE);
-		mNostrumBox.setVisibility(View.GONE);
-
-		if (mUser.mRoles.contains(User.ROLE_SOCIAL)) {
-			mAdaptadasBox.setVisibility(View.VISIBLE);
-			mAsambleaBox.setVisibility(View.VISIBLE);
-		}
-		if (mUser.mRoles.contains(User.ROLE_SOCORROS)) {
-			mAsambleaBox.setVisibility(View.VISIBLE);
-			mBravoBox.setVisibility(View.VISIBLE);
-			mCuapBox.setVisibility(View.VISIBLE);
-			mHospitalBox.setVisibility(View.VISIBLE);
-			mTerrestreBox.setVisibility(View.VISIBLE);
-			mNostrumBox.setVisibility(View.VISIBLE);
-		}
-		if (mUser.mRoles.contains(User.ROLE_ACUATICO)) {
-			mMaritimoBox.setVisibility(View.VISIBLE);
-
-		}
+		mAdaptadasBox.setVisibility(mUser.canSeeCheckBox(R.drawable.adaptadas));
+		mAsambleaBox.setVisibility(mUser.canSeeCheckBox(R.drawable.asamblea));
+		mBravoBox.setVisibility(mUser.canSeeCheckBox(R.drawable.bravo));
+		mCuapBox.setVisibility(mUser.canSeeCheckBox(R.drawable.cuap));
+		mHospitalBox.setVisibility(mUser.canSeeCheckBox(R.drawable.hospital));
+		mMaritimoBox.setVisibility(mUser.canSeeCheckBox(R.drawable.maritimo));
+		mTerrestreBox.setVisibility(mUser.canSeeCheckBox(R.drawable.terrestre));
+		mNostrumBox.setVisibility(mUser.canSeeCheckBox(R.drawable.nostrum));
 	}
 
 	@Override
@@ -796,6 +768,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	public void setUser(User user) {
 		mUser = user;
 		setCheckboxesVisibility();
+		drawMarkers();
 	}
 
 	@Override
