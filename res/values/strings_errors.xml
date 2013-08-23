@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="error_limit_reached">Se ha alcanzado el límite de usos permitidos hoy para esta
-        funcionalidad. Contacte con el administrador.</string>
-    <string name="error_no_connection">No está conectado a internet. Se han cargado los últimos marcadores
-        disponibles.</string>
-    <string name="error_login_no_connection">No está conectado a internet. No se pueden validar los datos.</string>
-    <string name="error_no_credentials">Los datos de acceso son obligatorios para el uso de la
-        aplicacion.</string>
+    <string name="error_limit_reached">S'ha arribat al límit d'usos permesos avui per aquesta funcionalitat. Contacti amb l'administrador.</string>
+    <string name="error_no_connection">No està connectat a Internet. S'han carregat els últims marcadors disponibles.</string>
+    <string name="error_login_no_connection">No està connectat a Internet. No es poden validar les dades.</string>
+    <string name="error_no_credentials">Les dades d'accés són obligatoris per a l'ús de l'aplicació.</string>
     <string name="error_401">Error 401</string>
     <string name="error_406">Error 406</string>
-    <string name="error_wrong_id">Datos de usuario invalidos</string>
-    <string name="error_io_excep">Problema con la conexion</string>
-    <string name="error_no_id">Error desconocido</string>
-    <string name="error_prot_excep">Error en la conexion con el servidor</string>
-    <string name="error_field_required">El campo es obligatorio</string>
-    <string name="error_invalid_password">La contrasea es incorrecta.</string>
-    <string name="error_user_invalidated">El usuario ha sido dado de baja por el administrador del sistema. Contacte con el administrador si esto se debe a un error.</string>
-    <string name="error_connection">Error en la conexión con el servidor</string>
+    <string name="error_wrong_id">Dades d'usuari invàlids</string>
+    <string name="error_io_excep">Problema amb la connexió</string>
+    <string name="error_no_id">Error desconegut</string>
+    <string name="error_prot_excep">Error en la connexió amb el servidor</string>
+    <string name="error_field_required">El camp és obligatori</string>
+    <string name="error_invalid_password">La contrasenya és incorrecta.</string>
+    <string name="error_user_invalidated">L'usuari ha estat donat de baixa per l'administrador del sistema. Contacti amb l'administrador si això es deu a un error.</string>
+    <string name="error_connection">Error en la connexió amb el servidor</string>
 
 </resources>
