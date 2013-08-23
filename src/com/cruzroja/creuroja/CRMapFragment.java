@@ -85,6 +85,15 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	private CheckBox mTerrestreCheckBox;
 	private CheckBox mNostrumCheckBox;
 
+	private View mAdaptadasBox;
+	private View mAsambleaBox;
+	private View mBravoBox;
+	private View mCuapBox;
+	private View mHospitalBox;
+	private View mMaritimoBox;
+	private View mTerrestreBox;
+	private View mNostrumBox;
+
 	public String mFilter = "";
 
 	private View mMarkerPanel;
@@ -103,6 +112,15 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
 		// Prepare all checkboxes for use
 		if (mMarkerPanel != null) {
+			mAdaptadasBox = v.findViewById(R.id.box_adaptadas);
+			mAsambleaBox = v.findViewById(R.id.box_asamblea);
+			mBravoBox = v.findViewById(R.id.box_bravo);
+			mCuapBox = v.findViewById(R.id.box_cuap);
+			mHospitalBox = v.findViewById(R.id.box_hospital);
+			mMaritimoBox = v.findViewById(R.id.box_maritimo);
+			mTerrestreBox = v.findViewById(R.id.box_terrestre);
+			mNostrumBox = v.findViewById(R.id.box_nostrum);
+
 			mAdaptadasCheckBox = (CheckBox) v.findViewById(R.id.checkbox_adaptadas);
 			mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
 			mBravoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_bravo);
@@ -142,32 +160,41 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 				return;
 			}
 		}
-		if (mUser.mRoles.contains(User.ROLE_ADMIN)){
+
+		if (mUser.mRoles.contains(User.ROLE_ADMIN)) {
+			mAdaptadasBox.setVisibility(View.VISIBLE);
+			mAsambleaBox.setVisibility(View.VISIBLE);
+			mBravoBox.setVisibility(View.VISIBLE);
+			mCuapBox.setVisibility(View.VISIBLE);
+			mHospitalBox.setVisibility(View.VISIBLE);
+			mMaritimoBox.setVisibility(View.VISIBLE);
+			mTerrestreBox.setVisibility(View.VISIBLE);
+			mNostrumBox.setVisibility(View.VISIBLE);
 			return;
 		}
-		mAdaptadasCheckBox.setVisibility(View.GONE);
-		mAsambleaCheckBox.setVisibility(View.GONE);
-		mBravoCheckBox.setVisibility(View.GONE);
-		mCuapCheckBox.setVisibility(View.GONE);
-		mHospitalCheckBox.setVisibility(View.GONE);
-		mMaritimoCheckBox.setVisibility(View.GONE);
-		mTerrestreCheckBox.setVisibility(View.GONE);
-		mNostrumCheckBox.setVisibility(View.GONE);
+		mAdaptadasBox.setVisibility(View.GONE);
+		mAsambleaBox.setVisibility(View.GONE);
+		mBravoBox.setVisibility(View.GONE);
+		mCuapBox.setVisibility(View.GONE);
+		mHospitalBox.setVisibility(View.GONE);
+		mMaritimoBox.setVisibility(View.GONE);
+		mTerrestreBox.setVisibility(View.GONE);
+		mNostrumBox.setVisibility(View.GONE);
 
 		if (mUser.mRoles.contains(User.ROLE_SOCIAL)) {
-			mAdaptadasCheckBox.setVisibility(View.VISIBLE);
-			mAsambleaCheckBox.setVisibility(View.VISIBLE);
+			mAdaptadasBox.setVisibility(View.VISIBLE);
+			mAsambleaBox.setVisibility(View.VISIBLE);
 		}
 		if (mUser.mRoles.contains(User.ROLE_SOCORROS)) {
-			mAsambleaCheckBox.setVisibility(View.VISIBLE);
-			mBravoCheckBox.setVisibility(View.VISIBLE);
-			mCuapCheckBox.setVisibility(View.VISIBLE);
-			mHospitalCheckBox.setVisibility(View.VISIBLE);
-			mTerrestreCheckBox.setVisibility(View.VISIBLE);
-			mNostrumCheckBox.setVisibility(View.VISIBLE);
+			mAsambleaBox.setVisibility(View.VISIBLE);
+			mBravoBox.setVisibility(View.VISIBLE);
+			mCuapBox.setVisibility(View.VISIBLE);
+			mHospitalBox.setVisibility(View.VISIBLE);
+			mTerrestreBox.setVisibility(View.VISIBLE);
+			mNostrumBox.setVisibility(View.VISIBLE);
 		}
 		if (mUser.mRoles.contains(User.ROLE_ACUATICO)) {
-			mMaritimoCheckBox.setVisibility(View.VISIBLE);
+			mMaritimoBox.setVisibility(View.VISIBLE);
 
 		}
 	}
@@ -443,26 +470,34 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 	}
 
 	private boolean shouldShowMarker(Location location, String filter) {
-		if (!matchFilter(location, filter)) {
+		if (!matchFilter(location, filter) || (mUser == null)) {
 			return false;
 		}
 		switch (location.mIcono) {
 		case R.drawable.adaptadas:
-			return prefs.getBoolean(Settings.SHOW_ADAPTADAS, true);
+			return prefs.getBoolean(Settings.SHOW_ADAPTADAS, true)
+					&& mUser.canSeeMarker(R.drawable.adaptadas);
 		case R.drawable.asamblea:
-			return prefs.getBoolean(Settings.SHOW_ASAMBLEA, true);
+			return prefs.getBoolean(Settings.SHOW_ASAMBLEA, true)
+					&& mUser.canSeeMarker(R.drawable.asamblea);
 		case R.drawable.bravo:
-			return prefs.getBoolean(Settings.SHOW_BRAVO, true);
+			return prefs.getBoolean(Settings.SHOW_BRAVO, true)
+					&& mUser.canSeeMarker(R.drawable.bravo);
 		case R.drawable.cuap:
-			return prefs.getBoolean(Settings.SHOW_CUAP, true);
+			return prefs.getBoolean(Settings.SHOW_CUAP, true)
+					&& mUser.canSeeMarker(R.drawable.cuap);
 		case R.drawable.hospital:
-			return prefs.getBoolean(Settings.SHOW_HOSPITAL, true);
+			return prefs.getBoolean(Settings.SHOW_HOSPITAL, true)
+					&& mUser.canSeeMarker(R.drawable.hospital);
 		case R.drawable.maritimo:
-			return prefs.getBoolean(Settings.SHOW_MARITIMO, true);
+			return prefs.getBoolean(Settings.SHOW_MARITIMO, true)
+					&& mUser.canSeeMarker(R.drawable.maritimo);
 		case R.drawable.terrestre:
-			return prefs.getBoolean(Settings.SHOW_TERRESTRE, true);
+			return prefs.getBoolean(Settings.SHOW_TERRESTRE, true)
+					&& mUser.canSeeMarker(R.drawable.terrestre);
 		case R.drawable.nostrum:
-			return prefs.getBoolean(Settings.SHOW_NOSTRUM, true);
+			return prefs.getBoolean(Settings.SHOW_NOSTRUM, true)
+					&& mUser.canSeeMarker(R.drawable.nostrum);
 		default:
 			return true;
 		}
@@ -760,6 +795,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
 	public void setUser(User user) {
 		mUser = user;
+		setCheckboxesVisibility();
 	}
 
 	@Override

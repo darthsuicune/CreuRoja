@@ -15,6 +15,7 @@
             android:layout_height="wrap_content" >
 
             <TableRow
+                android:id="@+id/box_adaptadas"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
 
@@ -28,6 +29,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/box_asamblea"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
 
@@ -41,6 +43,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/box_bravo"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
 
@@ -54,6 +57,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/box_cuap"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
 
@@ -67,6 +71,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/box_hospital"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
 
@@ -80,6 +85,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/box_maritimo"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
 
@@ -93,6 +99,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/box_terrestre"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
 
@@ -106,6 +113,7 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/box_nostrum"
                 android:gravity="center_vertical"
                 android:padding="8dp" >
 

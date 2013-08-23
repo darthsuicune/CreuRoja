@@ -70,9 +70,40 @@ public class User {
 				line.lastIndexOf("</string"));
 	}
 	
+	public boolean canSeeMarker(int markerType) {
+		if(mRoles.contains(ROLE_ADMIN)) {
+			return true;
+		}
+		switch(markerType) {
+		case R.drawable.adaptadas:
+			return mRoles.contains(ROLE_SOCIAL);
+		case R.drawable.asamblea:
+			return mRoles.contains(ROLE_SOCIAL) || mRoles.contains(ROLE_SOCORROS);
+		case R.drawable.bravo:
+			return mRoles.contains(ROLE_SOCORROS);
+		case R.drawable.cuap:
+			return mRoles.contains(ROLE_SOCORROS);
+		case R.drawable.hospital:
+			return mRoles.contains(ROLE_SOCORROS);
+		case R.drawable.maritimo:
+			return mRoles.contains(ROLE_ACUATICO);
+		case R.drawable.terrestre:
+			return mRoles.contains(ROLE_SOCORROS);
+		case R.drawable.nostrum:
+			return mRoles.contains(ROLE_SOCORROS);
+		default:
+			return false;
+		}
+	}
+	
 	public void save(SharedPreferences prefs) {
 		prefs.edit().putBoolean(Settings.IS_VALID_USER, true)
-		.putString(Settings.USERNAME, this.mName).commit();
+		.putString(Settings.USERNAME, this.mName)
+		.putBoolean(ROLE_ADMIN, mRoles.contains(ROLE_ADMIN))
+		.putBoolean(ROLE_ACUATICO, mRoles.contains(ROLE_ACUATICO))
+		.putBoolean(ROLE_SOCIAL, mRoles.contains(ROLE_SOCIAL))
+		.putBoolean(ROLE_SOCORROS, mRoles.contains(ROLE_SOCORROS))
+		.commit();
 	}
 
 	public void save(SharedPreferences prefs, String password) {
@@ -83,8 +114,33 @@ public class User {
 
 	public static User getSavedUser(SharedPreferences prefs) {
 		if (prefs.contains(Settings.USERNAME)) {
-			return new User();
+			return new User(prefs.getString(Settings.USERNAME, ""), getRoles(prefs));
 		}
 		return null;
+	}
+	
+	private static ArrayList<String> getRoles(SharedPreferences prefs) {
+		ArrayList<String> roles = new ArrayList<String>();
+		if(prefs.contains(ROLE_ADMIN)){
+			if(prefs.getBoolean(ROLE_ADMIN, false)){
+				roles.add(ROLE_ADMIN);
+			}
+		}
+		if(prefs.contains(ROLE_ACUATICO)){
+			if(prefs.getBoolean(ROLE_ACUATICO, false)){
+				roles.add(ROLE_ACUATICO);
+			}
+		}
+		if(prefs.contains(ROLE_SOCIAL)){
+			if(prefs.getBoolean(ROLE_SOCIAL, false)){
+				roles.add(ROLE_SOCIAL);
+			}
+		}
+		if(prefs.contains(ROLE_SOCORROS)){
+			if(prefs.getBoolean(ROLE_SOCORROS, false)){
+				roles.add(ROLE_SOCORROS);
+			}
+		}
+		return roles;
 	}
 }
