@@ -76,45 +76,33 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<U
 	 */
 	public void attemptLogin() {
 
-		// Reset errors.
-		mUsernameView.setError(null);
-		mPasswordView.setError(null);
-
 		// Store values at the time of the login attempt.
 		mUsername = mUsernameView.getText().toString();
 		mPassword = mPasswordView.getText().toString();
 
-		boolean cancel = false;
-
-		// Check for a valid password and username
-		if (TextUtils.isEmpty(mPassword) || (mPassword.length() < 4)
-				|| (TextUtils.isEmpty(mUsername))) {
-			cancel = true;
-		}
-
-		if (!cancel) {
-			// Show a progress spinner, and kick off a background task to
-			// perform the user login attempt.
-			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
-			checkCredentials();
+		if (TextUtils.isEmpty(mPassword) || (TextUtils.isEmpty(mUsername))) {
+			Toast.makeText(this, R.string.error_no_credentials, Toast.LENGTH_LONG).show();
+		} else if (mPassword.length() < 4) {
+			Toast.makeText(this, R.string.error_invalid_password, Toast.LENGTH_LONG).show();
+		} else {
+			if (ConnectionClient.isConnected(this)) {
+				// Show a progress spinner, and kick off a background task to
+				// perform the user login attempt.
+				mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
+				showProgress(true);
+				Bundle args = new Bundle();
+				args.putString(Settings.USERNAME, mUsername);
+				args.putString(Settings.PASSWORD, mPassword);
+				getSupportLoaderManager().restartLoader(LOGIN_LOADER, args, this);
+			} else {
+				Toast.makeText(this, R.string.error_login_no_connection, Toast.LENGTH_LONG).show();
+			}
 		}
 	}
 
 	private void showMap() {
 		this.setResult(RESULT_OK);
 		finish();
-	}
-
-	private void checkCredentials() {
-		if (ConnectionClient.isConnected(this)) {
-			showProgress(true);
-			Bundle args = new Bundle();
-			args.putString(Settings.USERNAME, mUsername);
-			args.putString(Settings.PASSWORD, mPassword);
-			getSupportLoaderManager().restartLoader(LOGIN_LOADER, args, this);
-		} else {
-			Toast.makeText(this, R.string.error_login_no_connection, Toast.LENGTH_LONG).show();
-		}
 	}
 
 	/**
@@ -155,12 +143,7 @@ public class LoginActivity extends FragmentActivity implements LoaderCallbacks<U
 
 	@Override
 	public Loader<User> onCreateLoader(int id, Bundle args) {
-		if(ConnectionClient.isConnected(this)){
-			return new LoginLoader(LoginActivity.this, args);
-		} else {
-			Toast.makeText(this, R.string.error_no_connection, Toast.LENGTH_LONG).show();
-			return null;
-		}
+		return new LoginLoader(LoginActivity.this, args);
 	}
 
 	@Override
