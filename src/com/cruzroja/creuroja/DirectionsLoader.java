@@ -1,85 +1,58 @@
 package com.cruzroja.creuroja;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URI;
-
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpParams;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
-public class DirectionsLoader extends AsyncTaskLoader<String> {
-	public static final String DIRECTIONS_API_BASE_URL = "https://maps.googleapis.com/maps/api/directions/json?region=es&";
-	public static final String ORIGIN_URL = "origin=";
-	public static final String DESTINATION_URL = "destination=";
-	public static final String SENSOR_URL = "sensor=";
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.google.android.gms.maps.model.LatLng;
 
-	public static final String ARG_ORIGIN_LAT = "originLat";
-	public static final String ARG_ORIGIN_LNG = "originLng";
-	public static final String ARG_DESTINATION_LAT = "destinationLat";
-	public static final String ARG_DESTINATION_LNG = "destinationLng";
+public class DirectionsLoader extends AsyncTaskLoader<ArrayList<LatLng>> {
+	public static final String ARG_ORIG_LAT = "originLatitud";
+	public static final String ARG_ORIG_LONG = "originLongitud";
+	public static final String ARG_DEST_LAT = "destinationLatitud";
+	public static final String ARG_DEST_LONG = "destinationLongitud";
 
-	Bundle mArgs;
+	private double mOriginLatitud;
+	private double mOriginLongitud;
+	private double mDestinationLatitud;
+	private double mDestinationLongitud;
+	private boolean isStarted = false;
 
 	public DirectionsLoader(Context context, Bundle args) {
 		super(context);
-		mArgs = args;
+		if (args == null || !args.containsKey(ARG_DEST_LAT)
+				|| !args.containsKey(ARG_DEST_LONG)
+				|| !args.containsKey(ARG_ORIG_LAT)
+				|| !args.containsKey(ARG_ORIG_LONG)) {
+			mOriginLatitud = 0;
+			mOriginLongitud = 0;
+			mDestinationLatitud = 0;
+			mDestinationLongitud = 0;
+		} else {
+			mOriginLatitud = args.getDouble(ARG_ORIG_LAT);
+			mOriginLongitud = args.getDouble(ARG_ORIG_LONG);
+			mDestinationLatitud = args.getDouble(ARG_DEST_LAT);
+			mDestinationLongitud= args.getDouble(ARG_DEST_LONG);
+			
+		}
 	}
 
 	@Override
 	protected void onStartLoading() {
-		forceLoad();
+		if (!isStarted) {
+			isStarted = true;
+			forceLoad();
+		}
 		super.onStartLoading();
 	}
 
 	@Override
-	public String loadInBackground() {
-		DefaultHttpClient httpClient = createHttpClient();
-		HttpGet request = new HttpGet(getUri());
-		InputStream response = null;
-		String data = "";
-		try {
-			response = httpClient.execute(request).getEntity().getContent();
-
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response));
-			String line = "";
-
-			while ((line = reader.readLine()) != null) {
-				data = data + line;
-			}
-			reader.close();
-		} catch (ClientProtocolException e) {
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return data;
+	public ArrayList<LatLng> loadInBackground() {
+		return ConnectionClient.getDirections(mOriginLatitud, mOriginLongitud,
+				mDestinationLatitud, mDestinationLongitud);
 	}
 
-	private URI getUri() {
-
-		return URI.create(DIRECTIONS_API_BASE_URL + ORIGIN_URL
-				+ mArgs.getDouble(ARG_ORIGIN_LAT) + ","
-				+ mArgs.getDouble(ARG_ORIGIN_LNG) + "&" + DESTINATION_URL
-				+ mArgs.getDouble(ARG_DESTINATION_LAT) + ","
-				+ mArgs.getDouble(ARG_DESTINATION_LNG) + "&" + SENSOR_URL
-				+ getSensorAvailability());
-	}
-
-	private DefaultHttpClient createHttpClient() {
-		HttpParams params = new BasicHttpParams();
-		return new DefaultHttpClient(params);
-	}
-
-	private String getSensorAvailability() {
-		return "true";
-	}
 }
