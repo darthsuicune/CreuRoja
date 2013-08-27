@@ -2,7 +2,6 @@ package com.cruzroja.creuroja.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -104,6 +103,7 @@ public class ConnectionClient {
 		if (cm.getActiveNetworkInfo() != null) {
 			return cm.getActiveNetworkInfo().isConnected();
 		}
+
 		return false;
 	}
 
@@ -112,6 +112,7 @@ public class ConnectionClient {
 			return null;
 		}
 		DefaultHttpClient httpClient = new DefaultHttpClient();
+		
 
 		try {
 			return httpClient.execute(request);
@@ -155,31 +156,11 @@ public class ConnectionClient {
 					return null;
 				}
 			default:
-				return new User();
+				return null;
 			}
+		} else {
+			return null;
 		}
-		return null;
-	}
-
-	/**
-	 * 
-	 * @param stream
-	 * @return int defined in LOGIN_LOADER corresponding to the user role. INVALID_CREDENTIALS if
-	 *         user is not registered or used a wrong password
-	 * @throws IOException
-	 *             An error in reading the information should be just catched and printed, done in
-	 *             the previous call
-	 */
-	private static int getUserRole(InputStream stream) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-		String line;
-		while ((line = reader.readLine()) != null) {
-			if (line.contains("session_name")) {
-				// TODO: Modify session_name for user roles
-				return 0;
-			}
-		}
-		return 1;
 	}
 
 	/*****************************
@@ -187,11 +168,12 @@ public class ConnectionClient {
 	 *****************************/
 
 	private static ArrayList<Location> parseLocationsResponse(Context context, HttpResponse response) {
+		ArrayList<Location> result = null;
 		if (response.getStatusLine() != null) {
 			switch (response.getStatusLine().getStatusCode()) {
 			case 200:
 				// Get everything as a string ready to parse and save later to
-				// db.
+				// disk.
 				BufferedReader reader;
 				try {
 					reader = new BufferedReader(new InputStreamReader(response.getEntity()
@@ -206,19 +188,21 @@ public class ConnectionClient {
 						reader.close();
 					}
 					// Parse the resulting string. Save to disk if its correct
-					return JSONParser.parseLocations(data);
+					result = JSONParser.parseLocations(data);
+					if (result != null && !result.isEmpty()) {
+						FileUtils.writeToFile(context, data);
+					}
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
-					return null;
 				} catch (IOException e) {
 					e.printStackTrace();
-					return null;
 				}
+				break;
 			default:
 				break;
 			}
 		}
-		return null;
+		return result;
 	}
 
 	/******************************
