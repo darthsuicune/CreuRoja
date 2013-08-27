@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
+import com.cruzroja.creuroja.utils.ConnectionClient;
 import com.google.android.gms.maps.model.LatLng;
 
 public class DirectionsLoader extends AsyncTaskLoader<ArrayList<LatLng>> {

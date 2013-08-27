@@ -8,18 +8,20 @@ import com.cruzroja.creuroja.database.CreuRojaContract;
 import com.cruzroja.creuroja.database.CreuRojaProvider;
 
 public class Location {
-	public static final String MARKER_NEW_LINE = "<br />";
-	public static final String MARKER_STRONG = "<strong>";
-	public static final String MARKER_STRONG_END = "</strong>";
-	public static final String MARKER_SPACE = "&nbsp;";
+public static final String MARKER_NEW_LINE = "<br>";
+public static final String MARKER_STRONG = "<strong>";
+public static final String MARKER_STRONG_END = "</strong>";
+public static final String MARKER_SPACE = "&nbsp;";
 
-	public static final String ICON_ASAMBLEA = "asamblea.png";
-	public static final String ICON_BRAVO = "bravo.png";
-	public static final String ICON_CUAP = "cuap.png";
-	public static final String ICON_HOSPITAL = "hospital.png";
-	public static final String ICON_MARITIMO = "maritimo.png";
-	public static final String ICON_TERRESTRE = "terrestre.png";
-	public static final int NO_ICON = 0;
+public static final String ICON_ADAPTADAS = "adaptadas.png";
+public static final String ICON_ASAMBLEA = "asamblea.png";
+public static final String ICON_BRAVO = "bravo.png";
+public static final String ICON_CUAP = "cuap.png";
+public static final String ICON_HOSPITAL = "hospital.png";
+public static final String ICON_MARITIMO = "maritimo.png";
+public static final String ICON_NOSTRUM = "nostrum.png";
+public static final String ICON_TERRESTRE = "terrestre.png";
+public static final int NO_ICON = 0;
 
 	public double mLat;
 	public double mLong;
@@ -73,23 +75,28 @@ public class Location {
 		cr.insert(CreuRojaProvider.CONTENT_LOCATIONS, values);
 	}
 
-	public int getIcon(String icon) {
-		if (icon.equals(ICON_ASAMBLEA)) {
-			return R.drawable.asamblea;
-		} else if (icon.equals(ICON_BRAVO)) {
-			return R.drawable.bravo;
-		} else if (icon.equals(ICON_CUAP)) {
-			return R.drawable.cuap;
-		} else if (icon.equals(ICON_HOSPITAL)) {
-			return R.drawable.hospital;
-		} else if (icon.equals(ICON_MARITIMO)) {
-			return R.drawable.maritimo;
-		} else if (icon.equals(ICON_TERRESTRE)) {
-			return R.drawable.terrestre;
-		} else {
-			return NO_ICON;
-		}
-	}
+
+    public int getIcon(String icon) {
+    	if (icon.equals(ICON_ADAPTADAS)) {
+    		return R.drawable.adaptadas;
+    	} else if (icon.equals(ICON_ASAMBLEA)) {
+            return R.drawable.asamblea;
+        } else if (icon.equals(ICON_BRAVO)) {
+            return R.drawable.bravo;
+        } else if (icon.equals(ICON_CUAP)) {
+            return R.drawable.cuap;
+        } else if (icon.equals(ICON_HOSPITAL)) {
+            return R.drawable.hospital;
+        } else if (icon.equals(ICON_MARITIMO)) {
+            return R.drawable.maritimo;
+        } else if (icon.equals(ICON_TERRESTRE)) {
+            return R.drawable.terrestre;
+        } else if (icon.equals(ICON_NOSTRUM)) {
+        	return R.drawable.nostrum;
+        } else {
+            return NO_ICON;
+        }
+    }
 
 	public Contenido getContenido(String contenido) {
 		if (!contenido.contains(MARKER_NEW_LINE)) {

@@ -4,11 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
-public class LoginLoader extends AsyncTaskLoader<Integer> {
-	public static final int UNKNOWN_ERROR = -1;
-	public static final int INVALID_CREDENTIALS = 1;
-	public static final int USER_REGISTERED = 3;
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.cruzroja.creuroja.utils.Settings;
 
+public class LoginLoader extends AsyncTaskLoader<User> {
 	private String mUsername;
 	private String mPassword;
 	private boolean isStarted = false;
@@ -29,7 +28,7 @@ public class LoginLoader extends AsyncTaskLoader<Integer> {
 	}
 
 	@Override
-	public Integer loadInBackground() {
+	public User loadInBackground() {
 		return ConnectionClient.doLogin(mUsername, mPassword);
 	}
 

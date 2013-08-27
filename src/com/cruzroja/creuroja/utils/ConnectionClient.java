@@ -1,4 +1,4 @@
-package com.cruzroja.creuroja;
+package com.cruzroja.creuroja.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -20,24 +20,24 @@ import org.apache.http.message.BasicHeader;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+import com.cruzroja.creuroja.Location;
+import com.cruzroja.creuroja.User;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
  * LOGIN:
  * 
- * PETITION FORMAT: <\?xml version="1.0"\?> <methodCall>
- * <methodName>user.login</methodName> <params> <param>
- * <value><string>username</string></value> </param> <param>
+ * PETITION FORMAT: <\?xml version="1.0"\?> <methodCall> <methodName>user.login</methodName>
+ * <params> <param> <value><string>username</string></value> </param> <param>
  * <value><string>password</string></value> </param> </params> </methodCall>
  * <p/>
  * 
- * Petition requirements: -Send via POST -Set content-type header to "text/xml"
- * or "application/xml"
+ * Petition requirements: -Send via POST -Set content-type header to "text/xml" or "application/xml"
  */
 public class ConnectionClient {
 	// URLs
-	private static final String BASE_URL = "http://r0uzic.net/voluntarios/";
-	public static final String URL_LOGIN = BASE_URL + "user/login?q=android";
+	public static final String BASE_URL = "http://r0uzic.net/voluntarios/";
+	public static final String URL_LOGIN = BASE_URL + "android/user/login";
 	public static final String URL_PUNTOS = BASE_URL + "map/marcadores.json";
 
 	public static final String DIRECTIONS_API_BASE_URL = "https://maps.googleapis.com/maps/api/directions/json?region=es&";
@@ -47,19 +47,50 @@ public class ConnectionClient {
 	public static final String SENSOR_URL = "sensor=";
 
 	// XML preconstructed strings
-	public static final String XML_PETITION_1 = "<?xml version=\"1.0\"?>\n"
-			+ "<methodCall>\n" + "   <methodName>user.login</methodName>\n"
-			+ "   <params>\n" + "     <param>\n" + "        <value><string>";
-	public static final String XML_PETITION_2 = "</string></value>\n"
-			+ "     </param>\n" + "    <param>\n" + "        <value><string>";
-	public static final String XML_PETITION_3 = "</string></value>\n"
-			+ "     </param>\n" + "   </params>\n" + "</methodCall>";
+	public static final String XML_PETITION_1 = "<?xml version=\"1.0\"?>\n" + "<methodCall>\n"
+			+ "   <methodName>user.login</methodName>\n" + "   <params>\n" + "     <param>\n"
+			+ "        <value><string>";
+	public static final String XML_PETITION_2 = "</string></value>\n" + "     </param>\n"
+			+ "    <param>\n" + "        <value><string>";
+	public static final String XML_PETITION_3 = "</string></value>\n" + "     </param>\n"
+			+ "   </params>\n" + "</methodCall>";
 	public static final String CONTENT_TYPE = "content-type";
 	public static final String CONTENT_TYPE_XML = "text/xml";
 
 	// This class should not be instantiated
 	private ConnectionClient() {
 	}
+
+	/**
+	 * * Method to call to perform a credentials validation.
+	 * 
+	 * @param username
+	 * @param password
+	 * @return null with server error. User with "" as name for invalid credentials. User with
+	 *         parameters for valid user.
+	 */
+	public static User doLogin(String username, String password) {
+		return parseLoginResponse(makeConnection(buildLoginRequest(username, password)));
+	}
+
+	/**
+	 * 
+	 * @param context
+	 * @return
+	 */
+	public static ArrayList<Location> downloadLocations(Context context) {
+		return parseLocationsResponse(context, makeConnection(new HttpGet(URL_PUNTOS)));
+	}
+
+	public static ArrayList<LatLng> getDirections(double originLatitud, double originLongitud,
+			double destinationLatitud, double destinationLongitud) {
+		return parseDirectionsResponse(makeConnection(buildDirectionsRequest(originLatitud,
+				originLongitud, destinationLatitud, destinationLongitud)));
+	}
+
+	/*******************
+	 * Utility methods *
+	 *******************/
 
 	/**
 	 * Should be always called before using the internet connection.
@@ -73,33 +104,7 @@ public class ConnectionClient {
 		if (cm.getActiveNetworkInfo() != null) {
 			return cm.getActiveNetworkInfo().isConnected();
 		}
-
 		return false;
-	}
-
-	/**
-	 * Method to call to perform a credentials validation.
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	public static int doLogin(String username, String password) {
-		return parseLoginResponse(makeConnection(buildLoginRequest(username,
-				password)));
-	}
-
-	public static void downloadLocations(Context context) {
-		parseLocationsResponse(context, makeConnection(new HttpGet(
-				URL_PUNTOS)));
-	}
-
-	public static ArrayList<LatLng> getDirections(double originLatitud,
-			double originLongitud, double destinationLatitud,
-			double destinationLongitud) {
-		return parseDirectionsResponse(makeConnection(buildDirectionsRequest(
-				originLatitud, originLongitud, destinationLatitud,
-				destinationLongitud)));
 	}
 
 	private static HttpResponse makeConnection(HttpUriRequest request) {
@@ -123,70 +128,65 @@ public class ConnectionClient {
 	 * Login specific methods *
 	 **************************/
 
-	private static HttpUriRequest buildLoginRequest(String username,
-			String password) {
+	private static HttpUriRequest buildLoginRequest(String username, String password) {
 		HttpPost request = new HttpPost(URL_LOGIN);
 		request.setHeader(new BasicHeader(CONTENT_TYPE, CONTENT_TYPE_XML));
 		try {
-			request.setEntity(new StringEntity(XML_PETITION_1 + username
-					+ XML_PETITION_2 + password + XML_PETITION_3));
+			request.setEntity(new StringEntity(XML_PETITION_1 + username + XML_PETITION_2
+					+ password + XML_PETITION_3));
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
 		return request;
 	}
 
-	private static int parseLoginResponse(HttpResponse response) {
+	private static User parseLoginResponse(HttpResponse response) {
 		if (response != null && response.getStatusLine() != null) {
 			switch (response.getStatusLine().getStatusCode()) {
 			case 200:
 				// Success in the connection. Check response
 				try {
-					return getUserRole(response.getEntity().getContent());
+					return new User(response.getEntity().getContent());
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
-					break;
+					return null;
 				} catch (IOException e) {
 					e.printStackTrace();
-					break;
+					return null;
 				}
 			default:
-				return response.getStatusLine().getStatusCode();
+				return new User();
 			}
 		}
-		return LoginLoader.UNKNOWN_ERROR;
+		return null;
 	}
 
 	/**
 	 * 
 	 * @param stream
-	 * @return int defined in LOGIN_LOADER corresponding to the user role.
-	 *         INVALID_CREDENTIALS if user is not registered or used a wrong
-	 *         password
+	 * @return int defined in LOGIN_LOADER corresponding to the user role. INVALID_CREDENTIALS if
+	 *         user is not registered or used a wrong password
 	 * @throws IOException
-	 *             An error in reading the information should be just catched
-	 *             and printed, done in the previous call
+	 *             An error in reading the information should be just catched and printed, done in
+	 *             the previous call
 	 */
 	private static int getUserRole(InputStream stream) throws IOException {
-		BufferedReader reader = new BufferedReader(
-				new InputStreamReader(stream));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 		String line;
 		while ((line = reader.readLine()) != null) {
 			if (line.contains("session_name")) {
-				//TODO: Modify session_name for user roles
-				return LoginLoader.USER_REGISTERED;
+				// TODO: Modify session_name for user roles
+				return 0;
 			}
-			// Insert all possible remaining cases here
 		}
-		return LoginLoader.INVALID_CREDENTIALS;
+		return 1;
 	}
 
 	/*****************************
 	 * Location specific methods *
 	 *****************************/
 
-	private static void parseLocationsResponse(Context context,
-			HttpResponse response) {
+	private static ArrayList<Location> parseLocationsResponse(Context context, HttpResponse response) {
 		if (response.getStatusLine() != null) {
 			switch (response.getStatusLine().getStatusCode()) {
 			case 200:
@@ -194,8 +194,8 @@ public class ConnectionClient {
 				// db.
 				BufferedReader reader;
 				try {
-					reader = new BufferedReader(new InputStreamReader(response
-							.getEntity().getContent()));
+					reader = new BufferedReader(new InputStreamReader(response.getEntity()
+							.getContent()));
 
 					String data = "";
 					String line;
@@ -206,17 +206,19 @@ public class ConnectionClient {
 						reader.close();
 					}
 					// Parse the resulting string. Save to disk if its correct
-					JSONParser.parseLocations(data);
+					return JSONParser.parseLocations(data);
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
+					return null;
 				} catch (IOException e) {
 					e.printStackTrace();
+					return null;
 				}
-				break;
 			default:
 				break;
 			}
 		}
+		return null;
 	}
 
 	/******************************
@@ -224,12 +226,10 @@ public class ConnectionClient {
 	 ******************************/
 
 	private static HttpUriRequest buildDirectionsRequest(double originLatitud,
-			double originLongitud, double destinationLatitud,
-			double destinationLongitud) {
-		return new HttpGet(URI.create(DIRECTIONS_API_BASE_URL + ORIGIN_URL
-				+ originLatitud + "," + originLongitud + "&" + DESTINATION_URL
-				+ destinationLatitud + "," + destinationLongitud + "&"
-				+ SENSOR_URL + getSensorAvailability()));
+			double originLongitud, double destinationLatitud, double destinationLongitud) {
+		return new HttpGet(URI.create(DIRECTIONS_API_BASE_URL + ORIGIN_URL + originLatitud + ","
+				+ originLongitud + "&" + DESTINATION_URL + destinationLatitud + ","
+				+ destinationLongitud + "&" + SENSOR_URL + getSensorAvailability()));
 	}
 
 	// Placeholder in case we want to introduce sensor detection
@@ -237,8 +237,7 @@ public class ConnectionClient {
 		return "true";
 	}
 
-	private static ArrayList<LatLng> parseDirectionsResponse(
-			HttpResponse response) {
+	private static ArrayList<LatLng> parseDirectionsResponse(HttpResponse response) {
 		ArrayList<LatLng> result = null;
 		if (response.getStatusLine() != null) {
 			switch (response.getStatusLine().getStatusCode()) {
@@ -246,8 +245,8 @@ public class ConnectionClient {
 				// Get everything as a string ready to parse
 				BufferedReader reader;
 				try {
-					reader = new BufferedReader(new InputStreamReader(response
-							.getEntity().getContent()));
+					reader = new BufferedReader(new InputStreamReader(response.getEntity()
+							.getContent()));
 
 					String data = "";
 					String line;

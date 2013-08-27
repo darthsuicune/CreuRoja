@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+
+    <string name="app_name">Cruz Roja</string>
+    <string name="menu_locate">Posición</string>
+    <string name="menu_refresh">Actualizar</string>
+    <string name="menu_show_panel">Leyenda</string>
+    <string name="menu_show_map">Mapa</string>
+    <string name="menu_search">Buscar</string>
+    <string name="search_hint">Busca un puesto</string>
+    <string name="google_maps_api_key">"AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ"</string>
+    <string name="google_maps_api_key_zuhause">"AIzaSyC_eeaFAw7-u9ha7njs7YPI-gvM3Pmil74"</string>
+    <string name="locating">Localizando posicion, espere un momento y vuelva a intentarlo</string>
+    <string name="location_disabled_title">Servicios de localización desactivados</string>
+    <string name="location_disabled_message">¿Desea activar los servicios de localización ahora?</string>
+    <string name="location_unavailable">Los servicios de localizacion no se pudieron activar</string>
+    <string name="open_location_settings">Ajustes</string>
+    <string name="cancel">Cancelar</string>
+
+</resources>

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -17,7 +16,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -25,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager.LoaderCallbacks;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -37,13 +36,14 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cruzroja.creuroja.ConnectionClient;
 import com.cruzroja.creuroja.DirectionsLoader;
 import com.cruzroja.creuroja.Location;
 import com.cruzroja.creuroja.R;
-import com.cruzroja.creuroja.Settings;
+import com.cruzroja.creuroja.User;
 import com.cruzroja.creuroja.database.CreuRojaContract;
 import com.cruzroja.creuroja.database.CreuRojaProvider;
+import com.cruzroja.creuroja.utils.ConnectionClient;
+import com.cruzroja.creuroja.utils.Settings;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -59,12 +59,11 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 /**
- * This methods should be modified when new kinds of locations are introduced.
- * -Variable definitions onCreateView onCheckedChanged shouldShowMarker
+ * This methods should be modified when new kinds of locations are introduced. -Variable definitions
+ * onCreateView onCheckedChanged shouldShowMarker
  * 
  */
-public class CRMapFragment extends Fragment implements
-		GoogleMap.OnInfoWindowClickListener,
+public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowClickListener,
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener,
 		CompoundButton.OnCheckedChangeListener, SearchView.OnQueryTextListener {
@@ -77,18 +76,31 @@ public class CRMapFragment extends Fragment implements
 
 	private SharedPreferences prefs;
 
+	private User mUser;
+
 	private ArrayList<Location> mLocationList;
 
 	private GoogleMap mGoogleMap;
 	private LocationClient mLocationClient;
 	private Polyline mPolyline;
 
+	private CheckBox mAdaptadasCheckBox;
 	private CheckBox mAsambleaCheckBox;
 	private CheckBox mBravoCheckBox;
 	private CheckBox mCuapCheckBox;
 	private CheckBox mHospitalCheckBox;
 	private CheckBox mMaritimoCheckBox;
 	private CheckBox mTerrestreCheckBox;
+	private CheckBox mNostrumCheckBox;
+
+	private View mAdaptadasBox;
+	private View mAsambleaBox;
+	private View mBravoBox;
+	private View mCuapBox;
+	private View mHospitalBox;
+	private View mMaritimoBox;
+	private View mTerrestreBox;
+	private View mNostrumBox;
 
 	public String mFilter = "";
 
@@ -100,53 +112,77 @@ public class CRMapFragment extends Fragment implements
 	}
 
 	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container,
-			Bundle savedInstanceState) {
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_map, container, false);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
 		mMarkerPanel = v.findViewById(R.id.marker_panel);
 
+		// Prepare all checkboxes for use
 		if (mMarkerPanel != null) {
-			mAsambleaCheckBox = (CheckBox) v
-					.findViewById(R.id.checkbox_asamblea);
+			mAdaptadasBox = v.findViewById(R.id.box_adaptadas);
+			mAsambleaBox = v.findViewById(R.id.box_asamblea);
+			mBravoBox = v.findViewById(R.id.box_bravo);
+			mCuapBox = v.findViewById(R.id.box_cuap);
+			mHospitalBox = v.findViewById(R.id.box_hospital);
+			mMaritimoBox = v.findViewById(R.id.box_maritimo);
+			mTerrestreBox = v.findViewById(R.id.box_terrestre);
+			mNostrumBox = v.findViewById(R.id.box_nostrum);
+
+			mAdaptadasCheckBox = (CheckBox) v.findViewById(R.id.checkbox_adaptadas);
+			mAsambleaCheckBox = (CheckBox) v.findViewById(R.id.checkbox_asamblea);
 			mBravoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_bravo);
 			mCuapCheckBox = (CheckBox) v.findViewById(R.id.checkbox_cuap);
-			mHospitalCheckBox = (CheckBox) v
-					.findViewById(R.id.checkbox_hospital);
-			mMaritimoCheckBox = (CheckBox) v
-					.findViewById(R.id.checkbox_maritimo);
-			mTerrestreCheckBox = (CheckBox) v
-					.findViewById(R.id.checkbox_terrestre);
+			mHospitalCheckBox = (CheckBox) v.findViewById(R.id.checkbox_hospital);
+			mMaritimoCheckBox = (CheckBox) v.findViewById(R.id.checkbox_maritimo);
+			mTerrestreCheckBox = (CheckBox) v.findViewById(R.id.checkbox_terrestre);
+			mNostrumCheckBox = (CheckBox) v.findViewById(R.id.checkbox_nostrum);
 
-			mAsambleaCheckBox.setChecked(prefs.getBoolean(
-					Settings.SHOW_ASAMBLEA, true));
-			mBravoCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_BRAVO,
-					true));
-			mCuapCheckBox
-					.setChecked(prefs.getBoolean(Settings.SHOW_CUAP, true));
-			mHospitalCheckBox.setChecked(prefs.getBoolean(
-					Settings.SHOW_HOSPITAL, true));
-			mMaritimoCheckBox.setChecked(prefs.getBoolean(
-					Settings.SHOW_MARITIMO, true));
-			mTerrestreCheckBox.setChecked(prefs.getBoolean(
-					Settings.SHOW_TERRESTRE, true));
+			mAdaptadasCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_ADAPTADAS, true));
+			mAsambleaCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_ASAMBLEA, true));
+			mBravoCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_BRAVO, true));
+			mCuapCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_CUAP, true));
+			mHospitalCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_HOSPITAL, true));
+			mMaritimoCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_MARITIMO, true));
+			mTerrestreCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_TERRESTRE, true));
+			mNostrumCheckBox.setChecked(prefs.getBoolean(Settings.SHOW_NOSTRUM, true));
 
+			mAdaptadasCheckBox.setOnCheckedChangeListener(this);
 			mAsambleaCheckBox.setOnCheckedChangeListener(this);
 			mBravoCheckBox.setOnCheckedChangeListener(this);
 			mCuapCheckBox.setOnCheckedChangeListener(this);
 			mHospitalCheckBox.setOnCheckedChangeListener(this);
 			mMaritimoCheckBox.setOnCheckedChangeListener(this);
 			mTerrestreCheckBox.setOnCheckedChangeListener(this);
+			mNostrumCheckBox.setOnCheckedChangeListener(this);
+
+			setCheckboxesVisibility();
 		}
 		return v;
+	}
+
+	private void setCheckboxesVisibility() {
+		if (mUser == null) {
+			mUser = User.getSavedUser(prefs);
+			if (mUser == null) {
+				return;
+			}
+		}
+
+		mAdaptadasBox.setVisibility(mUser.canSeeCheckBox(R.drawable.adaptadas));
+		mAsambleaBox.setVisibility(mUser.canSeeCheckBox(R.drawable.asamblea));
+		mBravoBox.setVisibility(mUser.canSeeCheckBox(R.drawable.bravo));
+		mCuapBox.setVisibility(mUser.canSeeCheckBox(R.drawable.cuap));
+		mHospitalBox.setVisibility(mUser.canSeeCheckBox(R.drawable.hospital));
+		mMaritimoBox.setVisibility(mUser.canSeeCheckBox(R.drawable.maritimo));
+		mTerrestreBox.setVisibility(mUser.canSeeCheckBox(R.drawable.terrestre));
+		mNostrumBox.setVisibility(mUser.canSeeCheckBox(R.drawable.nostrum));
 	}
 
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
 		requestGooglePlayServicesAvailability();
-
 		SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
 				.findFragmentById(R.id.map);
 
@@ -181,9 +217,7 @@ public class CRMapFragment extends Fragment implements
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 		inflater.inflate(R.menu.fragment_map, menu);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			setSearchOptions(menu);
-		}
+		setSearchOptions(menu);
 
 	}
 
@@ -194,9 +228,7 @@ public class CRMapFragment extends Fragment implements
 			moveToCurrentLocation();
 			return true;
 		case R.id.search:
-			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-				getActivity().onSearchRequested();
-			}
+			// Nothing needed here thanks to the support library
 			return true;
 		case android.R.id.home:
 		case R.id.menu_show_panel:
@@ -246,16 +278,14 @@ public class CRMapFragment extends Fragment implements
 	 * Check that Google Play services is available
 	 */
 	private boolean requestGooglePlayServicesAvailability() {
-		int resultCode = GooglePlayServicesUtil
-				.isGooglePlayServicesAvailable(getActivity());
+		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity());
 		// If Google Play services is available
 		if (ConnectionResult.SUCCESS == resultCode) {
 			return true;
 			// Google Play services was not available for some reason
 		} else {
 			// Get the error dialog from Google Play services
-			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(
-					resultCode, getActivity(),
+			Dialog errorDialog = GooglePlayServicesUtil.getErrorDialog(resultCode, getActivity(),
 					CONNECTION_FAILURE_RESOLUTION_REQUEST);
 
 			// If Google Play services can provide an error dialog
@@ -272,8 +302,8 @@ public class CRMapFragment extends Fragment implements
 	}
 
 	private void loadDataFromDB() {
-		getLoaderManager().restartLoader(LOCATIONS_DB_LOADER, null,
-				new LocationsLoaderHelper());
+		getLoaderManager().restartLoader(LOCATIONS_DB_LOADER, null, new LocationsLoaderHelper());
+
 	}
 
 	private void downloadNewData() {
@@ -281,8 +311,7 @@ public class CRMapFragment extends Fragment implements
 			getLoaderManager().restartLoader(LOCATIONS_DOWNLOAD_LOADER, null,
 					new LocationsLoaderHelper());
 		} else {
-			Toast.makeText(getActivity(), R.string.error_no_connection,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -292,11 +321,10 @@ public class CRMapFragment extends Fragment implements
 
 	private void setMap() {
 		if (mGoogleMap == null) {
-			mGoogleMap = ((SupportMapFragment) getFragmentManager()
-					.findFragmentById(R.id.map)).getMap();
+			mGoogleMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
+					.getMap();
 			if (mGoogleMap != null) {
-				setMapStyle(prefs.getInt(Settings.MAP_STYLE,
-						Settings.MAP_STYLE_NORMAL));
+				setMapStyle(prefs.getInt(Settings.MAP_STYLE, Settings.MAP_STYLE_NORMAL));
 				mGoogleMap.setMyLocationEnabled(true);
 				mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
 				mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
@@ -337,14 +365,11 @@ public class CRMapFragment extends Fragment implements
 		if (mGoogleMap != null) {
 			if (locationServicesAreEnabled()) {
 				if (mLocationClient.getLastLocation() != null) {
-					mGoogleMap.animateCamera(CameraUpdateFactory
-							.newLatLng(new LatLng(mLocationClient
-									.getLastLocation().getLatitude(),
-									mLocationClient.getLastLocation()
-											.getLongitude())));
+					mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(
+							mLocationClient.getLastLocation().getLatitude(), mLocationClient
+									.getLastLocation().getLongitude())));
 				} else {
-					Toast.makeText(getActivity(), R.string.locating,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(getActivity(), R.string.locating, Toast.LENGTH_SHORT).show();
 				}
 			} else {
 				showLocationSettings();
@@ -382,11 +407,10 @@ public class CRMapFragment extends Fragment implements
 				continue;
 			}
 
-			MarkerOptions marker = new MarkerOptions().position(new LatLng(
-					location.mLat, location.mLong));
+			MarkerOptions marker = new MarkerOptions().position(new LatLng(location.mLat,
+					location.mLong));
 			if (location.mIcono != 0) {
-				marker.icon(BitmapDescriptorFactory
-						.fromResource(location.mIcono));
+				marker.icon(BitmapDescriptorFactory.fromResource(location.mIcono));
 			}
 			if (location.mContenido.mNombre != null) {
 				marker.title(location.mContenido.mNombre);
@@ -409,12 +433,11 @@ public class CRMapFragment extends Fragment implements
 			return;
 		}
 		if (points.size() == 0) {
-			Toast.makeText(getActivity(), R.string.error_limit_reached,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.error_limit_reached, Toast.LENGTH_LONG).show();
 		}
 
-		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(points)
-				.color(Color.parseColor("#CC0000")));
+		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(points).color(
+				Color.parseColor("#CC0000")));
 	}
 
 	private void showMarkerPanel() {
@@ -428,22 +451,34 @@ public class CRMapFragment extends Fragment implements
 	}
 
 	private boolean shouldShowMarker(Location location, String filter) {
-		if (!matchFilter(location, filter)) {
+		if ((mUser == null) || !matchFilter(location, filter)) {
 			return false;
 		}
 		switch (location.mIcono) {
+		case R.drawable.adaptadas:
+			return prefs.getBoolean(Settings.SHOW_ADAPTADAS, true)
+					&& mUser.canSeeMarker(R.drawable.adaptadas);
 		case R.drawable.asamblea:
-			return prefs.getBoolean(Settings.SHOW_ASAMBLEA, true);
+			return prefs.getBoolean(Settings.SHOW_ASAMBLEA, true)
+					&& mUser.canSeeMarker(R.drawable.asamblea);
 		case R.drawable.bravo:
-			return prefs.getBoolean(Settings.SHOW_BRAVO, true);
+			return prefs.getBoolean(Settings.SHOW_BRAVO, true)
+					&& mUser.canSeeMarker(R.drawable.bravo);
 		case R.drawable.cuap:
-			return prefs.getBoolean(Settings.SHOW_CUAP, true);
+			return prefs.getBoolean(Settings.SHOW_CUAP, true)
+					&& mUser.canSeeMarker(R.drawable.cuap);
 		case R.drawable.hospital:
-			return prefs.getBoolean(Settings.SHOW_HOSPITAL, true);
+			return prefs.getBoolean(Settings.SHOW_HOSPITAL, true)
+					&& mUser.canSeeMarker(R.drawable.hospital);
 		case R.drawable.maritimo:
-			return prefs.getBoolean(Settings.SHOW_MARITIMO, true);
+			return prefs.getBoolean(Settings.SHOW_MARITIMO, true)
+					&& mUser.canSeeMarker(R.drawable.maritimo);
 		case R.drawable.terrestre:
-			return prefs.getBoolean(Settings.SHOW_TERRESTRE, true);
+			return prefs.getBoolean(Settings.SHOW_TERRESTRE, true)
+					&& mUser.canSeeMarker(R.drawable.terrestre);
+		case R.drawable.nostrum:
+			return prefs.getBoolean(Settings.SHOW_NOSTRUM, true)
+					&& mUser.canSeeMarker(R.drawable.nostrum);
 		default:
 			return true;
 		}
@@ -469,10 +504,9 @@ public class CRMapFragment extends Fragment implements
 	@SuppressLint("DefaultLocale")
 	private String dehyphenize(String input) {
 		input = input.toLowerCase();
-		return input.replace("à", "a").replace("á", "a").replace("é", "e")
-				.replace("è", "e").replace("í", "i").replace("ì", "i")
-				.replace("ó", "o").replace("ò", "o").replace("ú", "u")
-				.replace("ù", "u");
+		return input.replace("à", "a").replace("á", "a").replace("é", "e").replace("è", "e")
+				.replace("í", "i").replace("ì", "i").replace("ó", "o").replace("ò", "o")
+				.replace("ú", "u").replace("ù", "u");
 	}
 
 	/**************************
@@ -483,6 +517,9 @@ public class CRMapFragment extends Fragment implements
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		SharedPreferences.Editor editor = prefs.edit();
 		switch (buttonView.getId()) {
+		case R.id.checkbox_adaptadas:
+			editor.putBoolean(Settings.SHOW_ADAPTADAS, isChecked);
+			break;
 		case R.id.checkbox_asamblea:
 			editor.putBoolean(Settings.SHOW_ASAMBLEA, isChecked);
 			break;
@@ -501,6 +538,9 @@ public class CRMapFragment extends Fragment implements
 		case R.id.checkbox_terrestre:
 			editor.putBoolean(Settings.SHOW_TERRESTRE, isChecked);
 			break;
+		case R.id.checkbox_nostrum:
+			editor.putBoolean(Settings.SHOW_NOSTRUM, isChecked);
+			break;
 		}
 		editor.commit();
 		drawMarkers();
@@ -513,12 +553,14 @@ public class CRMapFragment extends Fragment implements
 			switch (id) {
 			case LOCATIONS_DB_LOADER:
 
-				return new CursorLoader(getActivity(),
-						CreuRojaProvider.CONTENT_LOCATIONS, null, null, null,
-						null);
+				return new CursorLoader(getActivity(), CreuRojaProvider.CONTENT_LOCATIONS, null,
+						null, null, null);
 			default:
+				Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG)
+						.show();
 				return null;
 			}
+
 		}
 
 		@Override
@@ -528,20 +570,19 @@ public class CRMapFragment extends Fragment implements
 					mLocationList = new ArrayList<Location>();
 				}
 				do {
-				mLocationList
-						.add(new Location(
-								cursor.getDouble(cursor
-										.getColumnIndex(CreuRojaContract.Locations.LATITUD)),
-								cursor.getDouble(cursor
-										.getColumnIndex(CreuRojaContract.Locations.LONGITUD)),
-								cursor.getString(cursor
-										.getColumnIndex(CreuRojaContract.Locations.ICON)),
-								cursor.getString(cursor
-										.getColumnIndex(CreuRojaContract.Locations.NAME)),
-								cursor.getString(cursor
-										.getColumnIndex(CreuRojaContract.Locations.ADDRESS)),
-								cursor.getString(cursor
-										.getColumnIndex(CreuRojaContract.Locations.DETAILS))));
+					mLocationList
+							.add(new Location(cursor.getDouble(cursor
+									.getColumnIndex(CreuRojaContract.Locations.LATITUD)), cursor
+									.getDouble(cursor
+											.getColumnIndex(CreuRojaContract.Locations.LONGITUD)),
+									cursor.getString(cursor
+											.getColumnIndex(CreuRojaContract.Locations.ICON)),
+									cursor.getString(cursor
+											.getColumnIndex(CreuRojaContract.Locations.NAME)),
+									cursor.getString(cursor
+											.getColumnIndex(CreuRojaContract.Locations.ADDRESS)),
+									cursor.getString(cursor
+											.getColumnIndex(CreuRojaContract.Locations.DETAILS))));
 				} while (cursor.moveToNext());
 				drawMarkers();
 			}
@@ -563,22 +604,18 @@ public class CRMapFragment extends Fragment implements
 		@Override
 		public View getInfoContents(Marker marker) {
 			View v = ((LayoutInflater) getActivity().getSystemService(
-					Context.LAYOUT_INFLATER_SERVICE)).inflate(
-					R.layout.map_marker, null);
+					Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.map_marker, null);
 
-			((TextView) v.findViewById(R.id.location)).setText(marker
-					.getTitle());
+			((TextView) v.findViewById(R.id.location)).setText(marker.getTitle());
 
 			if (marker.getSnippet() != null) {
 				String address = marker.getSnippet().substring(0,
 						marker.getSnippet().indexOf(Location.MARKER_NEW_LINE));
 				String other = marker.getSnippet().substring(
 						marker.getSnippet().indexOf(Location.MARKER_NEW_LINE)
-								+ Location.MARKER_NEW_LINE.length(),
-						marker.getSnippet().length());
+								+ Location.MARKER_NEW_LINE.length(), marker.getSnippet().length());
 				((TextView) v.findViewById(R.id.address)).setText(address);
-				((TextView) v.findViewById(R.id.other_information))
-						.setText(other);
+				((TextView) v.findViewById(R.id.other_information)).setText(other);
 			}
 
 			return v;
@@ -597,19 +634,16 @@ public class CRMapFragment extends Fragment implements
 		if (locationServicesAreEnabled()) {
 			if (mLocationClient.getLastLocation() != null) {
 				Bundle args = new Bundle();
-				args.putDouble(DirectionsLoader.ARG_ORIG_LAT, mLocationClient
-						.getLastLocation().getLatitude());
-				args.putDouble(DirectionsLoader.ARG_ORIG_LONG, mLocationClient
-						.getLastLocation().getLongitude());
-				args.putDouble(DirectionsLoader.ARG_DEST_LAT,
-						marker.getPosition().latitude);
-				args.putDouble(DirectionsLoader.ARG_DEST_LONG,
-						marker.getPosition().longitude);
+				args.putDouble(DirectionsLoader.ARG_ORIG_LAT, mLocationClient.getLastLocation()
+						.getLatitude());
+				args.putDouble(DirectionsLoader.ARG_ORIG_LONG, mLocationClient.getLastLocation()
+						.getLongitude());
+				args.putDouble(DirectionsLoader.ARG_DEST_LAT, marker.getPosition().latitude);
+				args.putDouble(DirectionsLoader.ARG_DEST_LONG, marker.getPosition().longitude);
 				getLoaderManager().restartLoader(DIRECTIONS_LOADER, args,
 						new DirectionsLoaderHelper());
 			} else {
-				Toast.makeText(getActivity(), R.string.locating,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity(), R.string.locating, Toast.LENGTH_SHORT).show();
 			}
 		} else {
 			showLocationSettings();
@@ -617,17 +651,21 @@ public class CRMapFragment extends Fragment implements
 
 	}
 
-	private class DirectionsLoaderHelper implements
-			LoaderCallbacks<ArrayList<LatLng>> {
+	private class DirectionsLoaderHelper implements LoaderCallbacks<ArrayList<LatLng>> {
 
 		@Override
 		public Loader<ArrayList<LatLng>> onCreateLoader(int id, Bundle args) {
-			return new DirectionsLoader(getActivity(), args);
+			if (ConnectionClient.isConnected(getActivity())) {
+				return new DirectionsLoader(getActivity(), args);
+			} else {
+				Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG)
+						.show();
+				return null;
+			}
 		}
 
 		@Override
-		public void onLoadFinished(Loader<ArrayList<LatLng>> loader,
-				ArrayList<LatLng> directions) {
+		public void onLoadFinished(Loader<ArrayList<LatLng>> loader, ArrayList<LatLng> directions) {
 			drawPolyline(directions);
 		}
 
@@ -645,12 +683,11 @@ public class CRMapFragment extends Fragment implements
 			return;
 		}
 		if (directions.size() == 0) {
-			Toast.makeText(getActivity(), R.string.error_limit_reached,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.error_limit_reached, Toast.LENGTH_LONG).show();
 		}
 
-		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(
-				directions).color(Color.parseColor("#CC0000")));
+		mPolyline = mGoogleMap.addPolyline(new PolylineOptions().addAll(directions).color(
+				Color.parseColor("#CC0000")));
 	}
 
 	/*****************************
@@ -660,9 +697,8 @@ public class CRMapFragment extends Fragment implements
 	public void onConnectionFailed(ConnectionResult connectionResult) {
 
 		/*
-		 * Google Play services can resolve some errors it detects. If the error
-		 * has a resolution, try sending an Intent to start a Google Play
-		 * services activity that can resolve error.
+		 * Google Play services can resolve some errors it detects. If the error has a resolution,
+		 * try sending an Intent to start a Google Play services activity that can resolve error.
 		 */
 		if (connectionResult.hasResolution()) {
 			try {
@@ -670,16 +706,14 @@ public class CRMapFragment extends Fragment implements
 				connectionResult.startResolutionForResult(getActivity(),
 						CONNECTION_FAILURE_RESOLUTION_REQUEST);
 				/*
-				 * Thrown if Google Play services canceled the original
-				 * PendingIntent
+				 * Thrown if Google Play services canceled the original PendingIntent
 				 */
 			} catch (IntentSender.SendIntentException e) {
 				// Log the error
 				e.printStackTrace();
 			}
 		} else {
-			Toast.makeText(getActivity(), R.string.location_unavailable,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), R.string.location_unavailable, Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -739,23 +773,28 @@ public class CRMapFragment extends Fragment implements
 		return false;
 	}
 
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setSearchOptions(Menu menu) {
-		SearchManager searchManager = (SearchManager) getActivity()
-				.getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.search)
-				.getActionView();
+		SearchManager searchManager = (SearchManager) getActivity().getSystemService(
+				Context.SEARCH_SERVICE);
+		MenuItem searchMenuItem = menu.findItem(R.id.search);
+		SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
 		if (searchView != null) {
-			searchView.setSearchableInfo(searchManager
-					.getSearchableInfo(getActivity().getComponentName()));
+			searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity()
+					.getComponentName()));
 
 			searchView.setOnQueryTextListener(this);
 		}
 	}
 
-	/***************************************
-	 * Other calls required for interfaces *
-	 ***************************************/
+	/****************
+	 * Other calls *
+	 ****************/
+
+	public void setUser(User user) {
+		mUser = user;
+		setCheckboxesVisibility();
+		drawMarkers();
+	}
 
 	@Override
 	public void onConnected(Bundle args) {

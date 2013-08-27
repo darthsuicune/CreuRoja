@@ -1,103 +1,140 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:baselineAligned="false">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:baselineAligned="false" >
+
     <ScrollView
-            android:id="@+id/marker_panel"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+        android:id="@+id/marker_panel"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:visibility="gone" >
 
         <TableLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
             <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                android:id="@+id/box_adaptadas"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
 
                 <TextView
-                        android:drawableLeft="@drawable/asamblea"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_asamblea"/>
+                    android:drawableLeft="@drawable/adaptadas"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/marker_type_adaptadas" />
 
-                <CheckBox android:id="@+id/checkbox_asamblea"/>
+                <CheckBox android:id="@+id/checkbox_adaptadas" />
             </TableRow>
 
             <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                android:id="@+id/box_asamblea"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
 
                 <TextView
-                        android:drawableLeft="@drawable/bravo"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_bravo"/>
+                    android:drawableLeft="@drawable/asamblea"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/marker_type_asamblea" />
 
-                <CheckBox android:id="@+id/checkbox_bravo"/>
+                <CheckBox android:id="@+id/checkbox_asamblea" />
             </TableRow>
 
             <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                android:id="@+id/box_bravo"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
 
                 <TextView
-                        android:drawableLeft="@drawable/cuap"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_cuap"/>
+                    android:drawableLeft="@drawable/bravo"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/marker_type_bravo" />
 
-                <CheckBox android:id="@+id/checkbox_cuap"/>
+                <CheckBox android:id="@+id/checkbox_bravo" />
             </TableRow>
 
             <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                android:id="@+id/box_cuap"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
 
                 <TextView
-                        android:drawableLeft="@drawable/hospital"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_hospital"/>
+                    android:drawableLeft="@drawable/cuap"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/marker_type_cuap" />
 
-                <CheckBox android:id="@+id/checkbox_hospital"/>
+                <CheckBox android:id="@+id/checkbox_cuap" />
             </TableRow>
 
             <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                android:id="@+id/box_hospital"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
 
                 <TextView
-                        android:drawableLeft="@drawable/maritimo"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_maritimo"/>
+                    android:drawableLeft="@drawable/hospital"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/marker_type_hospital" />
 
-                <CheckBox android:id="@+id/checkbox_maritimo"/>
+                <CheckBox android:id="@+id/checkbox_hospital" />
             </TableRow>
+
             <TableRow
-                    android:gravity="center_vertical"
-                    android:padding="8dp">
+                android:id="@+id/box_maritimo"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
 
                 <TextView
-                        android:drawableLeft="@drawable/terrestre"
-                        android:drawablePadding="8dp"
-                        android:gravity="center_vertical"
-                        android:text="@string/marker_type_terrestre"/>
+                    android:drawableLeft="@drawable/maritimo"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/marker_type_maritimo" />
 
-                <CheckBox android:id="@+id/checkbox_terrestre"/>
+                <CheckBox android:id="@+id/checkbox_maritimo" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/box_terrestre"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+
+                <TextView
+                    android:drawableLeft="@drawable/terrestre"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/marker_type_terrestre" />
+
+                <CheckBox android:id="@+id/checkbox_terrestre" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/box_nostrum"
+                android:gravity="center_vertical"
+                android:padding="8dp" >
+
+                <TextView
+                    android:drawableLeft="@drawable/nostrum"
+                    android:drawablePadding="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/marker_type_nostrum" />
+
+                <CheckBox android:id="@+id/checkbox_nostrum" />
             </TableRow>
         </TableLayout>
     </ScrollView>
 
     <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            class="com.google.android.gms.maps.SupportMapFragment"
-            tools:layout="@layout/fragment_map"/>
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        tools:layout="@layout/fragment_map" />
 
 </LinearLayout>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="username">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="validate">Validar datos</string>
+    <string name="logo">Logo CreuRoja</string>
+    <string name="login_progress_signing_in">Validando datos en el servidor...</string>
+
+</resources>

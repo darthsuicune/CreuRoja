@@ -1,4 +1,4 @@
-package com.cruzroja.creuroja;
+package com.cruzroja.creuroja.utils;
 
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.cruzroja.creuroja.Location;
 import com.google.android.gms.maps.model.LatLng;
 
 public class JSONParser {
