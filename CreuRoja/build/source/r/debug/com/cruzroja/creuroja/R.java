@@ -874,7 +874,7 @@ containing a value of this type.
         public static final int abc_search_url_text_normal=0x7f080000;
         public static final int abc_search_url_text_pressed=0x7f080001;
         public static final int abc_search_url_text_selected=0x7f080002;
-        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/colors.xml 
+        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/colors.xml 
          */
         public static final int common_action_bar_splitter=0x7f080003;
         public static final int common_signin_btn_dark_text_default=0x7f080004;
@@ -1214,110 +1214,108 @@ containing a value of this type.
  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values-es/strings.xml 
          */
         public static final int app_name=0x7f0c000d;
-        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/strings.xml 
+        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-af/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-am/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ar/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-be/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-bg/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ca/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-cs/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-da/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-de/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-el/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-en-rGB/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-es/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-es-rUS/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-et/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-fa/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-fi/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-fr/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-hi/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-hr/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-hu/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-in/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-it/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-iw/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ja/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ko/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-lt/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-lv/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ms/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-nb/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-nl/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-pl/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-pt/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-pt-rBR/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-pt-rPT/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ro/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ru/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sk/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sl/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sr/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sv/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sw/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-th/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-tl/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-tr/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-uk/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-vi/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-zh-rCN/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-zh-rTW/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-zu/strings.xml 
          */
-        public static final int auth_client_availability_notification_title=0x7f0c000e;
-        public static final int auth_client_play_services_err_notification_msg=0x7f0c000f;
-        public static final int auth_client_requested_by_msg=0x7f0c0010;
-        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values/strings.xml 
-         */
-        public static final int cancel=0x7f0c0011;
-        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-af/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-am/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ar/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-be/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-bg/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ca/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-cs/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-da/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-de/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-el/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-en-rGB/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-es/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-es-rUS/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-et/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-fa/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-fi/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-fr/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-hi/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-hr/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-hu/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-in/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-it/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-iw/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ja/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ko/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-lt/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-lv/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ms/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-nb/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-nl/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-pl/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-pt/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-pt-rBR/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-pt-rPT/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ro/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ru/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sk/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sl/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sr/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sv/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sw/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-th/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-tl/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-tr/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-uk/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-vi/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-zh-rCN/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-zh-rTW/strings.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-zu/strings.xml 
-         */
-        public static final int common_google_play_services_enable_button=0x7f0c0012;
-        public static final int common_google_play_services_enable_text=0x7f0c0013;
-        public static final int common_google_play_services_enable_title=0x7f0c0014;
-        public static final int common_google_play_services_install_button=0x7f0c0015;
-        public static final int common_google_play_services_install_text_phone=0x7f0c0016;
-        public static final int common_google_play_services_install_text_tablet=0x7f0c0017;
-        public static final int common_google_play_services_install_title=0x7f0c0018;
-        public static final int common_google_play_services_unknown_issue=0x7f0c0019;
-        public static final int common_google_play_services_unsupported_text=0x7f0c001a;
-        public static final int common_google_play_services_unsupported_title=0x7f0c001b;
-        public static final int common_google_play_services_update_button=0x7f0c001c;
-        public static final int common_google_play_services_update_text=0x7f0c001d;
-        public static final int common_google_play_services_update_title=0x7f0c001e;
-        public static final int common_signin_button_text=0x7f0c001f;
-        public static final int common_signin_button_text_long=0x7f0c0020;
-        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values/strings_errors.xml 
- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values-es/strings_errors.xml 
-         */
-        public static final int error_401=0x7f0c0021;
-        public static final int error_406=0x7f0c0022;
-        public static final int error_connection=0x7f0c0023;
-        public static final int error_field_required=0x7f0c0024;
-        public static final int error_invalid_password=0x7f0c0025;
-        public static final int error_io_excep=0x7f0c0026;
-        public static final int error_limit_reached=0x7f0c0027;
-        public static final int error_login_no_connection=0x7f0c0028;
-        public static final int error_no_connection=0x7f0c0029;
-        public static final int error_no_credentials=0x7f0c002a;
-        public static final int error_no_id=0x7f0c002b;
-        public static final int error_prot_excep=0x7f0c002c;
-        public static final int error_user_invalidated=0x7f0c002d;
-        public static final int error_wrong_id=0x7f0c002e;
+        public static final int auth_client_needs_enabling_title=0x7f0c000e;
+        public static final int auth_client_needs_installation_title=0x7f0c000f;
+        public static final int auth_client_needs_update_title=0x7f0c0010;
+        public static final int auth_client_play_services_err_notification_msg=0x7f0c0011;
+        public static final int auth_client_requested_by_msg=0x7f0c0012;
+        public static final int auth_client_using_bad_version_title=0x7f0c0013;
         /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values/strings.xml 
  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values-es/strings.xml 
          */
-        public static final int google_maps_api_key=0x7f0c002f;
-        public static final int google_maps_api_key_zuhause=0x7f0c0030;
-        public static final int locating=0x7f0c0031;
-        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/strings.xml 
+        public static final int cancel=0x7f0c0014;
+        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-es/strings.xml 
          */
-        public static final int location_client_ulr_inactive_age_under_13=0x7f0c0032;
-        public static final int location_client_ulr_inactive_age_unknown=0x7f0c0033;
-        public static final int location_client_ulr_inactive_unknown_restriction=0x7f0c0034;
+        public static final int common_google_play_services_enable_button=0x7f0c0015;
+        public static final int common_google_play_services_enable_text=0x7f0c0016;
+        public static final int common_google_play_services_enable_title=0x7f0c0017;
+        public static final int common_google_play_services_install_button=0x7f0c0018;
+        public static final int common_google_play_services_install_text_phone=0x7f0c0019;
+        public static final int common_google_play_services_install_text_tablet=0x7f0c001a;
+        public static final int common_google_play_services_install_title=0x7f0c001b;
+        public static final int common_google_play_services_unknown_issue=0x7f0c001c;
+        public static final int common_google_play_services_unsupported_text=0x7f0c001d;
+        public static final int common_google_play_services_unsupported_title=0x7f0c001e;
+        public static final int common_google_play_services_update_button=0x7f0c001f;
+        public static final int common_google_play_services_update_text=0x7f0c0020;
+        public static final int common_google_play_services_update_title=0x7f0c0021;
+        public static final int common_signin_button_text=0x7f0c0022;
+        public static final int common_signin_button_text_long=0x7f0c0023;
+        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values/strings_errors.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values-es/strings_errors.xml 
+         */
+        public static final int error_401=0x7f0c0024;
+        public static final int error_406=0x7f0c0025;
+        public static final int error_connection=0x7f0c0026;
+        public static final int error_field_required=0x7f0c0027;
+        public static final int error_invalid_password=0x7f0c0028;
+        public static final int error_io_excep=0x7f0c0029;
+        public static final int error_limit_reached=0x7f0c002a;
+        public static final int error_login_no_connection=0x7f0c002b;
+        public static final int error_no_connection=0x7f0c002c;
+        public static final int error_no_credentials=0x7f0c002d;
+        public static final int error_no_id=0x7f0c002e;
+        public static final int error_prot_excep=0x7f0c002f;
+        public static final int error_user_invalidated=0x7f0c0030;
+        public static final int error_wrong_id=0x7f0c0031;
         /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values/strings.xml 
+ From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values-es/strings.xml 
          */
+        public static final int google_maps_api_key=0x7f0c0032;
+        public static final int google_maps_api_key_zuhause=0x7f0c0033;
+        public static final int locating=0x7f0c0034;
         public static final int location_disabled_message=0x7f0c0035;
         public static final int location_disabled_title=0x7f0c0036;
         public static final int location_unavailable=0x7f0c0037;
@@ -2189,7 +2187,7 @@ containing a value of this type.
           @attr name com.cruzroja.creuroja:showDividers
         */
         public static final int LinearLayoutICS_showDividers = 1;
-        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/maps_attrs.xml 
+        /**  From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/maps_attrs.xml 
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />

@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merger xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2" >
 
-    <dataSet config="ComGoogleAndroidGmsPlayServices3136.aar" >
-        <source path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res" >
+    <dataSet config="ComGoogleAndroidGmsPlayServices3225.aar" >
+        <source path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res" >
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ko/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ko/strings.xml"
                 qualifiers="ko" >
                 <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Google Play 서비스 설치"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play 서비스 오류"
                 </string>
                 <string
                     name="common_google_play_services_unknown_issue"
@@ -23,8 +27,16 @@
                     msgid="529078775174559253" >"Google Play 서비스 사용"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Google Play 서비스를 사용하도록 설정해야 하는 애플리케이션입니다."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"업데이트"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Google Play 서비스를 업데이트해야 하는 애플리케이션입니다."
                 </string>
                 <string
                     name="common_google_play_services_update_text"
@@ -39,8 +51,19 @@
                     msgid="3542578567569488671" >"일부 사용자 애플리케이션에 필요한 Google Play 서비스가 사용자 기기에서 지원되지 않습니다. 기기 제조업체에 문의하시기 바랍니다."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>에서 요청"
+                </string>
+                <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Google 계정으로 로그인"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Google Play 서비스를 설치해야 하는 애플리케이션입니다."
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -53,6 +76,10 @@
                 <string
                     name="common_google_play_services_update_title"
                     msgid="6006316683626838685" >"Google Play 서비스 업데이트"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"애플리케이션에서 잘못된 버전의 Google Play 서비스를 사용하려고 했습니다."
                 </string>
                 <string
                     name="common_google_play_services_unsupported_title"
@@ -68,7 +95,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-in/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-in/strings.xml"
                 qualifiers="in" >
                 <string
                     name="common_google_play_services_install_button"
@@ -77,6 +104,10 @@
                 <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"Layanan Google Play, yang diandalkan oleh beberapa aplikasi Anda, tidak didukung oleh perangkat Anda. Hubungi pabrikan untuk mendapatkan bantuan."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Aplikasi membutuhkan pembaruan untuk Layanan Google Play."
                 </string>
                 <string
                     name="common_google_play_services_unsupported_title"
@@ -103,8 +134,23 @@
                     msgid="9071884888741449141" >"Masuk"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Aplikasi membutuhkan pemasangan Layanan Google Play."
+                </string>
+                <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Aktifkan layanan Google Play"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Diminta oleh 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Aplikasi membutuhkan Layanan Google Play untuk dapat diaktifkan."
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
@@ -119,6 +165,10 @@
                     msgid="6006316683626838685" >"Perbarui layanan Google Play"
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplikasi mencoba menggunakan versi Layanan Google Play yang rusak."
+                </string>
+                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Aplikasi ini tidak akan bekerja sampai Anda mengaktifkan layanan Google Play."
                 </string>
@@ -127,13 +177,28 @@
                     msgid="8932944190611227642" >"Perbarui"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Kesalahan layanan Google Play"
+                </string>
+                <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Masuk dengan Google"
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ro/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ro/strings.xml"
                 qualifiers="ro" >
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"O aplicație necesită o actualizare pentru Servicii Google Play."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Solicitată de 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
                 <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"Această aplicaţie nu poate rula fără Servicii Google Play, care lipsesc de pe telefon."
@@ -163,12 +228,20 @@
                     msgid="6334768798839376943" >"Servicii Google Play"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"O aplicație necesită activarea Serviciilor Google Play."
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Această aplicaţie nu poate rula fără Servicii Google Play, care lipsesc de pe tabletă."
                 </string>
                 <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Obţineţi Servicii Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"O aplicație necesită instalarea Serviciilor Google Play."
                 </string>
                 <string
                     name="common_google_play_services_install_title"
@@ -187,6 +260,14 @@
                     msgid="4181637455539816337" >"Activaţi Servicii Google Play"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Eroare Servicii Google Play"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplicația a încercat să utilizeze o vers. Servicii Google Play greșită"
+                </string>
+                <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Activaţi Servicii Google Play"
                 </string>
@@ -196,11 +277,15 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ru/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ru/strings.xml"
                 qualifiers="ru" >
                 <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Для работы этого приложения требуется включить Сервисы Google Play."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Версия сервисов Google Play неисправна"
                 </string>
                 <string
                     name="common_google_play_services_update_title"
@@ -213,6 +298,13 @@
                 <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Для работы этого приложения требуется установить Сервисы Google Play."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Запрос от приложения \"
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>\""
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -229,6 +321,10 @@
                 <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Неизвестная ошибка с Сервисами Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Для работы приложения требуется обновить сервисы Google Play"
                 </string>
                 <string
                     name="common_google_play_services_update_text"
@@ -251,6 +347,14 @@
                     msgid="4181637455539816337" >"Включить"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Для работы приложения требуется включить сервисы Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Для работы приложения требуется установить сервисы Google Play"
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Установите Сервисы Google Play"
                 </string>
@@ -258,9 +362,13 @@
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Включите Сервисы Google Play"
                 </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Ошибка сервисов Google Play"
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-cs/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-cs/strings.xml"
                 qualifiers="cs" >
                 <string
                     name="common_signin_button_text_long"
@@ -277,6 +385,22 @@
                 <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Ke spuštění této aplikace je třeba aktualizovat služby Google Play."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Chyba služeb Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Aplikace vyžaduje aktualizaci Služeb Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Aplikace vyžaduje instalaci Služeb Google Play."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplikace se pokusila použít nesprávnou verzi Služeb Google Play."
                 </string>
                 <string
                     name="common_google_play_services_enable_text"
@@ -297,6 +421,13 @@
                 <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Ke spuštění této aplikace jsou potřeba služby Google Play, které v tabletu nemáte."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Požadováno aplikací 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_enable_button"
@@ -322,9 +453,13 @@
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Instalovat služby Google Play"
                 </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Aplikace vyžaduje aktivované Služby Google Play."
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-pt-rBR/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-pt-rBR/strings.xml"
                 qualifiers="pt-rBR" >
                 <string
                     name="common_google_play_services_enable_text"
@@ -359,6 +494,10 @@
                     msgid="9071884888741449141" >"Login"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Ocorreu um erro no Google Play Services"
+                </string>
+                <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"Este aplicativo não funciona sem o Google Play Services, que não está instalado em seu telefone."
                 </string>
@@ -367,8 +506,19 @@
                     msgid="529078775174559253" >"Ative o Google Play Services"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Solicitado por 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"O Google Play Services, necessário para alguns dos aplicativos, não é compatível com seu dispositivo. Entre em contato com o fabricante para obter assistência."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Um aplicativo tentou usar uma versão errada do Google Play Services."
                 </string>
                 <string
                     name="common_google_play_services_update_button"
@@ -379,6 +529,14 @@
                     msgid="448354684997260580" >"Este aplicativo só funciona com uma versão atualizada do Google Play Services."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Um aplicativo requer a ativação do Google Play Services."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Um aplicativo requer a atualização do Google Play Services."
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Instale o Google Play Services"
                 </string>
@@ -386,10 +544,22 @@
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Instalar o Google Play Services"
                 </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Um aplicativo requer a instalação do Google Play Services."
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-nl/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-nl/strings.xml"
                 qualifiers="nl" >
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Google Play-services moet zijn ingeschakeld voor een applicatie."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Onjuiste versie van Google Play-services wordt gebruikt."
+                </string>
                 <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Google Play-services ophalen"
@@ -399,12 +569,23 @@
                     msgid="7627896071867667758" >"Deze app werkt niet, tenzij u Google Play-services inschakelt."
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Google Play-services moet worden geüpdatet voor een applicatie."
+                </string>
+                <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Google Play-services inschak."
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Google Play-services inschakelen"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Aangevraagd door 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_update_button"
@@ -431,6 +612,14 @@
                     msgid="9071884888741449141" >"Inloggen"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Fout met Google Play-services"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Google Play-services moet zijn geïnstalleerd voor een applicatie."
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Deze app kan niet worden uitgevoerd zonder Google Play-services die ontbreken op uw tablet."
                 </string>
@@ -452,7 +641,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/maps_attrs.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/maps_attrs.xml"
                 qualifiers="" >
                 <declare-styleable name="MapAttrs" >
                     <attr
@@ -516,7 +705,7 @@
                 </declare-styleable>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/colors.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/colors.xml"
                 qualifiers="" >
                 <color name="common_signin_btn_light_text_pressed" >@android:color/white
                 </color>
@@ -540,23 +729,19 @@
                 </color>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/strings.xml"
                 qualifiers="" >
+                <string name="auth_client_needs_update_title" >      An application requires an update for Google Play Services.
+                </string>
+                <string name="auth_client_needs_enabling_title" >      An application requires Google Play Services to be enabled.
+                </string>
                 <string name="common_google_play_services_unsupported_text" >Google Play services, which some of your applications rely on, is not supported by your device. Please contact the manufacturer for assistance.
                 </string>
-                <string
-                    name="location_client_ulr_inactive_unknown_restriction"
-                    translatable="false" >        UnknownRestriction
-                </string>
-                <string name="auth_client_availability_notification_title" >Install/Update/Enable Google Play services
+                <string name="auth_client_using_bad_version_title" >      An application attempted to use a bad version of Google Play Services.
                 </string>
                 <string
                     name="common_google_play_services_install_title"
                     msgid="7215213145546190223" >Get Google Play services
-                </string>
-                <string
-                    name="location_client_ulr_inactive_age_under_13"
-                    translatable="false" >        AgeUnder13
                 </string>
                 <string name="auth_client_requested_by_msg" >Requested by 
 <ns1:g id="app_name" >
@@ -588,6 +773,8 @@
                     name="common_google_play_services_update_button"
                     msgid="6556509956452265614" >Update
                 </string>
+                <string name="auth_client_needs_installation_title" >      An application requires installation of Google Play Services.
+                </string>
                 <string name="auth_client_play_services_err_notification_msg" >Google Play services error
                 </string>
                 <string name="common_signin_button_text_long" >Sign in with Google
@@ -608,24 +795,28 @@
                     name="common_google_play_services_install_button"
                     msgid="7153882981874058840" >Get Google Play services
                 </string>
-                <string
-                    name="location_client_ulr_inactive_age_unknown"
-                    translatable="false" >AgeUnknown
-                </string>
             </file>
             <file
                 name="common_signin_btn_text_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/color/common_signin_btn_text_light.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/color/common_signin_btn_text_light.xml"
                 qualifiers=""
                 type="color" />
             <file
                 name="common_signin_btn_text_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/color/common_signin_btn_text_dark.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/color/common_signin_btn_text_dark.xml"
                 qualifiers=""
                 type="color" />
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-tl/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-tl/strings.xml"
                 qualifiers="tl" >
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Error sa mga serbisyo ng Google Play"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"May app na sumubok ng maling bersyon ng Mga Serbisyo ng Google Play."
+                </string>
                 <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Mag-sign in sa Google"
@@ -655,6 +846,10 @@
                     msgid="8932944190611227642" >"I-update"
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Kailangan ng application na i-update ang Mga Serbisyo ng Google Play."
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Kumuha ng mga serbisyo ng Google Play"
                 </string>
@@ -663,12 +858,27 @@
                     msgid="448354684997260580" >"Hindi gagana ang app na ito maliban kung i-a-update mo ang mga serbisyo ng Google Play."
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Kailangan ng application na ma-install ang Serbisyo ng Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Kailangan ng application na na-enable ang Mga Serbisyo ng Google Play."
+                </string>
+                <string
                     name="common_google_play_services_update_title"
                     msgid="6006316683626838685" >"I-update ang mga serbisyo ng Google Play"
                 </string>
                 <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Sign in"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Hiniling ng 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
@@ -688,11 +898,19 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-zh-rTW/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-zh-rTW/strings.xml"
                 qualifiers="zh-rTW" >
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"應用程式需要啟用 Google Play 服務。"
+                </string>
                 <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"取得 Google Play 服務"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"應用程式需要更新 Google Play 服務。"
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -723,12 +941,24 @@
                     msgid="4762332809710093730" >"Google Play 服務發生不明問題。"
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"應用程式嘗試使用的 Google Play 服務版本有誤。"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play 服務錯誤"
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"更新"
                 </string>
                 <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"您的裝置不支援部分應用程式所需的 Google Play 服務。如需協助，請與您的裝置製造商聯絡。"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"應用程式需要安裝 Google Play 服務。"
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
@@ -743,6 +973,13 @@
                     msgid="4181637455539816337" >"啟用 Google Play 服務"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"提出要求的應用程式：
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"登入"
                 </string>
@@ -752,7 +989,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-lv/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-lv/strings.xml"
                 qualifiers="lv" >
                 <string
                     name="common_google_play_services_enable_text"
@@ -765,6 +1002,10 @@
                 <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Nezināma problēma ar Google Play pakalpojumiem."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Lai lietojumprogramma darbotos, jāatjaunina Google Play pakalpojumi."
                 </string>
                 <string
                     name="common_google_play_services_update_button"
@@ -787,8 +1028,23 @@
                     msgid="8685301130651051380" >"Lai šī lietotne darbotos, tālrunī ir jāinstalē Google Play pakalpojumi."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Pieprasījums no lietotnes 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play pakalpojumu kļūda"
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Lai šī lietotne darbotos, planšetdatorā ir jāinstalē Google Play pakalpojumi."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Lietojumpr. mēģināja izmantot nederīgu Google Play pakalp. versiju."
                 </string>
                 <string
                     name="common_google_play_services_enable_button"
@@ -803,8 +1059,16 @@
                     msgid="9071884888741449141" >"Pierakst."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Lai lietojumprogramma darbotos, ir jāiespējo Google Play pakalpojumi."
+                </string>
+                <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Iegūt Google Play pakalpojumus"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Lai lietojumprogramma darbotos, ir jāinstalē Google Play pakalpojumi."
                 </string>
                 <string
                     name="common_google_play_services_unsupported_title"
@@ -816,15 +1080,30 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-pt/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-pt/strings.xml"
                 qualifiers="pt" >
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Um aplicativo requer a atualização do Google Play Services."
+                </string>
                 <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Este aplicativo só funciona com uma versão atualizada do Google Play Services."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Solicitado por 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Este aplicativo não funciona sem o Google Play Services, que não está instalado em seu tablet."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Um aplicativo tentou usar uma versão errada do Google Play Services."
                 </string>
                 <string
                     name="common_google_play_services_install_button"
@@ -833,6 +1112,10 @@
                 <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Ative o Google Play Services"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Ocorreu um erro no Google Play Services"
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -855,8 +1138,16 @@
                     msgid="6334768798839376943" >"Play Services"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Um aplicativo requer a instalação do Google Play Services."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Atualizar"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Um aplicativo requer a ativação do Google Play Services."
                 </string>
                 <string
                     name="common_google_play_services_unsupported_text"
@@ -880,7 +1171,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-fr/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-fr/strings.xml"
                 qualifiers="fr" >
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -903,6 +1194,10 @@
                     msgid="3542578567569488671" >"Les services Google Play, dont dépendent certaines de vos applications, ne sont pas compatibles avec votre appareil. Veuillez contacter le fabricant pour obtenir de l\'aide."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Une application requiert l\'activation des services Google Play"
+                </string>
+                <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Cette application ne fonctionnera pas tant que vous n\'aurez pas mis à jour les services Google Play."
                 </string>
@@ -919,12 +1214,31 @@
                     msgid="1589957570365247855" >"Cette application ne fonctionnera pas sans les services Google Play, qui ne sont pas installés sur votre tablette."
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Erreur liée aux services Google Play"
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Installer les services Google Play"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Demandée par 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Cette application ne fonctionnera pas tant que vous n\'aurez pas activé les services Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Une application requiert la mise à jour des services Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Une application requiert l\'installation des services Google Play"
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -939,16 +1253,28 @@
                     msgid="6006316683626838685" >"Mettre à jour les services Google Play"
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Une application requiert une version valide des services Google Play"
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Connexion"
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ca/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ca/strings.xml"
                 qualifiers="ca" >
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Una aplicació requereix que s\'instal·lin els serveis de Google Play."
+                </string>
                 <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Activa els serveis de Google Play"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Error dels serveis de Google Play"
                 </string>
                 <string
                     name="common_google_play_services_update_title"
@@ -963,8 +1289,16 @@
                     msgid="448354684997260580" >"Aquesta aplicació no s\'executarà si no actualitzes els serveis de Google Play."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Una aplicació requereix que s\'activin els serveis de Google Play."
+                </string>
+                <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"El teu dispositiu no és compatible amb els serveis de Google Play, en què es basen les teves aplicacions. Per obtenir assistència, contacta amb el fabricant."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Una aplic. ha intentat utilitzar una versió errònia de serveis de Play."
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -975,8 +1309,19 @@
                     msgid="26645092511305524" >"Baixa els serveis de Google Play"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Sol·licitada per 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Aquesta aplicació no funcionarà si la tauleta no té instal·lats els serveis de Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Una aplicació requereix que s\'actualitzin els serveis de Google Play."
                 </string>
                 <string
                     name="common_google_play_services_enable_text"
@@ -1008,8 +1353,12 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-hu/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-hu/strings.xml"
                 qualifiers="hu" >
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Egy alkalmazás a Play Szolgáltatások rossz verzióját akarta használni."
+                </string>
                 <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Belépés"
@@ -1023,6 +1372,14 @@
                     msgid="7627896071867667758" >"Az alkalmazás csak akkor fog működni, ha engedélyezi a Google Play Szolgáltatásokat."
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Egy alkalmazás kéri a Google Play Szolgáltatások telepítését."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play szolgáltatási hiba"
+                </string>
+                <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Play Szolgáltatások telepítése"
                 </string>
@@ -1033,6 +1390,10 @@
                 <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Az alkalmazás csak akkor fog működni, ha frissíti a Google Play Szolgáltatásokat."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Egy alkalmazás kéri a Google Play Szolgáltatások frissítését."
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -1063,8 +1424,19 @@
                     msgid="3542578567569488671" >"A Google Play Szolgáltatásokat, amelyre egyes alkalmazások támaszkodnak, nem támogatja az eszköz. Segítségért forduljon az eszköz gyártójához."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Igénylő: 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Frissítés"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Egy alkalmazás kéri a Google Play Szolgáltatások engedélyezését."
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
@@ -1072,8 +1444,12 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-fa/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-fa/strings.xml"
                 qualifiers="fa" >
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"برنامه‌ای تلاش کرد از نسخه نادرستی از خدمات Google Play استفاده کند."
+                </string>
                 <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"این برنامه بدون خدمات Google Play اجرا نمی‌شود، این خدمات در تلفن شما وجود ندارد."
@@ -1123,6 +1499,17 @@
                     msgid="8515591849428043265" >"دریافت خدمات Google Play"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"درخواست توسط 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"برنامه‌ای به فعال کردن خدمات Google Play نیاز دارد."
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"این برنامه بدون خدمات Google Play اجرا نمی‌شود، این خدمات در رایانهٔ لوحی شما وجود ندارد."
                 </string>
@@ -1134,10 +1521,26 @@
                     name="common_google_play_services_unsupported_title"
                     msgid="6334768798839376943" >"خدمات Google Play"
                 </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"برنامه‌ای به نصب خدمات Google Play نیاز دارد."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"برنامه‌ای به به‌روزرسانی خدمات Google Play نیاز دارد."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"خطا در خدمات Google Play"
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sk/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sk/strings.xml"
                 qualifiers="sk" >
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Chyba služieb Google Play"
+                </string>
                 <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Táto aplikácia bude fungovať až po povolení služieb Google Play."
@@ -1151,12 +1554,23 @@
                     msgid="1589957570365247855" >"Na spustenie tejto aplikácie sa vyžadujú služby Google Play, ktoré v tablete nemáte."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Vyžiadané aplikáciou 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Inštalovať služby Google Play"
                 </string>
                 <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"Niektoré vaše aplikácie vyžadujú služby Google Play, ktoré vo vašom zariadení nie sú podporované. Ak potrebujete pomoc, kontaktujte výrobcu."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Aplikácia vyžaduje inštaláciu služieb Google Play."
                 </string>
                 <string
                     name="common_google_play_services_unknown_issue"
@@ -1169,6 +1583,14 @@
                 <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Inštalovať služby Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Aplikácia vyžaduje povolenie služieb Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Aplikácia vyžaduje aktualizáciu služieb Google Play."
                 </string>
                 <string
                     name="common_google_play_services_update_text"
@@ -1198,10 +1620,18 @@
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Prihlásiť sa do účtu Google"
                 </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplikácia sa pokúsila použiť nesprávnu verziu služieb Google Play."
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-af/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-af/strings.xml"
                 qualifiers="af" >
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"\'n Program vereis \'n opdatering vir Google Play-dienste."
+                </string>
                 <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Hierdie program sal nie loop nie, tensy jy Google Play-dienste opdateer."
@@ -1209,6 +1639,10 @@
                 <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Kry Google Play-dienste"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"\'n Program vereis dat Google Play-dienste geaktiveer word."
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
@@ -1219,6 +1653,13 @@
                     msgid="3542578567569488671" >"Google Play-dienste, waarop sommige van jou programme staatmaak, werk nie met jou toestel nie. Kontak asseblief die vervaardiger vir bystand."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Versoek deur 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Kry Google Play-dienste"
                 </string>
@@ -1227,12 +1668,20 @@
                     msgid="9071884888741449141" >"Meld aan"
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"\'n Program het probeer om \'n slegte weergawe van Google Play-dienste te gebruik."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Dateer op"
                 </string>
                 <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Hierdie program sal nie werk tensy jy Google Play-dienste aktiveer nie."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play-dienstefout"
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -1245,6 +1694,10 @@
                 <string
                     name="common_google_play_services_update_title"
                     msgid="6006316683626838685" >"Dateer Google Play-dienste op"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"\'n Program vereis dat Google Play-dienste geïnstalleer word."
                 </string>
                 <string
                     name="common_google_play_services_unsupported_title"
@@ -1264,7 +1717,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-en-rGB/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-en-rGB/strings.xml"
                 qualifiers="en-rGB" >
                 <string
                     name="common_google_play_services_unsupported_text"
@@ -1283,6 +1736,13 @@
                     msgid="529078775174559253" >"Enable Google Play services"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Requested by 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Update"
                 </string>
@@ -1291,8 +1751,20 @@
                     msgid="8515591849428043265" >"Get Google Play services"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"An application requires installation of Google Play Services."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"An application requires Google Play Services to be enabled."
+                </string>
+                <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Unknown issue with Google Play services."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"An application attempted to use a bad version of Google Play Services."
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -1301,6 +1773,10 @@
                 <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Sign in with Google"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"An application requires an update for Google Play Services."
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -1323,12 +1799,16 @@
                     msgid="6334768798839376943" >"Google Play services"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play services error"
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"This app won\'t run without Google Play services, which are missing from your tablet."
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-vi/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-vi/strings.xml"
                 qualifiers="vi" >
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -1351,8 +1831,16 @@
                     msgid="4762332809710093730" >"Sự cố không xác định với dịch vụ của Google Play."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Ứng dụng yêu cầu Dịch vụ của Google Play phải được bật."
+                </string>
+                <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Cài đặt dịch vụ của Google Play"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Ứng dụng đã cố sử dụng phiên bản không đúng của Dịch vụ của Google Play."
                 </string>
                 <string
                     name="common_google_play_services_enable_button"
@@ -1367,8 +1855,23 @@
                     msgid="448354684997260580" >"Ứng dụng này sẽ không chạy trừ khi bạn cập nhật dịch vụ của Google Play."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Được yêu cầu bởi 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Lỗi dịch vụ của Google Play"
+                </string>
+                <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Đăng nhập bằng Google"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Ứng dụng yêu cầu cập nhật dành cho Dịch vụ Google Play."
                 </string>
                 <string
                     name="common_google_play_services_update_title"
@@ -1377,6 +1880,10 @@
                 <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Cập nhật"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Ứng dụng yêu cầu cài đặt Dịch vụ của Google Play."
                 </string>
                 <string
                     name="common_google_play_services_enable_text"
@@ -1392,11 +1899,15 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-iw/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-iw/strings.xml"
                 qualifiers="iw" >
                 <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"יישום זה לא יפעל ללא שירותי Google Play, החסרים בטאבלט שלך."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"יש אפליקציה המחייבת עדכון של שירותי Google Play."
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -1423,6 +1934,14 @@
                     msgid="4181637455539816337" >"הפעל את שירותי Google Play"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"שגיאה בשירותי Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"יש אפליקציה המחייבת התקנה של שירותי Google Play."
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"היכנס"
                 </string>
@@ -1443,6 +1962,14 @@
                     msgid="8932944190611227642" >"עדכן"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"יש אפליקציה המחייבת הפעלה של שירותי Google Play."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"יש אפליקציה שניסתה להשתמש בגרסה שגויה של שירותי Google Play."
+                </string>
+                <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"הפעלת שירותי Google Play"
                 </string>
@@ -1451,13 +1978,24 @@
                     msgid="7627896071867667758" >"יישום זה לא יעבוד אם לא תפעיל את שירותי Google Play."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"התבקשה על ידי 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"יישום זה לא יפעל ללא שירותי Google Play, החסרים בטלפון שלך."
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-da/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-da/strings.xml"
                 qualifiers="da" >
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Fejl i Google Play-tjenester"
+                </string>
                 <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Opdater"
@@ -1475,12 +2013,31 @@
                     msgid="7627896071867667758" >"Denne app virker ikke, medmindre du aktiverer Google Play-tjenester."
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"En applikation kræver, at Google Play er installeret."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"En applikation forsøgte at bruge en defekt version af Google Play."
+                </string>
+                <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"Denne app kan ikke køre uden Google Play-tjenester, som mangler på din telefon."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Anmodning fra 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Ukendt problem med Google Play-tjenester."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"En applikation kræver en opdatering af Google Play."
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -1515,20 +2072,32 @@
                     msgid="9071884888741449141" >"Log ind"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"En applikation kræver, at Google Play er aktiveret."
+                </string>
+                <string
                     name="common_google_play_services_unsupported_title"
                     msgid="6334768798839376943" >"Google Play-tjenester"
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-zu/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-zu/strings.xml"
                 qualifiers="zu" >
                 <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Lolu hlelo lokusebenza ngeke lusebenze ngaphandle nje kokuthi unike amandla amasevisi e-Google Play."
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Uhlelo lokusebenza ludinga ukufakwa kwamasevisi we-Google Play."
+                </string>
+                <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Nika amandla amasevisi e-Google Play"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Iphutha lamasevisi we-Google Play"
                 </string>
                 <string
                     name="common_google_play_services_update_title"
@@ -1543,12 +2112,27 @@
                     msgid="1589957570365247855" >"Lolu hlelo lokusebenza ngeke lusebenze ngaphandle kwamasevisi e-Google Play, angekho kuthebulethi yakho."
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Uhlelo lokusebenza luzame ukusebenzisa inguqulo embi yamasevisi we-Google Play."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Isibuyekezo"
                 </string>
                 <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Thola amasevisi e-Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Uhlelo lokusebenza ludinga isibuyekezo samasevisi we-Google Play."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Kucelwe yi-
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
@@ -1571,6 +2155,10 @@
                     msgid="6334768798839376943" >"Amasevisi we-Google Play"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Uhlelo lokusebenza ludinga amasevisi we-Google Play ukuze anikwe amandla."
+                </string>
+                <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Ngena ngemvume nge-Google"
                 </string>
@@ -1584,7 +2172,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-bg/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-bg/strings.xml"
                 qualifiers="bg" >
                 <string
                     name="common_google_play_services_install_button"
@@ -1597,6 +2185,10 @@
                 <string
                     name="common_google_play_services_update_title"
                     msgid="6006316683626838685" >"Актуализиране на услугите за Google Play"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Приложение опита да ползва неправилна версия на услуг. за Google Play."
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -1623,8 +2215,27 @@
                     msgid="8685301130651051380" >"Това приложение няма да се изпълнява без услугите за Google Play, които липсват в телефона ви."
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Грешка в услугите за Google Play"
+                </string>
+                <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Услуги за Google Play: Актив."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Приложение изисква инсталирането на услугите за Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Приложение изисква активирането на услугите за Google Play."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Заявено от 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_install_title"
@@ -1639,6 +2250,10 @@
                     msgid="6334768798839376943" >"Услуги за Google Play"
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Приложение изисква актуализирането на услугите за Google Play."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Актуализиране"
                 </string>
@@ -1648,39 +2263,23 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-zh-rCN/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-zh-rCN/strings.xml"
                 qualifiers="zh-rCN" >
-                <string
-                    name="common_google_play_services_update_text"
-                    msgid="448354684997260580" >"您必须先更新 Google Play 服务才能运行此应用。"
-                </string>
                 <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"启用 Google Play 服务"
-                </string>
-                <string
-                    name="common_google_play_services_install_button"
-                    msgid="8515591849428043265" >"获取 Google Play 服务"
-                </string>
-                <string
-                    name="common_google_play_services_update_button"
-                    msgid="8932944190611227642" >"更新"
-                </string>
-                <string
-                    name="common_google_play_services_unsupported_text"
-                    msgid="3542578567569488671" >"您的设备不支持部分应用所依赖的 Google Play 服务。请与设备制造商联系，以寻求帮助。"
                 </string>
                 <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"获取 Google Play 服务"
                 </string>
                 <string
-                    name="common_google_play_services_unsupported_title"
-                    msgid="6334768798839376943" >"Google Play 服务"
-                </string>
-                <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"您的手机中没有 Google Play 服务，您必须先安装该服务才能运行此应用。"
+                </string>
+                <string
+                    name="common_google_play_services_unsupported_title"
+                    msgid="6334768798839376943" >"Google Play 服务"
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -1695,16 +2294,59 @@
                     msgid="6006316683626838685" >"更新 Google Play 服务"
                 </string>
                 <string
-                    name="common_google_play_services_unknown_issue"
-                    msgid="4762332809710093730" >"Google Play 服务出现未知问题。"
-                </string>
-                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"您必须先启用 Google Play 服务才能运行此应用。"
                 </string>
                 <string
+                    name="common_google_play_services_unknown_issue"
+                    msgid="4762332809710093730" >"Google Play 服务出现未知问题。"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"由“
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>”发出"
+                </string>
+                <string
+                    name="common_google_play_services_update_text"
+                    msgid="448354684997260580" >"您必须先更新 Google Play 服务才能运行此应用。"
+                </string>
+                <string
+                    name="common_google_play_services_install_button"
+                    msgid="8515591849428043265" >"获取 Google Play 服务"
+                </string>
+                <string
+                    name="common_google_play_services_update_button"
+                    msgid="8932944190611227642" >"更新"
+                </string>
+                <string
+                    name="common_google_play_services_unsupported_text"
+                    msgid="3542578567569488671" >"您的设备不支持部分应用所依赖的 Google Play 服务。请与设备制造商联系，以寻求帮助。"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play 服务出错"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"某个应用要求更新 Google Play 服务。"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"某个应用要求安装 Google Play 服务。"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"某个应用要求启用 Google Play 服务。"
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"您的平板电脑中没有 Google Play 服务，您必须先安装该服务才能运行此应用。"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"某个应用尝试使用的 Google Play 服务版本有误。"
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -1712,8 +2354,23 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-es/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-es/strings.xml"
                 qualifiers="es" >
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Solicitada por 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Una aplicación requiere que se habiliten los servicios de Play."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Una aplicación intentó usar versión incorrecta de servicios de Google Play."
+                </string>
                 <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Iniciar sesión"
@@ -1743,6 +2400,10 @@
                     msgid="4762332809710093730" >"Error desconocido relacionado con los servicios de Google Play"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Error de los servicios de Google Play"
+                </string>
+                <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Iniciar sesión con Google"
                 </string>
@@ -1767,8 +2428,16 @@
                     msgid="8932944190611227642" >"Actualizar"
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Una aplicación requiere que se actualicen los servicios de Google Play."
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Esta aplicación no se ejecutará si tu tablet no tiene instalados los servicios de Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Una aplicación requiere que se instalen los servicios de Google Play."
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
@@ -1776,35 +2445,58 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sw/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sw/strings.xml"
                 qualifiers="sw" >
                 <string
-                    name="common_google_play_services_unsupported_text"
-                    msgid="3542578567569488671" >"Huduma za Google Play, ambazo baadhi ya programu zako zinategemea, si linganifu na kifaa chako. Tafadhali wasiliana na mtengenezaji kwa usaidizi."
-                </string>
-                <string
-                    name="common_google_play_services_update_title"
-                    msgid="6006316683626838685" >"Sasisha huduma za Google Play"
-                </string>
-                <string
-                    name="common_google_play_services_install_button"
-                    msgid="8515591849428043265" >"Pata huduma za Google Play"
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Imeombwa na 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Pata huduma za Google Play"
                 </string>
                 <string
-                    name="common_google_play_services_update_text"
-                    msgid="448354684997260580" >"Programu hii haiwezi kuendeshwa mpaka utakaposasisha huduma za Google Play."
+                    name="common_google_play_services_install_button"
+                    msgid="8515591849428043265" >"Pata huduma za Google Play"
+                </string>
+                <string
+                    name="common_google_play_services_update_title"
+                    msgid="6006316683626838685" >"Sasisha huduma za Google Play"
+                </string>
+                <string
+                    name="common_google_play_services_unsupported_text"
+                    msgid="3542578567569488671" >"Huduma za Google Play, ambazo baadhi ya programu zako zinategemea, si linganifu na kifaa chako. Tafadhali wasiliana na mtengenezaji kwa usaidizi."
                 </string>
                 <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Wezesha huduma za Google Play"
                 </string>
                 <string
+                    name="common_google_play_services_update_text"
+                    msgid="448354684997260580" >"Programu hii haiwezi kuendeshwa mpaka utakaposasisha huduma za Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Programu inahitaji sasisho la Huduma za Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Programu inahitaji usakinishaji wa Huduma za Google Play."
+                </string>
+                <string
+                    name="common_google_play_services_unsupported_title"
+                    msgid="6334768798839376943" >"Huduma za Google Play"
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Programu hii haiwezi kuendeshwa bila huduma za Google Play, ambazo hazipo kwenye kompyuta yako ndogo."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Programu inahitaji Huduma za Google Play ili kuwashwa."
                 </string>
                 <string
                     name="common_google_play_services_update_button"
@@ -1813,6 +2505,10 @@
                 <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Wezesha huduma za Google Play"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Hitilafu kwenye Huduma za Google Play"
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -1827,8 +2523,8 @@
                     msgid="9071884888741449141" >"Ingia"
                 </string>
                 <string
-                    name="common_google_play_services_unsupported_title"
-                    msgid="6334768798839376943" >"Huduma za Google Play"
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Programu ilijaribu kutumia toleo baya la Huduma za Google Play."
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -1840,8 +2536,12 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sr/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sr/strings.xml"
                 qualifiers="sr" >
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Апликација захтева инсталирање Google Play услуга."
+                </string>
                 <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Непознат проблем са Google Play услугама."
@@ -1875,8 +2575,19 @@
                     msgid="8932944190611227642" >"Ажурирај"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Захтева 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Преузимање Google Play услуга"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Апликација захтева ажурирање Google Play услуга."
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -1887,12 +2598,24 @@
                     msgid="529078775174559253" >"Омогућавање Google Play услуга"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Апликација захтева да Google Play услуге буду омогућене."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Апликација је покушала да користи лошу верзију Google Play услуга."
+                </string>
+                <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Преузми Google Play услуге"
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Ова апликација не може да се покрене без Google Play услуга, које недостају на таблету."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Грешка Google Play услуга"
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -1905,106 +2628,106 @@
             </file>
             <file
                 name="common_signin_btn_text_disabled_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_disabled_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_disabled_focus_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_disabled_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_disabled_focus_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_pressed_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_pressed_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_pressed_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_focus_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_disabled_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_disabled_focus_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_disabled_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_disabled_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_pressed_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_pressed_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_pressed_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_disabled_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_disabled_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_disabled_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_disabled_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_normal_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_normal_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_normal_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_normal_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_normal_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_normal_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_focus_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_pressed_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_pressed_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_pressed_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_pressed_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_pressed_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_pressed_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_disabled_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_disabled_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_normal_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_normal_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_normal_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_normal_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_text_normal_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_text_normal_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_focus_light.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_focus_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-mdpi/common_signin_btn_icon_disabled_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-mdpi/common_signin_btn_icon_disabled_focus_dark.9.png"
                 qualifiers="mdpi"
                 type="drawable" />
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ar/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ar/strings.xml"
                 qualifiers="ar" >
                 <string
                     name="common_google_play_services_update_text"
@@ -2019,6 +2742,13 @@
                     msgid="8685301130651051380" >"لن يتم تشغيل هذا التطبيق بدون خدمات Google Play، والتي لا تتوفر في هاتفك."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"تم الطلب عن طريق 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_google_play_services_unsupported_title"
                     msgid="6334768798839376943" >"خدمات Google Play"
                 </string>
@@ -2027,8 +2757,20 @@
                     msgid="3542578567569488671" >"خدمات Google Play التي تستجيب لها بعض تطبيقاتك لا تعمل على جهازك. يُرجى الاتصال بجهة التصنيع للحصول على المساعدة."
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"خطأ في خدمات Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"يتطلب أحد التطبيقات تثبيت خدمات Google Play."
+                </string>
+                <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"تسجيل الدخول باستخدام Google"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"يحاول أحد التطبيقات استخدام إصدار غير صالح من خدمات Google Play."
                 </string>
                 <string
                     name="common_google_play_services_install_title"
@@ -2066,13 +2808,36 @@
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"لن يتم تشغيل هذا التطبيق بدون خدمات Google Play، والتي لا تتوفر في جهازك اللوحي."
                 </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"يتطلب أحد التطبيقات تحديث خدمات Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"يتطلب أحد التطبيقات تمكين خدمات Google Play."
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-nb/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-nb/strings.xml"
                 qualifiers="nb" >
                 <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"Denne appen kan ikke kjøres uten Google Play Tjenester, som ikke er installert på telefonen din."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Forespurt av 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"En app krever at Google Play Tjenester oppdateres."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"En app prøvde å bruke en skadet versjon av Google Play Tjenester."
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -2099,8 +2864,16 @@
                     msgid="6006316683626838685" >"Oppdater Google Play Tjenester"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"En app krever at Google Play Tjenester installeres."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Oppdater"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play Tjenester-feil"
                 </string>
                 <string
                     name="common_google_play_services_enable_text"
@@ -2130,110 +2903,118 @@
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Installer Google Play Tjenester"
                 </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"En app krever Google Play Tjenester for å aktiveres."
+                </string>
             </file>
             <file
                 name="common_signin_btn_text_disabled_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_disabled_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_disabled_focus_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_disabled_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_disabled_focus_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_pressed_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_pressed_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_pressed_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_focus_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_disabled_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_disabled_focus_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_disabled_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_disabled_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_pressed_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_pressed_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_pressed_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_disabled_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_disabled_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_disabled_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_disabled_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_normal_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_normal_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_normal_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_normal_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_normal_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_normal_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_focus_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_pressed_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_pressed_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_pressed_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_pressed_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_pressed_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_pressed_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_disabled_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_disabled_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_normal_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_normal_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_normal_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_normal_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_text_normal_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_text_normal_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_focus_light.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_focus_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-hdpi/common_signin_btn_icon_disabled_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-hdpi/common_signin_btn_icon_disabled_focus_dark.9.png"
                 qualifiers="hdpi"
                 type="drawable" />
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-tr/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-tr/strings.xml"
                 qualifiers="tr" >
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Bir uygulama, Google Play Hizmetleri için bir güncelleme gerektiriyor."
+                </string>
                 <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Oturum aç"
@@ -2255,8 +3036,16 @@
                     msgid="8515591849428043265" >"Google Play hizmetlerini edin"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Bir uygulama, Google Play Hizmetleri\'nin etkin olmasını gerektiriyor."
+                </string>
+                <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Google Play hizmetleriyle ilgili bilinmeyen sorun."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Bir uygulama, Google Play Hizmetleri\'nin yüklenmesini gerektiriyor."
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -2265,6 +3054,10 @@
                 <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Bu uygulama, Google Play Hizmetleri etkinleştirilmeden çalışmaz"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play hizmetleri hatası"
                 </string>
                 <string
                     name="common_google_play_services_update_button"
@@ -2294,110 +3087,125 @@
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Bu uygulama Google Play Hizmetleri güncellenmeden çalışmaz."
                 </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"İstekte bulunan: 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Bir uygulama, Google Play Hizmetleri\'nin bozuk bir sürümünü kullanmayı denedi."
+                </string>
             </file>
             <file
                 name="common_signin_btn_text_disabled_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_disabled_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_disabled_focus_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_disabled_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_disabled_focus_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_pressed_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_pressed_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_pressed_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_focus_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_disabled_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_disabled_focus_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_disabled_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_disabled_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_pressed_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_pressed_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_pressed_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_disabled_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_disabled_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_disabled_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_disabled_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_normal_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_normal_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_normal_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_normal_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_normal_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_normal_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_focus_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_pressed_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_pressed_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_pressed_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_pressed_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_pressed_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_pressed_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_disabled_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_disabled_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_disabled_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_normal_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_normal_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_normal_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_text_normal_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_text_normal_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_text_normal_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_focus_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_focus_light.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_focus_light.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_focus_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_disabled_focus_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable-xhdpi/common_signin_btn_icon_disabled_focus_dark.9.png"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable-xhdpi/common_signin_btn_icon_disabled_focus_dark.9.png"
                 qualifiers="xhdpi"
                 type="drawable" />
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-it/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-it/strings.xml"
                 qualifiers="it" >
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Errore Google Play Services"
+                </string>
                 <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Accedi"
@@ -2405,6 +3213,13 @@
                 <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Installa Google Play Services"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Richiesta da 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_enable_button"
@@ -2427,6 +3242,10 @@
                     msgid="8685301130651051380" >"L\'app non funzionerà senza Google Play Services, non presente sul tuo telefono."
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Un\'applicazione richiede l\'installazione di Google Play Services."
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"L\'app non funzionerà senza Google Play Services, non presente sul tuo tablet."
                 </string>
@@ -2447,6 +3266,14 @@
                     msgid="4762332809710093730" >"Problema sconosciuto con Google Play Services."
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Un\'app ha tentato di usare una versione non valida di Play Services."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Un\'applicazione richiede l\'attivazione di Google Play Services."
+                </string>
+                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"L\'app non funzionerà se non attivi Google Play Services."
                 </string>
@@ -2458,9 +3285,13 @@
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Aggiorna"
                 </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Un\'applicazione richiede un aggiornamento di Google Play Services."
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-es-rUS/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-es-rUS/strings.xml"
                 qualifiers="es-rUS" >
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -2487,12 +3318,24 @@
                     msgid="6334768798839376943" >"Google Play Services"
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Una aplicación requiere que se actualice Google Play Services"
+                </string>
+                <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Esta aplicación no se ejecutará si no actualizas Google Play Services."
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Una aplicación requiere que se instale Google Play Services"
+                </string>
+                <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Activar Google Play Services"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Una aplicación requiere que se active Google Play Services"
                 </string>
                 <string
                     name="common_google_play_services_enable_text"
@@ -2507,12 +3350,23 @@
                     msgid="529078775174559253" >"Activar Google Play Services"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Error de Google Play Services"
+                </string>
+                <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"Google Play Services, del cual dependen algunas de tus aplicaciones, no es compatible con tu dispositivo. Comunícate con el fabricante para obtener ayuda."
                 </string>
                 <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Descargar Google Play Services"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Solicitada por 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -2522,9 +3376,13 @@
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Error desconocido relacionado con Google Play Services"
                 </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Una aplic. intentó usar una versión no válida de Google Play Services"
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-am/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-am/strings.xml"
                 qualifiers="am" >
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -2533,6 +3391,25 @@
                 <string
                     name="common_google_play_services_update_title"
                     msgid="6006316683626838685" >"Google Play አገልግሎቶችን ያዘምኑ"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"መተግበሪያው Google Play አገልግሎቶች እንዲዘምን ይፈልጋል።"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"የGoogle Play አገልግሎቶች ስህተት"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"መተግበሪያው የGoogle Play አገልግሎቶችን መጥፎ ስሪት ለመጠቀም ሞክሯል።"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"በ
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g> የተጠየቀ"
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
@@ -2563,6 +3440,14 @@
                     msgid="1589957570365247855" >"ይህ መተግበሪያ ያለ Google Play አገልግሎቶች አይሰራም፣ እነሱ ደግሞ ጡባዊዎ ላይ የሉም።"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"መተግበሪያው Google Play አገልግሎቶች እንዲጫኑ ይፈልጋል።"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"መተግበሪያው Google Play አገልግሎቶች እንዲነቁ ይፈልጋል።"
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"ግባ"
                 </string>
@@ -2588,7 +3473,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-fi/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-fi/strings.xml"
                 qualifiers="fi" >
                 <string
                     name="common_google_play_services_unsupported_text"
@@ -2605,6 +3490,14 @@
                 <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"Tämä sovellus ei toimi ilman Google Play -palveluita, jotka puuttuvat puhelimesta."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Ota käyttöön Google Play -palvelut, jotta sovellus toimii."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Virhe Google Play -palveluissa"
                 </string>
                 <string
                     name="common_google_play_services_install_title"
@@ -2627,6 +3520,10 @@
                     msgid="7627896071867667758" >"Tämä sovellus ei toimi, ellet ota Google Play -palveluita käyttöön."
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Päivitä Google Play -palvelut, jotta sovellus toimii."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Päivitä"
                 </string>
@@ -2635,8 +3532,23 @@
                     msgid="4762332809710093730" >"Tuntematon ongelma käytettäessä Google Play -palveluita."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Pyynnön teki 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Sovellus yritti käyttää virheellistä Google Play -palveluiden versiota"
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Tämä sovellus ei toimi ilman Google Play -palveluita, jotka puuttuvat tablet-laitteesta."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Asenna Google Play -palvelut, jotta sovellus toimii."
                 </string>
                 <string
                     name="common_google_play_services_install_button"
@@ -2652,7 +3564,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-pt-rPT/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-pt-rPT/strings.xml"
                 qualifiers="pt-rPT" >
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -2671,6 +3583,10 @@
                     msgid="1589957570365247855" >"Esta aplicação não será executada sem os serviços do Google Play, que estão em falta no seu tablet."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Uma aplicação necessita da ativação dos Serviços do Google Play."
+                </string>
+                <string
                     name="common_google_play_services_unsupported_title"
                     msgid="6334768798839376943" >"Serviços do Google Play"
                 </string>
@@ -2685,6 +3601,13 @@
                 <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Ativar serviços do Google Play"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Solicitado por 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_update_text"
@@ -2707,16 +3630,32 @@
                     msgid="4762332809710093730" >"Problema desconhecido nos serviços do Google Play."
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Uma aplicação necessita da instalação dos Serviços do Google Play."
+                </string>
+                <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Ativar serviços do Google Play"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplicação tentou utiliz. versão incorreta dos Serviços do Google Play."
                 </string>
                 <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"Os serviços do Google Play, dos quais dependem algumas das suas aplicações, não são suportados pelo seu dispositivo. Contacte o fabricante para obter assistência."
                 </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Erro dos serviços do Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Uma aplicação necessita da atualização dos Serviços do Google Play."
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-hr/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-hr/strings.xml"
                 qualifiers="hr" >
                 <string
                     name="common_google_play_services_update_button"
@@ -2727,6 +3666,10 @@
                     msgid="3542578567569488671" >"Usluge za Google Play, koje su potrebne za funkcioniranje nekih vaših aplikacija, nisu podržane na vašem uređaju. Pomoć potražite od proizvođača."
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Aplikacija zahtijeva instaliranje Usluga za Google Play."
+                </string>
+                <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Ova se aplikacija neće pokrenuti ako ne ažurirate usluge za Google Play."
                 </string>
@@ -2735,12 +3678,31 @@
                     msgid="4762332809710093730" >"Nepoznata poteškoća s uslugama za Google Play."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Aplikacija zahtijeva omogućavanje Usluga za Google Play."
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Prijava"
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplikacija je pokušala upotrijebiti lošu verziju Usluga za Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Aplikacija zahtijeva ažuriranje Usluga za Google Play."
+                </string>
+                <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Ova aplikacija neće raditi ako ne omogućite usluge za Google Play."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Zahtijeva aplikacija 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
@@ -2767,6 +3729,10 @@
                     msgid="6006316683626838685" >"Ažuriraj usluge za Google Play"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Pogreška usluga za Google Play"
+                </string>
+                <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Omogući usluge za Google Play"
                 </string>
@@ -2781,26 +3747,26 @@
             </file>
             <file
                 name="common_signin_btn_text_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable/common_signin_btn_text_light.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable/common_signin_btn_text_light.xml"
                 qualifiers=""
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable/common_signin_btn_icon_dark.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable/common_signin_btn_icon_dark.xml"
                 qualifiers=""
                 type="drawable" />
             <file
                 name="common_signin_btn_text_dark"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable/common_signin_btn_text_dark.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable/common_signin_btn_text_dark.xml"
                 qualifiers=""
                 type="drawable" />
             <file
                 name="common_signin_btn_icon_light"
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/drawable/common_signin_btn_icon_light.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/drawable/common_signin_btn_icon_light.xml"
                 qualifiers=""
                 type="drawable" />
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-el/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-el/strings.xml"
                 qualifiers="el" >
                 <string
                     name="common_google_play_services_enable_text"
@@ -2821,6 +3787,10 @@
                 <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Λήψη υπηρεσιών Google Play"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Σφάλμα υπηρεσιών Google Play"
                 </string>
                 <string
                     name="common_google_play_services_install_button"
@@ -2847,12 +3817,35 @@
                     msgid="9071884888741449141" >"Σύνδεση"
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Απόπειρα χρήσης ακατάλληλης έκδοσης Υπηρεσιών Google Play από εφαρμογή"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Μια εφαρμογή απαιτεί την εγκατάσταση των Υπηρεσιών Google Play."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Υποβλήθηκε αίτημα από την εφαρμογή 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Μια εφαρμογή απαιτεί μια ενημέρωση για τις Υπηρεσίες Google Play."
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Αυτή η εφαρμογή δεν θα εκτελεστεί χωρίς τις υπηρεσίες Google Play, οι οποίες λείπουν από το tablet σας."
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"Αυτή η εφαρμογή δεν θα εκτελεστεί χωρίς τις υπηρεσίες Google Play, οι οποίες λείπουν από το τηλέφωνό σας."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Μια εφαρμογή απαιτεί τις Υπηρεσίες Google Play για ενεργοποίηση."
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
@@ -2864,11 +3857,19 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-be/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-be/strings.xml"
                 qualifiers="be" >
                 <string
                     name="common_google_play_services_update_title"
                     msgid="6006316683626838685" >"Абнаўленне службаў Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Прыкладанне патрабуе абнаўлення службаў Google Play."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Прыкладанне паспрабавала скарыстацца сапсаванай версіяй службаў Google Play."
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
@@ -2883,12 +3884,23 @@
                     msgid="6334768798839376943" >"Службы Google Play"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Запытана прыкладаннем 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Увайсці ў Google"
                 </string>
                 <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Уключыць службы Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Прыкладанне патрабуе ўключэння службаў Google Play."
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -2919,8 +3931,16 @@
                     msgid="26645092511305524" >"Атрымаць службы Google Play"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Прыкладанне патрабуе ўсталявання службаў Google Play."
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Увайсцi"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Памылка службаў Google Play"
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
@@ -2928,7 +3948,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ja/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ja/strings.xml"
                 qualifiers="ja" >
                 <string
                     name="common_google_play_services_install_button"
@@ -2947,8 +3967,16 @@
                     msgid="1589957570365247855" >"このアプリの実行にはGoogle Play開発者サービスが必要ですが、お使いのタブレットにはインストールされていません。"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"アプリではGoogle Play開発者サービスをインストールする必要があります。"
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"ログイン"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"アプリではGoogle Play開発者サービスを有効にする必要があります。"
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -2963,6 +3991,13 @@
                     msgid="6006316683626838685" >"Play開発者サービスの更新"
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>によるリクエスト"
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Play開発者サービスの入手"
                 </string>
@@ -2973,6 +4008,10 @@
                 <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Google Play開発者サービスで原因不明の問題が発生しました。"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"アプリではGoogle Play開発者サービスをアップデートする必要があります。"
                 </string>
                 <string
                     name="common_google_play_services_unsupported_title"
@@ -2990,9 +4029,17 @@
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Play開発者サービスの有効化"
                 </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play開発者サービスのエラー"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"アプリはGoogle Play開発者サービスの不適切なバージョンを使用しようとしました。"
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-hi/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-hi/strings.xml"
                 qualifiers="hi" >
                 <string
                     name="common_google_play_services_install_button"
@@ -3015,6 +4062,17 @@
                     msgid="3542578567569488671" >"Google Play सेवाएं, जिन पर आपके कुछ एप्लिकेशन निर्भर करते हैं, आपके उपकरण द्वारा समर्थित नहीं हैं. कृपया सहायता के लिए निर्माता से संपर्क करें."
                 </string>
                 <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g> द्वारा अनुरोधित"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"एप्लिकेशन के लिए Google Play सेवाओं के इंस्टॉलेशन की आवश्यकता है."
+                </string>
+                <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Google Play सेवाएं सक्षम करें"
                 </string>
@@ -3029,6 +4087,10 @@
                 <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Google Play सेवाएं सक्षम करें"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"एप्लि. ने Google Play सेवाओं के खराब संस्करण के उपयोग का प्रयास किया."
                 </string>
                 <string
                     name="common_google_play_services_update_title"
@@ -3047,6 +4109,18 @@
                     msgid="448354684997260580" >"जब तक आप Google Play सेवाओं को अपडेट नहीं करते, तब तक यह एप्लिकेशन नहीं चलेगा."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"एप्लिकेशन के लिए Google Play सेवाओं को सक्षम किए जाने की आवश्यकता है."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Google Play सेवाएं त्रुटि"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"एप्लिकेशन के लिए Google Play सेवाओं में अपडेट की आवश्यकता है."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"अपडेट करें"
                 </string>
@@ -3056,7 +4130,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sl/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sl/strings.xml"
                 qualifiers="sl" >
                 <string
                     name="common_google_play_services_enable_button"
@@ -3065,6 +4139,10 @@
                 <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Neznana težava s storitvami Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Za delovanje aplikacije morate posodobiti Storitve Google Play."
                 </string>
                 <string
                     name="common_google_play_services_update_title"
@@ -3099,8 +4177,31 @@
                     msgid="2429381841831957106" >"Prijavite se v Google"
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Za delovanje aplikacije morate omogočiti Storitve Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Za delovanje aplikacije morate namestiti Storitve Google Play."
+                </string>
+                <string
                     name="common_google_play_services_unsupported_title"
                     msgid="6334768798839376943" >"Storitve Google Play"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Zahtevala aplikacija 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplikacija je poskusila uporabiti napačno različico Storitev Google Play."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Napaka storitev Google Play"
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
@@ -3120,43 +4221,23 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-de/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-de/strings.xml"
                 qualifiers="de" >
-                <string
-                    name="common_google_play_services_unsupported_title"
-                    msgid="6334768798839376943" >"Google Play-Dienste"
-                </string>
                 <string
                     name="common_google_play_services_enable_button"
                     msgid="4181637455539816337" >"Google Play-Dienste aktivieren"
                 </string>
                 <string
-                    name="common_google_play_services_enable_text"
-                    msgid="7627896071867667758" >"Diese App funktioniert nur, wenn Sie die Google Play-Dienste aktivieren."
+                    name="common_google_play_services_unsupported_title"
+                    msgid="6334768798839376943" >"Google Play-Dienste"
                 </string>
                 <string
-                    name="common_google_play_services_install_text_tablet"
-                    msgid="1589957570365247855" >"Zur Nutzung dieser App sind Google Play-Dienste erforderlich, die auf Ihrem Tablet nicht installiert sind."
-                </string>
-                <string
-                    name="common_google_play_services_unknown_issue"
-                    msgid="4762332809710093730" >"Unbekanntes Problem mit Google Play-Diensten"
-                </string>
-                <string
-                    name="common_google_play_services_install_button"
-                    msgid="8515591849428043265" >"Google Play-Dienste installieren"
-                </string>
-                <string
-                    name="common_signin_button_text_long"
-                    msgid="2429381841831957106" >"Über Google anmelden"
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Fehler bei Google Play-Diensten"
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Google Play-Dienste aktivieren"
-                </string>
-                <string
-                    name="common_google_play_services_update_title"
-                    msgid="6006316683626838685" >"Google Play-Dienste aktualisieren"
                 </string>
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -3167,25 +4248,76 @@
                     msgid="9071884888741449141" >"Anmelden"
                 </string>
                 <string
-                    name="common_google_play_services_unsupported_text"
-                    msgid="3542578567569488671" >"Google Play-Dienste, auf denen einige Ihrer Apps basieren, werden von diesem Gerät nicht unterstützt. Wenden Sie sich für weitere Informationen an den Hersteller."
-                </string>
-                <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Diese App wird nur ausgeführt, wenn Sie die Google Play-Dienste aktualisieren."
                 </string>
                 <string
-                    name="common_google_play_services_install_title"
-                    msgid="26645092511305524" >"Google Play-Dienste installieren"
+                    name="common_google_play_services_unsupported_text"
+                    msgid="3542578567569488671" >"Google Play-Dienste, auf denen einige Ihrer Apps basieren, werden von diesem Gerät nicht unterstützt. Wenden Sie sich für weitere Informationen an den Hersteller."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Anwendung versuchte, defekte Google Play-Dienste-Version zu verwenden"
                 </string>
                 <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Aktualisieren"
                 </string>
+                <string
+                    name="common_google_play_services_enable_text"
+                    msgid="7627896071867667758" >"Diese App funktioniert nur, wenn Sie die Google Play-Dienste aktivieren."
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Anwendung erfordert die Installation von Google Play-Diensten"
+                </string>
+                <string
+                    name="common_google_play_services_install_text_tablet"
+                    msgid="1589957570365247855" >"Zur Nutzung dieser App sind Google Play-Dienste erforderlich, die auf Ihrem Tablet nicht installiert sind."
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Anwendung erfordert aktivierte Google Play-Dienste"
+                </string>
+                <string
+                    name="common_google_play_services_unknown_issue"
+                    msgid="4762332809710093730" >"Unbekanntes Problem mit Google Play-Diensten"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Anwendung erfordert ein Update für Google Play-Dienste"
+                </string>
+                <string
+                    name="common_google_play_services_install_button"
+                    msgid="8515591849428043265" >"Google Play-Dienste installieren"
+                </string>
+                <string
+                    name="common_signin_button_text_long"
+                    msgid="2429381841831957106" >"Über Google anmelden"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Angefordert von 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="common_google_play_services_update_title"
+                    msgid="6006316683626838685" >"Google Play-Dienste aktualisieren"
+                </string>
+                <string
+                    name="common_google_play_services_install_title"
+                    msgid="26645092511305524" >"Google Play-Dienste installieren"
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ms/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ms/strings.xml"
                 qualifiers="ms" >
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Perkhidmatan Google Play perlu dikemas kini untuk menggunakan aplikasi."
+                </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Apl ini tidak akan berfungsi tanpa perkhidmatan Google Play dan apl ini tiada pada tablet anda."
@@ -3203,12 +4335,27 @@
                     msgid="6006316683626838685" >"Kemas kini perkhidmatan Google Play"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Perkhidmatan Google Play perlu dipasang untuk mengguankan aplikasi."
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Log masuk"
                 </string>
                 <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Dayakan perkhidmatan Google Play"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Diminta oleh 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Ralat perkhidmatan Google Play"
                 </string>
                 <string
                     name="common_google_play_services_unknown_issue"
@@ -3246,9 +4393,17 @@
                     name="common_google_play_services_unsupported_title"
                     msgid="6334768798839376943" >"Perkhidmatan Google Play"
                 </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Perkhidmatan Google Play perlu didayakan untuk menggunakan aplikasi."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplikasi cuba menggunakan versi Perkhidmatan Google Play yang rosak."
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-et/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-et/strings.xml"
                 qualifiers="et" >
                 <string
                     name="common_google_play_services_install_text_phone"
@@ -3257,6 +4412,10 @@
                 <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Lubage Google Play teenused"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Rakenduse kasutamiseks peavad olema lubatud Google Play teenused."
                 </string>
                 <string
                     name="common_google_play_services_update_title"
@@ -3275,6 +4434,10 @@
                     msgid="7627896071867667758" >"See rakendus ei tööta, kui te ei luba Google Play teenuseid."
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Rakenduse kasutamiseks tuleb värskendada Google Play teenuseid."
+                </string>
+                <string
                     name="common_google_play_services_update_button"
                     msgid="8932944190611227642" >"Värskenda"
                 </string>
@@ -3283,8 +4446,27 @@
                     msgid="4181637455539816337" >"Lubage Google Play teenused"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Rakenduse kasutamiseks peavad olema installitud Google Play teenused."
+                </string>
+                <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Hankige Google Play teenused"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Päringu esitas: 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Rakendus püüdis kasutada Google Play teenuste sobimatut versiooni."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Viga Google Play teenustes"
                 </string>
                 <string
                     name="common_google_play_services_install_title"
@@ -3312,7 +4494,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sv/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sv/strings.xml"
                 qualifiers="sv" >
                 <string
                     name="common_google_play_services_enable_title"
@@ -3323,8 +4505,19 @@
                     msgid="1589957570365247855" >"Den här appen kan inte köras utan Google Play Tjänster, som saknas på surfplattan."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Google Play Tjänster måste aktiveras för en att app ska fungera."
+                </string>
+                <string
                     name="common_google_play_services_unsupported_title"
                     msgid="6334768798839376943" >"Google Play-tjänster"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Begärdes av 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_update_title"
@@ -3347,6 +4540,10 @@
                     msgid="4181637455539816337" >"Aktivera Google Play Tjänster"
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"En olämplig version av Google Play Tjänster anropades av en app."
+                </string>
+                <string
                     name="common_signin_button_text"
                     msgid="9071884888741449141" >"Logga in"
                 </string>
@@ -3363,6 +4560,14 @@
                     msgid="3542578567569488671" >"Några av dina appar använder Google Play-tjänster som inte stöds av din enhet. Kontakta tillverkaren om du vill ha hjälp."
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Fel på Google Play Tjänster"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Google Play Tjänster måste uppdateras för en app ska fungera."
+                </string>
+                <string
                     name="common_signin_button_text_long"
                     msgid="2429381841831957106" >"Logga in med Google"
                 </string>
@@ -3371,13 +4576,24 @@
                     msgid="8515591849428043265" >"Hämta Google Play Tjänster"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Google Play Tjänster måste installeras för att en app ska fungera."
+                </string>
+                <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"Den här appen kan inte köras utan Google Play Tjänster, som saknas på mobilen."
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-th/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-th/strings.xml"
                 qualifiers="th" >
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"ขอโดย 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
+                </string>
                 <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"แอปพลิเคชันนี้จะไม่ทำงานหากไม่มีบริการ Google Play ซึ่งไม่มีในโทรศัพท์ของคุณ"
@@ -3407,8 +4623,16 @@
                     msgid="7627896071867667758" >"แอปพลิเคชันนี้จะไม่ทำงานจนกว่าคุณจะเปิดใช้งานบริการ Google Play"
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"แอปพลิเคชันหนึ่งพยายามใช้เวอร์ชันที่ไม่เหมาะสมของบริการ Google Play"
+                </string>
+                <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"แอปพลิเคชันนี้จะไม่ทำงานจนกว่าคุณจะอัปเดตบริการ Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"แอปพลิเคชันหนึ่งจำเป็นต้องมีการติดตั้งบริการ Google Play"
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -3431,6 +4655,14 @@
                     msgid="529078775174559253" >"เปิดใช้งานบริการ Google Play"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"ข้อผิดพลาดของบริการ Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"แอปพลิเคชันหนึ่งจำเป็นต้องมีการอัปเดตสำหรับบริการ Google Play"
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"รับบริการ Google Play"
                 </string>
@@ -3438,17 +4670,32 @@
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"ปัญหาที่ไม่รู้จักของบริการ Google Play"
                 </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"แอปพลิเคชันหนึ่งจำเป็นต้องมีบริการ Google Play เพื่อเปิดใช้งาน"
+                </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-uk/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-uk/strings.xml"
                 qualifiers="uk" >
                 <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Ця програма не працюватиме, поки ви не ввімкнете Google Play Послуги."
                 </string>
                 <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Щоб програма працювала, потрібно ввімкнути Сервіси Google Play."
+                </string>
+                <string
                     name="common_google_play_services_install_text_phone"
                     msgid="8685301130651051380" >"Ця програма не запуститься без Google Play Послуг, яких немає у вашому телефоні."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Запит від програми 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_update_button"
@@ -3475,6 +4722,10 @@
                     msgid="1589957570365247855" >"Ця програма не запуститься без Google Play Послуг, яких немає на вашому планшетному ПК."
                 </string>
                 <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Програма спробувала застосувати хибну версію Сервісів Google Play."
+                </string>
+                <string
                     name="common_google_play_services_install_title"
                     msgid="26645092511305524" >"Установити Google Play Послуги"
                 </string>
@@ -3491,6 +4742,18 @@
                     msgid="3542578567569488671" >"Ваш пристрій не підтримує Сервіси Google Play, від яких залежить робота деяких програм. Зверніться по допомогу до виробника."
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Щоб програма працювала, потрібно оновити Сервіси Google Play."
+                </string>
+                <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Помилка Сервісів Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Щоб програма працювала, потрібно встановити Сервіси Google Play."
+                </string>
+                <string
                     name="common_google_play_services_update_text"
                     msgid="448354684997260580" >"Ця програма не запуститься, поки ви не оновите Google Play Послуги."
                 </string>
@@ -3504,11 +4767,23 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-pl/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-pl/strings.xml"
                 qualifiers="pl" >
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Aplikacja wymaga włączenia Usług Google Play."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Aplikacja próbowała skorzystać z nieprawidłowej wersji Usług Google Play."
+                </string>
                 <string
                     name="common_google_play_services_update_title"
                     msgid="6006316683626838685" >"Aktualizuj Usługi Google Play"
+                </string>
+                <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Aplikacja wymaga zainstalowania Usług Google Play."
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -3521,6 +4796,10 @@
                 <string
                     name="common_google_play_services_enable_text"
                     msgid="7627896071867667758" >"Ta aplikacja nie będzie działać, jeśli nie włączysz Usług Google Play."
+                </string>
+                <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Aplikacja wymaga aktualizacji Usług Google Play."
                 </string>
                 <string
                     name="common_signin_button_text_long"
@@ -3537,6 +4816,13 @@
                 <string
                     name="common_google_play_services_unsupported_text"
                     msgid="3542578567569488671" >"Usługi Google Play, od których zależy działanie niektórych aplikacji, nie są obsługiwane na Twoim urządzeniu. Skontaktuj się z producentem, by uzyskać pomoc."
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Żądanie z aplikacji 
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>"
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
@@ -3559,6 +4845,10 @@
                     msgid="8515591849428043265" >"Pobierz Usługi Google Play"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"Błąd usług Google Play"
+                </string>
+                <string
                     name="common_google_play_services_unknown_issue"
                     msgid="4762332809710093730" >"Nieznany problem z Usługami Google Play."
                 </string>
@@ -3568,7 +4858,7 @@
                 </string>
             </file>
             <file
-                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-lt/strings.xml"
+                path="/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-lt/strings.xml"
                 qualifiers="lt" >
                 <string
                     name="common_google_play_services_enable_button"
@@ -3591,6 +4881,14 @@
                     msgid="2429381841831957106" >"Prisij. naud. „Google“"
                 </string>
                 <string
+                    name="auth_client_needs_update_title"
+                    msgid="6488605506794595966" >"Norint naudoti programą būtina atnaujinti „Google Play“ paslaugas."
+                </string>
+                <string
+                    name="auth_client_using_bad_version_title"
+                    msgid="2534454398764507874" >"Programa bandė naudotis netinkama „Google Play“ paslaugų versija."
+                </string>
+                <string
                     name="common_google_play_services_install_text_tablet"
                     msgid="1589957570365247855" >"Ši programa neveiks be „Google Play“ paslaugų, kurios neįdiegtos planšetiniame kompiuteryje."
                 </string>
@@ -3607,12 +4905,31 @@
                     msgid="6334768798839376943" >"„Google Play“ paslaugos"
                 </string>
                 <string
+                    name="auth_client_needs_installation_title"
+                    msgid="7999585836145154206" >"Norint naudoti programą būtina įdiegti „Google Play“ paslaugas."
+                </string>
+                <string
                     name="common_google_play_services_enable_title"
                     msgid="529078775174559253" >"Įgalinti „Google Play“ paslaugas"
                 </string>
                 <string
+                    name="auth_client_play_services_err_notification_msg"
+                    msgid="3635065018897986478" >"„Google Play“ paslaugų klaida"
+                </string>
+                <string
                     name="common_google_play_services_install_button"
                     msgid="8515591849428043265" >"Gauti „Google Play“ paslaugų"
+                </string>
+                <string
+                    name="auth_client_requested_by_msg"
+                    msgid="6304135633531965756" >"Užklausą pateikė „
+<ns1:g id="APP_NAME" >
+%1$s
+                    </ns1:g>“"
+                </string>
+                <string
+                    name="auth_client_needs_enabling_title"
+                    msgid="3983201110833868073" >"Norint naudoti programą būtina įgalinti „Google Play“ paslaugas."
                 </string>
                 <string
                     name="common_google_play_services_enable_text"

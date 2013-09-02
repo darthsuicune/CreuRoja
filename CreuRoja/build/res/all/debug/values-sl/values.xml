@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-sl/strings.xml -->
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-sl/strings.xml -->
+    <string name="auth_client_needs_enabling_title" msgid="3983201110833868073">"Za delovanje aplikacije morate omogočiti Storitve Google Play."</string>
+    <string name="auth_client_needs_installation_title" msgid="7999585836145154206">"Za delovanje aplikacije morate namestiti Storitve Google Play."</string>
+    <string name="auth_client_needs_update_title" msgid="6488605506794595966">"Za delovanje aplikacije morate posodobiti Storitve Google Play."</string>
+    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Napaka storitev Google Play"</string>
+    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"Zahtevala aplikacija <ns1:g id="APP_NAME">%1$s</ns1:g>"</string>
+    <string name="auth_client_using_bad_version_title" msgid="2534454398764507874">"Aplikacija je poskusila uporabiti napačno različico Storitev Google Play."</string>
     <string name="common_google_play_services_enable_button" msgid="4181637455539816337">"Omogočite storitve Google Play"</string>
     <string name="common_google_play_services_enable_text" msgid="7627896071867667758">"Aplikacija ne bo delovala, če ne omogočite storitev Google Play."</string>
     <string name="common_google_play_services_enable_title" msgid="529078775174559253">"Omogočite storitve Google Play"</string>

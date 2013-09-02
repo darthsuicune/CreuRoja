@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-ja/strings.xml -->
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-ja/strings.xml -->
+    <string name="auth_client_needs_enabling_title" msgid="3983201110833868073">"アプリではGoogle Play開発者サービスを有効にする必要があります。"</string>
+    <string name="auth_client_needs_installation_title" msgid="7999585836145154206">"アプリではGoogle Play開発者サービスをインストールする必要があります。"</string>
+    <string name="auth_client_needs_update_title" msgid="6488605506794595966">"アプリではGoogle Play開発者サービスをアップデートする必要があります。"</string>
+    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Google Play開発者サービスのエラー"</string>
+    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"<ns1:g id="APP_NAME">%1$s</ns1:g>によるリクエスト"</string>
+    <string name="auth_client_using_bad_version_title" msgid="2534454398764507874">"アプリはGoogle Play開発者サービスの不適切なバージョンを使用しようとしました。"</string>
     <string name="common_google_play_services_enable_button" msgid="4181637455539816337">"Play開発者サービスの有効化"</string>
     <string name="common_google_play_services_enable_text" msgid="7627896071867667758">"このアプリの実行には、Google Play開発者サービスの有効化が必要です。"</string>
     <string name="common_google_play_services_enable_title" msgid="529078775174559253">"Play開発者サービスの有効化"</string>

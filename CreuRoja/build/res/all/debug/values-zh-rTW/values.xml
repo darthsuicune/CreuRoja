@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-zh-rTW/strings.xml -->
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-zh-rTW/strings.xml -->
+    <string name="auth_client_needs_enabling_title" msgid="3983201110833868073">"應用程式需要啟用 Google Play 服務。"</string>
+    <string name="auth_client_needs_installation_title" msgid="7999585836145154206">"應用程式需要安裝 Google Play 服務。"</string>
+    <string name="auth_client_needs_update_title" msgid="6488605506794595966">"應用程式需要更新 Google Play 服務。"</string>
+    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Google Play 服務錯誤"</string>
+    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"提出要求的應用程式：<ns1:g id="APP_NAME">%1$s</ns1:g>"</string>
+    <string name="auth_client_using_bad_version_title" msgid="2534454398764507874">"應用程式嘗試使用的 Google Play 服務版本有誤。"</string>
     <string name="common_google_play_services_enable_button" msgid="4181637455539816337">"啟用 Google Play 服務"</string>
     <string name="common_google_play_services_enable_text" msgid="7627896071867667758">"您必須啟用 Google Play 服務，這個應用程式才能運作。"</string>
     <string name="common_google_play_services_enable_title" msgid="529078775174559253">"啟用 Google Play 服務"</string>

@@ -93,7 +93,7 @@
     <color name="abc_search_url_text_normal">#7fa87f</color>
     <color name="abc_search_url_text_pressed">@android:color/black</color>
     <color name="abc_search_url_text_selected">@android:color/black</color>
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/colors.xml -->
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/colors.xml -->
     <color name="common_action_bar_splitter">#d2d2d2</color>
     <color name="common_signin_btn_dark_text_default">@android:color/white</color>
     <color name="common_signin_btn_dark_text_disabled">#FFAAAAAA</color>
@@ -223,7 +223,7 @@
         <!-- Size of padding on either end of a divider. -->
         <attr name="dividerPadding" format="dimension" />
     </declare-styleable>
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/maps_attrs.xml -->
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/maps_attrs.xml -->
     <declare-styleable name="MapAttrs">
         <attr name="mapType" format="enum">
             <enum name="none" value="0" />
@@ -557,13 +557,16 @@
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values/strings.xml -->
     <string name="app_name">Creu Roja</string>
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/strings.xml -->
-    <string name="auth_client_availability_notification_title">Install/Update/Enable Google Play services</string>
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/strings.xml -->
+    <string name="auth_client_needs_enabling_title">      An application requires Google Play Services to be enabled.</string>
+    <string name="auth_client_needs_installation_title">      An application requires installation of Google Play Services.</string>
+    <string name="auth_client_needs_update_title">      An application requires an update for Google Play Services.</string>
     <string name="auth_client_play_services_err_notification_msg">Google Play services error</string>
     <string name="auth_client_requested_by_msg">Requested by <ns1:g id="app_name">%1$s</ns1:g></string>
+    <string name="auth_client_using_bad_version_title">      An application attempted to use a bad version of Google Play Services.</string>
     <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values/strings.xml -->
     <string name="cancel">Cancel·lar</string>
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/strings.xml -->
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values/strings.xml -->
     <string name="common_google_play_services_enable_button" msgid="2523291102206661146">Enable Google Play services</string>
     <string name="common_google_play_services_enable_text" msgid="227660514972886228">This app won\'t work unless you enable Google Play services.</string>
     <string name="common_google_play_services_enable_title" msgid="5122002158466380389">Enable Google Play services</string>
@@ -601,11 +604,6 @@
     <string name="google_maps_api_key">"AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ"</string>
     <string name="google_maps_api_key_zuhause">"AIzaSyC_eeaFAw7-u9ha7njs7YPI-gvM3Pmil74"</string>
     <string name="locating">Localitzant posició, esperi un moment i torneu a intentar</string>
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values/strings.xml -->
-    <string name="location_client_ulr_inactive_age_under_13" translatable="false">        AgeUnder13</string>
-    <string name="location_client_ulr_inactive_age_unknown" translatable="false">AgeUnknown</string>
-    <string name="location_client_ulr_inactive_unknown_restriction" translatable="false">        UnknownRestriction</string>
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values/strings.xml -->
     <string name="location_disabled_message">Voleu activar els serveis de localització ara?</string>
     <string name="location_disabled_title">Serveis de localització desactivats</string>
     <string name="location_unavailable">Els serveis de localització no es van poder activar</string>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values-es/strings_map_items.xml -->
     <string-array name="map_styles">
@@ -20,8 +20,16 @@
     </string-array>
     <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values-es/strings.xml -->
     <string name="app_name">Cruz Roja</string>
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-es/strings.xml -->
+    <string name="auth_client_needs_enabling_title" msgid="3983201110833868073">"Una aplicación requiere que se habiliten los servicios de Play."</string>
+    <string name="auth_client_needs_installation_title" msgid="7999585836145154206">"Una aplicación requiere que se instalen los servicios de Google Play."</string>
+    <string name="auth_client_needs_update_title" msgid="6488605506794595966">"Una aplicación requiere que se actualicen los servicios de Google Play."</string>
+    <string name="auth_client_play_services_err_notification_msg" msgid="3635065018897986478">"Error de los servicios de Google Play"</string>
+    <string name="auth_client_requested_by_msg" msgid="6304135633531965756">"Solicitada por <ns1:g id="APP_NAME">%1$s</ns1:g>"</string>
+    <string name="auth_client_using_bad_version_title" msgid="2534454398764507874">"Una aplicación intentó usar versión incorrecta de servicios de Google Play."</string>
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/src/main/res/values-es/strings.xml -->
     <string name="cancel">Cancelar</string>
-    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3136.aar/res/values-es/strings.xml -->
+    <!-- From: file:/home/lapuente/projects/CreuRoja/CreuRoja/build/exploded-bundles/ComGoogleAndroidGmsPlayServices3225.aar/res/values-es/strings.xml -->
     <string name="common_google_play_services_enable_button" msgid="4181637455539816337">"Habilitar servicios de Google Play"</string>
     <string name="common_google_play_services_enable_text" msgid="7627896071867667758">"Esta aplicación no funcionará si no habilitas los servicios de Google Play."</string>
     <string name="common_google_play_services_enable_title" msgid="529078775174559253">"Habilitar servicios de Google Play"</string>
