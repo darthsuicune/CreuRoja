@@ -340,7 +340,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
 	private void moveToCurrentLocation() {
 		if (mGoogleMap != null) {
-			if (locationServicesAreEnabled()) {
+			if (areLocationServicesEnabled()) {
 				if (mLocationClient.getLastLocation() != null) {
 					mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(
 							mLocationClient.getLastLocation().getLatitude(), mLocationClient
@@ -354,7 +354,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 		}
 	}
 
-	private boolean locationServicesAreEnabled() {
+	private boolean areLocationServicesEnabled() {
 		LocationManager lm = (LocationManager) getActivity().getSystemService(
 				Context.LOCATION_SERVICE);
 		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
@@ -592,7 +592,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 		if (marker.getPosition() == null || !mGoogleMap.isMyLocationEnabled()) {
 			return;
 		}
-		if (locationServicesAreEnabled()) {
+		if (areLocationServicesEnabled()) {
 			if (mLocationClient.getLastLocation() != null) {
 				Bundle args = new Bundle();
 				args.putDouble(DirectionsLoader.ARG_ORIG_LAT, mLocationClient.getLastLocation()

@@ -1,13 +1,12 @@
 package com.cruzroja.creuroja.utils;
 
-import java.util.ArrayList;
-
+import com.cruzroja.creuroja.Location;
+import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.cruzroja.creuroja.Location;
-import com.google.android.gms.maps.model.LatLng;
+import java.util.ArrayList;
 
 public class JSONParser {
 
@@ -72,6 +71,12 @@ public class JSONParser {
 
 	}
 
+    /**
+     * This method was completely copied from stackoverflow.com
+     *
+     * @param encoded
+     * @return
+     */
 	private static ArrayList<LatLng> decodePoly(String encoded) {
 		ArrayList<LatLng> poly = new ArrayList<LatLng>();
 		int index = 0, len = encoded.length();
