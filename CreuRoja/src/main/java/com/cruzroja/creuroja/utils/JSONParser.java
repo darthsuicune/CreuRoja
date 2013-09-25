@@ -1,13 +1,12 @@
 package com.cruzroja.creuroja.utils;
 
-import java.util.ArrayList;
-
+import com.cruzroja.creuroja.Location;
+import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.cruzroja.creuroja.Location;
-import com.google.android.gms.maps.model.LatLng;
+import java.util.ArrayList;
 
 public class JSONParser {
 
@@ -72,6 +71,15 @@ public class JSONParser {
 
 	}
 
+    /**
+     * This method was completely copied from some point in stackoverflow.com
+     * If you wanna know what it does, good luck finding it again.
+     *
+     * It converts the polyline encoded in the response from Google into an array of points.
+     *
+     * @param encoded
+     * @return
+     */
 	private static ArrayList<LatLng> decodePoly(String encoded) {
 		ArrayList<LatLng> poly = new ArrayList<LatLng>();
 		int index = 0, len = encoded.length();

@@ -22,3 +22,6 @@ local.properties
 .idea
 *.iml
 
+CreuRoja/build
+.gradle/
+gradle
