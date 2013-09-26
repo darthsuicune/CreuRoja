@@ -1,15 +1,14 @@
 package com.cruzroja.creuroja;
 
+import android.content.SharedPreferences;
+import android.view.View;
+import com.cruzroja.creuroja.utils.Settings;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
-import android.content.SharedPreferences;
-import android.view.View;
-
-import com.cruzroja.creuroja.utils.Settings;
 
 public class User {
 	public static final String ROLE_ADMIN = "administrador";
@@ -97,26 +96,26 @@ public class User {
 		}
 	}
 	
-	public int canSeeCheckBox(int markerType) {
+	public int canSeeCheckBox(int checkBoxId) {
 		if (mRoles.contains(ROLE_ADMIN)) {
 			return View.VISIBLE;
 		}
-		switch (markerType) {
-		case R.drawable.adaptadas:
+		switch (checkBoxId) {
+		case R.id.box_adaptadas:
 			return (mRoles.contains(ROLE_SOCIAL)) ? View.VISIBLE : View.GONE;
-		case R.drawable.asamblea:
+		case R.id.box_asamblea:
 			return (mRoles.contains(ROLE_SOCIAL) || mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
-		case R.drawable.bravo:
+		case R.id.box_bravo:
 			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
-		case R.drawable.cuap:
+		case R.id.box_cuap:
 			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
-		case R.drawable.hospital:
+		case R.id.box_hospital:
 			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
-		case R.drawable.maritimo:
+		case R.id.box_maritimo:
 			return (mRoles.contains(ROLE_ACUATICO)) ? View.VISIBLE : View.GONE;
-		case R.drawable.terrestre:
+		case R.id.box_terrestre:
 			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
-		case R.drawable.nostrum:
+		case R.id.box_nostrum:
 			return (mRoles.contains(ROLE_SOCORROS)) ? View.VISIBLE : View.GONE;
 		default:
 			return View.GONE;
