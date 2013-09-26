@@ -77,22 +77,14 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
     }
 
     private void setCheckboxesVisibility() {
-        setCheckBoxVisibility(R.id.checkbox_adaptadas, R.id.box_adaptadas,
-                Settings.SHOW_ADAPTADAS);
-        setCheckBoxVisibility(R.id.checkbox_asamblea, R.id.box_asamblea,
-                Settings.SHOW_ASAMBLEA);
-        setCheckBoxVisibility(R.id.checkbox_bravo, R.id.box_bravo,
-                Settings.SHOW_BRAVO);
-        setCheckBoxVisibility(R.id.checkbox_cuap, R.id.box_cuap,
-                Settings.SHOW_CUAP);
-        setCheckBoxVisibility(R.id.checkbox_hospital, R.id.box_hospital,
-                Settings.SHOW_HOSPITAL);
-        setCheckBoxVisibility(R.id.checkbox_maritimo, R.id.box_maritimo,
-                Settings.SHOW_MARITIMO);
-        setCheckBoxVisibility(R.id.checkbox_nostrum, R.id.box_nostrum,
-                Settings.SHOW_NOSTRUM);
-        setCheckBoxVisibility(R.id.checkbox_terrestre, R.id.box_terrestre,
-                Settings.SHOW_TERRESTRE);
+        setCheckBoxVisibility(R.id.checkbox_adaptadas, R.id.box_adaptadas, Settings.SHOW_ADAPTADAS);
+        setCheckBoxVisibility(R.id.checkbox_asamblea,  R.id.box_asamblea,  Settings.SHOW_ASAMBLEA);
+        setCheckBoxVisibility(R.id.checkbox_bravo,     R.id.box_bravo,     Settings.SHOW_BRAVO);
+        setCheckBoxVisibility(R.id.checkbox_cuap,      R.id.box_cuap,      Settings.SHOW_CUAP);
+        setCheckBoxVisibility(R.id.checkbox_hospital,  R.id.box_hospital,  Settings.SHOW_HOSPITAL);
+        setCheckBoxVisibility(R.id.checkbox_maritimo,  R.id.box_maritimo,  Settings.SHOW_MARITIMO);
+        setCheckBoxVisibility(R.id.checkbox_nostrum,   R.id.box_nostrum,   Settings.SHOW_NOSTRUM);
+        setCheckBoxVisibility(R.id.checkbox_terrestre, R.id.box_terrestre, Settings.SHOW_TERRESTRE);
     }
 
     private void setCheckBoxVisibility(int checkBoxResId, int boxResId, String showTag) {
