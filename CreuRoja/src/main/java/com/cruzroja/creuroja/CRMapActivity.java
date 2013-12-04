@@ -31,10 +31,6 @@ public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#CC0000")));
 
-        if (savedInstanceState != null) {
-            return;
-        }
-
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (!prefs.getBoolean(Settings.IS_VALID_USER, false)) {
@@ -77,10 +73,11 @@ public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<
     }
 
     private void showMap() {
-
-        mMapFragment = (CRMapFragment) Fragment.instantiate(this, CRMapFragment.class.getName());
+        mMapFragment = (CRMapFragment) getSupportFragmentManager().findFragmentByTag(CRMapFragment.class.getName());
+        if(mMapFragment == null){
+            mMapFragment = (CRMapFragment) Fragment.instantiate(this, CRMapFragment.class.getName());
+        }
         mMapFragment.setHasOptionsMenu(true);
-        mMapFragment.setRetainInstance(true);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.map_fragment_container, mMapFragment).commit();
     }

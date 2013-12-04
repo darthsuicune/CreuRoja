@@ -108,19 +108,17 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
         requestGooglePlayServicesAvailability();
         SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
+        mGoogleMap = mapFragment.getMap();
 
         if (savedInstanceState == null) {
             mapFragment.setRetainInstance(true);
             downloadNewData();
-        } else {
-            mGoogleMap = mapFragment.getMap();
         }
 
         loadDataFromFile();
         setMap();
 
         mLocationClient = new LocationClient(getActivity(), this, this);
-
     }
 
     @Override
@@ -139,9 +137,9 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.fragment_map, menu);
         setSearchOptions(menu);
-
     }
 
     @Override
@@ -175,8 +173,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
     public boolean onBackPressed() {
         if (isMarkerPanelShowing) {
-            mMarkerPanel.setVisibility(View.GONE);
-            isMarkerPanelShowing = false;
+            showMarkerPanel();
             return true;
         }
         return isMarkerPanelShowing;
@@ -247,16 +244,16 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
         if (mGoogleMap == null) {
             mGoogleMap = ((SupportMapFragment) getFragmentManager().findFragmentById(R.id.map))
                     .getMap();
-            if (mGoogleMap != null) {
-                setMapStyle(prefs.getInt(Settings.MAP_STYLE, Settings.MAP_STYLE_NORMAL));
-                mGoogleMap.setMyLocationEnabled(true);
-                mGoogleMap.setIndoorEnabled(false);
-                mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
-                mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
-                mGoogleMap.getUiSettings().setAllGesturesEnabled(true);
-                mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                        new LatLng(41.3958, 2.1739), 12));
-            }
+        }
+        if (mGoogleMap != null) {
+            setMapStyle(prefs.getInt(Settings.MAP_STYLE, Settings.MAP_STYLE_NORMAL));
+            mGoogleMap.setMyLocationEnabled(true);
+            mGoogleMap.setIndoorEnabled(false);
+            mGoogleMap.getUiSettings().setZoomControlsEnabled(false);
+            mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
+            mGoogleMap.getUiSettings().setAllGesturesEnabled(true);
+            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(
+                    new LatLng(41.3958, 2.1739), 12));
         }
         drawMarkers();
     }

@@ -2,11 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cruzroja.creuroja"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0">
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="19" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,26 +23,27 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <uses-library android:name="com.google.android.maps" />
 
         <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ" />
+            android:value="AIzaSyApRMee00Mk5jRKjbM1azp5OdySR387eFo" />
 
         <activity
             android:name="com.cruzroja.creuroja.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar" >
-        </activity>
+            android:theme="@android:style/Theme.NoTitleBar"></activity>
         <activity
             android:name="com.cruzroja.creuroja.CRMapActivity"
-            android:label="@string/app_name" 
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
-            android:launchMode="singleTop" >
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <intent-filter>

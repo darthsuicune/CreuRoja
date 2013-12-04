@@ -9,7 +9,7 @@
     <string name="menu_search">Cercar</string>
     <string name="search_hint">Cerca un lloc</string>
     <string name="google_maps_api_key">"AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ"</string>
-    <string name="google_maps_api_key_zuhause">"AIzaSyC_eeaFAw7-u9ha7njs7YPI-gvM3Pmil74"</string>
+    <string name="google_maps_api_key_zuhause">"AIzaSyApRMee00Mk5jRKjbM1azp5OdySR387eFo"</string>
     <string name="locating">Localitzant posició, esperi un moment i torneu a intentar</string>
     <string name="location_disabled_title">Serveis de localització desactivats</string>
     <string name="location_disabled_message">Voleu activar els serveis de localització ara?</string>
