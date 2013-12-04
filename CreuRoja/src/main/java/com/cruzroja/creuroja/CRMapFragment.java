@@ -63,11 +63,10 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+                             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
-        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
         mMarkerPanel = v.findViewById(R.id.marker_panel);
+        prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         // Prepare all checkboxes for use
         if (mMarkerPanel != null) {
@@ -78,12 +77,12 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
     private void setCheckboxesVisibility() {
         setCheckBoxVisibility(R.id.checkbox_adaptadas, R.id.box_adaptadas, Settings.SHOW_ADAPTADAS);
-        setCheckBoxVisibility(R.id.checkbox_asamblea,  R.id.box_asamblea,  Settings.SHOW_ASAMBLEA);
-        setCheckBoxVisibility(R.id.checkbox_bravo,     R.id.box_bravo,     Settings.SHOW_BRAVO);
-        setCheckBoxVisibility(R.id.checkbox_cuap,      R.id.box_cuap,      Settings.SHOW_CUAP);
-        setCheckBoxVisibility(R.id.checkbox_hospital,  R.id.box_hospital,  Settings.SHOW_HOSPITAL);
-        setCheckBoxVisibility(R.id.checkbox_maritimo,  R.id.box_maritimo,  Settings.SHOW_MARITIMO);
-        setCheckBoxVisibility(R.id.checkbox_nostrum,   R.id.box_nostrum,   Settings.SHOW_NOSTRUM);
+        setCheckBoxVisibility(R.id.checkbox_asamblea, R.id.box_asamblea, Settings.SHOW_ASAMBLEA);
+        setCheckBoxVisibility(R.id.checkbox_bravo, R.id.box_bravo, Settings.SHOW_BRAVO);
+        setCheckBoxVisibility(R.id.checkbox_cuap, R.id.box_cuap, Settings.SHOW_CUAP);
+        setCheckBoxVisibility(R.id.checkbox_hospital, R.id.box_hospital, Settings.SHOW_HOSPITAL);
+        setCheckBoxVisibility(R.id.checkbox_maritimo, R.id.box_maritimo, Settings.SHOW_MARITIMO);
+        setCheckBoxVisibility(R.id.checkbox_nostrum, R.id.box_nostrum, Settings.SHOW_NOSTRUM);
         setCheckBoxVisibility(R.id.checkbox_terrestre, R.id.box_terrestre, Settings.SHOW_TERRESTRE);
     }
 
@@ -105,6 +104,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         requestGooglePlayServicesAvailability();
         SupportMapFragment mapFragment = (SupportMapFragment) getFragmentManager()
                 .findFragmentById(R.id.map);
@@ -184,7 +184,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
         switch (requestCode) {
             case CONNECTION_FAILURE_RESOLUTION_REQUEST:
             /*
-			 * If the result code is Activity.RESULT_OK, try to connect again
+             * If the result code is Activity.RESULT_OK, try to connect again
 			 */
                 switch (resultCode) {
                     case Activity.RESULT_OK:
@@ -661,7 +661,7 @@ public class CRMapFragment extends Fragment implements GoogleMap.OnInfoWindowCli
 
         @Override
         public void onLoadFinished(Loader<ArrayList<Location>> loader,
-                ArrayList<Location> locations) {
+                                   ArrayList<Location> locations) {
             mLocationList = locations;
             drawMarkers();
         }

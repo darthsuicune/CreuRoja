@@ -12,16 +12,13 @@ import android.support.v4.content.Loader;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.widget.Toast;
-
 import com.cruzroja.creuroja.utils.ConnectionClient;
 import com.cruzroja.creuroja.utils.Settings;
 
 public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<User> {
     private static final int ACTIVITY_LOGIN = 1;
     private static final int LOGIN_LOADER = 1;
-
     private SharedPreferences prefs;
-
     private CRMapFragment mMapFragment;
 
     @Override
@@ -32,6 +29,11 @@ public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#CC0000")));
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        if(savedInstanceState != null){
+            showMap();
+            return;
+        }
 
         if (!prefs.getBoolean(Settings.IS_VALID_USER, false)) {
             Intent intent = new Intent(this, LoginActivity.class);
@@ -46,18 +48,18 @@ public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-        case ACTIVITY_LOGIN:
-            switch (resultCode) {
-            case RESULT_OK:
-                showMap();
+            case ACTIVITY_LOGIN:
+                switch (resultCode) {
+                    case RESULT_OK:
+                        showMap();
+                        break;
+                    default:
+                        finish();
+                        break;
+                }
                 break;
             default:
-                finish();
                 break;
-            }
-            break;
-        default:
-            break;
         }
     }
 
@@ -73,18 +75,24 @@ public class CRMapActivity extends ActionBarActivity implements LoaderCallbacks<
     }
 
     private void showMap() {
-        mMapFragment = (CRMapFragment) getSupportFragmentManager().findFragmentByTag(CRMapFragment.class.getName());
-        if(mMapFragment == null){
-            mMapFragment = (CRMapFragment) Fragment.instantiate(this, CRMapFragment.class.getName());
+        if (mMapFragment == null) {
+            mMapFragment = (CRMapFragment) getSupportFragmentManager()
+                    .findFragmentByTag(CRMapFragment.class.getName());
+            if (mMapFragment == null) {
+                mMapFragment = (CRMapFragment) Fragment.instantiate(this,
+                        CRMapFragment.class.getName());
+            }
         }
         mMapFragment.setHasOptionsMenu(true);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.map_fragment_container, mMapFragment).commit();
+                .replace(R.id.map_fragment_container, mMapFragment, CRMapFragment.class.getName());
     }
 
-    /*************************
+    /**
+     * **********************
      * Login related methods *
-     *************************/
+     * ***********************
+     */
 
     private void checkCredentials() {
         if (ConnectionClient.isConnected(this)) {
