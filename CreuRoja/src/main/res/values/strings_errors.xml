@@ -3,4 +3,6 @@
     <string name="error_location_unavailable">Location unavailable</string>
     <string name="error_limit_reached">Limit for API calls reached</string>
     <string name="error_no_connection">No connection available</string>
+    <string name="error_connecting">Error during the connection. Please, try again later.</string>
+    <string name="error_invalid_response">Error on server response. Probably incorrect password.</string>
 </resources>

@@ -59,14 +59,14 @@ public class ConnectionClient {
     public static final String sOverviewPolyline = "overview_polyline";
     public static final String sPoints = "points";
 
-    public LoginResponse doLogin(String username, String password) {
+    public LoginResponse doLogin(String username, String password) throws IOException {
         HttpResponse response = executeRequest(createHttpClient(),
                 getLoginRequest(username, password));
 
         return new LoginResponse(response);
     }
 
-    public List<Location> requestUpdates(String accessToken, long lastUpdate) {
+    public List<Location> requestUpdates(String accessToken, long lastUpdate) throws IOException {
         HttpResponse response = executeRequest(createHttpClient(),
                 getLocationsRequest(accessToken, lastUpdate));
 
@@ -74,7 +74,7 @@ public class ConnectionClient {
     }
 
     public List<LatLng> getDirections(double latitudeStart, double longitudeStart,
-                                  Location destination) {
+                                  Location destination) throws IOException  {
         return parseDirectionsResponse(executeRequest(createHttpClient(), getDirectionsRequest(
                 latitudeStart, longitudeStart, destination)));
     }
@@ -133,16 +133,9 @@ public class ConnectionClient {
         return request;
     }
 
-    private HttpResponse executeRequest(HttpClient httpClient, HttpUriRequest request) {
-        HttpResponse response = null;
-        try {
-            response = httpClient.execute(request);
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return response;
+    private HttpResponse executeRequest(HttpClient httpClient, HttpUriRequest request)
+            throws IOException {
+        return httpClient.execute(request);
     }
 
     private static List<LatLng> parseDirectionsResponse(HttpResponse response) {

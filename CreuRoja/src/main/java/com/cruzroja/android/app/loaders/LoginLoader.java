@@ -4,10 +4,12 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
+import com.cruzroja.android.R;
 import com.cruzroja.android.app.LoginResponse;
 import com.cruzroja.android.app.Settings;
 import com.cruzroja.android.app.utils.ConnectionClient;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 
@@ -44,6 +46,12 @@ public class LoginLoader extends AsyncTaskLoader<LoginResponse> {
     @Override
     public LoginResponse loadInBackground() {
         mClient = new ConnectionClient();
-        return mClient.doLogin(mUsername, mPassword);
+        LoginResponse response = null;
+        try{
+            mClient.doLogin(mUsername, mPassword);
+        } catch(IOException e){
+            response = new LoginResponse(R.string.error_connecting);
+        }
+        return response;
     }
 }

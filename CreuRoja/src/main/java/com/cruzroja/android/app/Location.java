@@ -14,6 +14,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,7 +69,7 @@ public class Location {
         return new LatLng(mLatitude, mLongitude);
     }
 
-    public List<LatLng> getDirections(double latitudeStart, double longitudeStart) {
+    public List<LatLng> getDirections(double latitudeStart, double longitudeStart) throws IOException {
         return new ConnectionClient().getDirections(latitudeStart, longitudeStart, this);
     }
 

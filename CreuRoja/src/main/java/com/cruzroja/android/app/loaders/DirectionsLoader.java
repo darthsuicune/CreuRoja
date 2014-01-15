@@ -7,6 +7,7 @@ import android.support.v4.content.AsyncTaskLoader;
 import com.cruzroja.android.app.Location;
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -38,7 +39,14 @@ public class DirectionsLoader extends AsyncTaskLoader<List<LatLng>> {
 
     @Override
     public List<LatLng> loadInBackground() {
-        mDirections = mDestination.getDirections(origLat, origLong);
+        try{
+            mDirections = mDestination.getDirections(origLat, origLong);
+        } catch (IOException e) {
+            //return empty list
+            if(mDirections != null) {
+                mDirections.clear();
+            }
+        }
         return mDirections;
     }
 }

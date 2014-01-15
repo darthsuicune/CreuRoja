@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.cruzroja.android.R;
 import com.cruzroja.android.app.LoginResponse;
 import com.cruzroja.android.app.Settings;
+import com.cruzroja.android.app.utils.ConnectionClient;
 import com.cruzroja.android.app.utils.LocationDownloader;
 import com.cruzroja.android.app.loaders.LoginLoader;
 
@@ -67,14 +68,15 @@ public class LoginFragment extends Fragment
                 .putString(Settings.ACCESS_TOKEN, loginResponse.mToken.mAccessToken).commit();
         LocationDownloader.saveLocations(getActivity().getContentResolver(),
                 loginResponse.mLocationList);
-        showProgress(false);
         getActivity().setResult(Activity.RESULT_OK);
+        showProgress(false);
         getActivity().finish();
     }
 
-    public void loginFailed() {
+    public void loginFailed(LoginResponse response) {
         mPasswordView.setText("");
-        Toast.makeText(getActivity(), R.string.error_incorrect_password, Toast.LENGTH_LONG).show();
+        showProgress(false);
+        Toast.makeText(getActivity(), response.mErrorMessage, Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -117,6 +119,9 @@ public class LoginFragment extends Fragment
 
     @Override
     public Loader<LoginResponse> onCreateLoader(int id, Bundle args) {
+        if(!ConnectionClient.isConnected(getActivity())){
+            Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
+        }
         showProgress(true);
         Loader<LoginResponse> loader = null;
         switch (id) {
@@ -136,7 +141,7 @@ public class LoginFragment extends Fragment
                 if (response.isValid()) {
                     loginSuccessful(response);
                 } else {
-                    loginFailed();
+                    loginFailed(response);
                 }
                 break;
             default:
