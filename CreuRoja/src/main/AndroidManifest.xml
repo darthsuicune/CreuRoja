@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cruzroja.creuroja"
+    package="com.cruzroja.android"
     android:versionCode="1"
-    android:versionName="1.0">
+    android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -10,8 +10,8 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -23,37 +23,39 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-        <uses-library android:name="com.google.android.maps" />
-
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+        android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyApRMee00Mk5jRKjbM1azp5OdySR387eFo" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.cruzroja.creuroja.LoginActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.NoTitleBar"></activity>
-        <activity
-            android:name="com.cruzroja.creuroja.CRMapActivity"
-            android:label="@string/app_name"
-            android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            android:name="com.cruzroja.android.ui.activities.MainActivity"
+            android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/menu_search" />
         </activity>
+        <activity
+            android:name="com.cruzroja.android.ui.activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName="com.cruzroja.android.MainActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cruzroja.android.MainActivity" />
+        </activity>
+
+        <provider
+            android:name="com.cruzroja.android.database.CreuRojaProvider"
+            android:authorities="com.cruzroja.android.database.CreuRojaProvider"
+            android:exported="false" >
+        </provider>
+
     </application>
 
 </manifest>

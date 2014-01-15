@@ -1,20 +1,7 @@
-<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Creu Roja</string>
-    <string name="menu_locate">Posició</string>
-    <string name="menu_refresh">Actualitzar</string>
-    <string name="menu_show_panel">Llegenda</string>
-    <string name="menu_show_map">Mapa</string>
-    <string name="menu_search">Cercar</string>
-    <string name="search_hint">Cerca un lloc</string>
-    <string name="google_maps_api_key">"AIzaSyD4HzvaUA32b9neC1EcXbAnH5ZBD8OmSSQ"</string>
-    <string name="google_maps_api_key_zuhause">"AIzaSyApRMee00Mk5jRKjbM1azp5OdySR387eFo"</string>
-    <string name="locating">Localitzant posició, esperi un moment i torneu a intentar</string>
-    <string name="location_disabled_title">Serveis de localització desactivats</string>
-    <string name="location_disabled_message">Voleu activar els serveis de localització ara?</string>
-    <string name="location_unavailable">Els serveis de localització no es van poder activar</string>
-    <string name="open_location_settings">Ajustos</string>
-    <string name="cancel">Cancel·lar</string>
+    <string name="app_name">CruzRoja</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
