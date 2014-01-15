@@ -5,6 +5,7 @@ import android.content.ContentValues;
 import com.cruzroja.android.app.Location;
 import com.cruzroja.android.database.CreuRojaContract;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +26,15 @@ public class LocationDownloader implements Runnable {
 
     @Override
     public void run() {
+        try{
         List<Location> locationList = new ConnectionClient().
                 requestUpdates(mAccessToken, mLastUpdateTime);
         //TODO: implement something useful instead of this piece of crap
         saveLocations(mResolver, locationList);
+        } catch (IOException e) {
+            //In case problems during the connection arise, just leave a log.
+            e.printStackTrace();
+        }
     }
 
     public static void saveLocations(ContentResolver cr, List<Location> locationList) {
