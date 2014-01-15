@@ -8,7 +8,6 @@ import com.cruzroja.android.app.utils.LocationsProvider;
 import com.cruzroja.android.database.CreuRojaContract;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -60,8 +59,14 @@ public class LoginResponse {
         }
         try {
             JSONObject object = new JSONObject(builder.toString());
-            mToken = new AccessToken(object.getJSONObject(sAccessToken));
-            mLocationList = LocationsProvider.getLocationList(object);
+            if(object.has(sAccessToken)){
+                mToken = new AccessToken(object.getJSONObject(sAccessToken));
+                mLocationList = LocationsProvider.getLocationList(object);
+            } else {
+                mToken = null;
+                mLocationList = null;
+                mErrorMessage = R.string.error_invalid_password;
+            }
         } catch (JSONException e) {
             mToken = null;
             mLocationList = null;

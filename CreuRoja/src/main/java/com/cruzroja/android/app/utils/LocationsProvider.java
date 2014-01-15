@@ -48,8 +48,7 @@ public class LocationsProvider {
         ArrayList<Location> locationList = new ArrayList<>();
         JSONArray locations = object.getJSONArray(LoginResponse.sLocations);
         for (int i = 0; i < locations.length(); i++) {
-            JSONObject location = locations.getJSONObject(i);
-            locationList.add(new Location(location));
+            locationList.add(new Location(locations.getJSONObject(i)));
         }
         return locationList;
     }
@@ -73,7 +72,8 @@ public class LocationsProvider {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                String where = CreuRojaContract.Locations.EXPIRE_DATE + "=?";
+                String where = CreuRojaContract.Locations.EXPIRE_DATE + "<? AND "
+                        + CreuRojaContract.Locations.EXPIRE_DATE + ">0";
                 String[] whereArgs = {
                         Long.toString(System.currentTimeMillis())
                 };
