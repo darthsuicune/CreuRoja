@@ -1,0 +1,16 @@
+<resources>
+        <string name="title_activity_login">Iniciar sesión</string>
+
+    <!-- Strings related to login -->
+    <string name="login_username_hint">Usuario</string>
+    <string name="login_password_hint">Contraseña</string>
+    <string name="login_sign_in">Iniciar sesión</string>
+    <string name="login_logo_description">Logo CR</string>
+
+    <string name="login_progress_signing_in">Iniciando sesión&#8230;</string>
+
+    <string name="error_invalid_user">Este usuario no es válido</string>
+    <string name="error_invalid_password">La contraseña es demasiado corta</string>
+    <string name="error_incorrect_password">La contraseña es incorrecta</string>
+    <string name="error_field_required">Todos los campos son obligatorios</string>
+</resources>
