@@ -138,7 +138,7 @@ public class LoginFragment extends Fragment
     public void onLoadFinished(Loader<LoginResponse> loader, LoginResponse response) {
         switch (loader.getId()) {
             case LOADER_LOGIN:
-                if (response.isValid()) {
+                if (response != null && response.isValid()) {
                     loginSuccessful(response);
                 } else {
                     loginFailed(response);

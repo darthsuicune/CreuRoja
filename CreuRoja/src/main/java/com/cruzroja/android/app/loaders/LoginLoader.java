@@ -48,7 +48,7 @@ public class LoginLoader extends AsyncTaskLoader<LoginResponse> {
         mClient = new ConnectionClient();
         LoginResponse response = null;
         try{
-            mClient.doLogin(mUsername, mPassword);
+            response = mClient.doLogin(mUsername, mPassword);
         } catch(IOException e){
             response = new LoginResponse(R.string.error_connecting);
         }
