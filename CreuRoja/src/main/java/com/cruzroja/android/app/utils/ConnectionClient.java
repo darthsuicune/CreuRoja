@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class ConnectionClient {
     private static final String SERVER_URL = "http://kls.servequake.com:808";
-    private static final String QUERY = "/index.php?q=";
+    private static final String QUERY = "/webservice.php?q=";
     private static final String LOGIN_REQUEST = "request_access";
     private static final String LOCATIONS_REQUEST = "get_locations";
     public static final String DIRECTIONS_API_BASE_URL =
