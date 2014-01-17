@@ -43,7 +43,8 @@
         <activity
             android:name="com.cruzroja.android.ui.activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName="com.cruzroja.android.MainActivity"
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:parentActivityName="com.cruzroja.android.ui.activities.MainActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
