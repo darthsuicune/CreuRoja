@@ -10,10 +10,13 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cruzroja.android.R;
@@ -45,6 +48,16 @@ public class LoginFragment extends Fragment
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         mUsernameView = (EditText) v.findViewById(R.id.login_username);
         mPasswordView = (EditText) v.findViewById(R.id.login_password);
+        mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if (actionId == EditorInfo.IME_ACTION_GO) {
+                    attemptLogin();
+                    return true;
+                }
+                return false;
+            }
+        });
         v.findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
