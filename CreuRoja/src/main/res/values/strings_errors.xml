@@ -8,4 +8,5 @@
     <string name="error_invalid_password">Incorrect password.</string>
     <string name="error_invalid_user">This user is invalid</string>
     <string name="error_field_required">This field is required</string>
+    <string name="error_unsupported_encoding">This device doesn\'t support the login system</string>
 </resources>
