@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="error_location_unavailable">Localización desconocida</string>
-    <string name="error_limit_reached">Límite en la API</string>
+    <string name="error_limit_reached">Límite de la API superado</string>
     <string name="error_no_connection">No hay conexión disponible.</string>
     <string name="error_connecting">Error durante la conexión, inténtelo más tarde</string>
     <string name="error_invalid_response">Error del servidor</string>
