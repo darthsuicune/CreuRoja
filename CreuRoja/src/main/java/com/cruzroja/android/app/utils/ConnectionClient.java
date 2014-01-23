@@ -92,13 +92,7 @@ public class ConnectionClient {
     private HttpUriRequest getLoginRequest(String username, String password) {
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(USER_VAR, username));
-        try {
-            nameValuePairs.add(new BasicNameValuePair(PASS_VAR, Settings.getShaHash(password)));
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        nameValuePairs.add(new BasicNameValuePair(PASS_VAR, password));
         return buildRequest(LOGIN_REQUEST, nameValuePairs);
     }
 

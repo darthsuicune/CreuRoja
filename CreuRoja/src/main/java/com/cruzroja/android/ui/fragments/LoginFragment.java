@@ -23,8 +23,12 @@ import com.cruzroja.android.R;
 import com.cruzroja.android.app.LoginResponse;
 import com.cruzroja.android.app.Settings;
 import com.cruzroja.android.app.utils.ConnectionClient;
+import com.cruzroja.android.app.utils.HashGenerator;
 import com.cruzroja.android.app.utils.LocationDownloader;
 import com.cruzroja.android.app.loaders.LoginLoader;
+
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 
 /**
  * Created by lapuente on 29.10.13.
@@ -68,12 +72,20 @@ public class LoginFragment extends Fragment
     }
 
     public void attemptLogin() {
-        String username = mUsernameView.getText().toString();
-        String password = mPasswordView.getText().toString();
-        Bundle args = new Bundle();
-        args.putString(LoginLoader.USERNAME, username);
-        args.putString(LoginLoader.PASSWORD, password);
-        getLoaderManager().restartLoader(LOADER_LOGIN, args, this);
+        try {
+            String username = mUsernameView.getText().toString();
+            String password = mPasswordView.getText().toString();
+            Bundle args = new Bundle();
+            args.putString(LoginLoader.USERNAME, username);
+            args.putString(LoginLoader.PASSWORD, HashGenerator.getSha1Hash(password));
+            getLoaderManager().restartLoader(LOADER_LOGIN, args, this);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            loginFailed(new LoginResponse(R.string.error_unsupported_encoding));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            loginFailed(new LoginResponse(R.string.error_unsupported_encoding));
+        }
     }
 
     public void loginSuccessful(LoginResponse loginResponse) {
@@ -89,7 +101,9 @@ public class LoginFragment extends Fragment
     public void loginFailed(LoginResponse response) {
         mPasswordView.setText("");
         showProgress(false);
-        Toast.makeText(getActivity(), response.mErrorMessage, Toast.LENGTH_LONG).show();
+        if(response != null){
+            Toast.makeText(getActivity(), response.mErrorMessage, Toast.LENGTH_LONG).show();
+        }
     }
 
     /**
