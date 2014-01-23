@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="location_card_get_directions">Get route</string>
-    <string name="location_card_remove_directions">Remove directions</string>
-    <string name="location_card_close">Close</string>
+    <string name="location_card_get_directions">Ruta</string>
+    <string name="location_card_remove_directions">Eliminar ruta</string>
+    <string name="location_card_close">Tancar</string>
 </resources>
