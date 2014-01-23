@@ -496,7 +496,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     private void showLocationSettings() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.location_disabled_title);
         builder.setMessage(R.string.location_disabled_message);
         builder.setPositiveButton(R.string.open_location_settings,
