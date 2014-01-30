@@ -9,7 +9,6 @@
     map:cameraTargetLat="41.3958"
     map:cameraTargetLng="2.1739"
     map:cameraZoom="12"
-    map:mapType="normal"
     map:uiCompass="true"
     map:uiRotateGestures="true"
     map:uiScrollGestures="true"

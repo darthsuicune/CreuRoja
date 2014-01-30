@@ -22,6 +22,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -361,6 +362,9 @@ public class MainActivity extends ActionBarActivity implements
                     .findFragmentById(R.id.map)).getMap();
         }
         if (mGoogleMap != null) {
+            if(prefs.contains(Settings.MAP_TYPE)){
+                setMapType(prefs.getInt(Settings.MAP_TYPE, GoogleMap.MAP_TYPE_NORMAL));
+            }
             mGoogleMap.setMyLocationEnabled(true);
             mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
             if(mDirections != null){
@@ -649,6 +653,7 @@ public class MainActivity extends ActionBarActivity implements
             ((TextView) mCard.findViewById(R.id.location_card_name)).setText(mLocation.mName);
             ((TextView) mCard.findViewById(R.id.location_card_address)).setText(mLocation.mAddress);
             ((TextView) mCard.findViewById(R.id.location_card_other)).setText(mLocation.mDetails);
+            ((TextView) mCard.findViewById(R.id.location_card_other)).setAutoLinkMask(Linkify.PHONE_NUMBERS);
             mCard.findViewById(R.id.location_card_get_directions).setOnClickListener(
                     new View.OnClickListener() {
                         @Override
