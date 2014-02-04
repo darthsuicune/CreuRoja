@@ -362,6 +362,7 @@ public class MainActivity extends ActionBarActivity implements
                     .findFragmentById(R.id.map)).getMap();
         }
         if (mGoogleMap != null) {
+            mGoogleMap.clear();
             if(prefs.contains(Settings.MAP_TYPE)){
                 setMapType(prefs.getInt(Settings.MAP_TYPE, GoogleMap.MAP_TYPE_NORMAL));
             }
