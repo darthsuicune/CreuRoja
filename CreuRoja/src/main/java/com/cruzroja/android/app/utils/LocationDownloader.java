@@ -2,6 +2,7 @@ package com.cruzroja.android.app.utils;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+
 import com.cruzroja.android.app.Location;
 import com.cruzroja.android.database.CreuRojaContract;
 
@@ -22,19 +23,6 @@ public class LocationDownloader implements Runnable {
         mAccessToken = accessToken;
         mLastUpdateTime = lastUpdateTime;
         mResolver = cr;
-    }
-
-    @Override
-    public void run() {
-        try{
-        List<Location> locationList = new ConnectionClient().
-                requestUpdates(mAccessToken, mLastUpdateTime);
-        //TODO: implement something useful instead of this piece of crap
-        saveLocations(mResolver, locationList);
-        } catch (IOException e) {
-            //In case problems during the connection arise, just leave a log.
-            e.printStackTrace();
-        }
     }
 
     public static void saveLocations(ContentResolver cr, List<Location> locationList) {
@@ -63,9 +51,22 @@ public class LocationDownloader implements Runnable {
                 cr.update(CreuRojaContract.Locations.CONTENT_LOCATIONS, value, where, whereArgs);
             }
         }
-        if(insertValues.size() > 0){
+        if (insertValues.size() > 0) {
             cr.bulkInsert(CreuRojaContract.Locations.CONTENT_LOCATIONS,
                     insertValues.toArray(new ContentValues[insertValues.size()]));
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            List<Location> locationList = new ConnectionClient().
+                    requestUpdates(mAccessToken, mLastUpdateTime);
+            //TODO: implement something useful instead of this piece of crap
+            saveLocations(mResolver, locationList);
+        } catch (IOException e) {
+            //In case problems during the connection arise, just leave a log.
+            e.printStackTrace();
         }
     }
 }

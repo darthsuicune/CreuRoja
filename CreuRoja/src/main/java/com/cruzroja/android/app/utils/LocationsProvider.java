@@ -23,7 +23,7 @@ import java.util.List;
  */
 public class LocationsProvider {
     public static List<Location> getLocationList(HttpResponse response) {
-        List<Location> locationList = null;
+        List<Location> locationList = new ArrayList<>();
         BufferedReader reader;
         StringBuilder builder = new StringBuilder();
         try {
