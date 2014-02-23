@@ -22,17 +22,20 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
-import android.text.util.Linkify;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.*;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.cruzroja.android.R;
 import com.cruzroja.android.app.Location;
 import com.cruzroja.android.app.Settings;
 import com.cruzroja.android.app.loaders.DirectionsLoader;
-import com.cruzroja.android.app.utils.LocationDownloader;
 import com.cruzroja.android.app.utils.ConnectionClient;
+import com.cruzroja.android.app.utils.LocationDownloader;
 import com.cruzroja.android.app.utils.LocationsProvider;
 import com.cruzroja.android.database.CreuRojaContract;
 import com.google.android.gms.common.ConnectionResult;
@@ -539,7 +542,9 @@ public class MainActivity extends ActionBarActivity implements
     private void createMarkers(Cursor locations){
         List<Location> locationList = LocationsProvider.getLocationList(locations);
         for (Location location : locationList) {
-            mMarkerLocationMap.put(mGoogleMap.addMarker(location.getMarker()), location);
+            if(!mMarkerLocationMap.containsValue(location)){
+                mMarkerLocationMap.put(mGoogleMap.addMarker(location.getMarker()), location);
+            }
         }
         mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
     }
@@ -654,7 +659,6 @@ public class MainActivity extends ActionBarActivity implements
             ((TextView) mCard.findViewById(R.id.location_card_name)).setText(mLocation.mName);
             ((TextView) mCard.findViewById(R.id.location_card_address)).setText(mLocation.mAddress);
             ((TextView) mCard.findViewById(R.id.location_card_other)).setText(mLocation.mDetails);
-            ((TextView) mCard.findViewById(R.id.location_card_other)).setAutoLinkMask(Linkify.PHONE_NUMBERS);
             mCard.findViewById(R.id.location_card_get_directions).setOnClickListener(
                     new View.OnClickListener() {
                         @Override
