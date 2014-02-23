@@ -666,14 +666,18 @@ public class MainActivity extends ActionBarActivity implements
                             if (ConnectionClient.isConnected(MainActivity.this) &&
                                     mLocationClient != null && mLocationClient.isConnected()) {
                                 getDirections(mLocation);
+                            }
+                            /* For rewrite
+                            if(mDirections != null){
                                 switchDirectionsButton();
                             }
+                            */
                         }
                     });
         }
 
         private void switchDirectionsButton(){
-            //TODO: implement this shit.
+            //TODO: For rewrite
         }
     }
 }
