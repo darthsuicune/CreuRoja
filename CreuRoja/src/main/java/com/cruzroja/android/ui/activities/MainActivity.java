@@ -544,6 +544,9 @@ public class MainActivity extends ActionBarActivity implements
         for (Location location : locationList) {
             if(!mMarkerLocationMap.containsValue(location)){
                 mMarkerLocationMap.put(mGoogleMap.addMarker(location.getMarker()), location);
+            } else {
+                mMarkerLocationMap.remove(location);
+                mMarkerLocationMap.put(mGoogleMap.addMarker(location.getMarker()), location);
             }
         }
         mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
@@ -676,8 +679,8 @@ public class MainActivity extends ActionBarActivity implements
                     });
         }
 
-        private void switchDirectionsButton(){
-            //TODO: For rewrite
-        }
+        //TODO: For rewrite
+//        private void switchDirectionsButton(){
+//        }
     }
 }

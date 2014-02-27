@@ -69,6 +69,14 @@ public class Location {
         mExpireDate = cursor.getLong(cursor.getColumnIndex(CreuRojaContract.Locations.EXPIRE_DATE));
     }
 
+    @Override
+    public boolean equals(Object location){
+        Location loc = (Location) location;
+        return ((Double.compare(loc.mLatitude, this.mLatitude) == 0)
+                && (Double.compare(loc.mLongitude, this.mLongitude) == 0));
+
+    }
+
     public LatLng getPosition() {
         return new LatLng(mLatitude, mLongitude);
     }
