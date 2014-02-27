@@ -418,6 +418,31 @@ public class MainActivity extends ActionBarActivity implements
         }
     }
 
+    private void createMarkers(Cursor locations) {
+        List<Location> locationList = LocationsProvider.getLocationList(locations);
+        for (Location location : locationList) {
+            Marker marker = mGoogleMap.addMarker(location.getMarker());
+            if (!mMarkerLocationMap.containsValue(location)) {
+                mMarkerLocationMap.put(marker, location);
+            } else {
+                findAndRemoveMarker(location);
+                mMarkerLocationMap.put(marker, location);
+            }
+            marker.setVisible(location.shouldBeShown(mFilter, prefs));
+        }
+        mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
+    }
+
+    private void findAndRemoveMarker(Location location){
+        for(Marker marker : mMarkerLocationMap.keySet()){
+            if(mMarkerLocationMap.get(marker).equals(location)){
+                marker.remove();
+                mMarkerLocationMap.remove(marker);
+            }
+        }
+
+    }
+
     private void drawMarkers() {
         if (mGoogleMap == null || mMarkerLocationMap == null) {
             return;
@@ -539,19 +564,6 @@ public class MainActivity extends ActionBarActivity implements
         }
     }
 
-    private void createMarkers(Cursor locations){
-        List<Location> locationList = LocationsProvider.getLocationList(locations);
-        for (Location location : locationList) {
-            if(!mMarkerLocationMap.containsValue(location)){
-                mMarkerLocationMap.put(mGoogleMap.addMarker(location.getMarker()), location);
-            } else {
-                mMarkerLocationMap.remove(location);
-                mMarkerLocationMap.put(mGoogleMap.addMarker(location.getMarker()), location);
-            }
-        }
-        mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
-    }
-
     private class LocationsLoaderHelper implements
             LoaderManager.LoaderCallbacks<Cursor> {
         @Override
@@ -575,7 +587,6 @@ public class MainActivity extends ActionBarActivity implements
             switch(loader.getId()){
                 case LOADER_SHOW_LOCATIONS:
                     createMarkers(locations);
-                    drawMarkers();
                     break;
                 default:
                     break;
