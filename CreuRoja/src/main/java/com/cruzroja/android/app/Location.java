@@ -5,12 +5,15 @@ import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.text.TextUtils;
+
 import com.cruzroja.android.R;
 import com.cruzroja.android.app.utils.ConnectionClient;
 import com.cruzroja.android.database.CreuRojaContract;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -30,6 +33,7 @@ public class Location {
     public final String mDetails;
     public final long mLastModified;
     public final long mExpireDate;
+    public Marker mMarker;
 
     public Location(double latitude, double longitude, String name, String type, String address,
                     String details, long lastModified, long expireDate) {
@@ -74,7 +78,6 @@ public class Location {
         Location loc = (Location) location;
         return ((Double.compare(loc.mLatitude, this.mLatitude) == 0)
                 && (Double.compare(loc.mLongitude, this.mLongitude) == 0));
-
     }
 
     public LatLng getPosition() {

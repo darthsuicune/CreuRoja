@@ -89,11 +89,11 @@ public class MainActivity extends ActionBarActivity implements
             showLogin();
         }
         mLocationClient = new LocationClient(getApplicationContext(), this, this);
-        if(savedInstanceState != null && savedInstanceState.containsKey(POLYLINE)){
+        if (savedInstanceState != null && savedInstanceState.containsKey(POLYLINE)) {
             //Retrieve the codified polyline from it
             mDirections = new ArrayList<>();
             double[] array = savedInstanceState.getDoubleArray(POLYLINE);
-            for(int i = 0; i < array.length; i++){
+            for (int i = 0; i < array.length; i++) {
                 mDirections.add(new LatLng(array[i++], array[i]));
             }
         }
@@ -121,7 +121,7 @@ public class MainActivity extends ActionBarActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         //Codify an array with the polyline points
-        if(mDirections != null){
+        if (mDirections != null) {
             double[] polyline = new double[mDirections.size() * 2];
             int i = 0;
             for (LatLng latLng : mDirections) {
@@ -366,12 +366,12 @@ public class MainActivity extends ActionBarActivity implements
         }
         if (mGoogleMap != null) {
             mGoogleMap.clear();
-            if(prefs.contains(Settings.MAP_TYPE)){
+            if (prefs.contains(Settings.MAP_TYPE)) {
                 setMapType(prefs.getInt(Settings.MAP_TYPE, GoogleMap.MAP_TYPE_NORMAL));
             }
             mGoogleMap.setMyLocationEnabled(true);
             mGoogleMap.getUiSettings().setMyLocationButtonEnabled(false);
-            if(mDirections != null){
+            if (mDirections != null) {
                 drawDirections(mDirections);
             }
         }
@@ -422,25 +422,17 @@ public class MainActivity extends ActionBarActivity implements
         List<Location> locationList = LocationsProvider.getLocationList(locations);
         for (Location location : locationList) {
             Marker marker = mGoogleMap.addMarker(location.getMarker());
-            if (!mMarkerLocationMap.containsValue(location)) {
-                mMarkerLocationMap.put(marker, location);
-            } else {
-                findAndRemoveMarker(location);
-                mMarkerLocationMap.put(marker, location);
+            if (mMarkerLocationMap.containsValue(location)) {
+                if (location.mMarker != null) {
+                    mMarkerLocationMap.remove(location.mMarker);
+                    location.mMarker.remove();
+                }
             }
+            location.mMarker = marker;
+            mMarkerLocationMap.put(marker, location);
             marker.setVisible(location.shouldBeShown(mFilter, prefs));
         }
         mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
-    }
-
-    private void findAndRemoveMarker(Location location){
-        for(Marker marker : mMarkerLocationMap.keySet()){
-            if(mMarkerLocationMap.get(marker).equals(location)){
-                marker.remove();
-                mMarkerLocationMap.remove(marker);
-            }
-        }
-
     }
 
     private void drawMarkers() {
@@ -448,12 +440,12 @@ public class MainActivity extends ActionBarActivity implements
             return;
         }
 
-        for(Marker marker : mMarkerLocationMap.keySet()){
+        for (Marker marker : mMarkerLocationMap.keySet()) {
             marker.setVisible(mMarkerLocationMap.get(marker).shouldBeShown(mFilter, prefs));
         }
     }
 
-    private void getDirections(Location location){
+    private void getDirections(Location location) {
         if (areLocationServicesEnabled()) {
             if (mLocationClient.getLastLocation() != null) {
                 Bundle args = new Bundle();
@@ -584,7 +576,7 @@ public class MainActivity extends ActionBarActivity implements
 
         @Override
         public void onLoadFinished(Loader<Cursor> loader, Cursor locations) {
-            switch(loader.getId()){
+            switch (loader.getId()) {
                 case LOADER_SHOW_LOCATIONS:
                     createMarkers(locations);
                     break;
@@ -662,14 +654,14 @@ public class MainActivity extends ActionBarActivity implements
         public final View mCard;
         public final Location mLocation;
 
-        public LocationCard(Location location){
+        public LocationCard(Location location) {
             mCard = findViewById(R.id.location_card);
             mCard.setVisibility(View.VISIBLE);
             mLocation = location;
             setUpCard();
         }
 
-        private void setUpCard(){
+        private void setUpCard() {
             ((TextView) mCard.findViewById(R.id.location_card_name)).setText(mLocation.mName);
             ((TextView) mCard.findViewById(R.id.location_card_address)).setText(mLocation.mAddress);
             ((TextView) mCard.findViewById(R.id.location_card_other)).setText(mLocation.mDetails);
