@@ -19,9 +19,3 @@ local.properties
 .classpath
 .project
 .settings
-.idea
-*.iml
-
-CreuRoja/build
-.gradle/
-*gradle*
