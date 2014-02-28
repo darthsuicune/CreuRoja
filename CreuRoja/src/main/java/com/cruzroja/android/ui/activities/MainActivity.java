@@ -419,15 +419,14 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     private void createMarkers(Cursor locations) {
+        mMarkerLocationMap = new HashMap<>();
+        mGoogleMap.clear();
         List<Location> locationList = LocationsProvider.getLocationList(locations);
         for (Location location : locationList) {
-            Marker marker = mGoogleMap.addMarker(location.getMarker());
-            if (mMarkerLocationMap.containsValue(location)) {
-                if (location.mMarker != null) {
-                    mMarkerLocationMap.remove(location.mMarker);
-                    location.mMarker.remove();
-                }
+            if(mPolyline != null){
+                drawDirections(mPolyline.getPoints());
             }
+            Marker marker = mGoogleMap.addMarker(location.getMarker());
             location.mMarker = marker;
             mMarkerLocationMap.put(marker, location);
             marker.setVisible(location.shouldBeShown(mFilter, prefs));
@@ -436,7 +435,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     private void drawMarkers() {
-        if (mGoogleMap == null || mMarkerLocationMap == null) {
+        if (mGoogleMap == null || mMarkerLocationMap == null || mMarkerLocationMap.size() == 0) {
             return;
         }
 
