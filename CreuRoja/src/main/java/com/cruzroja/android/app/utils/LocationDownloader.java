@@ -2,8 +2,10 @@ package com.cruzroja.android.app.utils;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 
 import com.cruzroja.android.app.Location;
+import com.cruzroja.android.app.Settings;
 import com.cruzroja.android.database.CreuRojaContract;
 
 import java.io.IOException;
@@ -17,18 +19,24 @@ public class LocationDownloader implements Runnable {
     private String mAccessToken;
     private long mLastUpdateTime;
     private ContentResolver mResolver;
+    private SharedPreferences mPrefs;
 
     public LocationDownloader(String accessToken, long lastUpdateTime,
-                              ContentResolver cr) {
+                              ContentResolver cr, SharedPreferences prefs) {
         mAccessToken = accessToken;
         mLastUpdateTime = lastUpdateTime;
         mResolver = cr;
+        mPrefs = prefs;
     }
 
-    public static void saveLocations(ContentResolver cr, List<Location> locationList) {
-        List<Location> currentLocations = LocationsProvider.getCurrentLocations(cr);
+    public void saveLocations(List<Location> locationList) {
+        mLastUpdateTime = mPrefs.getLong(Settings.LAST_UPDATE_TIME, 0);
+        List<Location> currentLocations = LocationsProvider.getCurrentLocations(mResolver);
         ArrayList<ContentValues> insertValues = new ArrayList<>();
         for (Location location : locationList) {
+            if(location.mLastModified > mLastUpdateTime){
+                mLastUpdateTime = location.mLastModified;
+            }
             ContentValues value = new ContentValues();
             value.put(CreuRojaContract.Locations.ADDRESS, location.mAddress);
             value.put(CreuRojaContract.Locations.DETAILS, location.mDetails);
@@ -53,16 +61,17 @@ public class LocationDownloader implements Runnable {
                 };
                 if (location.mExpireDate == 0
                         || location.mExpireDate > System.currentTimeMillis()) {
-                    cr.update(CreuRojaContract.Locations.CONTENT_LOCATIONS, value, where, whereArgs);
+                    mResolver.update(CreuRojaContract.Locations.CONTENT_LOCATIONS, value, where, whereArgs);
                 } else {
-                    cr.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, where, whereArgs);
+                    mResolver.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, where, whereArgs);
                 }
             }
         }
         if (insertValues.size() > 0) {
-            cr.bulkInsert(CreuRojaContract.Locations.CONTENT_LOCATIONS,
+            mResolver.bulkInsert(CreuRojaContract.Locations.CONTENT_LOCATIONS,
                     insertValues.toArray(new ContentValues[insertValues.size()]));
         }
+        mPrefs.edit().putLong(Settings.LAST_UPDATE_TIME, mLastUpdateTime).commit();
     }
 
     @Override
@@ -72,7 +81,7 @@ public class LocationDownloader implements Runnable {
             List<Location> locationList = new ConnectionClient().
                     requestUpdates(mAccessToken, mLastUpdateTime);
             //TODO: implement something useful instead of this piece of crap
-            saveLocations(mResolver, locationList);
+            saveLocations(locationList);
         } catch (IOException e) {
             //In case problems during the connection arise, just leave a log.
             e.printStackTrace();

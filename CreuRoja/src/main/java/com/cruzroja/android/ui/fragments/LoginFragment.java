@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -89,10 +90,10 @@ public class LoginFragment extends Fragment
     }
 
     public void loginSuccessful(LoginResponse loginResponse) {
-        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putString(Settings.ACCESS_TOKEN, loginResponse.mToken.mAccessToken).commit();
-        LocationDownloader.saveLocations(getActivity().getContentResolver(),
-                loginResponse.mLocationList);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        prefs.edit().putString(Settings.ACCESS_TOKEN, loginResponse.mToken.mAccessToken).commit();
+        new LocationDownloader(loginResponse.mToken.mAccessToken,0,
+                getActivity().getContentResolver(), prefs).saveLocations(loginResponse.mLocationList);
         getActivity().setResult(Activity.RESULT_OK);
         showProgress(false);
         getActivity().finish();

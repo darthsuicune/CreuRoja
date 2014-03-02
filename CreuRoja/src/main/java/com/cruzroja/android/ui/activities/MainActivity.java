@@ -380,8 +380,8 @@ public class MainActivity extends ActionBarActivity implements
 
     private void downloadNewData() {
         new Thread(new LocationDownloader(prefs.getString(Settings.ACCESS_TOKEN, ""),
-                Settings.getLastUpdateTime(getContentResolver()),
-                getContentResolver())).start();
+                prefs.getLong(Settings.LAST_UPDATE_TIME, 0),
+                getContentResolver(), prefs)).start();
 
     }
 
