@@ -55,11 +55,7 @@ public class Location {
         mAddress = object.getString(LoginResponse.sAddress);
         mDetails = object.getString(LoginResponse.sDetails);
         mLastModified = object.getLong(LoginResponse.sLastUpdateTime);
-        if(!object.isNull(LoginResponse.sExpireDate)){
-            mExpireDate = object.getLong(LoginResponse.sExpireDate);
-        } else {
-            mExpireDate = 0;
-        }
+        mExpireDate = object.getLong(LoginResponse.sExpireDate);
     }
 
     public Location(Cursor cursor) {

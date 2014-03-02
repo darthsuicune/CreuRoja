@@ -17,25 +17,22 @@ import java.util.List;
  */
 public class LocationDownloader implements Runnable {
     private String mAccessToken;
-    private long mLastUpdateTime;
     private ContentResolver mResolver;
     private SharedPreferences mPrefs;
 
-    public LocationDownloader(String accessToken, long lastUpdateTime,
-                              ContentResolver cr, SharedPreferences prefs) {
+    public LocationDownloader(String accessToken, ContentResolver cr, SharedPreferences prefs) {
         mAccessToken = accessToken;
-        mLastUpdateTime = lastUpdateTime;
         mResolver = cr;
         mPrefs = prefs;
     }
 
     public void saveLocations(List<Location> locationList) {
-        mLastUpdateTime = mPrefs.getLong(Settings.LAST_UPDATE_TIME, 0);
+        long lastUpdateTime = mPrefs.getLong(Settings.LAST_UPDATE_TIME, 0);
         List<Location> currentLocations = LocationsProvider.getCurrentLocations(mResolver);
         ArrayList<ContentValues> insertValues = new ArrayList<>();
         for (Location location : locationList) {
-            if(location.mLastModified > mLastUpdateTime){
-                mLastUpdateTime = location.mLastModified;
+            if(location.mLastModified > lastUpdateTime){
+                lastUpdateTime = location.mLastModified;
             }
             ContentValues value = new ContentValues();
             value.put(CreuRojaContract.Locations.ADDRESS, location.mAddress);
@@ -47,12 +44,7 @@ public class LocationDownloader implements Runnable {
             value.put(CreuRojaContract.Locations.NAME, location.mName);
             value.put(CreuRojaContract.Locations.EXPIRE_DATE, location.mExpireDate);
 
-            if (!currentLocations.contains(location)) {
-                if (location.mExpireDate == 0
-                        || location.mExpireDate > System.currentTimeMillis()) {
-                    insertValues.add(value);
-                }
-            } else {
+            if (currentLocations.contains(location)) {
                 String where = CreuRojaContract.Locations.LATITUD + "=? AND " +
                         CreuRojaContract.Locations.LONGITUD + "=?";
                 String[] whereArgs = {
@@ -60,10 +52,15 @@ public class LocationDownloader implements Runnable {
                         Double.toString(location.mLongitude)
                 };
                 if (location.mExpireDate == 0
-                        || location.mExpireDate > System.currentTimeMillis()) {
+         c               || location.mExpireDate > System.currentTimeMillis()) {
                     mResolver.update(CreuRojaContract.Locations.CONTENT_LOCATIONS, value, where, whereArgs);
                 } else {
                     mResolver.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, where, whereArgs);
+                }
+            } else {
+                if (location.mExpireDate == 0
+                        || location.mExpireDate > System.currentTimeMillis()) {
+                    insertValues.add(value);
                 }
             }
         }
@@ -71,7 +68,7 @@ public class LocationDownloader implements Runnable {
             mResolver.bulkInsert(CreuRojaContract.Locations.CONTENT_LOCATIONS,
                     insertValues.toArray(new ContentValues[insertValues.size()]));
         }
-        mPrefs.edit().putLong(Settings.LAST_UPDATE_TIME, mLastUpdateTime).commit();
+        mPrefs.edit().putLong(Settings.LAST_UPDATE_TIME, lastUpdateTime).commit();
     }
 
     @Override
@@ -79,7 +76,7 @@ public class LocationDownloader implements Runnable {
         try {
             checkExpiredLocations(mResolver);
             List<Location> locationList = new ConnectionClient().
-                    requestUpdates(mAccessToken, mLastUpdateTime);
+                    requestUpdates(mAccessToken, mPrefs.getLong(Settings.LAST_UPDATE_TIME, 0));
             //TODO: implement something useful instead of this piece of crap
             saveLocations(locationList);
         } catch (IOException e) {

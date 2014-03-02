@@ -49,7 +49,11 @@ public class LocationsProvider {
         ArrayList<Location> locationList = new ArrayList<>();
         JSONArray locations = object.getJSONArray(LoginResponse.sLocations);
         for (int i = 0; i < locations.length(); i++) {
-            locationList.add(new Location(locations.getJSONObject(i)));
+            Location location = new Location(locations.getJSONObject(i));
+            if (location.mExpireDate == 0 ||
+                    location.mExpireDate > System.currentTimeMillis()) {
+                locationList.add(location);
+            }
         }
         return locationList;
     }
@@ -58,13 +62,17 @@ public class LocationsProvider {
         ArrayList<Location> locationsList = new ArrayList<Location>();
         if (cursor.moveToFirst()) {
             do {
-                locationsList.add(new Location(cursor));
+                Location location = new Location(cursor);
+                if (location.mExpireDate == 0 ||
+                        location.mExpireDate > System.currentTimeMillis()) {
+                    locationsList.add(location);
+                }
             } while (cursor.moveToNext());
         }
         return locationsList;
     }
 
-    public static List<Location> getCurrentLocations(ContentResolver cr){
+    public static List<Location> getCurrentLocations(ContentResolver cr) {
         Uri uri = CreuRojaContract.Locations.CONTENT_LOCATIONS;
         return getLocationList(cr.query(uri, null, null, null, null));
     }

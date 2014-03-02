@@ -92,7 +92,7 @@ public class LoginFragment extends Fragment
     public void loginSuccessful(LoginResponse loginResponse) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         prefs.edit().putString(Settings.ACCESS_TOKEN, loginResponse.mToken.mAccessToken).commit();
-        new LocationDownloader(loginResponse.mToken.mAccessToken,0,
+        new LocationDownloader(loginResponse.mToken.mAccessToken,
                 getActivity().getContentResolver(), prefs).saveLocations(loginResponse.mLocationList);
         getActivity().setResult(Activity.RESULT_OK);
         showProgress(false);

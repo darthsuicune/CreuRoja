@@ -380,7 +380,6 @@ public class MainActivity extends ActionBarActivity implements
 
     private void downloadNewData() {
         new Thread(new LocationDownloader(prefs.getString(Settings.ACCESS_TOKEN, ""),
-                prefs.getLong(Settings.LAST_UPDATE_TIME, 0),
                 getContentResolver(), prefs)).start();
 
     }
@@ -422,13 +421,16 @@ public class MainActivity extends ActionBarActivity implements
         mGoogleMap.clear();
         List<Location> locationList = LocationsProvider.getLocationList(locations);
         for (Location location : locationList) {
-            if(mPolyline != null){
-                drawDirections(mPolyline.getPoints());
+            if (location.mExpireDate == 0 ||
+                    location.mExpireDate > System.currentTimeMillis()) {
+                if (mPolyline != null) {
+                    drawDirections(mPolyline.getPoints());
+                }
+                Marker marker = mGoogleMap.addMarker(location.getMarker());
+                location.mMarker = marker;
+                mMarkerLocationMap.put(marker, location);
+                marker.setVisible(location.shouldBeShown(mFilter, prefs));
             }
-            Marker marker = mGoogleMap.addMarker(location.getMarker());
-            location.mMarker = marker;
-            mMarkerLocationMap.put(marker, location);
-            marker.setVisible(location.shouldBeShown(mFilter, prefs));
         }
         mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
     }
