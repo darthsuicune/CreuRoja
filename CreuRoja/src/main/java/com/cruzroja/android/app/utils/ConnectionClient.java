@@ -5,12 +5,10 @@ import android.net.ConnectivityManager;
 
 import com.cruzroja.android.app.Location;
 import com.cruzroja.android.app.LoginResponse;
-import com.cruzroja.android.app.Settings;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -27,7 +25,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +32,7 @@ import java.util.List;
  * Created by lapuente on 29.10.13.
  */
 public class ConnectionClient {
-    private static final String SERVER_URL = "http://kls.servequake.com:808";
+    private static final String SERVER_URL = "http://r0uzic.net/voluntarios/";
     private static final String QUERY = "/webservice.php?q=";
     private static final String LOGIN_REQUEST = "request_access";
     private static final String LOCATIONS_REQUEST = "get_locations";
