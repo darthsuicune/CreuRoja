@@ -35,6 +35,7 @@ public class LocationsProvider {
             }
 
             locationList = getLocationList(new JSONObject(builder.toString()));
+            Log.d("RESPONSE", builder.toString());
         } catch (IOException e) {
             //Nothing to do, still return the empty list
         } catch (JSONException e) {
@@ -66,21 +67,5 @@ public class LocationsProvider {
     public static List<Location> getCurrentLocations(ContentResolver cr){
         Uri uri = CreuRojaContract.Locations.CONTENT_LOCATIONS;
         return getLocationList(cr.query(uri, null, null, null, null));
-    }
-
-    public static void checkExpiredLocations(final ContentResolver cr) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String where = CreuRojaContract.Locations.EXPIRE_DATE + "<? AND "
-                        + CreuRojaContract.Locations.EXPIRE_DATE + ">0";
-                String[] whereArgs = {
-                        Long.toString(System.currentTimeMillis())
-                };
-                cr.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS,
-                    where, whereArgs);
-
-            }
-        }).start();
     }
 }

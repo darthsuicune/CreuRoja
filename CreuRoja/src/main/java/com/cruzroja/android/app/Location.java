@@ -125,17 +125,6 @@ public class Location {
         }
     }
 
-    public boolean isInList(List<Location> locationList) {
-        boolean isIn = false;
-        for (Location location : locationList) {
-            if (Double.compare(location.mLatitude, this.mLatitude) == 0
-                    && Double.compare(location.mLongitude,this.mLongitude) == 0){
-                isIn = true;
-            }
-        }
-        return isIn;
-    }
-
     private boolean matchesFilter(String filter) {
         if (TextUtils.isEmpty(filter)) {
             return true;

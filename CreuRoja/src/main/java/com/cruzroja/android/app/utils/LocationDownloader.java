@@ -39,8 +39,11 @@ public class LocationDownloader implements Runnable {
             value.put(CreuRojaContract.Locations.NAME, location.mName);
             value.put(CreuRojaContract.Locations.EXPIRE_DATE, location.mExpireDate);
 
-            if (!location.isInList(currentLocations)) {
-                insertValues.add(value);
+            if (!currentLocations.contains(location)) {
+                if (location.mExpireDate == 0
+                        || location.mExpireDate > System.currentTimeMillis()) {
+                    insertValues.add(value);
+                }
             } else {
                 String where = CreuRojaContract.Locations.LATITUD + "=? AND " +
                         CreuRojaContract.Locations.LONGITUD + "=?";
@@ -48,7 +51,12 @@ public class LocationDownloader implements Runnable {
                         Double.toString(location.mLatitude),
                         Double.toString(location.mLongitude)
                 };
-                cr.update(CreuRojaContract.Locations.CONTENT_LOCATIONS, value, where, whereArgs);
+                if (location.mExpireDate == 0
+                        || location.mExpireDate > System.currentTimeMillis()) {
+                    cr.update(CreuRojaContract.Locations.CONTENT_LOCATIONS, value, where, whereArgs);
+                } else {
+                    cr.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, where, whereArgs);
+                }
             }
         }
         if (insertValues.size() > 0) {
@@ -60,6 +68,7 @@ public class LocationDownloader implements Runnable {
     @Override
     public void run() {
         try {
+            checkExpiredLocations(mResolver);
             List<Location> locationList = new ConnectionClient().
                     requestUpdates(mAccessToken, mLastUpdateTime);
             //TODO: implement something useful instead of this piece of crap
@@ -68,5 +77,20 @@ public class LocationDownloader implements Runnable {
             //In case problems during the connection arise, just leave a log.
             e.printStackTrace();
         }
+    }
+
+    public void checkExpiredLocations(final ContentResolver cr) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String where = CreuRojaContract.Locations.EXPIRE_DATE + "<? AND "
+                        + CreuRojaContract.Locations.EXPIRE_DATE + ">0";
+                String[] whereArgs = {
+                        Long.toString(System.currentTimeMillis())
+                };
+                cr.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS,
+                        where, whereArgs);
+            }
+        }).start();
     }
 }

@@ -82,7 +82,6 @@ public class MainActivity extends ActionBarActivity implements
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         if (prefs.contains(Settings.ACCESS_TOKEN)) {
-            LocationsProvider.checkExpiredLocations(getContentResolver());
             showMap();
             downloadNewData();
         } else {
