@@ -3,10 +3,11 @@ package com.cruzroja.android.app.utils;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
+
 import com.cruzroja.android.app.Location;
 import com.cruzroja.android.app.LoginResponse;
 import com.cruzroja.android.database.CreuRojaContract;
+
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,11 +36,10 @@ public class LocationsProvider {
             }
 
             locationList = getLocationList(new JSONObject(builder.toString()));
-            Log.d("RESPONSE", builder.toString());
         } catch (IOException e) {
             //Nothing to do, still return the empty list
         } catch (JSONException e) {
-            Log.d("RESPONSE", builder.toString());
+            //Nothing to do, still return the empty list
         }
 
         return locationList;
