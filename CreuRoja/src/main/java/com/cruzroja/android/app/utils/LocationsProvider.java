@@ -50,10 +50,7 @@ public class LocationsProvider {
         JSONArray locations = object.getJSONArray(LoginResponse.sLocations);
         for (int i = 0; i < locations.length(); i++) {
             Location location = new Location(locations.getJSONObject(i));
-            if (location.mExpireDate == 0 ||
-                    location.mExpireDate > System.currentTimeMillis()) {
-                locationList.add(location);
-            }
+            locationList.add(location);
         }
         return locationList;
     }
@@ -63,10 +60,7 @@ public class LocationsProvider {
         if (cursor.moveToFirst()) {
             do {
                 Location location = new Location(cursor);
-                if (location.mExpireDate == 0 ||
-                        location.mExpireDate > System.currentTimeMillis()) {
-                    locationsList.add(location);
-                }
+                locationsList.add(location);
             } while (cursor.moveToNext());
         }
         return locationsList;
