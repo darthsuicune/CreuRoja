@@ -2,7 +2,7 @@
         <string name="title_activity_login">Iniciar sesión</string>
 
     <!-- Strings related to login -->
-    <string name="login_username_hint">Usuario</string>
+    <string name="login_email_hint">Usuario</string>
     <string name="login_password_hint">Contraseña</string>
     <string name="login_sign_in">Iniciar sesión</string>
     <string name="login_logo_description">Logo CR</string>

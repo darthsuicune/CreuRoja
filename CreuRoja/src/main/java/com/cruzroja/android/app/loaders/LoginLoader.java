@@ -18,11 +18,11 @@ public class LoginLoader extends AsyncTaskLoader<LoginResponse> {
     public static final String PASSWORD = "Password";
 
     private ConnectionClient mClient;
-    private String mUsername, mPassword;
+    private String mEmail, mPassword;
 
     public LoginLoader(Context context, Bundle args) {
         super(context);
-        mUsername = args.getString(EMAIL);
+        mEmail = args.getString(EMAIL);
         mPassword = args.getString(PASSWORD);
     }
 
@@ -39,7 +39,7 @@ public class LoginLoader extends AsyncTaskLoader<LoginResponse> {
         mClient = new ConnectionClient();
         LoginResponse response = null;
         try{
-            response = mClient.doLogin(mUsername, mPassword);
+            response = mClient.doLogin(mEmail, mPassword);
         } catch(IOException e){
             response = new LoginResponse(R.string.error_connecting);
         }
