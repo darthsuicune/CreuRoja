@@ -37,7 +37,7 @@ import java.security.NoSuchAlgorithmException;
 public class LoginFragment extends Fragment
         implements LoaderManager.LoaderCallbacks<LoginResponse> {
     private static final int LOADER_LOGIN = 1;
-    private EditText mUsernameView, mPasswordView;
+    private EditText mEmailView, mPasswordView;
 
     public LoginFragment() {
     }
@@ -51,7 +51,7 @@ public class LoginFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-        mUsernameView = (EditText) v.findViewById(R.id.login_username);
+        mEmailView = (EditText) v.findViewById(R.id.login_email);
         mPasswordView = (EditText) v.findViewById(R.id.login_password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -74,10 +74,10 @@ public class LoginFragment extends Fragment
 
     public void attemptLogin() {
         try {
-            String username = mUsernameView.getText().toString();
+            String email = mEmailView.getText().toString();
             String password = mPasswordView.getText().toString();
             Bundle args = new Bundle();
-            args.putString(LoginLoader.USERNAME, username);
+            args.putString(LoginLoader.EMAIL, email);
             args.putString(LoginLoader.PASSWORD, HashGenerator.getSha1Hash(password));
             getLoaderManager().restartLoader(LOADER_LOGIN, args, this);
         } catch (NoSuchAlgorithmException e) {

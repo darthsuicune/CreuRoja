@@ -32,7 +32,7 @@ import java.util.List;
  * Created by lapuente on 29.10.13.
  */
 public class ConnectionClient {
-    private static final String SERVER_URL = "http://r0uzic.net/voluntarios/";
+    private static final String SERVER_URL = "http://creuroja.net";
     private static final String QUERY = "/webservice.php?q=";
     private static final String LOGIN_REQUEST = "request_access";
     private static final String LOCATIONS_REQUEST = "get_locations";
@@ -42,7 +42,7 @@ public class ConnectionClient {
     public static final String DESTINATION_URL = "destination=";
     public static final String SENSOR_URL = "sensor=";
 
-    public static final String USER_VAR = "username";
+    public static final String EMAIL_VAR = "email";
     public static final String PASS_VAR = "password";
     public static final String ACCESS_TOKEN_VAR = "access_token";
     public static final String LAST_UPDATE_VAR = "last_update";
@@ -56,9 +56,9 @@ public class ConnectionClient {
     public static final String sOverviewPolyline = "overview_polyline";
     public static final String sPoints = "points";
 
-    public LoginResponse doLogin(String username, String password) throws IOException {
+    public LoginResponse doLogin(String email, String password) throws IOException {
         HttpResponse response = executeRequest(createHttpClient(),
-                getLoginRequest(username, password));
+                getLoginRequest(email, password));
 
         return new LoginResponse(response);
     }
@@ -86,9 +86,9 @@ public class ConnectionClient {
         return new DefaultHttpClient();
     }
 
-    private HttpUriRequest getLoginRequest(String username, String password) {
+    private HttpUriRequest getLoginRequest(String email, String password) {
         List<NameValuePair> nameValuePairs = new ArrayList<>();
-        nameValuePairs.add(new BasicNameValuePair(USER_VAR, username));
+        nameValuePairs.add(new BasicNameValuePair(EMAIL_VAR, email));
         nameValuePairs.add(new BasicNameValuePair(PASS_VAR, password));
         return buildRequest(LOGIN_REQUEST, nameValuePairs);
     }
