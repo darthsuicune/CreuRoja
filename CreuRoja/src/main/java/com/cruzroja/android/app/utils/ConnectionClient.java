@@ -32,7 +32,7 @@ import java.util.List;
  * Created by lapuente on 29.10.13.
  */
 public class ConnectionClient {
-    private static final String SERVER_URL = "http://r0uzic.net/voluntarios/";
+    private static final String SERVER_URL = "http://creuroja.net";
     private static final String QUERY = "/webservice.php?q=";
     private static final String LOGIN_REQUEST = "request_access";
     private static final String LOCATIONS_REQUEST = "get_locations";

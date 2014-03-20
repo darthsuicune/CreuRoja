@@ -52,7 +52,7 @@ public class LocationDownloader implements Runnable {
                         Double.toString(location.mLongitude)
                 };
                 if (location.mExpireDate == 0
-         c               || location.mExpireDate > System.currentTimeMillis()) {
+                        || location.mExpireDate > System.currentTimeMillis()) {
                     mResolver.update(CreuRojaContract.Locations.CONTENT_LOCATIONS, value, where, whereArgs);
                 } else {
                     mResolver.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, where, whereArgs);
