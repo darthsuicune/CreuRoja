@@ -1,5 +1,10 @@
 package com.cruzroja.android.app;
 
+import android.content.ContentResolver;
+import android.content.SharedPreferences;
+
+import com.cruzroja.android.database.CreuRojaContract;
+
 /**
  * Created by lapuente on 29.10.13.
  */
@@ -17,4 +22,9 @@ public class Settings {
     public static final String SHOW_NOSTRUM = "nostrum";
     public static final String SHOW_SOCIAL = "social";
     public static final String SHOW_TERRESTRE = "terrestre";
+
+    public static void removeData(ContentResolver cr, SharedPreferences prefs) {
+        cr.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, null, null);
+        prefs.edit().clear().commit();
+    }
 }

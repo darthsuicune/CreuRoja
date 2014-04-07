@@ -22,6 +22,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cruzroja.android.R;
+import com.cruzroja.android.app.AccessResponse;
 import com.cruzroja.android.app.Location;
 import com.cruzroja.android.app.Settings;
 import com.cruzroja.android.app.loaders.DirectionsLoader;
@@ -50,6 +52,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -83,6 +86,7 @@ public class MainActivity extends ActionBarActivity implements
 
         if (prefs.contains(Settings.ACCESS_TOKEN)) {
             showMap();
+            validateLogin();
             downloadNewData();
         } else {
             showLogin();
@@ -304,6 +308,31 @@ public class MainActivity extends ActionBarActivity implements
 
         setActionBar();
         prepareViews();
+    }
+
+    private void validateLogin() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (ConnectionClient.isConnected(getApplicationContext())) {
+                    try {
+                        AccessResponse response = new ConnectionClient().validateLogin(
+                                prefs.getString(Settings.ACCESS_TOKEN, ""));
+                        if(!response.isValid){
+                            removeData();
+                        }
+                    } catch (IOException e) {
+                        Log.e("LoginValidation", getString(R.string.error_invalid_user));
+                    }
+                }
+            }
+        });
+    }
+
+    private void removeData() {
+        Settings.removeData(getContentResolver(), prefs);
+        showLogin();
+        Toast.makeText(getApplicationContext(), R.string.error_user_removed, Toast.LENGTH_LONG).show();
     }
 
     private void showLogin() {
@@ -530,7 +559,8 @@ public class MainActivity extends ActionBarActivity implements
                         startActivity(new Intent(
                                 android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
-                });
+                }
+        );
         builder.setNegativeButton(R.string.cancel, null);
         builder.create().show();
     }
@@ -679,7 +709,8 @@ public class MainActivity extends ActionBarActivity implements
                             }
                             */
                         }
-                    });
+                    }
+            );
         }
 
         //TODO: For rewrite

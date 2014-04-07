@@ -8,4 +8,5 @@
     <string name="error_invalid_password">Contrasenya incorrecta</string>
     <string name="error_invalid_user">Usuari incorrecte</string>
     <string name="error_field_required">Aquest camp és obligatori</string>
+    <string name="error_user_removed">"El usuario ha sido invalidado por el administrador. Si cree que esto es un error, por favor contacte con su oficina mas cercana."</string>
 </resources>

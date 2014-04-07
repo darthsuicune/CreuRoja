@@ -3,6 +3,7 @@ package com.cruzroja.android.app.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
+import com.cruzroja.android.app.AccessResponse;
 import com.cruzroja.android.app.Location;
 import com.cruzroja.android.app.LoginResponse;
 import com.google.android.gms.maps.model.LatLng;
@@ -35,6 +36,7 @@ public class ConnectionClient {
     private static final String SERVER_URL = "http://kls.servequake.com:808";
     private static final String QUERY = "/webservice.php?q=";
     private static final String LOGIN_REQUEST = "request_access";
+    private static final String VALIDATE_REQUEST = "validate_access";
     private static final String LOCATIONS_REQUEST = "get_locations";
     public static final String DIRECTIONS_API_BASE_URL =
             "https://maps.googleapis.com/maps/api/directions/json?region=es&";
@@ -61,6 +63,13 @@ public class ConnectionClient {
                 getLoginRequest(email, password));
 
         return new LoginResponse(response);
+    }
+
+    public AccessResponse validateLogin(String accessToken) throws IOException {
+        HttpResponse response = executeRequest(createHttpClient(),
+                getValidationRequest(accessToken));
+
+        return new AccessResponse(response);
     }
 
     public List<Location> requestUpdates(String accessToken, long lastUpdate) throws IOException {
@@ -90,6 +99,12 @@ public class ConnectionClient {
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(EMAIL_VAR, email));
         nameValuePairs.add(new BasicNameValuePair(PASS_VAR, password));
+        return buildRequest(LOGIN_REQUEST, nameValuePairs);
+    }
+
+    private HttpUriRequest getValidationRequest(String accessToken) {
+        List<NameValuePair> nameValuePairs = new ArrayList<>();
+        nameValuePairs.add(new BasicNameValuePair(ACCESS_TOKEN_VAR, accessToken));
         return buildRequest(LOGIN_REQUEST, nameValuePairs);
     }
 
