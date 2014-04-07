@@ -16,13 +16,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,6 +36,7 @@ import com.cruzroja.android.app.AccessResponse;
 import com.cruzroja.android.app.Location;
 import com.cruzroja.android.app.Settings;
 import com.cruzroja.android.app.loaders.DirectionsLoader;
+import com.cruzroja.android.app.loaders.LoginValidationLoader;
 import com.cruzroja.android.app.utils.ConnectionClient;
 import com.cruzroja.android.app.utils.LocationDownloader;
 import com.cruzroja.android.app.utils.LocationsProvider;
@@ -52,7 +53,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,6 +65,7 @@ public class MainActivity extends ActionBarActivity implements
     private static final int ACTIVITY_LOGIN = 1;
     private static final int LOADER_SHOW_LOCATIONS = 1;
     private static final int LOADER_GET_DIRECTIONS = 2;
+    private static final int LOADER_VALIDATE_LOGIN = 3;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private final static String POLYLINE = "polyline";
     public boolean isMarkerPanelShowing = false;
@@ -86,8 +87,11 @@ public class MainActivity extends ActionBarActivity implements
 
         if (prefs.contains(Settings.ACCESS_TOKEN)) {
             showMap();
-            validateLogin();
-            downloadNewData();
+            if (ConnectionClient.isConnected(getApplicationContext())) {
+                getSupportLoaderManager().restartLoader(LOADER_VALIDATE_LOGIN, null,
+                        new LoginValidatorLoaderHelper());
+                downloadNewData();
+            }
         } else {
             showLogin();
         }
@@ -308,36 +312,6 @@ public class MainActivity extends ActionBarActivity implements
 
         setActionBar();
         prepareViews();
-    }
-
-    private void validateLogin() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (ConnectionClient.isConnected(getApplicationContext())) {
-                    try {
-                        AccessResponse response = new ConnectionClient().validateLogin(
-                                prefs.getString(Settings.ACCESS_TOKEN, ""));
-
-                        if (response != null && !response.isValid) {
-                            removeData();
-                        }
-                    } catch (IOException e) {
-                        Log.e("LoginValidation", getString(R.string.error_invalid_response));
-                    }
-                }
-            }
-        }).start();
-
-        if (!prefs.contains(Settings.ACCESS_TOKEN)) {
-            Toast.makeText(getApplicationContext(), R.string.error_user_removed, Toast.LENGTH_LONG).show();
-            finish();
-        }
-    }
-
-    private void removeData() {
-        Settings.removeData(getContentResolver(), prefs);
-        showLogin();
     }
 
     private void showLogin() {
@@ -669,6 +643,44 @@ public class MainActivity extends ActionBarActivity implements
 
         @Override
         public void onLoaderReset(Loader<List<LatLng>> loader) {
+        }
+    }
+
+    private class LoginValidatorLoaderHelper
+            implements LoaderManager.LoaderCallbacks<AccessResponse> {
+
+        @Override
+        public Loader<AccessResponse> onCreateLoader(int id, Bundle args) {
+            AsyncTaskLoader<AccessResponse> loader = null;
+            switch (id) {
+                case LOADER_VALIDATE_LOGIN:
+                    loader = new LoginValidationLoader(MainActivity.this);
+                    break;
+                default:
+                    break;
+            }
+            return loader;
+        }
+
+        @Override
+        public void onLoadFinished(Loader<AccessResponse> loader, AccessResponse response) {
+            switch (loader.getId()) {
+                case LOADER_VALIDATE_LOGIN:
+                    if (response != null && !response.isValid) {
+                        Settings.removeData(getApplicationContext().getContentResolver(), prefs);
+                        Toast.makeText(getApplicationContext(), R.string.error_user_removed,
+                                Toast.LENGTH_LONG).show();
+                        showLogin();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<AccessResponse> accessResponseLoader) {
+
         }
     }
 
