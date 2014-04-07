@@ -318,21 +318,26 @@ public class MainActivity extends ActionBarActivity implements
                     try {
                         AccessResponse response = new ConnectionClient().validateLogin(
                                 prefs.getString(Settings.ACCESS_TOKEN, ""));
-                        if(!response.isValid){
+
+                        if (response != null && !response.isValid) {
                             removeData();
                         }
                     } catch (IOException e) {
-                        Log.e("LoginValidation", getString(R.string.error_invalid_user));
+                        Log.e("LoginValidation", getString(R.string.error_invalid_response));
                     }
                 }
             }
-        });
+        }).start();
+
+        if (!prefs.contains(Settings.ACCESS_TOKEN)) {
+            Toast.makeText(getApplicationContext(), R.string.error_user_removed, Toast.LENGTH_LONG).show();
+            finish();
+        }
     }
 
     private void removeData() {
         Settings.removeData(getContentResolver(), prefs);
         showLogin();
-        Toast.makeText(getApplicationContext(), R.string.error_user_removed, Toast.LENGTH_LONG).show();
     }
 
     private void showLogin() {

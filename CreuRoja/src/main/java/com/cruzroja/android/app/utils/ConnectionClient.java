@@ -105,7 +105,7 @@ public class ConnectionClient {
     private HttpUriRequest getValidationRequest(String accessToken) {
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(ACCESS_TOKEN_VAR, accessToken));
-        return buildRequest(LOGIN_REQUEST, nameValuePairs);
+        return buildRequest(VALIDATE_REQUEST, nameValuePairs);
     }
 
     private HttpUriRequest getLocationsRequest(String accessToken, long lastUpdate) {
