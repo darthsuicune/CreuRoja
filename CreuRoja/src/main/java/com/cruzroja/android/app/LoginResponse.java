@@ -68,6 +68,7 @@ public class LoginResponse {
                 mErrorMessage = R.string.error_invalid_password;
             }
         } catch (JSONException e) {
+			e.printStackTrace();
             mToken = null;
             mLocationList = null;
             mErrorMessage = R.string.error_invalid_response;
