@@ -31,20 +31,20 @@ public class Location {
     public final Type mType;
     public final String mAddress;
     public final String mDetails;
-    public final long mLastModified;
+    public final String mLastModified;
     public final long mExpireDate;
     public Marker mMarker;
 
     public Location(double latitude, double longitude, String name, String type, String address,
-                    String details, long lastModified, long expireDate) {
+                    String details, String lastModified, long expireDate) {
         mLatitude = latitude;
         mLongitude = longitude;
         mName = name;
         mType = Type.getType(type);
         mAddress = address;
         mDetails = details;
-        mLastModified = lastModified;
-        mExpireDate = expireDate;
+		mLastModified = lastModified;
+		mExpireDate = expireDate;
     }
 
     public Location(JSONObject object) throws JSONException {
@@ -54,8 +54,12 @@ public class Location {
         mType = Type.getType(object.getString(LoginResponse.sType));
         mAddress = object.getString(LoginResponse.sAddress);
         mDetails = object.getString(LoginResponse.sDetails);
-        mLastModified = object.getLong(LoginResponse.sLastUpdateTime);
-        mExpireDate = object.getLong(LoginResponse.sExpireDate);
+        mLastModified = object.getString(LoginResponse.sLastUpdateTime);
+		if(object.has(LoginResponse.sExpireDate)){
+			mExpireDate = object.getLong(LoginResponse.sExpireDate);
+		} else {
+			mExpireDate = 0;
+		}
     }
 
     public Location(Cursor cursor) {
@@ -65,7 +69,7 @@ public class Location {
         mType = Type.getType(cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ICON)));
         mAddress = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ADDRESS));
         mDetails = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.DETAILS));
-        mLastModified = cursor.getLong(cursor.getColumnIndex(CreuRojaContract.Locations.LAST_MODIFIED));
+        mLastModified = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.LAST_MODIFIED));
         mExpireDate = cursor.getLong(cursor.getColumnIndex(CreuRojaContract.Locations.EXPIRE_DATE));
     }
 

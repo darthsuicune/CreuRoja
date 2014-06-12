@@ -545,7 +545,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     // Define a DialogFragment that displays the error dialog
-    private static class ErrorDialogFragment extends DialogFragment {
+    public static class ErrorDialogFragment extends DialogFragment {
         // Global field to contain the error dialog
         private Dialog mDialog;
 
