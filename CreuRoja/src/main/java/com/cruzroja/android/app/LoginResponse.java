@@ -26,10 +26,10 @@ public class LoginResponse {
     public static final String sLatitude = "latitude";
     public static final String sLongitude = "longitude";
     public static final String sName = "name";
-    public static final String sType = "location_type";
+    public static final String sType = "type";
     public static final String sAddress = "address";
     public static final String sDetails = "other";
-    public static final String sLastUpdateTime = "updated_at";
+    public static final String sLastUpdateTime = "lastUpdateTime";
     public static final String sExpireDate = "expireDate";
     public AccessToken mToken;
     public List<Location> mLocationList;

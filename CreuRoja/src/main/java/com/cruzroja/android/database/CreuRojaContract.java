@@ -14,11 +14,11 @@ public final class CreuRojaContract {
 
         public static final String LATITUD = "latitud";
         public static final String LONGITUD = "longitud";
-        public static final String ICON = "icon";
+        public static final String ICON = "location_type";
         public static final String NAME = "name";
         public static final String ADDRESS = "address";
         public static final String DETAILS = "details";
-        public static final String LAST_MODIFIED = "lastmodified";
+        public static final String LAST_MODIFIED = "updated_at";
         public static final String EXPIRE_DATE = "expiredate";
     }
 
