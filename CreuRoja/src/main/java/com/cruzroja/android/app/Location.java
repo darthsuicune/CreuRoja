@@ -18,8 +18,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.DateFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -76,11 +76,15 @@ public class Location {
 		mExpireDate = cursor.getLong(cursor.getColumnIndex(CreuRojaContract.Locations.EXPIRE_DATE));
 	}
 
-	public boolean newerThan(String testDate) {
+	public boolean newerThan(String lastUpdate) {
+		if(TextUtils.isEmpty(lastUpdate)){
+			return true;
+		}
 		try {
-			Date updatedAt = DateFormat.getDateTimeInstance().parse(mLastModified);
-			Date saved = DateFormat.getDateTimeInstance().parse(testDate);
-			return updatedAt.compareTo(saved) > 0;
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			Date updatedAt = format.parse(mLastModified);
+			Date saved = format.parse(lastUpdate);
+			return updatedAt.after(saved);
 		} catch (ParseException e) {
 			e.printStackTrace();
 			return false;

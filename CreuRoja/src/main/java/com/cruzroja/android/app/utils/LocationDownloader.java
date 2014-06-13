@@ -76,7 +76,7 @@ public class LocationDownloader implements Runnable {
         try {
             checkExpiredLocations(mResolver);
             List<Location> locationList = new ConnectionClient().
-                    requestUpdates(mAccessToken, mPrefs.getLong(Settings.LAST_UPDATE_TIME, 0));
+                    requestUpdates(mAccessToken, mPrefs.getString(Settings.LAST_UPDATE_TIME, ""));
             //TODO: implement something useful instead of this piece of crap
             saveLocations(locationList);
         } catch (IOException e) {

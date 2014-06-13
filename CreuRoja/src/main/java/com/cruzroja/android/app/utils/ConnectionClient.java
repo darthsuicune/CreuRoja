@@ -72,7 +72,7 @@ public class ConnectionClient {
         return new AccessResponse(response);
     }
 
-    public List<Location> requestUpdates(String accessToken, long lastUpdate) throws IOException {
+    public List<Location> requestUpdates(String accessToken, String lastUpdate) throws IOException {
         HttpResponse response = executeRequest(createHttpClient(),
                 getLocationsRequest(accessToken, lastUpdate));
 
@@ -108,10 +108,10 @@ public class ConnectionClient {
         return buildRequest(VALIDATE_REQUEST, nameValuePairs);
     }
 
-    private HttpUriRequest getLocationsRequest(String accessToken, long lastUpdate) {
+    private HttpUriRequest getLocationsRequest(String accessToken, String lastUpdate) {
         List<NameValuePair> nameValuePairs = new ArrayList<>();
         nameValuePairs.add(new BasicNameValuePair(ACCESS_TOKEN_VAR, accessToken));
-        nameValuePairs.add(new BasicNameValuePair(LAST_UPDATE_VAR, Long.toString(lastUpdate)));
+        nameValuePairs.add(new BasicNameValuePair(LAST_UPDATE_VAR, lastUpdate));
         return buildRequest(LOCATIONS_REQUEST, nameValuePairs);
     }
 
