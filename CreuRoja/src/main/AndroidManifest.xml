@@ -4,10 +4,6 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="9"
-        android:targetSdkVersion="19" />
-
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -32,7 +28,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.cruzroja.android.ui.activities.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,10 +37,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.cruzroja.android.ui.activities.LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:label="@string/title_activity_login"
+            android:parentActivityName=".ui.activities.MainActivity"
             android:theme="@style/NoActionBar"
-            android:parentActivityName="com.cruzroja.android.ui.activities.MainActivity"
             android:windowSoftInputMode="adjustResize|stateVisible" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -52,11 +48,34 @@
         </activity>
 
         <provider
-            android:name="com.cruzroja.android.database.CreuRojaProvider"
+            android:name=".database.CreuRojaProvider"
             android:authorities="com.cruzroja.android.database.CreuRojaProvider"
             android:exported="false" >
         </provider>
 
+        <activity
+            android:name=".view.activities.LocationsIndexActivity"
+            android:label="@string/title_activity_locations" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login"
+            android:parentActivityName=".LocationsActivity"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="LocationsActivity" />
+        </activity>
     </application>
+
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>
