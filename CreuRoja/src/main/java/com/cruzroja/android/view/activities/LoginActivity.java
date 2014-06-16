@@ -92,12 +92,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 	/**
 	 * Set up the {@link android.app.ActionBar}, if the API is available.
 	 */
-	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	private void setupActionBar() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			// Show the Up button in the action bar.
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
+		//Nothing to do this far.
 	}
 
 	/**
@@ -202,18 +198,18 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 	@Override
 	public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
 		return new CursorLoader(this,
-								// Retrieve data rows for the device user's 'profile' contact.
-								Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-													 ContactsContract.Contacts.Data.CONTENT_DIRECTORY),
-								ProfileQuery.PROJECTION,
+				// Retrieve data rows for the device user's 'profile' contact.
+				Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
+						ContactsContract.Contacts.Data.CONTENT_DIRECTORY),
+				ProfileQuery.PROJECTION,
 
-								// Select only email addresses.
-								ContactsContract.Contacts.Data.MIMETYPE + " = ?", new String[]{
-				ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE},
+				// Select only email addresses.
+				ContactsContract.Contacts.Data.MIMETYPE + " = ?",
+				new String[]{ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE},
 
-								// Show primary email addresses first. Note that there won't be
-								// a primary email address if the user hasn't specified one.
-								ContactsContract.Contacts.Data.IS_PRIMARY + " DESC"
+				// Show primary email addresses first. Note that there won't be
+				// a primary email address if the user hasn't specified one.
+				ContactsContract.Contacts.Data.IS_PRIMARY + " DESC"
 		);
 	}
 
@@ -234,22 +230,21 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 	}
 
+	private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
+		//Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(LoginActivity.this,
+				android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+
+		mEmailView.setAdapter(adapter);
+	}
+
+
 	private interface ProfileQuery {
 		String[] PROJECTION = {ContactsContract.CommonDataKinds.Email.ADDRESS,
 							   ContactsContract.CommonDataKinds.Email.IS_PRIMARY,};
 
 		int ADDRESS = 0;
 		int IS_PRIMARY = 1;
-	}
-
-
-	private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
-		//Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(LoginActivity.this,
-																android.R.layout.simple_dropdown_item_1line,
-																emailAddressCollection);
-
-		mEmailView.setAdapter(adapter);
 	}
 
 	/**
@@ -297,7 +292,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 			if (success) {
 				finish();
 			} else {
-				mPasswordView.setError(getString(R.string.error_incorrect_password));
+				mPasswordView.setError(getString(R.string.error_invalid_password));
 				mPasswordView.requestFocus();
 			}
 		}
@@ -309,6 +304,3 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 		}
 	}
 }
-
-
-

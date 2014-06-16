@@ -1,8 +1,44 @@
 CreuRoja
 Locations
+Name TEXT NOT NULL
+Description TEXT
+Address TEXT
+Phone TEXT
 Latitud DOUBLE NOT NULL
 Longitud DOUBLE NOT NULL
-Icon TEXT NOT NULL
+Type TEXT NOT NULL
+UpdatedAt DATETIME NOT NULL
+Active BOOLEAN
+
+Services
 Name TEXT NOT NULL
-Address TEXT
-Details TEXT
+Description TEXT NOT NULL
+AssemblyId INTEGER NOT NULL
+BaseTime DATETIME NOT NULL
+StartTime DATETIME NOT NULL
+EndTime DATETIME NOT NULL
+Code TEXT
+CreatedAt DATETIME NOT NULL
+UpdatedAt DATETIME NOT NULL
+
+Vehicles
+brand TEXT NOT NULL
+model TEXT NOT NULL
+license TEXT NOT NULL
+indicative TEXT NOT NULL
+vehicle_type TEXT NOT NULL
+places INTEGER NOT NULL
+notes TEXT NOT NULL
+operative BOOLEAN NOT NULL
+created_at DATETIME NOT NULL
+updated_at DATETIME NOT NULL
+
+Users
+name TEXT NOT NULL
+surname TEXT NOT NULL
+email TEXT NOT NULL
+password_digest TEXT NOT NULL
+role TEXT NOT NULL
+created_at DATETIME NOT NULL
+updated_at DATETIME NOT NULL
+active BOOLEAN NOT NULL
