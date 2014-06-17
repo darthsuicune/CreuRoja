@@ -65,7 +65,8 @@
         <provider
             android:name="com.cruzroja.android.model.db.CreuRojaProvider"
             android:authorities="com.cruzroja.android.model.db.Provider"
-            android:exported="false">
+            android:exported="false"
+            android:syncable="true">
         </provider>
     </application>
 

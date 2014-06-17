@@ -33,13 +33,7 @@ import java.util.List;
  * A login screen that offers login via email/password.
  */
 public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
-
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS =
-			new String[]{"foo@example.com:hello", "bar@example.com:world"};
+	public static final int E_MAIL_AUTO_COMPLETE_LOADER = 0;
 	/**
 	 * Keep track of the login task to ensure we can cancel it if requested.
 	 */
@@ -55,7 +49,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		setupActionBar();
 
 		// Set up the login form.
 		mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
@@ -86,14 +79,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 	}
 
 	private void populateAutoComplete() {
-		getLoaderManager().initLoader(0, null, this);
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}, if the API is available.
-	 */
-	private void setupActionBar() {
-		//Nothing to do this far.
+		getLoaderManager().initLoader(E_MAIL_AUTO_COMPLETE_LOADER, null, this);
 	}
 
 	/**
@@ -150,13 +136,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 	}
 
 	private boolean isEmailValid(String email) {
-		//TODO: Replace this with your own logic
 		return email.contains("@");
 	}
 
 	private boolean isPasswordValid(String password) {
-		//TODO: Replace this with your own logic
-		return password.length() > 4;
+		return password.length() > 2;
 	}
 
 	/**
@@ -196,33 +180,48 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 	}
 
 	@Override
-	public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-		return new CursorLoader(this,
+	public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
+		Uri uri = null;
+		String[] projection = null;
+		String selection = null;
+		String[] selectionArgs = null;
+		String sortOrder = null;
+		switch (id) {
+			case E_MAIL_AUTO_COMPLETE_LOADER:
 				// Retrieve data rows for the device user's 'profile' contact.
-				Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-						ContactsContract.Contacts.Data.CONTENT_DIRECTORY),
-				ProfileQuery.PROJECTION,
-
+				uri = Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
+						ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
+				projection = ProfileQuery.PROJECTION;
 				// Select only email addresses.
-				ContactsContract.Contacts.Data.MIMETYPE + " = ?",
-				new String[]{ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE},
-
+				selection = ContactsContract.Contacts.Data.MIMETYPE + " = ?";
+				selectionArgs =
+						new String[]{ContactsContract.CommonDataKinds.Email.CONTENT_ITEM_TYPE};
 				// Show primary email addresses first. Note that there won't be
 				// a primary email address if the user hasn't specified one.
-				ContactsContract.Contacts.Data.IS_PRIMARY + " DESC"
-		);
+				sortOrder = ContactsContract.Contacts.Data.IS_PRIMARY + " DESC";
+				break;
+			default:
+				break;
+		}
+		return new CursorLoader(this, uri, projection, selection, selectionArgs, sortOrder);
 	}
 
 	@Override
 	public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-		List<String> emails = new ArrayList<String>();
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			emails.add(cursor.getString(ProfileQuery.ADDRESS));
-			cursor.moveToNext();
-		}
+		switch (cursorLoader.getId()) {
+			case E_MAIL_AUTO_COMPLETE_LOADER:
+				List<String> emails = new ArrayList<>();
+				cursor.moveToFirst();
+				while (!cursor.isAfterLast()) {
+					emails.add(cursor.getString(ProfileQuery.ADDRESS));
+					cursor.moveToNext();
+				}
 
-		addEmailsToAutoComplete(emails);
+				addEmailsToAutoComplete(emails);
+				break;
+			default:
+				break;
+		}
 	}
 
 	@Override
@@ -232,7 +231,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 	private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
 		//Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(LoginActivity.this,
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(LoginActivity.this,
 				android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
 		mEmailView.setAdapter(adapter);
@@ -265,22 +264,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 		protected Boolean doInBackground(Void... params) {
 			// TODO: attempt authentication against a network service.
 
-			try {
-				// Simulate network access.
-				Thread.sleep(2000);
-			} catch (InterruptedException e) {
-				return false;
-			}
-
-			for (String credential : DUMMY_CREDENTIALS) {
-				String[] pieces = credential.split(":");
-				if (pieces[0].equals(mEmail)) {
-					// Account exists, return true if the password matches.
-					return pieces[1].equals(mPassword);
-				}
-			}
-
-			// TODO: register the new account here.
 			return true;
 		}
 
@@ -290,6 +273,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 			showProgress(false);
 
 			if (success) {
+				setResult(RESULT_OK);
 				finish();
 			} else {
 				mPasswordView.setError(getString(R.string.error_invalid_password));
