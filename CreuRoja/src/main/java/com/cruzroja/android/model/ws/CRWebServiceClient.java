@@ -71,7 +71,14 @@ public class CRWebServiceClient implements WebServiceClient {
 	private HttpUriRequest getLoginRequest() throws URISyntaxException {
 		HttpPost post = new HttpPost();
 		StringBuilder builder = new StringBuilder();
+		builder.append(WS_PROTOCOL);
+		builder.append(WS_URL);
+		builder.append(":");
+		builder.append(WS_PORT);
+		builder.append(WS_CONNECTION_POINT);
+		builder.append(WS_RESOURCE_LOGIN);
 		URI uri = new URI(builder.toString());
+		Log.d("est", uri.toString());
 		post.setURI(uri);
 		return post;
 	}
