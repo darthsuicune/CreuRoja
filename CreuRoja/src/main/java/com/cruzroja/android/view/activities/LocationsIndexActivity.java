@@ -14,20 +14,25 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.cruzroja.android.R;
+import com.cruzroja.android.controller.GoogleMapController;
 import com.cruzroja.android.controller.MapController;
-import com.cruzroja.android.model.auth.CreuRojaAccount;
+import com.cruzroja.android.model.auth.AccountUtils;
+import com.cruzroja.android.model.auth.AccountUtils.LoginManager;
 import com.cruzroja.android.view.fragments.LocationListFragment;
 import com.cruzroja.android.view.fragments.NavigationDrawerFragment;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 
-public class LocationsIndexActivity extends Activity
-		implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+public class LocationsIndexActivity extends Activity implements LoginManager,
+		NavigationDrawerFragment.NavigationDrawerCallbacks,
 		LocationListFragment.OnFragmentInteractionListener {
-	public static final int INTENT_LOGIN_ACTIVITY = 10;
-	public static final int INTENT_SETTINGS_ACTIVITY = 11;
+
+	// Keep the authToken for manual refresh
+	private String mAuthToken;
+
 	// Fragment managing the behaviors, interactions and presentation of the navigation drawer.
 	private NavigationDrawerFragment mNavigationDrawerFragment;
+
 	// Used to store the last screen title. For use in {@link #restoreActionBar()}.
 	private CharSequence mTitle;
 
@@ -38,16 +43,20 @@ public class LocationsIndexActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (!CreuRojaAccount.exists(this)) {
-			attemptLogin();
-		} else {
-			startUi();
-		}
+
+		AccountUtils utils = new AccountUtils(this, this);
+		utils.getAuth(this);
 	}
 
-	private void attemptLogin() {
-		Intent intent = new Intent(this, LoginActivity.class);
-		startActivityForResult(intent, INTENT_LOGIN_ACTIVITY);
+	// Callbacks for when the auth token is returned
+	@Override
+	public void successfulLogin(String authToken){
+		mAuthToken = authToken;
+		startUi();
+	}
+	@Override
+	public void failedLogin(){
+		finish();
 	}
 
 	private void startUi() {
@@ -63,25 +72,6 @@ public class LocationsIndexActivity extends Activity
 				.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
 	}
 
-	@Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		switch (requestCode) {
-			case INTENT_LOGIN_ACTIVITY:
-				if (resultCode == RESULT_OK) {
-					startUi();
-				} else {
-					finish();
-				}
-				break;
-			case INTENT_SETTINGS_ACTIVITY:
-				//Nothing for now
-				break;
-			default:
-				break;
-		}
-
-	}
-
 	@Override
 	public void onNavigationDrawerItemSelected(int position) {
 		FragmentManager fragmentManager = getFragmentManager();
@@ -89,10 +79,10 @@ public class LocationsIndexActivity extends Activity
 		switch (position) {
 			case NavigationDrawerFragment.SEE_MAP:
 				MapFragment mapFragment;
-				if(mapController == null) {
-					mapController = new MapController(prefs);
+				if (mapController == null) {
+					mapController = new GoogleMapController(prefs);
 					mapFragment = (MapFragment) fragmentManager.findFragmentById(R.id.map);
-					if(mapFragment == null) {
+					if (mapFragment == null) {
 						mapFragment = MapFragment.newInstance(mapController.getMapOptions());
 					}
 					mapController.setMapFragment(mapFragment);
@@ -148,7 +138,7 @@ public class LocationsIndexActivity extends Activity
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (!mNavigationDrawerFragment.isDrawerOpen()) {
+		if (mNavigationDrawerFragment != null && !mNavigationDrawerFragment.isDrawerOpen()) {
 			// Only show items in the action bar relevant to this screen
 			// if the drawer is not showing. Otherwise, let the drawer
 			// decide what to show in the action bar.

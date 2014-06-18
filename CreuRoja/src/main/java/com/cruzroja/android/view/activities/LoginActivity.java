@@ -1,11 +1,14 @@
 package com.cruzroja.android.view.activities;
 
+import android.accounts.Account;
+import android.accounts.AccountAuthenticatorActivity;
+import android.accounts.AccountManager;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -25,6 +28,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cruzroja.android.R;
+import com.cruzroja.android.model.auth.AccountUtils;
+import com.cruzroja.android.model.ws.CRWebServiceClient;
+import com.cruzroja.android.model.ws.WebServiceClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +38,13 @@ import java.util.List;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AccountAuthenticatorActivity implements LoaderCallbacks<Cursor> {
 	public static final int E_MAIL_AUTO_COMPLETE_LOADER = 0;
-	/**
-	 * Keep track of the login task to ensure we can cancel it if requested.
-	 */
+	public static final String ARG_ACCOUNT_TYPE = "accountType";
+	public static final String ARG_AUTH_TYPE = "authType";
+	public static final String ARG_IS_ADDING_NEW_ACCOUNT = "is adding new account";
+
+	// Keep track of the login task to ensure we can cancel it if requested.
 	private UserLoginTask mAuthTask = null;
 
 	// UI references.
@@ -231,8 +239,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
 	private void addEmailsToAutoComplete(List<String> emailAddressCollection) {
 		//Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
-		ArrayAdapter<String> adapter = new ArrayAdapter<>(LoginActivity.this,
-				android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
+		ArrayAdapter<String> adapter =
+				new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_dropdown_item_1line,
+						emailAddressCollection);
 
 		mEmailView.setAdapter(adapter);
 	}
@@ -250,33 +259,42 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+	public class UserLoginTask extends AsyncTask<Void, Void, Intent> {
 
+		private final WebServiceClient mClient;
 		private final String mEmail;
 		private final String mPassword;
 
 		UserLoginTask(String email, String password) {
+			mClient = new CRWebServiceClient();
 			mEmail = email;
 			mPassword = password;
 		}
 
 		@Override
-		protected Boolean doInBackground(Void... params) {
-			// TODO: attempt authentication against a network service.
-
-			return true;
+		protected Intent doInBackground(Void... params) {
+			Intent result = new Intent();
+			String authToken = mClient.signInUser(mEmail, mPassword);
+			if (!TextUtils.isEmpty(authToken)) {
+				result.putExtra(AccountManager.KEY_ACCOUNT_NAME, mEmail);
+				result.putExtra(AccountManager.KEY_ACCOUNT_TYPE,
+						AccountUtils.ACCOUNT_TYPE);
+				result.putExtra(AccountManager.KEY_AUTHTOKEN, authToken);
+				result.putExtra(AccountManager.KEY_PASSWORD, mPassword);
+			}
+			return result;
 		}
 
 		@Override
-		protected void onPostExecute(final Boolean success) {
+		protected void onPostExecute(final Intent result) {
 			mAuthTask = null;
 			showProgress(false);
 
-			if (success) {
-				setResult(RESULT_OK);
-				finish();
+			if (result != null) {
+				successfulLogin(result);
 			} else {
 				mPasswordView.setError(getString(R.string.error_invalid_password));
+				mPasswordView.setText("");
 				mPasswordView.requestFocus();
 			}
 		}
@@ -285,6 +303,28 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 		protected void onCancelled() {
 			mAuthTask = null;
 			showProgress(false);
+		}
+
+		private void successfulLogin(Intent intent) {
+			String accountName = intent.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
+			String accountPassword = intent.getStringExtra(AccountManager.KEY_PASSWORD);
+
+			final AccountManager manager = AccountManager.get(LoginActivity.this);
+			final Account account = new Account(accountName,
+					intent.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
+
+			if (getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)) {
+				String authToken = intent.getStringExtra(AccountManager.KEY_AUTHTOKEN);
+				String authTokenType = getIntent().getStringExtra(ARG_AUTH_TYPE);
+				// Creating the account on the device and setting the auth token we got
+				manager.addAccountExplicitly(account, accountPassword, null);
+				manager.setAuthToken(account, authTokenType, authToken);
+			} else {
+				manager.setPassword(account, accountPassword);
+			}
+			setAccountAuthenticatorResult(intent.getExtras());
+			setResult(RESULT_OK);
+			finish();
 		}
 	}
 }
