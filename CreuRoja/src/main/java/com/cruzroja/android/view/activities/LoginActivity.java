@@ -26,10 +26,13 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cruzroja.android.R;
 import com.cruzroja.android.model.auth.AccountUtils;
+import com.cruzroja.android.model.ws.CRLoginResponse;
 import com.cruzroja.android.model.ws.CRWebServiceClient;
+import com.cruzroja.android.model.ws.LoginResponse;
 import com.cruzroja.android.model.ws.WebServiceClient;
 
 import java.util.ArrayList;
@@ -198,7 +201,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 			case E_MAIL_AUTO_COMPLETE_LOADER:
 				// Retrieve data rows for the device user's 'profile' contact.
 				uri = Uri.withAppendedPath(ContactsContract.Profile.CONTENT_URI,
-						ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
+										   ContactsContract.Contacts.Data.CONTENT_DIRECTORY);
 				projection = ProfileQuery.PROJECTION;
 				// Select only email addresses.
 				selection = ContactsContract.Contacts.Data.MIMETYPE + " = ?";
@@ -241,7 +244,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 		//Create adapter to tell the AutoCompleteTextView what to show in its dropdown list.
 		ArrayAdapter<String> adapter =
 				new ArrayAdapter<>(LoginActivity.this, android.R.layout.simple_dropdown_item_1line,
-						emailAddressCollection);
+								   emailAddressCollection);
 
 		mEmailView.setAdapter(adapter);
 	}
@@ -274,13 +277,17 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 		@Override
 		protected Intent doInBackground(Void... params) {
 			Intent result = new Intent();
-			String authToken = mClient.signInUser(mEmail, mPassword);
-			if (!TextUtils.isEmpty(authToken)) {
+			LoginResponse response = mClient.signInUser(mEmail, mPassword);
+			if (response.isValid()) {
+				result.putExtra(CRLoginResponse.IS_VALID, true);
 				result.putExtra(AccountManager.KEY_ACCOUNT_NAME, mEmail);
-				result.putExtra(AccountManager.KEY_ACCOUNT_TYPE,
-						AccountUtils.ACCOUNT_TYPE);
-				result.putExtra(AccountManager.KEY_AUTHTOKEN, authToken);
+				result.putExtra(AccountManager.KEY_ACCOUNT_TYPE, AccountUtils.ACCOUNT_TYPE);
+				result.putExtra(AccountManager.KEY_AUTHTOKEN, response.authToken());
 				result.putExtra(AccountManager.KEY_PASSWORD, mPassword);
+			} else {
+				result.putExtra(CRLoginResponse.IS_VALID, false);
+				result.putExtra(CRLoginResponse.ERROR_CODE, response.errorCode());
+				result.putExtra(CRLoginResponse.ERROR_MESSAGE, response.errorMessage());
 			}
 			return result;
 		}
@@ -290,12 +297,15 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 			mAuthTask = null;
 			showProgress(false);
 
-			if (result != null) {
+			if (result.getBooleanExtra(CRLoginResponse.IS_VALID, false)) {
 				successfulLogin(result);
 			} else {
 				mPasswordView.setError(getString(R.string.error_invalid_password));
 				mPasswordView.setText("");
 				mPasswordView.requestFocus();
+				Toast.makeText(getApplicationContext(),
+							   result.getStringExtra(CRLoginResponse.ERROR_MESSAGE),
+							   Toast.LENGTH_LONG).show();
 			}
 		}
 
@@ -310,8 +320,8 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 			String accountPassword = intent.getStringExtra(AccountManager.KEY_PASSWORD);
 
 			final AccountManager manager = AccountManager.get(LoginActivity.this);
-			final Account account = new Account(accountName,
-					intent.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
+			final Account account = new Account(accountName, intent.getStringExtra(
+					AccountManager.KEY_ACCOUNT_TYPE));
 
 			if (getIntent().getBooleanExtra(ARG_IS_ADDING_NEW_ACCOUNT, false)) {
 				String authToken = intent.getStringExtra(AccountManager.KEY_AUTHTOKEN);
