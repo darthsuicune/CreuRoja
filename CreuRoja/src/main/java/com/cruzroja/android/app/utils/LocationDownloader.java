@@ -27,11 +27,11 @@ public class LocationDownloader implements Runnable {
     }
 
     public void saveLocations(List<Location> locationList) {
-        long lastUpdateTime = mPrefs.getLong(Settings.LAST_UPDATE_TIME, 0);
+        String lastUpdateTime = mPrefs.getString(Settings.LAST_UPDATE_TIME, "");
         List<Location> currentLocations = LocationsProvider.getCurrentLocations(mResolver);
         ArrayList<ContentValues> insertValues = new ArrayList<>();
         for (Location location : locationList) {
-            if(location.mLastModified > lastUpdateTime){
+            if(location.newerThan(lastUpdateTime)){
                 lastUpdateTime = location.mLastModified;
             }
             ContentValues value = new ContentValues();
@@ -68,7 +68,7 @@ public class LocationDownloader implements Runnable {
             mResolver.bulkInsert(CreuRojaContract.Locations.CONTENT_LOCATIONS,
                     insertValues.toArray(new ContentValues[insertValues.size()]));
         }
-        mPrefs.edit().putLong(Settings.LAST_UPDATE_TIME, lastUpdateTime).commit();
+        mPrefs.edit().putString(Settings.LAST_UPDATE_TIME, lastUpdateTime).commit();
     }
 
     @Override
@@ -76,7 +76,7 @@ public class LocationDownloader implements Runnable {
         try {
             checkExpiredLocations(mResolver);
             List<Location> locationList = new ConnectionClient().
-                    requestUpdates(mAccessToken, mPrefs.getLong(Settings.LAST_UPDATE_TIME, 0));
+                    requestUpdates(mAccessToken, mPrefs.getString(Settings.LAST_UPDATE_TIME, ""));
             //TODO: implement something useful instead of this piece of crap
             saveLocations(locationList);
         } catch (IOException e) {
