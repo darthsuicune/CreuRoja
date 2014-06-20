@@ -1,5 +1,7 @@
 package com.cruzroja.android.model.ws;
 
+import android.content.ContentResolver;
+
 import com.cruzroja.android.model.Location;
 
 import java.util.List;
@@ -14,6 +16,10 @@ public class CRLocationList implements LocationList {
 
 	@Override
 	public List<Location> getLocations() {
+		return null;
+	}
+
+	@Override public String save(ContentResolver cr) {
 		return null;
 	}
 }
