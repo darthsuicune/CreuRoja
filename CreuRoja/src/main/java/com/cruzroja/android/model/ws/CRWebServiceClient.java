@@ -16,7 +16,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +24,7 @@ import java.util.List;
  * Created by lapuente on 18.06.14.
  */
 public class CRWebServiceClient implements WebServiceClient {
+	private static final String WS_CR_TAG = "CreuRoja webservice client";
 	public static final String ARG_EMAIL = "email";
 	public static final String ARG_PASSWORD = "password";
 	public static final String ARG_ACCESS_TOKEN = "access_token";
@@ -34,6 +34,8 @@ public class CRWebServiceClient implements WebServiceClient {
 	private static final String WS_CONNECTION_POINT = "webservice.php";
 	private static final String WS_RESOURCE_LOGIN = "?q=request_access";
 	private static final String WS_RESOURCE_LOCATIONS = "?q=get_locations";
+	private static final String WS_VERSION = "&version=";
+	private static final String ARG_VERSION = "2.0";
 
 	@Override
 	public LoginResponse signInUser(String username, String password) {
@@ -53,16 +55,16 @@ public class CRWebServiceClient implements WebServiceClient {
 	}
 
 	@Override
-	public LocationList getLocations() {
-		return getLocations("0");
+	public LocationList getLocations(String accessToken) {
+		return getLocations("0", accessToken);
 	}
 
 	@Override
-	public LocationList getLocations(String lastUpdateTime) {
+	public LocationList getLocations(String lastUpdateTime, String accessToken) {
 
 		HttpClient client = getHttpClient();
 		try {
-			HttpUriRequest request = getLocationsRequest();
+			HttpUriRequest request = getLocationsRequest(lastUpdateTime, accessToken);
 			HttpResponse response = client.execute(request);
 			String result = readResponse(response);
 			return new CRLocationList(result);
@@ -71,7 +73,7 @@ public class CRWebServiceClient implements WebServiceClient {
 			return null;
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
-			Log.d("WSClient", "Incorrect URL");
+			Log.d(WS_CR_TAG, "Incorrect URL");
 			return null;
 		}
 	}
@@ -84,13 +86,9 @@ public class CRWebServiceClient implements WebServiceClient {
 
 	private HttpUriRequest getLoginRequest(String email, String password)
 			throws URISyntaxException, UnsupportedEncodingException {
-		HttpPost request = new HttpPost();
-		StringBuilder builder = new StringBuilder();
-		builder.append(WS_URL);
-		builder.append(WS_CONNECTION_POINT);
-		builder.append(WS_RESOURCE_LOGIN);
-		URI uri = new URI(builder.toString());
-		request.setURI(uri);
+		HttpPost request =
+				new HttpPost(WS_URL + WS_CONNECTION_POINT + WS_RESOURCE_LOGIN + WS_VERSION +
+							 ARG_VERSION);
 		List<NameValuePair> nameValuePairs = new ArrayList<>();
 		nameValuePairs.add(new BasicNameValuePair(ARG_EMAIL, email));
 		nameValuePairs.add(new BasicNameValuePair(ARG_PASSWORD, password));
@@ -98,15 +96,15 @@ public class CRWebServiceClient implements WebServiceClient {
 		return request;
 	}
 
-	private HttpUriRequest getLocationsRequest() throws URISyntaxException {
-		HttpPost post = new HttpPost();
-		StringBuilder builder = new StringBuilder();
-		builder.append(WS_URL);
-		builder.append(WS_CONNECTION_POINT);
-		builder.append(WS_RESOURCE_LOCATIONS);
-		URI uri = new URI(builder.toString());
-		post.setURI(uri);
-		return post;
+	private HttpUriRequest getLocationsRequest(String lastUpdateTime, String accessToken)
+			throws URISyntaxException, UnsupportedEncodingException {
+		HttpPost request = new HttpPost(WS_URL + WS_CONNECTION_POINT + WS_RESOURCE_LOCATIONS +
+										WS_VERSION + ARG_VERSION);
+		List<NameValuePair> nameValuePairs = new ArrayList<>();
+		nameValuePairs.add(new BasicNameValuePair(ARG_LAST_UPDATE, lastUpdateTime));
+		nameValuePairs.add(new BasicNameValuePair(ARG_ACCESS_TOKEN, accessToken));
+		request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+		return request;
 	}
 
 	private String readResponse(HttpResponse response) throws IOException {
@@ -117,6 +115,7 @@ public class CRWebServiceClient implements WebServiceClient {
 		while ((line = reader.readLine()) != null) {
 			builder.append(line);
 		}
+		reader.close();
 		return builder.toString();
 	}
 }

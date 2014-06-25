@@ -52,7 +52,7 @@
         </activity>
         <activity
             android:name=".view.activities.SettingsActivity"
-            android:label="@string/title_activity_settings">
+            android:label="@string/action_settings">
         </activity>
 
         <service

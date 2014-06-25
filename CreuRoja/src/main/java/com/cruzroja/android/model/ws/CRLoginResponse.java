@@ -1,7 +1,5 @@
 package com.cruzroja.android.model.ws;
 
-import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +20,6 @@ public class CRLoginResponse implements LoginResponse {
 
 	public CRLoginResponse(String json) {
 		try {
-			Log.d("test", json);
 			JSONObject response = new JSONObject(json);
 			if(response.has(AUTH_TOKEN_HOLDER)) {
 				authToken = response.getJSONObject(AUTH_TOKEN_HOLDER).getString(AUTH_TOKEN);
