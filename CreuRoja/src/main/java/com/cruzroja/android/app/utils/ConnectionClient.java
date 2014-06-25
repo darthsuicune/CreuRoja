@@ -38,6 +38,7 @@ public class ConnectionClient {
     private static final String LOGIN_REQUEST = "request_access";
     private static final String VALIDATE_REQUEST = "validate_access";
     private static final String LOCATIONS_REQUEST = "get_locations";
+
     public static final String DIRECTIONS_API_BASE_URL =
             "https://maps.googleapis.com/maps/api/directions/json?region=es&";
     public static final String ORIGIN_URL = "origin=";
@@ -48,6 +49,7 @@ public class ConnectionClient {
     public static final String PASS_VAR = "password";
     public static final String ACCESS_TOKEN_VAR = "access_token";
     public static final String LAST_UPDATE_VAR = "last_update";
+	public static final String PROGRAM_VERSION_VAR = "version";
 
     public static final int STATUS_OK = 0;
     public static final int STATUS_NOT_OK = 1;
@@ -128,7 +130,7 @@ public class ConnectionClient {
     }
 
     private HttpUriRequest buildRequest(String requestType, List<NameValuePair> entity) {
-        String address = SERVER_URL + QUERY + requestType;
+        String address = SERVER_URL + QUERY + requestType + "&" + PROGRAM_VERSION_VAR + "1.0";
         HttpPost request = new HttpPost(address);
         try {
             request.setEntity(new UrlEncodedFormEntity(entity));
