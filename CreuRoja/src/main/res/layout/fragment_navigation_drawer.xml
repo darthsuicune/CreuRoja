@@ -1,42 +1,38 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
-            android:id="@+id/navigation_drawer_pane"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context="org.creuroja.android.view.fragments.NavigationDrawerFragment"
-            android:background="#cccc">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_drawer_pane"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="org.creuroja.android.view.fragments.NavigationDrawerFragment"
+    android:background="#cccc">
 
-    <LinearLayout
+    <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_drawer_sections"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/navigation_drawer_sections"/>
+    <ListView
+        android:id="@+id/navigation_drawer_section_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"/>
 
-        <ListView
-            android:id="@+id/navigation_drawer_section_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="0dp"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_drawer_location_types"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/navigation_drawer_location_types"/>
+    <include layout="@layout/legend"/>
 
-        <include layout="@layout/legend"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/navigation_drawer_map_types"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/navigation_drawer_map_types"/>
+    <include layout="@layout/map_type"/>
 
-        <include layout="@layout/map_type"/>
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>
