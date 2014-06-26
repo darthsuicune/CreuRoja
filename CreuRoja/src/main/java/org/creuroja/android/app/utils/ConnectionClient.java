@@ -3,9 +3,6 @@ package org.creuroja.android.app.utils;
 import android.content.Context;
 import android.net.ConnectivityManager;
 
-import org.creuroja.android.app.AccessResponse;
-import org.creuroja.android.app.Location;
-import org.creuroja.android.app.LoginResponse;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.apache.http.HttpResponse;
@@ -17,6 +14,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.creuroja.android.app.Location;
+import org.creuroja.android.app.LoginResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -65,13 +64,6 @@ public class ConnectionClient {
                 getLoginRequest(email, password));
 
         return new LoginResponse(response);
-    }
-
-    public AccessResponse validateLogin(String accessToken) throws IOException {
-        HttpResponse response = executeRequest(createHttpClient(),
-                getValidationRequest(accessToken));
-
-        return new AccessResponse(response);
     }
 
     public List<Location> requestUpdates(String accessToken, String lastUpdate) throws IOException {

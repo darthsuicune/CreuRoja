@@ -33,7 +33,7 @@ public class Location {
 	public final String mName;
 	public final Type mType;
 	public final String mAddress;
-	public final String mDetails;
+	public final String mDescription;
 	public final String mLastModified;
 	public final long mExpireDate;
 	public Marker mMarker;
@@ -45,7 +45,7 @@ public class Location {
 		mName = name;
 		mType = Type.getType(type);
 		mAddress = address;
-		mDetails = details;
+		mDescription = details;
 		mLastModified = lastModified;
 		mExpireDate = expireDate;
 	}
@@ -56,11 +56,17 @@ public class Location {
 		mName = object.getString(LoginResponse.sName);
 		mType = Type.getType(object.getString(LoginResponse.sType));
 		mAddress = object.getString(LoginResponse.sAddress);
-		mDetails = object.getString(LoginResponse.sDetails);
+		if (object.isNull(LoginResponse.sDescription) ||
+			object.getString(LoginResponse.sDescription) == "null") {
+			mDescription = "";
+		} else {
+			mDescription = object.getString(LoginResponse.sDescription);
+		}
+
 		mLastModified = object.getString(LoginResponse.sLastUpdateTime);
 		mExpireDate = (object.has(LoginResponse.sExpireDate) &&
 					   !object.isNull(LoginResponse.sExpireDate)) ?
-					  object.getLong(LoginResponse.sExpireDate) : 0;
+				object.getLong(LoginResponse.sExpireDate) : 0;
 	}
 
 	public Location(Cursor cursor) {
@@ -70,14 +76,14 @@ public class Location {
 		mType = Type.getType(
 				cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ICON)));
 		mAddress = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ADDRESS));
-		mDetails = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.DETAILS));
+		mDescription = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.DETAILS));
 		mLastModified =
 				cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.LAST_MODIFIED));
 		mExpireDate = cursor.getLong(cursor.getColumnIndex(CreuRojaContract.Locations.EXPIRE_DATE));
 	}
 
 	public boolean newerThan(String lastUpdate) {
-		if(TextUtils.isEmpty(lastUpdate)){
+		if (TextUtils.isEmpty(lastUpdate)) {
 			return true;
 		}
 		try {
@@ -217,11 +223,11 @@ public class Location {
 			String[] projection = {"DISTINCT " + CreuRojaContract.Locations.ICON};
 			Cursor cursor =
 					cr.query(CreuRojaContract.Locations.CONTENT_LOCATIONS, projection, null, null,
-							 null);
+							null);
 			if (cursor.moveToFirst()) {
 				do {
-					typeList.add(getType(cursor.getString(
-							cursor.getColumnIndex(CreuRojaContract.Locations.ICON))));
+					typeList.add(getType(cursor
+							.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ICON))));
 				} while (cursor.moveToNext());
 			}
 			cursor.close();

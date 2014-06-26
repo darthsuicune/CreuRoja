@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
@@ -44,11 +43,9 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import org.creuroja.android.R;
-import org.creuroja.android.app.AccessResponse;
 import org.creuroja.android.app.Location;
 import org.creuroja.android.app.Settings;
 import org.creuroja.android.app.loaders.DirectionsLoader;
-import org.creuroja.android.app.loaders.LoginValidationLoader;
 import org.creuroja.android.app.utils.ConnectionClient;
 import org.creuroja.android.app.utils.LocationDownloader;
 import org.creuroja.android.app.utils.LocationsProvider;
@@ -66,7 +63,6 @@ public class MainActivity extends ActionBarActivity implements
     private static final int ACTIVITY_LOGIN = 1;
     private static final int LOADER_SHOW_LOCATIONS = 1;
     private static final int LOADER_GET_DIRECTIONS = 2;
-    private static final int LOADER_VALIDATE_LOGIN = 3;
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
     private final static String POLYLINE = "polyline";
     public boolean isMarkerPanelShowing = false;
@@ -89,8 +85,6 @@ public class MainActivity extends ActionBarActivity implements
         if (prefs.contains(Settings.ACCESS_TOKEN)) {
             showMap();
             if (ConnectionClient.isConnected(getApplicationContext())) {
-                getSupportLoaderManager().restartLoader(LOADER_VALIDATE_LOGIN, null,
-                        new LoginValidatorLoaderHelper());
                 downloadNewData();
             }
         } else {
@@ -647,44 +641,6 @@ public class MainActivity extends ActionBarActivity implements
         }
     }
 
-    private class LoginValidatorLoaderHelper
-            implements LoaderManager.LoaderCallbacks<AccessResponse> {
-
-        @Override
-        public Loader<AccessResponse> onCreateLoader(int id, Bundle args) {
-            AsyncTaskLoader<AccessResponse> loader = null;
-            switch (id) {
-                case LOADER_VALIDATE_LOGIN:
-                    loader = new LoginValidationLoader(MainActivity.this);
-                    break;
-                default:
-                    break;
-            }
-            return loader;
-        }
-
-        @Override
-        public void onLoadFinished(Loader<AccessResponse> loader, AccessResponse response) {
-            switch (loader.getId()) {
-                case LOADER_VALIDATE_LOGIN:
-                    if (response != null && !response.isValid) {
-                        Settings.removeData(getApplicationContext().getContentResolver(), prefs);
-                        Toast.makeText(getApplicationContext(), R.string.error_user_removed,
-                                Toast.LENGTH_LONG).show();
-                        showLogin();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        @Override
-        public void onLoaderReset(Loader<AccessResponse> accessResponseLoader) {
-
-        }
-    }
-
     private class MarkerAdapter implements GoogleMap.InfoWindowAdapter {
         @Override
         public View getInfoWindow(Marker marker) {
@@ -712,7 +668,7 @@ public class MainActivity extends ActionBarActivity implements
         private void setUpCard() {
             ((TextView) mCard.findViewById(R.id.location_card_name)).setText(mLocation.mName);
             ((TextView) mCard.findViewById(R.id.location_card_address)).setText(mLocation.mAddress);
-            ((TextView) mCard.findViewById(R.id.location_card_other)).setText(mLocation.mDetails);
+            ((TextView) mCard.findViewById(R.id.location_card_other)).setText(mLocation.mDescription);
             mCard.findViewById(R.id.location_card_get_directions).setOnClickListener(
                     new View.OnClickListener() {
                         @Override
