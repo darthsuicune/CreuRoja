@@ -1,4 +1,4 @@
-package com.cruzroja.android.app;
+package org.creuroja.android.app;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;

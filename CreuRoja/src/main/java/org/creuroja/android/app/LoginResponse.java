@@ -1,13 +1,12 @@
-package com.cruzroja.android.app;
+package org.creuroja.android.app;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
 
-import com.cruzroja.android.R;
-import com.cruzroja.android.app.utils.LocationsProvider;
-import com.cruzroja.android.database.CreuRojaContract;
-
 import org.apache.http.HttpResponse;
+import org.creuroja.android.R;
+import org.creuroja.android.app.utils.LocationsProvider;
+import org.creuroja.android.database.CreuRojaContract;
 import org.json.JSONException;
 import org.json.JSONObject;
 

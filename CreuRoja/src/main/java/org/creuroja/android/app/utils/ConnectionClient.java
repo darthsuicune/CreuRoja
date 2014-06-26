@@ -1,11 +1,11 @@
-package com.cruzroja.android.app.utils;
+package org.creuroja.android.app.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 
-import com.cruzroja.android.app.AccessResponse;
-import com.cruzroja.android.app.Location;
-import com.cruzroja.android.app.LoginResponse;
+import org.creuroja.android.app.AccessResponse;
+import org.creuroja.android.app.Location;
+import org.creuroja.android.app.LoginResponse;
 import com.google.android.gms.maps.model.LatLng;
 
 import org.apache.http.HttpResponse;
