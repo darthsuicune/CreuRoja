@@ -20,13 +20,14 @@
         android:required="true" />
 
     <application
+        android:debuggable="false"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyApRMee00Mk5jRKjbM1azp5OdySR387eFo" />
+            android:value="AIzaSyBfi8KVys-Vo9uea-i_IKNMRgfB6EXI5dk" />
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
