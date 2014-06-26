@@ -1,10 +1,10 @@
-package com.cruzroja.android.app.loaders;
+package org.creuroja.android.app.loaders;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
-import com.cruzroja.android.app.Location;
+import org.creuroja.android.app.Location;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;

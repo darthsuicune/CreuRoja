@@ -1,4 +1,4 @@
-package com.cruzroja.android.ui.activities;
+package org.creuroja.android.ui.activities;
 
 
 import android.app.AlertDialog;
@@ -30,14 +30,6 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cruzroja.android.R;
-import com.cruzroja.android.app.Location;
-import com.cruzroja.android.app.Settings;
-import com.cruzroja.android.app.loaders.DirectionsLoader;
-import com.cruzroja.android.app.utils.ConnectionClient;
-import com.cruzroja.android.app.utils.LocationDownloader;
-import com.cruzroja.android.app.utils.LocationsProvider;
-import com.cruzroja.android.database.CreuRojaContract;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -49,6 +41,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+
+import org.creuroja.android.R;
+import org.creuroja.android.app.Location;
+import org.creuroja.android.app.Settings;
+import org.creuroja.android.app.loaders.DirectionsLoader;
+import org.creuroja.android.app.utils.ConnectionClient;
+import org.creuroja.android.app.utils.LocationDownloader;
+import org.creuroja.android.app.utils.LocationsProvider;
+import org.creuroja.android.database.CreuRojaContract;
 
 import java.util.ArrayList;
 import java.util.HashMap;

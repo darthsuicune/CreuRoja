@@ -1,4 +1,4 @@
-package com.cruzroja.android.ui.fragments;
+package org.creuroja.android.ui.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -20,12 +20,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cruzroja.android.R;
-import com.cruzroja.android.app.LoginResponse;
-import com.cruzroja.android.app.Settings;
-import com.cruzroja.android.app.loaders.LoginLoader;
-import com.cruzroja.android.app.utils.ConnectionClient;
-import com.cruzroja.android.app.utils.LocationDownloader;
+import org.creuroja.android.R;
+import org.creuroja.android.app.LoginResponse;
+import org.creuroja.android.app.Settings;
+import org.creuroja.android.app.loaders.LoginLoader;
+import org.creuroja.android.app.utils.ConnectionClient;
+import org.creuroja.android.app.utils.LocationDownloader;
 
 /**
  * Created by lapuente on 29.10.13.

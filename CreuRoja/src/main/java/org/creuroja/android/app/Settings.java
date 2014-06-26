@@ -1,9 +1,9 @@
-package com.cruzroja.android.app;
+package org.creuroja.android.app;
 
 import android.content.ContentResolver;
 import android.content.SharedPreferences;
 
-import com.cruzroja.android.database.CreuRojaContract;
+import org.creuroja.android.database.CreuRojaContract;
 
 /**
  * Created by lapuente on 29.10.13.

@@ -1,12 +1,12 @@
-package com.cruzroja.android.app.utils;
+package org.creuroja.android.app.utils;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
-import com.cruzroja.android.app.Location;
-import com.cruzroja.android.app.LoginResponse;
-import com.cruzroja.android.database.CreuRojaContract;
+import org.creuroja.android.app.Location;
+import org.creuroja.android.app.LoginResponse;
+import org.creuroja.android.database.CreuRojaContract;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONArray;
