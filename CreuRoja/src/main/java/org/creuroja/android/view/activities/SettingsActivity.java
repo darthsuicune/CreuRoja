@@ -16,7 +16,8 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
-import com.cruzroja.android.R;
+
+import org.creuroja.android.R;
 
 import java.util.List;
 

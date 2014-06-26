@@ -1,13 +1,14 @@
 package org.creuroja.android.view.fragments;
 
 import android.app.Activity;
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.cruzroja.android.R;
+import org.creuroja.android.R;
+
 
 /**
  * A fragment representing a list of Items.

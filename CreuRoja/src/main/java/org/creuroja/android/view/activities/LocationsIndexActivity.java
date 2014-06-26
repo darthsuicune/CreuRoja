@@ -13,15 +13,16 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.cruzroja.android.R;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+
+import org.creuroja.android.R;
 import org.creuroja.android.controller.GoogleMapController;
 import org.creuroja.android.controller.MapController;
 import org.creuroja.android.model.auth.AccountUtils;
 import org.creuroja.android.model.auth.AccountUtils.LoginManager;
 import org.creuroja.android.view.fragments.LocationListFragment;
 import org.creuroja.android.view.fragments.NavigationDrawerFragment;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 
 public class LocationsIndexActivity extends Activity implements LoginManager,
 		NavigationDrawerFragment.NavigationDrawerCallbacks,

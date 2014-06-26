@@ -28,7 +28,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cruzroja.android.R;
+import org.creuroja.android.R;
 import org.creuroja.android.model.auth.AccountUtils;
 import org.creuroja.android.model.ws.CRLoginResponse;
 import org.creuroja.android.model.ws.CRWebServiceClient;
@@ -128,7 +128,7 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 			focusView = mEmailView;
 			cancel = true;
 		} else if (!isEmailValid(email)) {
-			mEmailView.setError(getString(R.string.error_invalid_email));
+			mEmailView.setError(getString(R.string.error_invalid_user));
 			focusView = mEmailView;
 			cancel = true;
 		}
