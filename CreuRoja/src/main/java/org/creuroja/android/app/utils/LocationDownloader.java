@@ -36,7 +36,7 @@ public class LocationDownloader implements Runnable {
             }
             ContentValues value = new ContentValues();
             value.put(CreuRojaContract.Locations.ADDRESS, location.mAddress);
-            value.put(CreuRojaContract.Locations.DETAILS, location.mDetails);
+            value.put(CreuRojaContract.Locations.DETAILS, location.mDescription);
             value.put(CreuRojaContract.Locations.ICON, location.mType.toString().toLowerCase());
             value.put(CreuRojaContract.Locations.LAST_MODIFIED, location.mLastModified);
             value.put(CreuRojaContract.Locations.LATITUD, location.mLatitude);

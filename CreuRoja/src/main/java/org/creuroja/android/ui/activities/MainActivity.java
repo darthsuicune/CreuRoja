@@ -668,7 +668,7 @@ public class MainActivity extends ActionBarActivity implements
         private void setUpCard() {
             ((TextView) mCard.findViewById(R.id.location_card_name)).setText(mLocation.mName);
             ((TextView) mCard.findViewById(R.id.location_card_address)).setText(mLocation.mAddress);
-            ((TextView) mCard.findViewById(R.id.location_card_other)).setText(mLocation.mDetails);
+            ((TextView) mCard.findViewById(R.id.location_card_other)).setText(mLocation.mDescription);
             mCard.findViewById(R.id.location_card_get_directions).setOnClickListener(
                     new View.OnClickListener() {
                         @Override
