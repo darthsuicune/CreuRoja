@@ -640,6 +640,7 @@ public class MainActivity extends ActionBarActivity implements
         public void onLoaderReset(Loader<List<LatLng>> loader) {
         }
     }
+
     private class MarkerAdapter implements GoogleMap.InfoWindowAdapter {
         @Override
         public View getInfoWindow(Marker marker) {
