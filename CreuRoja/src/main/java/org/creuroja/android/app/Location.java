@@ -56,8 +56,13 @@ public class Location {
 		mName = object.getString(LoginResponse.sName);
 		mType = Type.getType(object.getString(LoginResponse.sType));
 		mAddress = object.getString(LoginResponse.sAddress);
-		mDescription = (object.isNull(LoginResponse.sDetails)) ?
-				object.getString(LoginResponse.sDetails) : "";
+		if (object.isNull(LoginResponse.sDescription) ||
+			object.getString(LoginResponse.sDescription) == "null") {
+			mDescription = "";
+		} else {
+			mDescription = object.getString(LoginResponse.sDescription);
+		}
+
 		mLastModified = object.getString(LoginResponse.sLastUpdateTime);
 		mExpireDate = (object.has(LoginResponse.sExpireDate) &&
 					   !object.isNull(LoginResponse.sExpireDate)) ?

@@ -27,7 +27,7 @@ public class LoginResponse {
     public static final String sName = "name";
     public static final String sType = "location_type";
     public static final String sAddress = "address";
-    public static final String sDetails = "description";
+    public static final String sDescription = "description";
     public static final String sLastUpdateTime = "updated_at";
     public static final String sExpireDate = "expireDate";
     public AccessToken mToken;
