@@ -3,7 +3,7 @@
             android:id="@+id/navigation_drawer_pane"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="com.cruzroja.android.view.fragments.NavigationDrawerFragment"
+            tools:context="org.creuroja.android.view.fragments.NavigationDrawerFragment"
             android:background="#cccc">
 
     <LinearLayout
