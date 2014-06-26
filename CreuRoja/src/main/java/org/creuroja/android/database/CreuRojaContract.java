@@ -1,4 +1,4 @@
-package com.cruzroja.android.database;
+package org.creuroja.android.database;
 
 import android.net.Uri;
 import android.provider.BaseColumns;

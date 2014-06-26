@@ -1,4 +1,4 @@
-package com.cruzroja.android.app.utils;
+package org.creuroja.android.app.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

@@ -1,14 +1,14 @@
-package com.cruzroja.android.app.loaders;
+package org.creuroja.android.app.loaders;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.cruzroja.android.R;
-import com.cruzroja.android.app.AccessResponse;
-import com.cruzroja.android.app.Settings;
-import com.cruzroja.android.app.utils.ConnectionClient;
+import org.creuroja.android.R;
+import org.creuroja.android.app.AccessResponse;
+import org.creuroja.android.app.Settings;
+import org.creuroja.android.app.utils.ConnectionClient;
 
 import java.io.IOException;
 

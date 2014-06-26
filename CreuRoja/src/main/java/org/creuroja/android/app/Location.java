@@ -1,4 +1,4 @@
-package com.cruzroja.android.app;
+package org.creuroja.android.app;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -6,14 +6,14 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.text.TextUtils;
 
-import com.cruzroja.android.R;
-import com.cruzroja.android.app.utils.ConnectionClient;
-import com.cruzroja.android.database.CreuRojaContract;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.creuroja.android.R;
+import org.creuroja.android.app.utils.ConnectionClient;
+import org.creuroja.android.database.CreuRojaContract;
 import org.json.JSONException;
 import org.json.JSONObject;
 
