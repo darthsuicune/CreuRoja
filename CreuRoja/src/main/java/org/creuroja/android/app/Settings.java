@@ -1,7 +1,9 @@
 package org.creuroja.android.app;
 
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import org.creuroja.android.database.CreuRojaContract;
 
@@ -23,7 +25,9 @@ public class Settings {
     public static final String SHOW_SOCIAL = "social";
     public static final String SHOW_TERRESTRE = "terrestre";
 
-    public static void removeData(ContentResolver cr, SharedPreferences prefs) {
+    public static void removeData(Context context) {
+		ContentResolver cr = context.getContentResolver();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         cr.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, null, null);
         prefs.edit().clear().commit();
     }
