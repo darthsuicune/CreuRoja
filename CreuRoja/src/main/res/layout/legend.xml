@@ -4,6 +4,64 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:id="@+id/navigation_legend">
+              android:id="@+id/navigation_legend"
+              android:layout_marginLeft="10dp">
+
+    <TextView
+        android:id="@+id/navigation_legend_adaptadas"
+        android:text="@string/marker_type_adaptadas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/adaptadas"/>
+    <TextView
+        android:id="@+id/navigation_legend_asamblea"
+        android:text="@string/marker_type_asamblea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/asamblea"/>
+    <TextView
+        android:id="@+id/navigation_legend_bravo"
+        android:text="@string/marker_type_bravo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/bravo"/>
+    <TextView
+        android:id="@+id/navigation_legend_cuap"
+        android:text="@string/marker_type_cuap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/cuap"/>
+    <TextView
+        android:id="@+id/navigation_legend_hospital"
+        android:text="@string/marker_type_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/hospital"/>
+    <TextView
+        android:id="@+id/navigation_legend_maritimo"
+        android:text="@string/marker_type_maritimo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/maritimo"/>
+    <TextView
+        android:id="@+id/navigation_legend_nostrum"
+        android:text="@string/marker_type_nostrum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/nostrum"/>
+    <TextView
+        android:id="@+id/navigation_legend_terrestre"
+        android:text="@string/marker_type_terrestre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/terrestre"/>
 
 </LinearLayout>

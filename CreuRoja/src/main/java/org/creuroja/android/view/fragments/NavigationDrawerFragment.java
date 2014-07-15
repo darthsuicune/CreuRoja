@@ -17,12 +17,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+
 import org.creuroja.android.R;
+import org.creuroja.android.controller.NavigationDrawerController;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -31,14 +32,10 @@ import org.creuroja.android.R;
  */
 public class NavigationDrawerFragment extends Fragment {
 	public static final int SEE_MAP = 0;
-	public static final int SEE_LIST = 1;
-	public static final int MAP_TYPE_NORMAL = 8;
-	public static final int MAP_TYPE_TERRAIN = 9;
-	public static final int MAP_TYPE_HYBRID = 10;
-	public static final int MAP_TYPE_SATELLITE = 11;
+	public static final int SEE_LIST = 17;
 
 	// Remember the position of the selected item.
-	private static final String STATE_SELECTED_POSITION = "selected_navigation_drawer_position";
+	private static final String STATE_SELECTED_MAP_TYPE = "selected_map_type";
 
 	/**
 	 * Per the design guidelines, you should show the drawer on launch until the user manually
@@ -53,12 +50,13 @@ public class NavigationDrawerFragment extends Fragment {
 	private ActionBarDrawerToggle mDrawerToggle;
 
 	private DrawerLayout mDrawerLayout;
-	private ListView mDrawerListView;
 	private View mFragmentContainerView;
 
-	private int mCurrentSelectedPosition = 0;
+	private int mCurrentSelectedMapType = GoogleMap.MAP_TYPE_NORMAL;
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
+
+	private NavigationDrawerController mDrawerController;
 
 	public NavigationDrawerFragment() {
 	}
@@ -73,12 +71,12 @@ public class NavigationDrawerFragment extends Fragment {
 		mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
 		if (savedInstanceState != null) {
-			mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
+			mCurrentSelectedMapType = savedInstanceState.getInt(STATE_SELECTED_MAP_TYPE);
 			mFromSavedInstanceState = true;
 		}
 
 		// Select either the default item (0) or the last selected item.
-		selectItem(mCurrentSelectedPosition);
+		selectMapType(mCurrentSelectedMapType);
 	}
 
 	@Override
@@ -91,22 +89,8 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
+		mDrawerController = new NavigationDrawerController(this);
 		View v = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-
-		mDrawerListView = (ListView) v.findViewById(R.id.navigation_drawer_section_list);
-		mDrawerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				selectItem(position);
-			}
-		});
-		mDrawerListView.setAdapter(new ArrayAdapter<>(getActionBar().getThemedContext(),
-				android.R.layout.simple_list_item_activated_1, android.R.id.text1, new String[]{
-				getString(R.string.title_section1),
-				getString(R.string.title_section2),
-				getString(R.string.title_section3),}
-		));
-		mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
 		prepareLegend(v);
 		prepareMapTypes(v);
 		return v;
@@ -114,9 +98,27 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private void prepareLegend(View v) {
+
 	}
 
-	private void prepareMapTypes(View v){
+	private void prepareMapTypes(View v) {
+		TextView normal = (TextView) v.findViewById(R.id.navigation_map_type_normal);
+		TextView terrain = (TextView) v.findViewById(R.id.navigation_map_type_terrain);
+		TextView satellite = (TextView) v.findViewById(R.id.navigation_map_type_satellite);
+		TextView hybrid = (TextView) v.findViewById(R.id.navigation_map_type_hybrid);
+
+		mDrawerController.prepareMapType(normal, GoogleMap.MAP_TYPE_NORMAL);
+		mDrawerController.prepareMapType(terrain, GoogleMap.MAP_TYPE_TERRAIN);
+		mDrawerController.prepareMapType(satellite, GoogleMap.MAP_TYPE_SATELLITE);
+		mDrawerController.prepareMapType(hybrid, GoogleMap.MAP_TYPE_HYBRID);
+	}
+
+	public void legendObjectToggled(int legend, boolean newStatus) {
+
+	}
+
+	public void mapTypeChanged(int newMapType) {
+
 	}
 
 	public boolean isDrawerOpen() {
@@ -162,11 +164,8 @@ public class NavigationDrawerFragment extends Fragment {
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 
-	private void selectItem(int position) {
-		mCurrentSelectedPosition = position;
-		if (mDrawerListView != null) {
-			mDrawerListView.setItemChecked(position, true);
-		}
+	private void selectMapType(int position) {
+		mCurrentSelectedMapType = position;
 		if (mDrawerLayout != null) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
@@ -194,7 +193,7 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
-		outState.putInt(STATE_SELECTED_POSITION, mCurrentSelectedPosition);
+		outState.putInt(STATE_SELECTED_MAP_TYPE, mCurrentSelectedMapType);
 	}
 
 	@Override
