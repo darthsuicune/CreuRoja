@@ -19,7 +19,7 @@ public final class CreuRojaContract {
         public static final String ADDRESS = "address";
         public static final String DETAILS = "details";
         public static final String LAST_MODIFIED = "updated_at";
-        public static final String EXPIRE_DATE = "expiredate";
+        public static final String ACTIVE = "active";
     }
 
 }

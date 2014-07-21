@@ -4,11 +4,9 @@ import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
-import org.creuroja.android.app.Location;
-import org.creuroja.android.app.LoginResponse;
-import org.creuroja.android.database.CreuRojaContract;
-
 import org.apache.http.HttpResponse;
+import org.creuroja.android.app.Location;
+import org.creuroja.android.database.CreuRojaContract;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,7 +45,7 @@ public class LocationsProvider {
 
     public static List<Location> getLocationList(JSONObject object) throws JSONException {
         ArrayList<Location> locationList = new ArrayList<>();
-        JSONArray locations = object.getJSONArray(LoginResponse.sLocations);
+        JSONArray locations = object.getJSONArray(Location.sLocations);
         for (int i = 0; i < locations.length(); i++) {
             Location location = new Location(locations.getJSONObject(i));
             locationList.add(location);

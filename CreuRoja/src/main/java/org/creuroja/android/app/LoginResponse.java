@@ -21,15 +21,6 @@ import java.util.List;
 public class LoginResponse {
     public static final String sAccessToken = "accessToken";
     public static final String sAccessTokenString = "accessTokenString";
-    public static final String sLocations = "locations";
-    public static final String sLatitude = "latitude";
-    public static final String sLongitude = "longitude";
-    public static final String sName = "name";
-    public static final String sType = "location_type";
-    public static final String sAddress = "address";
-    public static final String sDescription = "description";
-    public static final String sLastUpdateTime = "updated_at";
-    public static final String sExpireDate = "expireDate";
     public AccessToken mToken;
     public List<Location> mLocationList;
     public int mErrorMessage;

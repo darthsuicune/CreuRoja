@@ -62,11 +62,6 @@ public class ConnectionClient {
 		return (cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected());
 	}
 
-	// Placeholder in case we want to introduce sensor detection
-	private static String getSensorAvailability() {
-		return "true";
-	}
-
 	private static List<LatLng> parseDirectionsResponse(HttpResponse response) {
 		List<LatLng> result = null;
 		if (response.getStatusLine() != null) {
@@ -247,5 +242,13 @@ public class ConnectionClient {
 	private HttpResponse executeRequest(HttpClient httpClient, HttpUriRequest request)
 			throws IOException {
 		return httpClient.execute(request);
+	}
+
+	/**
+	 *
+	 Placeholder in case we want to introduce sensor detection
+ 	 */
+	private static String getSensorAvailability() {
+		return "true";
 	}
 }

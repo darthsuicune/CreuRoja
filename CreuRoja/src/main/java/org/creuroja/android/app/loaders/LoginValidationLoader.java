@@ -3,13 +3,10 @@ package org.creuroja.android.app.loaders;
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.v4.content.AsyncTaskLoader;
-import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.creuroja.android.app.Settings;
 import org.creuroja.android.app.utils.ConnectionClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -38,19 +35,19 @@ public class LoginValidationLoader extends AsyncTaskLoader<Boolean> {
 	@Override
 	public Boolean loadInBackground() {
 		mClient = new ConnectionClient();
-		Boolean result = true;
+		Boolean isValid = true;
 		String accessToken = PreferenceManager.getDefaultSharedPreferences(getContext())
 				.getString(Settings.ACCESS_TOKEN, "");
 		try {
-			result = mClient.validateLogin(accessToken);
+			isValid = mClient.validateLogin(accessToken);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return result;
+		return isValid;
 	}
 
 	public static Boolean parse(HttpResponse response) {
-		Boolean result = true;
+		Boolean isValid = true;
 		BufferedReader reader;
 		try {
 			reader = new BufferedReader(
@@ -64,28 +61,18 @@ public class LoginValidationLoader extends AsyncTaskLoader<Boolean> {
 				reader.close();
 			}
 			// Parse the resulting string. Save to disk if its correct
-			result = parseResponse(builder.toString());
+			isValid = parseResponse(builder.toString());
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		return result;
+		return isValid;
 	}
 
 	private static Boolean parseResponse(String response) {
-		try {
-			JSONObject object = new JSONObject(response);
-			if(object.has(PARAMETER_IS_VALID)) {
-				Log.d("WAT", response);
-				return object.getBoolean(PARAMETER_IS_VALID);
-			} else {
-				Log.d("WAT", response);
-			}
-		} catch (JSONException e) {
-			e.printStackTrace();
-		}
-		return true;
+		//This is the response that would lead to a invalid user.
+		return !response.equals("\"{\\\"isValid\\\":false}\"");
 	}
 }

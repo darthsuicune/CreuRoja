@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class CreuRojaOpenHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "CreuRoja";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
     private static final String CREATE = "CREATE TABLE ";
     private static final String KEY = " INTEGER PRIMARY KEY AUTOINCREMENT, ";
 
@@ -29,7 +29,7 @@ public class CreuRojaOpenHelper extends SQLiteOpenHelper {
                 + CreuRojaContract.Locations.NAME + " TEXT NOT NULL, "
                 + CreuRojaContract.Locations.ADDRESS + " TEXT, "
                 + CreuRojaContract.Locations.DETAILS + " TEXT, "
-                + CreuRojaContract.Locations.EXPIRE_DATE + " INTEGER NOT NULL, "
+                + CreuRojaContract.Locations.ACTIVE + " INTEGER NOT NULL, "
                 + CreuRojaContract.Locations.LAST_MODIFIED + " TEXT NOT NULL)"
         );
 
@@ -37,5 +37,13 @@ public class CreuRojaOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+		switch(oldVersion) {
+			case 1:
+				db.execSQL("ALTER TABLE " + CreuRojaContract.Locations.TABLE_NAME + " ADD COLUMN "
+						   + CreuRojaContract.Locations.ACTIVE + " INTEGER NOT NULL DEFAULT 1");
+				break;
+			default:
+				break;
+		}
     }
 }

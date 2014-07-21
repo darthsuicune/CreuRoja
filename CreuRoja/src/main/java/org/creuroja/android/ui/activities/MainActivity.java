@@ -430,15 +430,13 @@ public class MainActivity extends ActionBarActivity
 		mGoogleMap.clear();
 		List<Location> locationList = LocationsProvider.getLocationList(locations);
 		for (Location location : locationList) {
-			if (location.mExpireDate == 0 || location.mExpireDate > System.currentTimeMillis()) {
-				if (mPolyline != null) {
-					drawDirections(mPolyline.getPoints());
-				}
-				Marker marker = mGoogleMap.addMarker(location.getMarker());
-				location.mMarker = marker;
-				mMarkerLocationMap.put(marker, location);
-				marker.setVisible(location.shouldBeShown(mFilter, prefs));
+			if (mPolyline != null) {
+				drawDirections(mPolyline.getPoints());
 			}
+			Marker marker = mGoogleMap.addMarker(location.getMarker());
+			location.mMarker = marker;
+			mMarkerLocationMap.put(marker, location);
+			marker.setVisible(location.shouldBeShown(mFilter, prefs));
 		}
 		mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
 	}

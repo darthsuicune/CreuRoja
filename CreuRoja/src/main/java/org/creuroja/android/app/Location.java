@@ -28,6 +28,16 @@ import java.util.List;
  * Created by lapuente on 29.10.13.
  */
 public class Location {
+	public static final String sLocations = "locations";
+	public static final String sLatitude = "latitude";
+	public static final String sLongitude = "longitude";
+	public static final String sName = "name";
+	public static final String sType = "location_type";
+	public static final String sAddress = "address";
+	public static final String sActive= "active";
+	public static final String sDescription = "description";
+	public static final String sLastUpdateTime = "updated_at";
+	
 	public final double mLatitude;
 	public final double mLongitude;
 	public final String mName;
@@ -35,11 +45,11 @@ public class Location {
 	public final String mAddress;
 	public final String mDescription;
 	public final String mLastModified;
-	public final long mExpireDate;
+	public final boolean mActive;
 	public Marker mMarker;
 
 	public Location(double latitude, double longitude, String name, String type, String address,
-					String details, String lastModified, long expireDate) {
+					String details, String lastModified, boolean active) {
 		mLatitude = latitude;
 		mLongitude = longitude;
 		mName = name;
@@ -47,26 +57,25 @@ public class Location {
 		mAddress = address;
 		mDescription = details;
 		mLastModified = lastModified;
-		mExpireDate = expireDate;
+		mActive = active;
 	}
 
 	public Location(JSONObject object) throws JSONException {
-		mLatitude = object.getDouble(LoginResponse.sLatitude);
-		mLongitude = object.getDouble(LoginResponse.sLongitude);
-		mName = object.getString(LoginResponse.sName);
-		mType = Type.getType(object.getString(LoginResponse.sType));
-		mAddress = object.getString(LoginResponse.sAddress);
-		if (object.isNull(LoginResponse.sDescription) ||
-			object.getString(LoginResponse.sDescription) == "null") {
+		mLatitude = object.getDouble(sLatitude);
+		mLongitude = object.getDouble(sLongitude);
+		mName = object.getString(sName);
+		mType = Type.getType(object.getString(sType));
+		mAddress = object.getString(sAddress);
+		if (object.isNull(sDescription) ||
+			object.getString(sDescription) == "null") {
 			mDescription = "";
 		} else {
-			mDescription = object.getString(LoginResponse.sDescription);
+			mDescription = object.getString(sDescription);
 		}
 
-		mLastModified = object.getString(LoginResponse.sLastUpdateTime);
-		mExpireDate = (object.has(LoginResponse.sExpireDate) &&
-					   !object.isNull(LoginResponse.sExpireDate)) ?
-				object.getLong(LoginResponse.sExpireDate) : 0;
+		mLastModified = object.getString(sLastUpdateTime);
+		mActive = (object.has(sActive)) ?
+				(object.getInt(sActive) == 1) : true;
 	}
 
 	public Location(Cursor cursor) {
@@ -79,7 +88,7 @@ public class Location {
 		mDescription = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.DETAILS));
 		mLastModified =
 				cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.LAST_MODIFIED));
-		mExpireDate = cursor.getLong(cursor.getColumnIndex(CreuRojaContract.Locations.EXPIRE_DATE));
+		mActive = (cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.ACTIVE)) == 1);
 	}
 
 	public boolean newerThan(String lastUpdate) {
