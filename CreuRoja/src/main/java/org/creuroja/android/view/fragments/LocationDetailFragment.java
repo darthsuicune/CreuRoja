@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.creuroja.android.R;
+import org.creuroja.android.model.Location;
 
 
 /**
@@ -23,21 +24,18 @@ public class LocationDetailFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final String ARG_LOCATION_ID = "locationId";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Location mLocation;
 
     private OnFragmentInteractionListener mListener;
 
     // TODO: Rename and change types of parameters
-    public static LocationDetailFragment newInstance(String param1, String param2) {
+    public static LocationDetailFragment newInstance(int locationId) {
         LocationDetailFragment fragment = new LocationDetailFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_LOCATION_ID, locationId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -54,8 +52,7 @@ public class LocationDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            mLocation = new Location(getArguments().getInt(ARG_LOCATION_ID));
         }
     }
 

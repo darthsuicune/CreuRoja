@@ -4,6 +4,28 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-                android:id="@+id/navigation_map_type">
+              android:id="@+id/navigation_map_type"
+              android:layout_marginLeft="10dp">
+
+    <TextView
+        android:id="@+id/navigation_map_type_normal"
+        android:text="@string/map_style_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/navigation_map_type_terrain"
+        android:text="@string/map_style_terrain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/navigation_map_type_satellite"
+        android:text="@string/map_style_satellite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/navigation_map_type_hybrid"
+        android:text="@string/map_style_hybrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

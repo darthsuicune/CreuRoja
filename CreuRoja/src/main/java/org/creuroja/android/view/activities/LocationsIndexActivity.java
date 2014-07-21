@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 
 import org.creuroja.android.R;
@@ -93,18 +92,6 @@ public class LocationsIndexActivity extends Activity implements LoginManager,
 			case NavigationDrawerFragment.SEE_LIST:
 				fragment = LocationListFragment.newInstance("", "");
 				break;
-			case NavigationDrawerFragment.MAP_TYPE_HYBRID:
-				mapController.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-				break;
-			case NavigationDrawerFragment.MAP_TYPE_NORMAL:
-				mapController.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-				break;
-			case NavigationDrawerFragment.MAP_TYPE_SATELLITE:
-				mapController.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-				break;
-			case NavigationDrawerFragment.MAP_TYPE_TERRAIN:
-				mapController.setMapType(GoogleMap.MAP_TYPE_HYBRID);
-				break;
 			default:
 				//wait, wat?
 				break;
@@ -112,20 +99,6 @@ public class LocationsIndexActivity extends Activity implements LoginManager,
 		// update the main content by replacing fragments
 		if (fragment != null) {
 			fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
-		}
-	}
-
-	public void onSectionAttached(int number) {
-		switch (number) {
-			case 1:
-				mTitle = getString(R.string.title_section1);
-				break;
-			case 2:
-				mTitle = getString(R.string.title_section2);
-				break;
-			case 3:
-				mTitle = getString(R.string.title_section3);
-				break;
 		}
 	}
 

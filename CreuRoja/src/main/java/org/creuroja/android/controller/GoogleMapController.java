@@ -2,10 +2,11 @@ package org.creuroja.android.controller;
 
 import android.content.SharedPreferences;
 
-import org.creuroja.android.app.Settings;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
+
+import org.creuroja.android.app.Settings;
 
 /**
  * Created by lapuente on 16.06.14.
@@ -40,4 +41,6 @@ public class GoogleMapController implements MapController {
 			map.setMapType(mapType);
 		}
 	}
+
+
 }

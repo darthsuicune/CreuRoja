@@ -14,6 +14,10 @@ import java.util.List;
  */
 public class Location {
 
+	public Location(int id) {
+
+	}
+
 	public static List<Type> getAvailableTypes(Context context) {
 		ArrayList<Type> result = new ArrayList<>();
 		ContentResolver cr = context.getContentResolver();
