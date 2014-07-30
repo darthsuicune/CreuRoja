@@ -33,7 +33,7 @@ import java.util.List;
  * Created by lapuente on 29.10.13.
  */
 public class ConnectionClient {
-    private static final String SERVER_URL = "http://creuroja.net";
+    private static final String SERVER_URL = "https://creuroja.net";
     private static final String QUERY = "/webservice.php?q=";
     private static final String LOGIN_REQUEST = "request_access";
 	private static final String VALIDATE_REQUEST = "validate_access";
