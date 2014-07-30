@@ -1,9 +1,9 @@
-package org.creuroja.android.ui.activities;
+package net.creuroja.android.ui.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import org.creuroja.android.R;
+import net.creuroja.android.R;
 
 public class LoginActivity extends FragmentActivity {
 

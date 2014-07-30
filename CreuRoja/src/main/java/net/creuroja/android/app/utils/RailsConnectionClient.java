@@ -1,9 +1,10 @@
-package org.creuroja.android.app.utils;
+package net.creuroja.android.app.utils;
+
+import net.creuroja.android.app.LoginResponse;
 
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.creuroja.android.app.Location;
-import org.creuroja.android.app.LoginResponse;
+import net.creuroja.android.app.Location;
 
 import java.io.IOException;
 import java.util.List;

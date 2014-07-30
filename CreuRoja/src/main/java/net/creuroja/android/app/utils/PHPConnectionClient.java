@@ -1,4 +1,8 @@
-package org.creuroja.android.app.utils;
+package net.creuroja.android.app.utils;
+
+import net.creuroja.android.app.Location;
+import net.creuroja.android.app.LoginResponse;
+import net.creuroja.android.app.PHPLoginResponse;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -6,9 +10,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.message.BasicNameValuePair;
-import org.creuroja.android.app.Location;
-import org.creuroja.android.app.LoginResponse;
-import org.creuroja.android.app.PHPLoginResponse;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,17 +1,18 @@
-package org.creuroja.android.app.utils;
+package net.creuroja.android.app.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import net.creuroja.android.app.Location;
+import net.creuroja.android.app.LoginResponse;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.creuroja.android.app.Location;
-import org.creuroja.android.app.LoginResponse;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

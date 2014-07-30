@@ -1,8 +1,9 @@
-package org.creuroja.android.app;
+package net.creuroja.android.app;
+
+import net.creuroja.android.R;
+import net.creuroja.android.app.utils.LocationsProvider;
 
 import org.apache.http.HttpResponse;
-import org.creuroja.android.R;
-import org.creuroja.android.app.utils.LocationsProvider;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -23,6 +24,10 @@ public class PHPLoginResponse extends LoginResponse {
 
 	public PHPLoginResponse(HttpResponse response) {
 		super(response);
+	}
+
+	@Override public String getToken() {
+		return mToken.mAccessToken;
 	}
 
 	@Override

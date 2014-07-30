@@ -1,12 +1,12 @@
-package org.creuroja.android.app.utils;
+package net.creuroja.android.app.utils;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.SharedPreferences;
 
-import org.creuroja.android.app.Location;
-import org.creuroja.android.app.Settings;
-import org.creuroja.android.database.CreuRojaContract;
+import net.creuroja.android.app.Location;
+import net.creuroja.android.app.Settings;
+import net.creuroja.android.database.CreuRojaContract;
 
 import java.io.IOException;
 import java.util.ArrayList;

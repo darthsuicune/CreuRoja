@@ -1,7 +1,8 @@
-package org.creuroja.android.app;
+package net.creuroja.android.app;
+
+import net.creuroja.android.R;
 
 import org.apache.http.HttpResponse;
-import org.creuroja.android.R;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,6 +30,8 @@ public abstract class LoginResponse {
             mErrorMessage = R.string.error_connecting;
         }
     }
+
+	public abstract String getToken();
 
     public abstract void parseResponse(BufferedReader reader) throws IOException;
 

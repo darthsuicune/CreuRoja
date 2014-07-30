@@ -1,12 +1,12 @@
-package org.creuroja.android.app.loaders;
+package net.creuroja.android.app.loaders;
 
 import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.v4.content.AsyncTaskLoader;
 
-import org.creuroja.android.app.Settings;
-import org.creuroja.android.app.utils.ConnectionClient;
-import org.creuroja.android.app.utils.PHPConnectionClient;
+import net.creuroja.android.app.utils.ConnectionClient;
+import net.creuroja.android.app.Settings;
+import net.creuroja.android.app.utils.PHPConnectionClient;
 
 import java.io.IOException;
 

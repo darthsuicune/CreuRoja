@@ -1,4 +1,4 @@
-package org.creuroja.android.app;
+package net.creuroja.android.app;
 
 import org.apache.http.HttpResponse;
 
@@ -15,6 +15,10 @@ public class RailsLoginResponse extends LoginResponse {
 
 	public RailsLoginResponse(HttpResponse response) {
 		super(response);
+	}
+
+	@Override public String getToken() {
+		return null;
 	}
 
 	@Override public void parseResponse(BufferedReader reader) throws IOException {

@@ -1,4 +1,4 @@
-package org.creuroja.android.app;
+package net.creuroja.android.app;
 
 import android.annotation.SuppressLint;
 import android.content.ContentResolver;
@@ -11,9 +11,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.creuroja.android.R;
-import org.creuroja.android.app.utils.PHPConnectionClient;
-import org.creuroja.android.database.CreuRojaContract;
+import net.creuroja.android.app.utils.PHPConnectionClient;
+import net.creuroja.android.database.CreuRojaContract;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -185,16 +185,16 @@ public class Location {
 	}
 
 	public enum Type {
-		NONE(R.string.no_marker_type, 0),
-		ADAPTADAS(R.string.marker_type_adaptadas, R.drawable.adaptadas),
-		ASAMBLEA(R.string.marker_type_asamblea, R.drawable.asamblea),
-		BRAVO(R.string.marker_type_bravo, R.drawable.bravo),
-		CUAP(R.string.marker_type_cuap, R.drawable.cuap),
-		HOSPITAL(R.string.marker_type_hospital, R.drawable.hospital),
-		MARITIMO(R.string.marker_type_maritimo, R.drawable.maritimo),
-		NOSTRUM(R.string.marker_type_nostrum, R.drawable.nostrum),
-		SOCIAL(R.string.marker_type_social, R.drawable.social),
-		TERRESTRE(R.string.marker_type_terrestre, R.drawable.terrestre);
+		NONE(net.creuroja.android.R.string.no_marker_type, 0),
+		ADAPTADAS(net.creuroja.android.R.string.marker_type_adaptadas, net.creuroja.android.R.drawable.adaptadas),
+		ASAMBLEA(net.creuroja.android.R.string.marker_type_asamblea, net.creuroja.android.R.drawable.asamblea),
+		BRAVO(net.creuroja.android.R.string.marker_type_bravo, net.creuroja.android.R.drawable.bravo),
+		CUAP(net.creuroja.android.R.string.marker_type_cuap, net.creuroja.android.R.drawable.cuap),
+		HOSPITAL(net.creuroja.android.R.string.marker_type_hospital, net.creuroja.android.R.drawable.hospital),
+		MARITIMO(net.creuroja.android.R.string.marker_type_maritimo, net.creuroja.android.R.drawable.maritimo),
+		NOSTRUM(net.creuroja.android.R.string.marker_type_nostrum, net.creuroja.android.R.drawable.nostrum),
+		SOCIAL(net.creuroja.android.R.string.marker_type_social, net.creuroja.android.R.drawable.social),
+		TERRESTRE(net.creuroja.android.R.string.marker_type_terrestre, net.creuroja.android.R.drawable.terrestre);
 		public final int mIcon;
 		public final int mMarkerType;
 
@@ -233,13 +233,13 @@ public class Location {
 			Cursor cursor =
 					cr.query(CreuRojaContract.Locations.CONTENT_LOCATIONS, projection, null, null,
 							null);
-			if (cursor.moveToFirst()) {
+			if (cursor != null && cursor.moveToFirst()) {
 				do {
 					typeList.add(getType(cursor
 							.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ICON))));
 				} while (cursor.moveToNext());
+				cursor.close();
 			}
-			cursor.close();
 			return typeList;
 		}
 	}

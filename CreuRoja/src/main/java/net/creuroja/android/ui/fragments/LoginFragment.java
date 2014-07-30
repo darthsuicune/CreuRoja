@@ -1,4 +1,4 @@
-package org.creuroja.android.ui.fragments;
+package net.creuroja.android.ui.fragments;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -20,12 +20,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.creuroja.android.R;
-import org.creuroja.android.app.LoginResponse;
-import org.creuroja.android.app.Settings;
-import org.creuroja.android.app.loaders.LoginLoader;
-import org.creuroja.android.app.utils.ConnectionClient;
-import org.creuroja.android.app.utils.LocationDownloader;
+import net.creuroja.android.app.LoginResponse;
+import net.creuroja.android.app.Settings;
+import net.creuroja.android.app.loaders.LoginLoader;
+import net.creuroja.android.app.utils.ConnectionClient;
+import net.creuroja.android.app.utils.LocationDownloader;
 
 /**
  * Created by lapuente on 29.10.13.
@@ -46,9 +45,9 @@ public class LoginFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_login, container, false);
-		mEmailView = (EditText) v.findViewById(R.id.login_email);
-		mPasswordView = (EditText) v.findViewById(R.id.login_password);
+		View v = inflater.inflate(net.creuroja.android.R.layout.fragment_login, container, false);
+		mEmailView = (EditText) v.findViewById(net.creuroja.android.R.id.login_email);
+		mPasswordView = (EditText) v.findViewById(net.creuroja.android.R.id.login_password);
 		mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
 			public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
@@ -59,7 +58,7 @@ public class LoginFragment extends Fragment
 				return false;
 			}
 		});
-		v.findViewById(R.id.login_button).setOnClickListener(new View.OnClickListener() {
+		v.findViewById(net.creuroja.android.R.id.login_button).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				attemptLogin();
@@ -79,8 +78,8 @@ public class LoginFragment extends Fragment
 
 	public void loginSuccessful(LoginResponse loginResponse) {
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		prefs.edit().putString(Settings.ACCESS_TOKEN, loginResponse.mToken.mAccessToken).commit();
-		new LocationDownloader(loginResponse.mToken.mAccessToken,
+		prefs.edit().putString(Settings.ACCESS_TOKEN, loginResponse.getToken()).commit();
+		new LocationDownloader(loginResponse.getToken(),
 							   getActivity().getContentResolver(), prefs)
 				.saveLocations(loginResponse.mLocationList);
 		getActivity().setResult(Activity.RESULT_OK);
@@ -101,8 +100,8 @@ public class LoginFragment extends Fragment
 	 */
 	@TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
 	private void showProgress(final boolean show) {
-		final View loginStatusView = getActivity().findViewById(R.id.login_status);
-		final View loginFormView = getActivity().findViewById(R.id.login_form);
+		final View loginStatusView = getActivity().findViewById(net.creuroja.android.R.id.login_status);
+		final View loginFormView = getActivity().findViewById(net.creuroja.android.R.id.login_form);
 		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
 		// for very easy animations. If available, use these APIs to fade-in
 		// the progress spinner.
@@ -137,7 +136,7 @@ public class LoginFragment extends Fragment
 	@Override
 	public Loader<LoginResponse> onCreateLoader(int id, Bundle args) {
 		if (!ConnectionClient.isConnected(getActivity())) {
-			Toast.makeText(getActivity(), R.string.error_no_connection, Toast.LENGTH_LONG).show();
+			Toast.makeText(getActivity(), net.creuroja.android.R.string.error_no_connection, Toast.LENGTH_LONG).show();
 		}
 		showProgress(true);
 		Loader<LoginResponse> loader = null;
