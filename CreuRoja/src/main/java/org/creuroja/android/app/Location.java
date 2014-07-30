@@ -12,7 +12,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.creuroja.android.R;
-import org.creuroja.android.app.utils.ConnectionClient;
+import org.creuroja.android.app.utils.PHPConnectionClient;
 import org.creuroja.android.database.CreuRojaContract;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -119,7 +119,7 @@ public class Location {
 
 	public List<LatLng> getDirections(double latitudeStart, double longitudeStart)
 			throws IOException {
-		return new ConnectionClient().getDirections(latitudeStart, longitudeStart, this);
+		return new PHPConnectionClient().getDirections(latitudeStart, longitudeStart, this);
 	}
 
 	public MarkerOptions getMarker() {
