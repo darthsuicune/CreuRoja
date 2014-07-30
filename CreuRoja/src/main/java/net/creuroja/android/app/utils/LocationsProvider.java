@@ -1,12 +1,13 @@
-package org.creuroja.android.app.utils;
+package net.creuroja.android.app.utils;
 
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
 
+import net.creuroja.android.app.Location;
+import net.creuroja.android.database.CreuRojaContract;
+
 import org.apache.http.HttpResponse;
-import org.creuroja.android.app.Location;
-import org.creuroja.android.database.CreuRojaContract;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -55,7 +56,7 @@ public class LocationsProvider {
 
     public static List<Location> getLocationList(Cursor cursor) {
         ArrayList<Location> locationsList = new ArrayList<Location>();
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             do {
                 Location location = new Location(cursor);
                 locationsList.add(location);

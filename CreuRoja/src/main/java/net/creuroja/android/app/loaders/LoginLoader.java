@@ -1,12 +1,13 @@
-package org.creuroja.android.app.loaders;
+package net.creuroja.android.app.loaders;
 
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
-import org.creuroja.android.R;
-import org.creuroja.android.app.LoginResponse;
-import org.creuroja.android.app.utils.ConnectionClient;
+import net.creuroja.android.app.LoginResponse;
+import net.creuroja.android.app.PHPLoginResponse;
+import net.creuroja.android.app.utils.ConnectionClient;
+import net.creuroja.android.app.utils.PHPConnectionClient;
 
 import java.io.IOException;
 
@@ -36,12 +37,12 @@ public class LoginLoader extends AsyncTaskLoader<LoginResponse> {
 
     @Override
     public LoginResponse loadInBackground() {
-        mClient = new ConnectionClient();
+        mClient = new PHPConnectionClient();
         LoginResponse response = null;
         try{
             response = mClient.doLogin(mEmail, mPassword);
         } catch(IOException e){
-            response = new LoginResponse(R.string.error_connecting);
+            response = new PHPLoginResponse(net.creuroja.android.R.string.error_connecting);
         }
         return response;
     }

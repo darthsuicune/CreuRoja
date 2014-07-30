@@ -1,22 +1,18 @@
-package org.creuroja.android.app.utils;
+package net.creuroja.android.app.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import net.creuroja.android.app.Location;
+import net.creuroja.android.app.LoginResponse;
+
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.creuroja.android.app.Location;
-import org.creuroja.android.app.LoginResponse;
-import org.creuroja.android.app.loaders.LoginValidationLoader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,7 +20,6 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,23 +27,14 @@ import java.util.List;
 /**
  * Created by lapuente on 29.10.13.
  */
-public class ConnectionClient {
-    private static final String SERVER_URL = "https://creuroja.net";
-    private static final String QUERY = "/webservice.php?q=";
-    private static final String LOGIN_REQUEST = "request_access";
-	private static final String VALIDATE_REQUEST = "validate_access";
-    private static final String LOCATIONS_REQUEST = "get_locations";
-
+public abstract class ConnectionClient {
 	public static final String DIRECTIONS_API_BASE_URL =
 			"https://maps.googleapis.com/maps/api/directions/json?region=es&";
 	public static final String ORIGIN_URL = "origin=";
 	public static final String DESTINATION_URL = "destination=";
 	public static final String SENSOR_URL = "sensor=";
-	public static final String EMAIL_VAR = "email";
-	public static final String PASS_VAR = "password";
-	public static final String ACCESS_TOKEN_VAR = "access_token";
-	public static final String LAST_UPDATE_VAR = "last_update";
-	public static final String PROGRAM_VERSION_VAR = "version";
+	public static final String PROGRAM_VERSION_VAR = "version=";
+	public static final String PROGRAM_VERSION_NUMBER = "1.0";
 	public static final int STATUS_OK = 0;
 	public static final int STATUS_NOT_OK = 1;
 	public static final int STATUS_LIMIT_REACHED = 2;
@@ -169,18 +155,11 @@ public class ConnectionClient {
 		}
 	}
 
-	public LoginResponse doLogin(String email, String password) throws IOException {
-		HttpResponse response =
-				executeRequest(createHttpClient(), getLoginRequest(email, password));
-
-		return new LoginResponse(response);
-	}
-
-	public List<Location> requestUpdates(String accessToken, String lastUpdate) throws IOException {
-		HttpResponse response =
-				executeRequest(createHttpClient(), getLocationsRequest(accessToken, lastUpdate));
-
-		return LocationsProvider.getLocationList(response);
+	/**
+	 * Placeholder in case we want to introduce sensor detection
+	 */
+	private static String getSensorAvailability() {
+		return "true";
 	}
 
 	public List<LatLng> getDirections(double latitudeStart, double longitudeStart,
@@ -189,67 +168,27 @@ public class ConnectionClient {
 				getDirectionsRequest(latitudeStart, longitudeStart, destination)));
 	}
 
-	public Boolean validateLogin(String accessToken) throws IOException {
-		HttpResponse response =
-				executeRequest(createHttpClient(), getValidationRequest(accessToken));
-		return LoginValidationLoader.parse(response);
-	}
-
-	private DefaultHttpClient createHttpClient() {
-		return new DefaultHttpClient();
-	}
-
-	private HttpUriRequest getLoginRequest(String email, String password) {
-		List<NameValuePair> nameValuePairs = new ArrayList<>();
-		nameValuePairs.add(new BasicNameValuePair(EMAIL_VAR, email));
-		nameValuePairs.add(new BasicNameValuePair(PASS_VAR, password));
-		return buildRequest(LOGIN_REQUEST, nameValuePairs);
-	}
-
-	private HttpUriRequest getValidationRequest(String accessToken) {
-		List<NameValuePair> nameValuePairs = new ArrayList<>();
-		nameValuePairs.add(new BasicNameValuePair(ACCESS_TOKEN_VAR, accessToken));
-		return buildRequest(VALIDATE_REQUEST, nameValuePairs);
-	}
-
-	private HttpUriRequest getLocationsRequest(String accessToken, String lastUpdate) {
-		List<NameValuePair> nameValuePairs = new ArrayList<>();
-		nameValuePairs.add(new BasicNameValuePair(ACCESS_TOKEN_VAR, accessToken));
-		nameValuePairs.add(new BasicNameValuePair(LAST_UPDATE_VAR, lastUpdate));
-		return buildRequest(LOCATIONS_REQUEST, nameValuePairs);
-	}
-
 	private HttpUriRequest getDirectionsRequest(double latitudeStart, double longitudeStart,
 												Location destination) {
 		return new HttpGet(URI.create(
 				DIRECTIONS_API_BASE_URL + ORIGIN_URL + latitudeStart + "," + longitudeStart + "&" +
 				DESTINATION_URL + destination.mLatitude + "," + destination.mLongitude + "&" +
-				SENSOR_URL + getSensorAvailability()
-		));
+				SENSOR_URL + getSensorAvailability()));
 	}
 
-	private HttpUriRequest buildRequest(String requestType, List<NameValuePair> entity) {
-		String address = SERVER_URL + QUERY + requestType + "&" + PROGRAM_VERSION_VAR + "1.0";
-		HttpPost request = new HttpPost(address);
-		try {
-			request.setEntity(new UrlEncodedFormEntity(entity));
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		return request;
+	DefaultHttpClient createHttpClient() {
+		return new DefaultHttpClient();
 	}
 
-	private HttpResponse executeRequest(HttpClient httpClient, HttpUriRequest request)
+	HttpResponse executeRequest(HttpClient httpClient, HttpUriRequest request)
 			throws IOException {
 		return httpClient.execute(request);
 	}
 
-	/**
-	 *
-	 Placeholder in case we want to introduce sensor detection
- 	 */
-	private static String getSensorAvailability() {
-		return "true";
-	}
+	public abstract LoginResponse doLogin(String email, String password) throws IOException;
+
+	public abstract List<Location> requestUpdates(String accessToken, String lastUpdate)
+			throws IOException;
+
+	public abstract Boolean validateLogin(String accessToken) throws IOException;
 }

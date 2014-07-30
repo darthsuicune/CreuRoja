@@ -1,11 +1,11 @@
-package org.creuroja.android.database;
+package net.creuroja.android.database;
 
 import android.content.*;
 import android.database.Cursor;
 import android.net.Uri;
 
 public class CreuRojaProvider extends ContentProvider {
-    protected static final String CONTENT_NAME = "org.creuroja.android.database.CreuRojaProvider";
+    protected static final String CONTENT_NAME = "net.creuroja.android.database.CreuRojaProvider";
     private static final int LOCATIONS = 1;
     private static final int LOCATIONS_ID = 2;
     static UriMatcher sUriMatcher;

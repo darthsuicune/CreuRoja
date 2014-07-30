@@ -1,11 +1,11 @@
-package org.creuroja.android.app;
+package net.creuroja.android.app;
 
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import org.creuroja.android.database.CreuRojaContract;
+import net.creuroja.android.database.CreuRojaContract;
 
 /**
  * Created by lapuente on 29.10.13.
