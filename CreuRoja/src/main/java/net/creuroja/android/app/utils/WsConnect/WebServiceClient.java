@@ -30,6 +30,8 @@ public abstract class WebServiceClient {
 
 	public abstract HttpResponse get(String resource, WebServiceFormat format,
 									 List<WebServiceOption> options) throws IOException;
+	public abstract HttpResponse post(String resource, WebServiceFormat format,
+									 List<WebServiceOption> options) throws IOException;
 
 	public String getAsString(HttpResponse response) throws IOException {
 		StringBuilder builder = new StringBuilder();

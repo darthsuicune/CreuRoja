@@ -21,7 +21,7 @@ import java.util.List;
 public class RailsConnectionClient extends ConnectionClient {
 	private static final String SERVER_PROTOCOL = "http";
 	private static final String SERVER_URL = "testing.creuroja.net";
-	private static final String LOGIN_REQUEST = "sessions/create";
+	private static final String LOGIN_REQUEST = "sessions";
 	private static final String LOCATIONS_REQUEST = "locations";
 	private static final String ACCESS_TOKEN_HEADER = "Authorization: Token ";
 	private static final String LAST_UPDATE_PARAMETER = "updated_at";
@@ -43,7 +43,7 @@ public class RailsConnectionClient extends ConnectionClient {
 	@Override
 	public LoginResponse doLogin(String email, String password) throws IOException {
 		List<WebServiceOption> options = createLoginOptions(email, password);
-		HttpResponse httpResponse = client.get(LOGIN_REQUEST, WebServiceFormat.JSON, options);
+		HttpResponse httpResponse = client.post(LOGIN_REQUEST, WebServiceFormat.JSON, options);
 		LoginResponse response = new RailsLoginResponse(httpResponse);
 		return response;
 	}
