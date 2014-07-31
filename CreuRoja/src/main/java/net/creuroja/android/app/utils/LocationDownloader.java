@@ -72,7 +72,7 @@ public class LocationDownloader implements Runnable {
     @Override
     public void run() {
         try {
-            List<Location> locationList = new PHPConnectionClient().
+            List<Location> locationList = new RailsConnectionClient().
                     requestUpdates(mAccessToken, mPrefs.getString(Settings.LAST_UPDATE_TIME, ""));
             //TODO: implement something useful instead of this piece of crap
             saveLocations(locationList);

@@ -1,4 +1,4 @@
-package com.abbyy.eu.common;
+package net.creuroja.android.app.utils.WsConnect;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -6,8 +6,7 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
@@ -32,18 +31,6 @@ public abstract class WebServiceClient {
 	public abstract HttpResponse get(String resource, WebServiceFormat format,
 									 List<WebServiceOption> options) throws IOException;
 
-	public abstract HttpResponse put(String resource, WebServiceFormat format,
-									 List<WebServiceOption> options) throws IOException;
-
-	public abstract HttpResponse post(String resource, WebServiceFormat format,
-									  List<WebServiceOption> options) throws IOException;
-
-	public abstract HttpResponse patch(String resource, WebServiceFormat format,
-									   List<WebServiceOption> options) throws IOException;
-
-	public abstract HttpResponse delete(String resource, WebServiceFormat format,
-										List<WebServiceOption> options) throws IOException;
-
 	public String getAsString(HttpResponse response) throws IOException {
 		StringBuilder builder = new StringBuilder();
 		BufferedReader reader =
@@ -56,18 +43,13 @@ public abstract class WebServiceClient {
 		return builder.toString();
 	}
 
-	protected abstract HttpResponse getHttpResponse(String resource, WebServiceFormat format,
-													List<WebServiceOption> options)
-			throws IOException;
-
-	protected String getStringResponse(String resource, WebServiceFormat format,
+	public String getStringResponse(String resource, WebServiceFormat format,
 									   List<WebServiceOption> options) throws IOException {
-		return getAsString(getHttpResponse(resource, format, options));
+		return getAsString(get(resource, format, options));
 	}
 
-	protected CloseableHttpClient getClient() {
-		HttpClientBuilder builder = HttpClientBuilder.create();
-		return builder.build();
+	protected DefaultHttpClient getClient() {
+		return new DefaultHttpClient();
 	}
 
 	protected HttpUriRequest getRequest(WebServiceRequestType requestType, String resource,
@@ -112,7 +94,11 @@ public abstract class WebServiceClient {
 				addHeaders(request, headerOptions);
 				return request;
 			case POST:
-				break;
+				HttpPost postRequest =
+						new HttpPost(buildRequestUrl(resource, format, getOptions));
+				addHeaders(postRequest, headerOptions);
+				addPostParameters(postRequest, postOptions);
+				return postRequest;
 			case PUT:
 				break;
 			case PATCH:
@@ -152,9 +138,12 @@ public abstract class WebServiceClient {
 		return request;
 	}
 
-	public HttpUriRequest addPostParameters(HttpPost request, List<NameValuePair> postOptions)
-			throws UnsupportedEncodingException {
-		request.setEntity(new UrlEncodedFormEntity(postOptions));
+	public HttpUriRequest addPostParameters(HttpPost request, List<NameValuePair> postOptions) {
+		try {
+			request.setEntity(new UrlEncodedFormEntity(postOptions));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		return request;
 	}
 }
