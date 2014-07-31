@@ -29,9 +29,11 @@ import java.util.List;
  */
 public class Location {
 	public static final String sLocations = "locations";
+	public static final String sId = "id";
 	public static final String sLatitude = "latitude";
 	public static final String sLongitude = "longitude";
 	public static final String sName = "name";
+	public static final String sPhone = "phone";
 	public static final String sType = "location_type";
 	public static final String sAddress = "address";
 	public static final String sActive= "active";
@@ -42,6 +44,7 @@ public class Location {
 	public final double mLongitude;
 	public final String mName;
 	public final Type mType;
+	public final String mPhone;
 	public final String mAddress;
 	public final String mDescription;
 	public final String mLastModified;
@@ -49,13 +52,14 @@ public class Location {
 	public Marker mMarker;
 
 	public Location(double latitude, double longitude, String name, String type, String address,
-					String details, String lastModified, boolean active) {
+					String details, String lastModified, String phone, boolean active) {
 		mLatitude = latitude;
 		mLongitude = longitude;
 		mName = name;
 		mType = Type.getType(type);
 		mAddress = address;
 		mDescription = details;
+		mPhone = phone;
 		mLastModified = lastModified;
 		mActive = active;
 	}
@@ -72,10 +76,10 @@ public class Location {
 		} else {
 			mDescription = object.getString(sDescription);
 		}
-
+		mPhone = object.getString(sPhone);
 		mLastModified = object.getString(sLastUpdateTime);
-		mActive = (object.has(sActive)) ?
-				(object.getInt(sActive) == 1) : true;
+		String active = object.get(sActive).toString();
+		mActive = (active.equals("1") || active.equals("true"));
 	}
 
 	public Location(Cursor cursor) {
@@ -86,6 +90,7 @@ public class Location {
 				cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ICON)));
 		mAddress = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ADDRESS));
 		mDescription = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.DETAILS));
+		mPhone = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.PHONE));
 		mLastModified =
 				cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.LAST_MODIFIED));
 		mActive = (cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.ACTIVE)) == 1);
@@ -96,7 +101,7 @@ public class Location {
 			return true;
 		}
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 			Date updatedAt = format.parse(mLastModified);
 			Date saved = format.parse(lastUpdate);
 			return updatedAt.after(saved);

@@ -27,6 +27,9 @@ public class LocationDownloader implements Runnable {
     }
 
     public void saveLocations(List<Location> locationList) {
+		if(locationList == null || locationList.isEmpty()) {
+			return;
+		}
         String lastUpdateTime = mPrefs.getString(Settings.LAST_UPDATE_TIME, "");
         List<Location> currentLocations = LocationsProvider.getCurrentLocations(mResolver);
         ArrayList<ContentValues> insertValues = new ArrayList<>();

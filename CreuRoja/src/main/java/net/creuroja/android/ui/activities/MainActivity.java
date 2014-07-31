@@ -22,6 +22,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import net.creuroja.android.app.Location;
 import net.creuroja.android.app.Settings;
 import net.creuroja.android.app.loaders.DirectionsLoader;
 import net.creuroja.android.app.loaders.LoginValidationLoader;
@@ -49,7 +51,6 @@ import net.creuroja.android.app.utils.ConnectionClient;
 import net.creuroja.android.app.utils.LocationDownloader;
 import net.creuroja.android.app.utils.LocationsProvider;
 import net.creuroja.android.database.CreuRojaContract;
-import net.creuroja.android.app.Location;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -214,6 +215,7 @@ public class MainActivity extends ActionBarActivity
 			case ACTIVITY_LOGIN:
 				switch (resultCode) {
 					case RESULT_OK:
+						downloadNewData();
 						showMap();
 						break;
 					default:
@@ -307,9 +309,8 @@ public class MainActivity extends ActionBarActivity
 		requestGooglePlayServicesAvailability();
 
 		setContentView(net.creuroja.android.R.layout.activity_main);
-
+		mMarkerPanelView = findViewById(net.creuroja.android.R.id.marker_panel);
 		setActionBar();
-		prepareViews();
 	}
 
 	private void showLogin() {
@@ -324,10 +325,10 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	private void prepareViews() {
-		mMarkerPanelView = findViewById(net.creuroja.android.R.id.marker_panel);
-
 		if (mMarkerPanelView != null) {
 			setCheckboxesVisibility();
+		} else {
+			Log.d("DEBUG", "The marker panel is not showing.");
 		}
 	}
 
@@ -583,6 +584,7 @@ public class MainActivity extends ActionBarActivity
 		public void onLoadFinished(Loader<Cursor> loader, Cursor locations) {
 			switch (loader.getId()) {
 				case LOADER_SHOW_LOCATIONS:
+					prepareViews();
 					createMarkers(locations);
 					break;
 				default:

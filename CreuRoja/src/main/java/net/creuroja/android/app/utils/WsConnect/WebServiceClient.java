@@ -119,7 +119,7 @@ public abstract class WebServiceClient {
 		for (NameValuePair option : getOptions) {
 			options.append(option.getName());
 			options.append("=");
-			options.append(option.getValue());
+			options.append(option.getValue().replace(" ", "%20"));
 			options.append("&");
 		}
 		if (options.toString().contains("&")) {
