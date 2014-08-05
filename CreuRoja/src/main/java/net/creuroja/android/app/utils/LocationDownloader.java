@@ -38,13 +38,15 @@ public class LocationDownloader implements Runnable {
                 lastUpdateTime = location.mLastModified;
             }
             ContentValues value = new ContentValues();
+			value.put(CreuRojaContract.Locations.REMOTE_ID, location.mRemoteId);
+			value.put(CreuRojaContract.Locations.LATITUD, location.mLatitude);
+			value.put(CreuRojaContract.Locations.LONGITUD, location.mLongitude);
+			value.put(CreuRojaContract.Locations.NAME, location.mName);
+			value.put(CreuRojaContract.Locations.ICON, location.mType.toString().toLowerCase());
+			value.put(CreuRojaContract.Locations.PHONE, location.mPhone);
             value.put(CreuRojaContract.Locations.ADDRESS, location.mAddress);
             value.put(CreuRojaContract.Locations.DETAILS, location.mDescription);
-            value.put(CreuRojaContract.Locations.ICON, location.mType.toString().toLowerCase());
             value.put(CreuRojaContract.Locations.LAST_MODIFIED, location.mLastModified);
-            value.put(CreuRojaContract.Locations.LATITUD, location.mLatitude);
-            value.put(CreuRojaContract.Locations.LONGITUD, location.mLongitude);
-            value.put(CreuRojaContract.Locations.NAME, location.mName);
             value.put(CreuRojaContract.Locations.ACTIVE, (location.mActive) ? "1" : "0");
 
             if (currentLocations.contains(location)) {
