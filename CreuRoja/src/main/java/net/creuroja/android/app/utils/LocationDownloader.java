@@ -27,6 +27,9 @@ public class LocationDownloader implements Runnable {
     }
 
     public void saveLocations(List<Location> locationList) {
+		if(locationList == null || locationList.isEmpty()) {
+			return;
+		}
         String lastUpdateTime = mPrefs.getString(Settings.LAST_UPDATE_TIME, "");
         List<Location> currentLocations = LocationsProvider.getCurrentLocations(mResolver);
         ArrayList<ContentValues> insertValues = new ArrayList<>();
@@ -35,13 +38,15 @@ public class LocationDownloader implements Runnable {
                 lastUpdateTime = location.mLastModified;
             }
             ContentValues value = new ContentValues();
+			value.put(CreuRojaContract.Locations.REMOTE_ID, location.mRemoteId);
+			value.put(CreuRojaContract.Locations.LATITUD, location.mLatitude);
+			value.put(CreuRojaContract.Locations.LONGITUD, location.mLongitude);
+			value.put(CreuRojaContract.Locations.NAME, location.mName);
+			value.put(CreuRojaContract.Locations.ICON, location.mType.toString().toLowerCase());
+			value.put(CreuRojaContract.Locations.PHONE, location.mPhone);
             value.put(CreuRojaContract.Locations.ADDRESS, location.mAddress);
             value.put(CreuRojaContract.Locations.DETAILS, location.mDescription);
-            value.put(CreuRojaContract.Locations.ICON, location.mType.toString().toLowerCase());
             value.put(CreuRojaContract.Locations.LAST_MODIFIED, location.mLastModified);
-            value.put(CreuRojaContract.Locations.LATITUD, location.mLatitude);
-            value.put(CreuRojaContract.Locations.LONGITUD, location.mLongitude);
-            value.put(CreuRojaContract.Locations.NAME, location.mName);
             value.put(CreuRojaContract.Locations.ACTIVE, (location.mActive) ? "1" : "0");
 
             if (currentLocations.contains(location)) {
@@ -72,9 +77,8 @@ public class LocationDownloader implements Runnable {
     @Override
     public void run() {
         try {
-            List<Location> locationList = new PHPConnectionClient().
+            List<Location> locationList = new RailsConnectionClient().
                     requestUpdates(mAccessToken, mPrefs.getString(Settings.LAST_UPDATE_TIME, ""));
-            //TODO: implement something useful instead of this piece of crap
             saveLocations(locationList);
         } catch (IOException e) {
             //In case problems during the connection arise, just leave a log.

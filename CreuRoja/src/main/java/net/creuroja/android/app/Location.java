@@ -11,7 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import net.creuroja.android.app.utils.PHPConnectionClient;
+import net.creuroja.android.app.utils.RailsConnectionClient;
 import net.creuroja.android.database.CreuRojaContract;
 
 import org.json.JSONException;
@@ -29,56 +29,68 @@ import java.util.List;
  */
 public class Location {
 	public static final String sLocations = "locations";
+	public static final String sId = "id";
 	public static final String sLatitude = "latitude";
 	public static final String sLongitude = "longitude";
 	public static final String sName = "name";
+	public static final String sPhone = "phone";
 	public static final String sType = "location_type";
 	public static final String sAddress = "address";
-	public static final String sActive= "active";
+	public static final String sActive = "active";
 	public static final String sDescription = "description";
 	public static final String sLastUpdateTime = "updated_at";
-	
+
+	public final int mRemoteId;
 	public final double mLatitude;
 	public final double mLongitude;
 	public final String mName;
 	public final Type mType;
+	public final String mPhone;
 	public final String mAddress;
 	public final String mDescription;
 	public final String mLastModified;
 	public final boolean mActive;
 	public Marker mMarker;
 
-	public Location(double latitude, double longitude, String name, String type, String address,
-					String details, String lastModified, boolean active) {
+	public Location(int id, double latitude, double longitude, String name, String type,
+					String address, String details, String lastModified, String phone,
+					boolean active) {
+		mRemoteId = id;
 		mLatitude = latitude;
 		mLongitude = longitude;
 		mName = name;
 		mType = Type.getType(type);
 		mAddress = address;
 		mDescription = details;
+		mPhone = phone;
 		mLastModified = lastModified;
 		mActive = active;
 	}
 
 	public Location(JSONObject object) throws JSONException {
+		mRemoteId = object.getInt(sId);
 		mLatitude = object.getDouble(sLatitude);
 		mLongitude = object.getDouble(sLongitude);
 		mName = object.getString(sName);
 		mType = Type.getType(object.getString(sType));
 		mAddress = object.getString(sAddress);
-		if (object.isNull(sDescription) ||
-			object.getString(sDescription) == "null") {
+		if (object.isNull(sDescription) || object.getString(sDescription) == "null") {
 			mDescription = "";
 		} else {
 			mDescription = object.getString(sDescription);
 		}
-
+		if(object.isNull(sPhone)) {
+			mPhone = "";
+		}else {
+			mPhone = object.getString(sPhone);
+		}
 		mLastModified = object.getString(sLastUpdateTime);
-		mActive = (object.has(sActive)) ?
-				(object.getInt(sActive) == 1) : true;
+		String active = object.get(sActive).toString();
+		mActive = (active.equals("1") || active.equals("true"));
 	}
 
 	public Location(Cursor cursor) {
+		mRemoteId = cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.REMOTE_ID));
 		mLatitude = cursor.getDouble(cursor.getColumnIndex(CreuRojaContract.Locations.LATITUD));
 		mLongitude = cursor.getDouble(cursor.getColumnIndex(CreuRojaContract.Locations.LONGITUD));
 		mName = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.NAME));
@@ -86,6 +98,7 @@ public class Location {
 				cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ICON)));
 		mAddress = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ADDRESS));
 		mDescription = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.DETAILS));
+		mPhone = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.PHONE));
 		mLastModified =
 				cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.LAST_MODIFIED));
 		mActive = (cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.ACTIVE)) == 1);
@@ -96,7 +109,7 @@ public class Location {
 			return true;
 		}
 		try {
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
 			Date updatedAt = format.parse(mLastModified);
 			Date saved = format.parse(lastUpdate);
 			return updatedAt.after(saved);
@@ -109,8 +122,7 @@ public class Location {
 	@Override
 	public boolean equals(Object location) {
 		Location loc = (Location) location;
-		return ((Double.compare(loc.mLatitude, this.mLatitude) == 0) &&
-				(Double.compare(loc.mLongitude, this.mLongitude) == 0));
+		return mRemoteId == loc.mRemoteId;
 	}
 
 	public LatLng getPosition() {
@@ -119,7 +131,7 @@ public class Location {
 
 	public List<LatLng> getDirections(double latitudeStart, double longitudeStart)
 			throws IOException {
-		return new PHPConnectionClient().getDirections(latitudeStart, longitudeStart, this);
+		return new RailsConnectionClient().getDirections(latitudeStart, longitudeStart, this);
 	}
 
 	public MarkerOptions getMarker() {
@@ -186,15 +198,23 @@ public class Location {
 
 	public enum Type {
 		NONE(net.creuroja.android.R.string.no_marker_type, 0),
-		ADAPTADAS(net.creuroja.android.R.string.marker_type_adaptadas, net.creuroja.android.R.drawable.adaptadas),
-		ASAMBLEA(net.creuroja.android.R.string.marker_type_asamblea, net.creuroja.android.R.drawable.asamblea),
-		BRAVO(net.creuroja.android.R.string.marker_type_bravo, net.creuroja.android.R.drawable.bravo),
+		ADAPTADAS(net.creuroja.android.R.string.marker_type_adaptadas,
+				net.creuroja.android.R.drawable.adaptadas),
+		ASAMBLEA(net.creuroja.android.R.string.marker_type_asamblea,
+				net.creuroja.android.R.drawable.asamblea),
+		BRAVO(net.creuroja.android.R.string.marker_type_bravo,
+				net.creuroja.android.R.drawable.bravo),
 		CUAP(net.creuroja.android.R.string.marker_type_cuap, net.creuroja.android.R.drawable.cuap),
-		HOSPITAL(net.creuroja.android.R.string.marker_type_hospital, net.creuroja.android.R.drawable.hospital),
-		MARITIMO(net.creuroja.android.R.string.marker_type_maritimo, net.creuroja.android.R.drawable.maritimo),
-		NOSTRUM(net.creuroja.android.R.string.marker_type_nostrum, net.creuroja.android.R.drawable.nostrum),
-		SOCIAL(net.creuroja.android.R.string.marker_type_social, net.creuroja.android.R.drawable.social),
-		TERRESTRE(net.creuroja.android.R.string.marker_type_terrestre, net.creuroja.android.R.drawable.terrestre);
+		HOSPITAL(net.creuroja.android.R.string.marker_type_hospital,
+				net.creuroja.android.R.drawable.hospital),
+		MARITIMO(net.creuroja.android.R.string.marker_type_maritimo,
+				net.creuroja.android.R.drawable.maritimo),
+		NOSTRUM(net.creuroja.android.R.string.marker_type_nostrum,
+				net.creuroja.android.R.drawable.nostrum),
+		SOCIAL(net.creuroja.android.R.string.marker_type_social,
+				net.creuroja.android.R.drawable.social),
+		TERRESTRE(net.creuroja.android.R.string.marker_type_terrestre,
+				net.creuroja.android.R.drawable.terrestre);
 		public final int mIcon;
 		public final int mMarkerType;
 

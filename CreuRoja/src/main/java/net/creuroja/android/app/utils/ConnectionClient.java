@@ -28,6 +28,8 @@ import java.util.List;
  * Created by lapuente on 29.10.13.
  */
 public abstract class ConnectionClient {
+	public static final String EMAIL_VAR = "email";
+	public static final String PASS_VAR = "password";
 	public static final String DIRECTIONS_API_BASE_URL =
 			"https://maps.googleapis.com/maps/api/directions/json?region=es&";
 	public static final String ORIGIN_URL = "origin=";
