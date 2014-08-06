@@ -4,9 +4,9 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 import android.support.v4.content.AsyncTaskLoader;
 
-import net.creuroja.android.app.utils.ConnectionClient;
 import net.creuroja.android.app.Settings;
-import net.creuroja.android.app.utils.PHPConnectionClient;
+import net.creuroja.android.app.utils.ConnectionClient;
+import net.creuroja.android.app.utils.RailsConnectionClient;
 
 import java.io.IOException;
 
@@ -32,7 +32,7 @@ public class LoginValidationLoader extends AsyncTaskLoader<Boolean> {
 
 	@Override
 	public Boolean loadInBackground() {
-		mClient = new PHPConnectionClient();
+		mClient = new RailsConnectionClient();
 		Boolean isValid = true;
 		String accessToken = PreferenceManager.getDefaultSharedPreferences(getContext())
 				.getString(Settings.ACCESS_TOKEN, "");

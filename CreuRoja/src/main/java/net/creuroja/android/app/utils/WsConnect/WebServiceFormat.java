@@ -1,4 +1,4 @@
-package com.abbyy.eu.common;
+package net.creuroja.android.app.utils.WsConnect;
 
 /**
  * Created by lapuente on 30.07.14.

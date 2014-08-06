@@ -4,10 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
+import net.creuroja.android.R;
 import net.creuroja.android.app.LoginResponse;
-import net.creuroja.android.app.PHPLoginResponse;
+import net.creuroja.android.app.RailsLoginResponse;
 import net.creuroja.android.app.utils.ConnectionClient;
-import net.creuroja.android.app.utils.PHPConnectionClient;
+import net.creuroja.android.app.utils.RailsConnectionClient;
 
 import java.io.IOException;
 
@@ -37,12 +38,12 @@ public class LoginLoader extends AsyncTaskLoader<LoginResponse> {
 
     @Override
     public LoginResponse loadInBackground() {
-        mClient = new PHPConnectionClient();
+        mClient = new RailsConnectionClient();
         LoginResponse response = null;
         try{
             response = mClient.doLogin(mEmail, mPassword);
         } catch(IOException e){
-            response = new PHPLoginResponse(net.creuroja.android.R.string.error_connecting);
+            response = new RailsLoginResponse(R.string.error_connecting);
         }
         return response;
     }

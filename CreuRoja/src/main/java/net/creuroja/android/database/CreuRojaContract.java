@@ -12,6 +12,7 @@ public final class CreuRojaContract {
         public static final String TABLE_NAME = "locations";
         public static final String DEFAULT_ORDER = _ID + " DESC";
 
+		public static final String REMOTE_ID = "remote_id";
         public static final String LATITUD = "latitud";
         public static final String LONGITUD = "longitud";
         public static final String ICON = "location_type";
@@ -20,6 +21,7 @@ public final class CreuRojaContract {
         public static final String DETAILS = "details";
         public static final String LAST_MODIFIED = "updated_at";
         public static final String ACTIVE = "active";
+		public static final String PHONE = "phone";
     }
 
 }

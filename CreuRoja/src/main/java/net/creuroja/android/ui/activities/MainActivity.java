@@ -22,6 +22,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -42,6 +43,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import net.creuroja.android.app.Location;
 import net.creuroja.android.app.Settings;
 import net.creuroja.android.app.loaders.DirectionsLoader;
 import net.creuroja.android.app.loaders.LoginValidationLoader;
@@ -49,7 +51,6 @@ import net.creuroja.android.app.utils.ConnectionClient;
 import net.creuroja.android.app.utils.LocationDownloader;
 import net.creuroja.android.app.utils.LocationsProvider;
 import net.creuroja.android.database.CreuRojaContract;
-import net.creuroja.android.app.Location;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -214,6 +215,7 @@ public class MainActivity extends ActionBarActivity
 			case ACTIVITY_LOGIN:
 				switch (resultCode) {
 					case RESULT_OK:
+						downloadNewData();
 						showMap();
 						break;
 					default:
@@ -298,8 +300,9 @@ public class MainActivity extends ActionBarActivity
 				e.printStackTrace();
 			}
 		} else {
-			Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.error_location_unavailable,
-					Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(),
+					net.creuroja.android.R.string.error_location_unavailable, Toast.LENGTH_LONG)
+					.show();
 		}
 	}
 
@@ -307,9 +310,8 @@ public class MainActivity extends ActionBarActivity
 		requestGooglePlayServicesAvailability();
 
 		setContentView(net.creuroja.android.R.layout.activity_main);
-
+		mMarkerPanelView = findViewById(net.creuroja.android.R.id.marker_panel);
 		setActionBar();
-		prepareViews();
 	}
 
 	private void showLogin() {
@@ -324,33 +326,33 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	private void prepareViews() {
-		mMarkerPanelView = findViewById(net.creuroja.android.R.id.marker_panel);
-
 		if (mMarkerPanelView != null) {
 			setCheckboxesVisibility();
+		} else {
+			Log.d("DEBUG", "The marker panel is not showing.");
 		}
 	}
 
 	private void setCheckboxesVisibility() {
 		List<Location.Type> availableTypes = Location.Type.getAvailableTypes(getContentResolver());
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_adaptadas, net.creuroja.android.R.id.box_adaptadas,
-				Settings.SHOW_ADAPTADAS);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_asamblea, net.creuroja.android.R.id.box_asamblea,
-				Settings.SHOW_ASAMBLEA);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_bravo, net.creuroja.android.R.id.box_bravo,
-				Settings.SHOW_BRAVO);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_cuap, net.creuroja.android.R.id.box_cuap,
-				Settings.SHOW_CUAP);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_hospital, net.creuroja.android.R.id.box_hospital,
-				Settings.SHOW_HOSPITAL);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_maritimo, net.creuroja.android.R.id.box_maritimo,
-				Settings.SHOW_MARITIMO);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_nostrum, net.creuroja.android.R.id.box_nostrum,
-				Settings.SHOW_NOSTRUM);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_social, net.creuroja.android.R.id.box_social,
-				Settings.SHOW_SOCIAL);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_terrestre, net.creuroja.android.R.id.box_terrestre,
-				Settings.SHOW_TERRESTRE);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_adaptadas,
+				net.creuroja.android.R.id.box_adaptadas, Settings.SHOW_ADAPTADAS);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_asamblea,
+				net.creuroja.android.R.id.box_asamblea, Settings.SHOW_ASAMBLEA);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_bravo,
+				net.creuroja.android.R.id.box_bravo, Settings.SHOW_BRAVO);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_cuap,
+				net.creuroja.android.R.id.box_cuap, Settings.SHOW_CUAP);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_hospital,
+				net.creuroja.android.R.id.box_hospital, Settings.SHOW_HOSPITAL);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_maritimo,
+				net.creuroja.android.R.id.box_maritimo, Settings.SHOW_MARITIMO);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_nostrum,
+				net.creuroja.android.R.id.box_nostrum, Settings.SHOW_NOSTRUM);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_social,
+				net.creuroja.android.R.id.box_social, Settings.SHOW_SOCIAL);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_terrestre,
+				net.creuroja.android.R.id.box_terrestre, Settings.SHOW_TERRESTRE);
 	}
 
 	private void setCheckBoxVisibility(List<Location.Type> availableTypes, int checkBoxResId,
@@ -366,10 +368,8 @@ public class MainActivity extends ActionBarActivity
 
 	private void loadMapAndMarkers() {
 		if (mGoogleMap == null) {
-			mGoogleMap =
-					((SupportMapFragment) getSupportFragmentManager().findFragmentById(
-							net.creuroja.android.R.id.map))
-							.getMap();
+			mGoogleMap = ((SupportMapFragment) getSupportFragmentManager()
+					.findFragmentById(net.creuroja.android.R.id.map)).getMap();
 		}
 		if (mGoogleMap != null) {
 			mGoogleMap.clear();
@@ -413,11 +413,10 @@ public class MainActivity extends ActionBarActivity
 				if (mLocationClient.getLastLocation() != null) {
 					mGoogleMap.animateCamera(CameraUpdateFactory.newLatLng(
 							new LatLng(mLocationClient.getLastLocation().getLatitude(),
-									mLocationClient.getLastLocation().getLongitude())
-					));
+									mLocationClient.getLastLocation().getLongitude())));
 				} else {
-					Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.locating, Toast.LENGTH_SHORT)
-							.show();
+					Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.locating,
+							Toast.LENGTH_SHORT).show();
 				}
 			} else {
 				showLocationSettings();
@@ -462,8 +461,8 @@ public class MainActivity extends ActionBarActivity
 				getSupportLoaderManager().restartLoader(LOADER_GET_DIRECTIONS, args,
 						new DirectionsLoaderHelper(location));
 			} else {
-				Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.locating, Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.locating,
+						Toast.LENGTH_SHORT).show();
 			}
 		} else {
 			showLocationSettings();
@@ -478,8 +477,8 @@ public class MainActivity extends ActionBarActivity
 			return;
 		}
 		if (points.size() == 0) {
-			Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.error_limit_reached, Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getApplicationContext(),
+					net.creuroja.android.R.string.error_limit_reached, Toast.LENGTH_LONG).show();
 		}
 
 		mDirections = points;
@@ -535,8 +534,7 @@ public class MainActivity extends ActionBarActivity
 						startActivity(new Intent(
 								android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 					}
-				}
-		);
+				});
 		builder.setNegativeButton(net.creuroja.android.R.string.cancel, null);
 		builder.create().show();
 	}
@@ -583,6 +581,7 @@ public class MainActivity extends ActionBarActivity
 		public void onLoadFinished(Loader<Cursor> loader, Cursor locations) {
 			switch (loader.getId()) {
 				case LOADER_SHOW_LOCATIONS:
+					prepareViews();
 					createMarkers(locations);
 					break;
 				default:
@@ -614,7 +613,8 @@ public class MainActivity extends ActionBarActivity
 					if (ConnectionClient.isConnected(getApplicationContext())) {
 						return new DirectionsLoader(getApplicationContext(), args, mLocation);
 					} else {
-						Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.error_no_connection,
+						Toast.makeText(getApplicationContext(),
+								net.creuroja.android.R.string.error_no_connection,
 								Toast.LENGTH_LONG).show();
 						return null;
 					}
@@ -666,8 +666,12 @@ public class MainActivity extends ActionBarActivity
 		}
 
 		private void setUpCard() {
-			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_name)).setText(mLocation.mName);
-			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_address)).setText(mLocation.mAddress);
+			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_name))
+					.setText(mLocation.mName);
+			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_address))
+					.setText(mLocation.mAddress);
+			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_phone))
+					.setText(mLocation.mPhone);
 			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_other))
 					.setText(mLocation.mDescription);
 			mCard.findViewById(net.creuroja.android.R.id.location_card_get_directions)
@@ -680,14 +684,13 @@ public class MainActivity extends ActionBarActivity
 													mLocationClient.isConnected()) {
 													getDirections(mLocation);
 												}
-                            /* For rewrite
+							/* For rewrite
                             if(mDirections != null){
                                 switchDirectionsButton();
                             }
                             */
 											}
-										}
-					);
+										});
 		}
 
 		//TODO: For rewrite
@@ -701,7 +704,7 @@ public class MainActivity extends ActionBarActivity
 		}
 
 		@Override public void onLoadFinished(Loader<Boolean> loader, Boolean isValid) {
-			if(!isValid) {
+			if (!isValid) {
 				Settings.removeData(getApplicationContext());
 			}
 		}

@@ -3,6 +3,7 @@ package net.creuroja.android.app.utils;
 import android.content.ContentResolver;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import net.creuroja.android.app.Location;
 import net.creuroja.android.database.CreuRojaContract;
@@ -34,15 +35,25 @@ public class LocationsProvider {
                 builder.append(line);
             }
 
-            locationList = getLocationList(new JSONObject(builder.toString()));
+            locationList = getLocationList(new JSONArray(builder.toString()));
         } catch (IOException e) {
             //Nothing to do, still return the empty list
         } catch (JSONException e) {
             //Nothing to do, still return the empty list
+			Log.d("JSONException", e.toString());
         }
 
         return locationList;
     }
+
+	public static List<Location> getLocationList(JSONArray locations) throws JSONException {
+		ArrayList<Location> locationList = new ArrayList<>();
+		for (int i = 0; i < locations.length(); i++) {
+			Location location = new Location(locations.getJSONObject(i));
+			locationList.add(location);
+		}
+		return locationList;
+	}
 
     public static List<Location> getLocationList(JSONObject object) throws JSONException {
         ArrayList<Location> locationList = new ArrayList<>();

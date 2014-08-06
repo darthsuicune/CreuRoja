@@ -25,6 +25,7 @@ public abstract class LoginResponse {
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(response.getEntity().getContent()));
             parseResponse(reader);
+			reader.close();
         } catch (IOException e) {
             mLocationList = null;
             mErrorMessage = R.string.error_connecting;

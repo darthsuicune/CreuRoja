@@ -22,8 +22,6 @@ import java.util.List;
  * Created by lapuente on 28.07.14.
  */
 public class PHPConnectionClient extends ConnectionClient {
-	public static final String EMAIL_VAR = "email";
-	public static final String PASS_VAR = "password";
 	public static final String ACCESS_TOKEN_VAR = "access_token";
 	public static final String LAST_UPDATE_VAR = "last_update";
 
