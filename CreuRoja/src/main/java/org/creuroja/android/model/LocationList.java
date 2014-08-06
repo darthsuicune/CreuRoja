@@ -1,4 +1,4 @@
-package org.creuroja.android.model.ws;
+package org.creuroja.android.model;
 
 import android.content.ContentResolver;
 

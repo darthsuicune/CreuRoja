@@ -1,4 +1,4 @@
-package org.creuroja.android.model.auth;
+package org.creuroja.android.webservice.auth;
 
 import android.app.Service;
 import android.content.Intent;

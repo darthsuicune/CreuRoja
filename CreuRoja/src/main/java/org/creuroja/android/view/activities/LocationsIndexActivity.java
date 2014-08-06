@@ -18,8 +18,8 @@ import com.google.android.gms.maps.MapFragment;
 import org.creuroja.android.R;
 import org.creuroja.android.controller.GoogleMapController;
 import org.creuroja.android.controller.MapController;
-import org.creuroja.android.model.auth.AccountUtils;
-import org.creuroja.android.model.auth.AccountUtils.LoginManager;
+import org.creuroja.android.webservice.auth.AccountUtils;
+import org.creuroja.android.webservice.auth.AccountUtils.LoginManager;
 import org.creuroja.android.view.fragments.LocationListFragment;
 import org.creuroja.android.view.fragments.NavigationDrawerFragment;
 

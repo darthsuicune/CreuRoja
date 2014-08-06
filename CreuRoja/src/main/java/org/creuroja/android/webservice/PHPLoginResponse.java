@@ -1,4 +1,4 @@
-package org.creuroja.android.model.ws;
+package org.creuroja.android.webservice;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -6,19 +6,16 @@ import org.json.JSONObject;
 /**
  * Created by denis on 19.06.14.
  */
-public class CRLoginResponse implements LoginResponse {
-	public static final String IS_VALID = "isValid";
+public class PHPLoginResponse implements LoginResponse {
 	public static final String AUTH_TOKEN_HOLDER = "accessToken";
 	public static final String AUTH_TOKEN = "accessTokenString";
-	public static final String ERROR_CODE = "errorCode";
-	public static final String ERROR_MESSAGE = "errorMessage";
 
 	private boolean isValid = false;
 	private String authToken = null;
 	private int errorCode = 0;
 	private String errorMessage;
 
-	public CRLoginResponse(String json) {
+	public PHPLoginResponse(String json) {
 		try {
 			JSONObject response = new JSONObject(json);
 			if(response.has(AUTH_TOKEN_HOLDER)) {
@@ -33,23 +30,19 @@ public class CRLoginResponse implements LoginResponse {
 		}
 	}
 
-	@Override
-	public boolean isValid() {
+	@Override public boolean isValid() {
 		return isValid;
 	}
 
-	@Override
-	public String authToken() {
+	@Override public String authToken() {
 		return authToken;
 	}
 
-	@Override
-	public int errorCode() {
+	@Override public int errorCode() {
 		return errorCode;
 	}
 
-	@Override
-	public String errorMessage() {
+	@Override public String errorMessage() {
 		return errorMessage;
 	}
 }

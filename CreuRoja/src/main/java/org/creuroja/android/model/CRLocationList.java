@@ -1,8 +1,6 @@
-package org.creuroja.android.model.ws;
+package org.creuroja.android.model;
 
 import android.content.ContentResolver;
-
-import org.creuroja.android.model.Location;
 
 import java.util.List;
 

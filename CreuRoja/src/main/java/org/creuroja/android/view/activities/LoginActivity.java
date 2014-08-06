@@ -29,11 +29,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.creuroja.android.R;
-import org.creuroja.android.model.auth.AccountUtils;
-import org.creuroja.android.model.ws.CRLoginResponse;
-import org.creuroja.android.model.ws.CRWebServiceClient;
-import org.creuroja.android.model.ws.LoginResponse;
-import org.creuroja.android.model.ws.WebServiceClient;
+import org.creuroja.android.webservice.CRWebServiceClient;
+import org.creuroja.android.webservice.auth.AccountUtils;
+import org.creuroja.android.webservice.LoginResponse;
+import org.creuroja.android.webservice.PHPWebServiceClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -264,12 +263,12 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 	 */
 	public class UserLoginTask extends AsyncTask<Void, Void, Intent> {
 
-		private final WebServiceClient mClient;
+		private final CRWebServiceClient mClient;
 		private final String mEmail;
 		private final String mPassword;
 
 		UserLoginTask(String email, String password) {
-			mClient = new CRWebServiceClient();
+			mClient = new PHPWebServiceClient();
 			mEmail = email;
 			mPassword = password;
 		}
@@ -279,15 +278,15 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 			Intent result = new Intent();
 			LoginResponse response = mClient.signInUser(mEmail, mPassword);
 			if (response.isValid()) {
-				result.putExtra(CRLoginResponse.IS_VALID, true);
+				result.putExtra(LoginResponse.IS_VALID, true);
 				result.putExtra(AccountManager.KEY_ACCOUNT_NAME, mEmail);
 				result.putExtra(AccountManager.KEY_ACCOUNT_TYPE, AccountUtils.ACCOUNT_TYPE);
 				result.putExtra(AccountManager.KEY_AUTHTOKEN, response.authToken());
 				result.putExtra(AccountManager.KEY_PASSWORD, mPassword);
 			} else {
-				result.putExtra(CRLoginResponse.IS_VALID, false);
-				result.putExtra(CRLoginResponse.ERROR_CODE, response.errorCode());
-				result.putExtra(CRLoginResponse.ERROR_MESSAGE, response.errorMessage());
+				result.putExtra(LoginResponse.IS_VALID, false);
+				result.putExtra(LoginResponse.ERROR_CODE, response.errorCode());
+				result.putExtra(LoginResponse.ERROR_MESSAGE, response.errorMessage());
 			}
 			return result;
 		}
@@ -297,14 +296,14 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 			mAuthTask = null;
 			showProgress(false);
 
-			if (result.getBooleanExtra(CRLoginResponse.IS_VALID, false)) {
+			if (result.getBooleanExtra(LoginResponse.IS_VALID, false)) {
 				successfulLogin(result);
 			} else {
 				mPasswordView.setError(getString(R.string.error_invalid_password));
 				mPasswordView.setText("");
 				mPasswordView.requestFocus();
 				Toast.makeText(getApplicationContext(),
-							   result.getStringExtra(CRLoginResponse.ERROR_MESSAGE),
+							   result.getStringExtra(LoginResponse.ERROR_MESSAGE),
 							   Toast.LENGTH_LONG).show();
 			}
 		}

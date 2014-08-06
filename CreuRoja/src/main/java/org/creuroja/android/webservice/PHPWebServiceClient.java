@@ -1,4 +1,4 @@
-package org.creuroja.android.model.ws;
+package org.creuroja.android.webservice;
 
 import android.util.Log;
 
@@ -11,6 +11,8 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
+import org.creuroja.android.model.CRLocationList;
+import org.creuroja.android.model.LocationList;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,12 +25,12 @@ import java.util.List;
 /**
  * Created by lapuente on 18.06.14.
  */
-public class CRWebServiceClient implements WebServiceClient {
-	private static final String WS_CR_TAG = "CreuRoja webservice client";
-	public static final String ARG_EMAIL = "email";
-	public static final String ARG_PASSWORD = "password";
-	public static final String ARG_ACCESS_TOKEN = "access_token";
-	public static final String ARG_LAST_UPDATE = "last_update";
+public class PHPWebServiceClient implements CRWebServiceClient {
+	private static final String WS_CR_TAG = "CreuRoja webservice PHP test";
+	private static final String ARG_EMAIL = "email";
+	private static final String ARG_PASSWORD = "password";
+	private static final String ARG_ACCESS_TOKEN = "access_token";
+	private static final String ARG_LAST_UPDATE = "last_update";
 
 	private static final String WS_URL = "http://kls.servequake.com:808/";
 	private static final String WS_CONNECTION_POINT = "webservice.php";
@@ -44,7 +46,7 @@ public class CRWebServiceClient implements WebServiceClient {
 			HttpUriRequest request = getLoginRequest(username, password);
 			HttpResponse response = client.execute(request);
 			String result = readResponse(response);
-			return new CRLoginResponse(result);
+			return new PHPLoginResponse(result);
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
@@ -56,12 +58,11 @@ public class CRWebServiceClient implements WebServiceClient {
 
 	@Override
 	public LocationList getLocations(String accessToken) {
-		return getLocations("0", accessToken);
+		return getLocations(accessToken, "0");
 	}
 
 	@Override
-	public LocationList getLocations(String lastUpdateTime, String accessToken) {
-
+	public LocationList getLocations(String accessToken, String lastUpdateTime) {
 		HttpClient client = getHttpClient();
 		try {
 			HttpUriRequest request = getLocationsRequest(lastUpdateTime, accessToken);
@@ -73,7 +74,7 @@ public class CRWebServiceClient implements WebServiceClient {
 			return null;
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
-			Log.d(WS_CR_TAG, "Incorrect URL");
+			Log.d(WS_CR_TAG, "Incorrect URL " + e.getMessage());
 			return null;
 		}
 	}

@@ -1,4 +1,4 @@
-package org.creuroja.android.model.auth;
+package org.creuroja.android.webservice.auth;
 
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -52,7 +52,7 @@ public class AccountUtils {
 
 		@Override
 		public void run(AccountManagerFuture accountManagerFuture) {
-			LoginResponse response = new LoginResponse(accountManagerFuture, mEntryPoint);
+			LoginResponseTask response = new LoginResponseTask(accountManagerFuture, mEntryPoint);
 			response.execute();
 		}
 	}
@@ -61,22 +61,23 @@ public class AccountUtils {
 
 	}
 
-	public static class LoginResponse extends AsyncTask<Void, Void, String> {
+	public static class LoginResponseTask extends AsyncTask<Void, Void, String> {
 		private LoginManager mEntryPoint;
 		private AccountManagerFuture<Bundle> mAccountManagerFuture;
 
-		public LoginResponse(AccountManagerFuture accountManagerFuture, LoginManager entryPoint) {
+		public LoginResponseTask(AccountManagerFuture accountManagerFuture,
+								 LoginManager entryPoint) {
 			mEntryPoint = entryPoint;
 			mAccountManagerFuture = accountManagerFuture;
 		}
 
 		@Override
 		protected String doInBackground(Void... voids) {
-			Bundle bnd;
+			Bundle bundle;
 			String authToken = null;
 			try {
-				bnd = mAccountManagerFuture.getResult();
-				authToken = bnd.getString(AccountManager.KEY_AUTHTOKEN);
+				bundle = mAccountManagerFuture.getResult();
+				authToken = bundle.getString(AccountManager.KEY_AUTHTOKEN);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

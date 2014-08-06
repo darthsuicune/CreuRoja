@@ -1,4 +1,4 @@
-package org.creuroja.android.model.ws;
+package org.creuroja.android.webservice;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -15,7 +15,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.creuroja.android.app.Settings;
-import org.creuroja.android.model.auth.AccountUtils;
+import org.creuroja.android.model.LocationList;
+import org.creuroja.android.webservice.auth.AccountUtils;
 
 import java.io.IOException;
 
@@ -50,7 +51,7 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter {
 			connectivity.getActiveNetworkInfo().isConnected()) {
 			try {
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-				WebServiceClient client = new CRWebServiceClient();
+				CRWebServiceClient client = new PHPWebServiceClient();
 
 				String accessToken = mAccountManager
 						.blockingGetAuthToken(account, AccountUtils.AUTH_TOKEN_TYPE, true);

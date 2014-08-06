@@ -54,7 +54,7 @@
         </activity>
 
         <service
-            android:name="org.creuroja.android.model.auth.CreuRojaAuthenticatorService"
+            android:name=".webservice.auth.CreuRojaAuthenticatorService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

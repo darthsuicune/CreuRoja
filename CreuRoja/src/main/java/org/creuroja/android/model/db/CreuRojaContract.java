@@ -17,8 +17,8 @@ public final class CreuRojaContract {
 		public static final String PHONE = "phone";
 		public static final String LATITUD = "latitud";
 		public static final String LONGITUD = "longitud";
-		public static final String TYPE = "type";
-		public static final String UPDATED_AT = "_updatedat";
+		public static final String TYPE = "location_type";
+		public static final String UPDATED_AT = "updated_at";
 		public static final String ACTIVE = "active";
 	}
 
@@ -35,8 +35,8 @@ public final class CreuRojaContract {
 		public static final String STARTTIME = "starttime";
 		public static final String ENDTIME = "endtime";
 		public static final String CODE = "code";
-		public static final String CREATED_AT = "_createdat";
-		public static final String UPDATED_AT = "_updatedat";
+		public static final String CREATED_AT = "created_at";
+		public static final String UPDATED_AT = "updated_at";
 	}
 
 	public static final class Vehicles implements BaseColumns {

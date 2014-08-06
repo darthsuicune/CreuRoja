@@ -1,4 +1,4 @@
-package org.creuroja.android.model.auth;
+package org.creuroja.android.webservice.auth;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
