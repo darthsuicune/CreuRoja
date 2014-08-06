@@ -36,6 +36,13 @@
         android:gravity="center_vertical"
         android:drawableLeft="@drawable/cuap"/>
     <TextView
+        android:id="@+id/navigation_legend_gasolinera"
+        android:text="@string/marker_type_gasolinera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/gasolinera"/>
+    <TextView
         android:id="@+id/navigation_legend_hospital"
         android:text="@string/marker_type_hospital"
         android:layout_width="match_parent"
@@ -56,6 +63,13 @@
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         android:drawableLeft="@drawable/nostrum"/>
+    <TextView
+        android:id="@+id/navigation_legend_salvamento"
+        android:text="@string/marker_type_salvamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/salvamento"/>
     <TextView
         android:id="@+id/navigation_legend_terrestre"
         android:text="@string/marker_type_terrestre"
