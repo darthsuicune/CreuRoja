@@ -129,7 +129,6 @@ public abstract class WebServiceClient {
 		if(getOptions != null && !getOptions.isEmpty()) {
 			result = result + "?" + options.toString();
 		}
-		System.out.println(result);
 		return result;
 	}
 

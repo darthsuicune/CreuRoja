@@ -1,7 +1,5 @@
 package net.creuroja.android.app.utils;
 
-import android.util.Log;
-
 import net.creuroja.android.app.Location;
 import net.creuroja.android.app.LoginResponse;
 import net.creuroja.android.app.RailsLoginResponse;
@@ -19,8 +17,8 @@ import java.util.List;
  * Created by lapuente on 28.07.14.
  */
 public class RailsConnectionClient extends ConnectionClient {
-	private static final String SERVER_PROTOCOL = "http";
-	private static final String SERVER_URL = "testing.creuroja.net";
+	private static final String SERVER_PROTOCOL = "https";
+	private static final String SERVER_URL = "creuroja.net";
 	private static final String LOGIN_REQUEST = "sessions";
 	private static final String LOCATIONS_REQUEST = "locations";
 	private static final String ACCESS_TOKEN_HEADER = "Authorization: Token ";
@@ -59,9 +57,6 @@ public class RailsConnectionClient extends ConnectionClient {
 	public Boolean validateLogin(String accessToken) throws IOException {
 		List<WebServiceOption> options = createLocationsOptions(accessToken, null);
 		HttpResponse response = client.get(LOCATIONS_REQUEST, WebServiceFormat.JSON, options);
-		if (response.getStatusLine().getStatusCode() == 401) {
-			Log.d("ERRORRRRRRr", "Unauthorized to see locations");
-		}
 		return response == null || response.getStatusLine().getStatusCode() != 401;
 	}
 

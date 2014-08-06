@@ -79,7 +79,6 @@ public class LocationDownloader implements Runnable {
         try {
             List<Location> locationList = new RailsConnectionClient().
                     requestUpdates(mAccessToken, mPrefs.getString(Settings.LAST_UPDATE_TIME, ""));
-            //TODO: implement something useful instead of this piece of crap
             saveLocations(locationList);
         } catch (IOException e) {
             //In case problems during the connection arise, just leave a log.

@@ -26,13 +26,15 @@ public class CreuRojaOpenHelper extends SQLiteOpenHelper {
 		}
 
 		db.execSQL(CREATE + CreuRojaContract.Locations.TABLE_NAME + " (" +
-				   CreuRojaContract.Locations._ID + KEY + CreuRojaContract.Locations.LATITUD +
-				   " DOUBLE NOT NULL, " + CreuRojaContract.Locations.LONGITUD +
-				   " DOUBLE NOT NULL, " + CreuRojaContract.Locations.ICON + " TEXT NOT NULL, " +
+				   CreuRojaContract.Locations._ID + KEY +
+				   CreuRojaContract.Locations.LATITUD + " DOUBLE NOT NULL, " +
+				   CreuRojaContract.Locations.LONGITUD + " DOUBLE NOT NULL, " +
+				   CreuRojaContract.Locations.ICON + " TEXT NOT NULL, " +
 				   CreuRojaContract.Locations.NAME + " TEXT NOT NULL, " +
 				   CreuRojaContract.Locations.ADDRESS + " TEXT, " +
 				   CreuRojaContract.Locations.DETAILS + " TEXT, " +
 				   CreuRojaContract.Locations.ACTIVE + " INTEGER NOT NULL, " +
+				   CreuRojaContract.Locations.REMOTE_ID + " INTEGER NOT NULL, " +
 				   CreuRojaContract.Locations.PHONE + " TEXT, " +
 				   CreuRojaContract.Locations.LAST_MODIFIED + " TEXT NOT NULL)");
 

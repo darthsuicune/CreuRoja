@@ -79,7 +79,11 @@ public class Location {
 		} else {
 			mDescription = object.getString(sDescription);
 		}
-		mPhone = object.getString(sPhone);
+		if(object.isNull(sPhone)) {
+			mPhone = "";
+		}else {
+			mPhone = object.getString(sPhone);
+		}
 		mLastModified = object.getString(sLastUpdateTime);
 		String active = object.get(sActive).toString();
 		mActive = (active.equals("1") || active.equals("true"));
