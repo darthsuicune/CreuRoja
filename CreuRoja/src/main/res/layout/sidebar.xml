@@ -66,6 +66,20 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/box_gasolinera"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:drawableLeft="@drawable/gasolinera"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/marker_type_gasolinera"/>
+
+            <CheckBox android:id="@+id/checkbox_gasolinera"/>
+        </TableRow>
+
+        <TableRow
                 android:id="@+id/box_hospital"
                 android:gravity="center_vertical"
                 android:padding="8dp">
@@ -91,20 +105,6 @@
                     android:text="@string/marker_type_nostrum"/>
 
             <CheckBox android:id="@+id/checkbox_nostrum"/>
-        </TableRow>
-
-        <TableRow
-                android:id="@+id/box_social"
-                android:gravity="center_vertical"
-                android:padding="8dp">
-
-            <TextView
-                    android:drawableLeft="@drawable/social"
-                    android:drawablePadding="8dp"
-                    android:gravity="center_vertical"
-                    android:text="@string/marker_type_social"/>
-
-            <CheckBox android:id="@+id/checkbox_social"/>
         </TableRow>
 
         <TableRow

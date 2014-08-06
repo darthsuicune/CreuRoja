@@ -6,8 +6,8 @@
     <string name="map_style_hybrid">Híbrid</string>
     <string name="marker_type_adaptadas">Adaptades</string>
     <string name="marker_type_asamblea">Assemblees</string>
-    <string name="marker_type_cuap">CUAPs</string>
     <string name="marker_type_bravo">Bravos</string>
+    <string name="marker_type_cuap">CUAPs</string>
     <string name="marker_type_hospital">Hospitals</string>
     <string name="marker_type_maritimo">Marítims</string>
     <string name="marker_type_nostrum">Clau 2</string>
@@ -24,8 +24,9 @@
     <string-array name="marker_types">
         <item>@string/marker_type_adaptadas</item>
         <item>@string/marker_type_asamblea</item>
-        <item>@string/marker_type_cuap</item>
         <item>@string/marker_type_bravo</item>
+        <item>@string/marker_type_cuap</item>
+        <item>@string/marker_type_gasolinera</item>
         <item>@string/marker_type_hospital</item>
         <item>@string/marker_type_maritimo</item>
         <item>@string/marker_type_nostrum</item>

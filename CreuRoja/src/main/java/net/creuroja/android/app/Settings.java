@@ -24,8 +24,9 @@ public class Settings {
     public static final String SHOW_NOSTRUM = "nostrum";
     public static final String SHOW_SOCIAL = "social";
     public static final String SHOW_TERRESTRE = "terrestre";
+	public static final String SHOW_GASOLINERA = "gasolinera";
 
-    public static void removeData(Context context) {
+	public static void removeData(Context context) {
 		ContentResolver cr = context.getContentResolver();
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
         cr.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, null, null);

@@ -244,6 +244,9 @@ public class MainActivity extends ActionBarActivity
 			case net.creuroja.android.R.id.checkbox_cuap:
 				editor.putBoolean(Settings.SHOW_CUAP, isChecked);
 				break;
+			case net.creuroja.android.R.id.checkbox_gasolinera:
+				editor.putBoolean(Settings.SHOW_GASOLINERA, isChecked);
+				break;
 			case net.creuroja.android.R.id.checkbox_hospital:
 				editor.putBoolean(Settings.SHOW_HOSPITAL, isChecked);
 				break;
@@ -353,6 +356,8 @@ public class MainActivity extends ActionBarActivity
 				net.creuroja.android.R.id.box_social, Settings.SHOW_SOCIAL);
 		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_terrestre,
 				net.creuroja.android.R.id.box_terrestre, Settings.SHOW_TERRESTRE);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_gasolinera,
+				net.creuroja.android.R.id.box_gasolinera, Settings.SHOW_GASOLINERA);
 	}
 
 	private void setCheckBoxVisibility(List<Location.Type> availableTypes, int checkBoxResId,
