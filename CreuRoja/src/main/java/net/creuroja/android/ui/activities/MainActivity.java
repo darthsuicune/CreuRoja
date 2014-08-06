@@ -43,6 +43,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import net.creuroja.android.R;
 import net.creuroja.android.app.Location;
 import net.creuroja.android.app.Settings;
 import net.creuroja.android.app.loaders.DirectionsLoader;
@@ -160,7 +161,7 @@ public class MainActivity extends ActionBarActivity
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(net.creuroja.android.R.menu.activity_map, menu);
+		getMenuInflater().inflate(R.menu.activity_map, menu);
 		setSearchOptions(menu);
 		return true;
 	}
@@ -168,29 +169,29 @@ public class MainActivity extends ActionBarActivity
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case net.creuroja.android.R.id.menu_locate:
+			case R.id.menu_locate:
 				moveToCurrentPosition();
 				return true;
-			case net.creuroja.android.R.id.search:
+			case R.id.search:
 				// Nothing needed here thanks to the support library
 				return true;
 			case android.R.id.home:
-			case net.creuroja.android.R.id.menu_show_panel:
+			case R.id.menu_show_panel:
 				showMarkerPanel();
 				return true;
-			case net.creuroja.android.R.id.menu_refresh:
+			case R.id.menu_refresh:
 				downloadNewData();
 				return true;
-			case net.creuroja.android.R.id.menu_show_hybrid:
+			case R.id.menu_show_hybrid:
 				setMapType(GoogleMap.MAP_TYPE_HYBRID);
 				return true;
-			case net.creuroja.android.R.id.menu_show_normal:
+			case R.id.menu_show_normal:
 				setMapType(GoogleMap.MAP_TYPE_NORMAL);
 				return true;
-			case net.creuroja.android.R.id.menu_show_satellite:
+			case R.id.menu_show_satellite:
 				setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 				return true;
-			case net.creuroja.android.R.id.menu_show_terrain:
+			case R.id.menu_show_terrain:
 				setMapType(GoogleMap.MAP_TYPE_TERRAIN);
 				return true;
 			default:
@@ -232,34 +233,34 @@ public class MainActivity extends ActionBarActivity
 		//TODO: move stuff around, i dont like this shit
 		SharedPreferences.Editor editor = prefs.edit();
 		switch (buttonView.getId()) {
-			case net.creuroja.android.R.id.checkbox_adaptadas:
+			case R.id.checkbox_adaptadas:
 				editor.putBoolean(Settings.SHOW_ADAPTADAS, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_asamblea:
+			case R.id.checkbox_asamblea:
 				editor.putBoolean(Settings.SHOW_ASAMBLEA, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_bravo:
+			case R.id.checkbox_bravo:
 				editor.putBoolean(Settings.SHOW_BRAVO, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_cuap:
+			case R.id.checkbox_cuap:
 				editor.putBoolean(Settings.SHOW_CUAP, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_gasolinera:
+			case R.id.checkbox_gasolinera:
 				editor.putBoolean(Settings.SHOW_GASOLINERA, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_hospital:
+			case R.id.checkbox_hospital:
 				editor.putBoolean(Settings.SHOW_HOSPITAL, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_maritimo:
+			case R.id.checkbox_maritimo:
 				editor.putBoolean(Settings.SHOW_MARITIMO, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_terrestre:
+			case R.id.checkbox_terrestre:
 				editor.putBoolean(Settings.SHOW_TERRESTRE, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_nostrum:
+			case R.id.checkbox_nostrum:
 				editor.putBoolean(Settings.SHOW_NOSTRUM, isChecked);
 				break;
-			case net.creuroja.android.R.id.checkbox_salvamento:
+			case R.id.checkbox_salvamento:
 				editor.putBoolean(Settings.SHOW_SALVAMENTO, isChecked);
 				break;
 			default:
@@ -308,17 +309,16 @@ public class MainActivity extends ActionBarActivity
 				e.printStackTrace();
 			}
 		} else {
-			Toast.makeText(getApplicationContext(),
-					net.creuroja.android.R.string.error_location_unavailable, Toast.LENGTH_LONG)
-					.show();
+			Toast.makeText(getApplicationContext(), R.string.error_location_unavailable,
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
 	private void showMap() {
 		requestGooglePlayServicesAvailability();
 
-		setContentView(net.creuroja.android.R.layout.activity_main);
-		mMarkerPanelView = findViewById(net.creuroja.android.R.id.marker_panel);
+		setContentView(R.layout.activity_main);
+		mMarkerPanelView = findViewById(R.id.marker_panel);
 		setActionBar();
 	}
 
@@ -343,26 +343,26 @@ public class MainActivity extends ActionBarActivity
 
 	private void setCheckboxesVisibility() {
 		List<Location.Type> availableTypes = Location.Type.getAvailableTypes(getContentResolver());
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_adaptadas,
-				net.creuroja.android.R.id.box_adaptadas, Settings.SHOW_ADAPTADAS);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_asamblea,
-				net.creuroja.android.R.id.box_asamblea, Settings.SHOW_ASAMBLEA);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_bravo,
-				net.creuroja.android.R.id.box_bravo, Settings.SHOW_BRAVO);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_cuap,
-				net.creuroja.android.R.id.box_cuap, Settings.SHOW_CUAP);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_hospital,
-				net.creuroja.android.R.id.box_hospital, Settings.SHOW_HOSPITAL);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_maritimo,
-				net.creuroja.android.R.id.box_maritimo, Settings.SHOW_MARITIMO);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_nostrum,
-				net.creuroja.android.R.id.box_nostrum, Settings.SHOW_NOSTRUM);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_terrestre,
-				net.creuroja.android.R.id.box_terrestre, Settings.SHOW_TERRESTRE);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_gasolinera,
-				net.creuroja.android.R.id.box_gasolinera, Settings.SHOW_GASOLINERA);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_salvamento,
-				net.creuroja.android.R.id.box_salvamento, Settings.SHOW_SALVAMENTO);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_adaptadas, R.id.box_adaptadas,
+				Settings.SHOW_ADAPTADAS);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_asamblea, R.id.box_asamblea,
+				Settings.SHOW_ASAMBLEA);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_bravo, R.id.box_bravo,
+				Settings.SHOW_BRAVO);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_cuap, R.id.box_cuap,
+				Settings.SHOW_CUAP);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_hospital, R.id.box_hospital,
+				Settings.SHOW_HOSPITAL);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_maritimo, R.id.box_maritimo,
+				Settings.SHOW_MARITIMO);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_nostrum, R.id.box_nostrum,
+				Settings.SHOW_NOSTRUM);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_terrestre, R.id.box_terrestre,
+				Settings.SHOW_TERRESTRE);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_gasolinera, R.id.box_gasolinera,
+				Settings.SHOW_GASOLINERA);
+		setCheckBoxVisibility(availableTypes, R.id.checkbox_salvamento, R.id.box_salvamento,
+				Settings.SHOW_SALVAMENTO);
 	}
 
 	private void setCheckBoxVisibility(List<Location.Type> availableTypes, int checkBoxResId,
@@ -378,8 +378,9 @@ public class MainActivity extends ActionBarActivity
 
 	private void loadMapAndMarkers() {
 		if (mGoogleMap == null) {
-			mGoogleMap = ((SupportMapFragment) getSupportFragmentManager()
-					.findFragmentById(net.creuroja.android.R.id.map)).getMap();
+			mGoogleMap =
+					((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+							.getMap();
 		}
 		if (mGoogleMap != null) {
 			mGoogleMap.clear();
@@ -425,8 +426,8 @@ public class MainActivity extends ActionBarActivity
 							new LatLng(mLocationClient.getLastLocation().getLatitude(),
 									mLocationClient.getLastLocation().getLongitude())));
 				} else {
-					Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.locating,
-							Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), R.string.locating, Toast.LENGTH_SHORT)
+							.show();
 				}
 			} else {
 				showLocationSettings();
@@ -471,8 +472,8 @@ public class MainActivity extends ActionBarActivity
 				getSupportLoaderManager().restartLoader(LOADER_GET_DIRECTIONS, args,
 						new DirectionsLoaderHelper(location));
 			} else {
-				Toast.makeText(getApplicationContext(), net.creuroja.android.R.string.locating,
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), R.string.locating, Toast.LENGTH_SHORT)
+						.show();
 			}
 		} else {
 			showLocationSettings();
@@ -487,8 +488,8 @@ public class MainActivity extends ActionBarActivity
 			return;
 		}
 		if (points.size() == 0) {
-			Toast.makeText(getApplicationContext(),
-					net.creuroja.android.R.string.error_limit_reached, Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), R.string.error_limit_reached, Toast.LENGTH_LONG)
+					.show();
 		}
 
 		mDirections = points;
@@ -499,7 +500,7 @@ public class MainActivity extends ActionBarActivity
 	private void setSearchOptions(Menu menu) {
 		SearchManager searchManager =
 				(SearchManager) getApplicationContext().getSystemService(SEARCH_SERVICE);
-		MenuItem searchMenuItem = menu.findItem(net.creuroja.android.R.id.search);
+		MenuItem searchMenuItem = menu.findItem(R.id.search);
 		SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchMenuItem);
 		if (searchView != null) {
 			searchView.setSearchableInfo(searchManager.getSearchableInfo(this.getComponentName()));
@@ -536,16 +537,16 @@ public class MainActivity extends ActionBarActivity
 
 	private void showLocationSettings() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-		builder.setTitle(net.creuroja.android.R.string.location_disabled_title);
-		builder.setMessage(net.creuroja.android.R.string.location_disabled_message);
-		builder.setPositiveButton(net.creuroja.android.R.string.open_location_settings,
+		builder.setTitle(R.string.location_disabled_title);
+		builder.setMessage(R.string.location_disabled_message);
+		builder.setPositiveButton(R.string.open_location_settings,
 				new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialogInterface, int i) {
 						startActivity(new Intent(
 								android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS));
 					}
 				});
-		builder.setNegativeButton(net.creuroja.android.R.string.cancel, null);
+		builder.setNegativeButton(R.string.cancel, null);
 		builder.create().show();
 	}
 
@@ -623,8 +624,7 @@ public class MainActivity extends ActionBarActivity
 					if (ConnectionClient.isConnected(getApplicationContext())) {
 						return new DirectionsLoader(getApplicationContext(), args, mLocation);
 					} else {
-						Toast.makeText(getApplicationContext(),
-								net.creuroja.android.R.string.error_no_connection,
+						Toast.makeText(getApplicationContext(), R.string.error_no_connection,
 								Toast.LENGTH_LONG).show();
 						return null;
 					}
@@ -669,38 +669,34 @@ public class MainActivity extends ActionBarActivity
 		public final Location mLocation;
 
 		public LocationCard(Location location) {
-			mCard = findViewById(net.creuroja.android.R.id.location_card);
+			mCard = findViewById(R.id.location_card);
 			mCard.setVisibility(View.VISIBLE);
 			mLocation = location;
 			setUpCard();
 		}
 
 		private void setUpCard() {
-			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_name))
-					.setText(mLocation.mName);
-			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_address))
-					.setText(mLocation.mAddress);
-			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_phone))
-					.setText(mLocation.mPhone);
-			((TextView) mCard.findViewById(net.creuroja.android.R.id.location_card_other))
+			((TextView) mCard.findViewById(R.id.location_card_name)).setText(mLocation.mName);
+			((TextView) mCard.findViewById(R.id.location_card_address)).setText(mLocation.mAddress);
+			((TextView) mCard.findViewById(R.id.location_card_phone)).setText(mLocation.mPhone);
+			((TextView) mCard.findViewById(R.id.location_card_other))
 					.setText(mLocation.mDescription);
-			mCard.findViewById(net.creuroja.android.R.id.location_card_get_directions)
+			mCard.findViewById(R.id.location_card_get_directions)
 					.setOnClickListener(new View.OnClickListener() {
-											@Override
-											public void onClick(View view) {
-												if (ConnectionClient
-															.isConnected(MainActivity.this) &&
-													mLocationClient != null &&
-													mLocationClient.isConnected()) {
-													getDirections(mLocation);
-												}
+						@Override
+						public void onClick(View view) {
+							if (ConnectionClient.isConnected(MainActivity.this) &&
+								mLocationClient != null &&
+								mLocationClient.isConnected()) {
+								getDirections(mLocation);
+							}
 							/* For rewrite
-                            if(mDirections != null){
+							if(mDirections != null){
                                 switchDirectionsButton();
                             }
                             */
-											}
-										});
+						}
+					});
 		}
 
 		//TODO: For rewrite

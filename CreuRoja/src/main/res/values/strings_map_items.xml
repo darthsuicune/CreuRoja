@@ -8,11 +8,11 @@
     <string name="marker_type_asamblea">Assemblees</string>
     <string name="marker_type_bravo">Bravos</string>
     <string name="marker_type_cuap">CUAPs</string>
-    <string name="marker_type_gasolinera">""</string>
+    <string name="marker_type_gasolinera">Gasolineres</string>
     <string name="marker_type_hospital">Hospitals</string>
     <string name="marker_type_maritimo">Marítims</string>
     <string name="marker_type_nostrum">Clau 2</string>
-    <string name="marker_type_salvamento">""</string>
+    <string name="marker_type_salvamento">Salvmentiu</string>
     <string name="marker_type_terrestre">Preventius</string>
     <string name="no_marker_type">Desconegut</string>
 
