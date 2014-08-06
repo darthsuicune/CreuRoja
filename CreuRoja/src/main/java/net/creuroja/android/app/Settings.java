@@ -25,6 +25,7 @@ public class Settings {
     public static final String SHOW_SOCIAL = "social";
     public static final String SHOW_TERRESTRE = "terrestre";
 	public static final String SHOW_GASOLINERA = "gasolinera";
+	public static final String SHOW_SALVAMENTO = "salvamento";
 
 	public static void removeData(Context context) {
 		ContentResolver cr = context.getContentResolver();

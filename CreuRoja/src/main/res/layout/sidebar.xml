@@ -122,6 +122,20 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/box_salvamento"
+            android:gravity="center_vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:drawableLeft="@drawable/salvamento"
+                android:drawablePadding="8dp"
+                android:gravity="center_vertical"
+                android:text="@string/marker_type_salvamento"/>
+
+            <CheckBox android:id="@+id/checkbox_salvamento"/>
+        </TableRow>
+
+        <TableRow
                 android:id="@+id/box_terrestre"
                 android:gravity="center_vertical"
                 android:padding="8dp">

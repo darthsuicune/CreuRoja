@@ -259,6 +259,11 @@ public class MainActivity extends ActionBarActivity
 			case net.creuroja.android.R.id.checkbox_nostrum:
 				editor.putBoolean(Settings.SHOW_NOSTRUM, isChecked);
 				break;
+			case net.creuroja.android.R.id.checkbox_salvamento:
+				editor.putBoolean(Settings.SHOW_SALVAMENTO, isChecked);
+				break;
+			default:
+				break;
 		}
 		editor.commit();
 		drawMarkers();
@@ -352,12 +357,12 @@ public class MainActivity extends ActionBarActivity
 				net.creuroja.android.R.id.box_maritimo, Settings.SHOW_MARITIMO);
 		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_nostrum,
 				net.creuroja.android.R.id.box_nostrum, Settings.SHOW_NOSTRUM);
-		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_social,
-				net.creuroja.android.R.id.box_social, Settings.SHOW_SOCIAL);
 		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_terrestre,
 				net.creuroja.android.R.id.box_terrestre, Settings.SHOW_TERRESTRE);
 		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_gasolinera,
 				net.creuroja.android.R.id.box_gasolinera, Settings.SHOW_GASOLINERA);
+		setCheckBoxVisibility(availableTypes, net.creuroja.android.R.id.checkbox_salvamento,
+				net.creuroja.android.R.id.box_salvamento, Settings.SHOW_SALVAMENTO);
 	}
 
 	private void setCheckBoxVisibility(List<Location.Type> availableTypes, int checkBoxResId,

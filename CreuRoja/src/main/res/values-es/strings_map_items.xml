@@ -8,11 +8,12 @@
     <string name="marker_type_asamblea">Asambleas</string>
     <string name="marker_type_bravo">Bravos</string>
     <string name="marker_type_cuap">CUAPs</string>
+    <string name="marker_type_gasolinera">Gasolineras</string>
     <string name="marker_type_hospital">Hospitales</string>
     <string name="marker_type_maritimo">Marítimos</string>
     <string name="marker_type_nostrum">Clave 2</string>
+    <string name="marker_type_salvamento">Salvamento</string>
     <string name="marker_type_terrestre">Preventivos</string>
-    <string name="marker_type_gasolinera">Gasolineras</string>
     <string name="no_marker_type">Desconocido</string>
 
     <string-array name="map_styles">
@@ -30,6 +31,7 @@
         <item>@string/marker_type_hospital</item>
         <item>@string/marker_type_maritimo</item>
         <item>@string/marker_type_nostrum</item>
+        <item>@string/marker_type_salvamento</item>
         <item>@string/marker_type_terrestre</item>
     </string-array>
 

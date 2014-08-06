@@ -11,6 +11,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import net.creuroja.android.R;
 import net.creuroja.android.app.utils.RailsConnectionClient;
 import net.creuroja.android.database.CreuRojaContract;
 
@@ -156,14 +157,16 @@ public class Location {
 				return prefs.getBoolean(Settings.SHOW_BRAVO, true);
 			case CUAP:
 				return prefs.getBoolean(Settings.SHOW_CUAP, true);
+			case GASOLINERA:
+				return prefs.getBoolean(Settings.SHOW_GASOLINERA, true);
 			case HOSPITAL:
 				return prefs.getBoolean(Settings.SHOW_HOSPITAL, true);
 			case MARITIMO:
 				return prefs.getBoolean(Settings.SHOW_MARITIMO, true);
 			case NOSTRUM:
 				return prefs.getBoolean(Settings.SHOW_NOSTRUM, true);
-			case SOCIAL:
-				return prefs.getBoolean(Settings.SHOW_SOCIAL, true);
+			case SALVAMENTO:
+				return prefs.getBoolean(Settings.SHOW_SALVAMENTO, true);
 			case TERRESTRE:
 				return prefs.getBoolean(Settings.SHOW_TERRESTRE, true);
 			default:
@@ -197,24 +200,26 @@ public class Location {
 	}
 
 	public enum Type {
-		NONE(net.creuroja.android.R.string.no_marker_type, 0),
-		ADAPTADAS(net.creuroja.android.R.string.marker_type_adaptadas,
-				net.creuroja.android.R.drawable.adaptadas),
-		ASAMBLEA(net.creuroja.android.R.string.marker_type_asamblea,
-				net.creuroja.android.R.drawable.asamblea),
-		BRAVO(net.creuroja.android.R.string.marker_type_bravo,
-				net.creuroja.android.R.drawable.bravo),
-		CUAP(net.creuroja.android.R.string.marker_type_cuap, net.creuroja.android.R.drawable.cuap),
-		HOSPITAL(net.creuroja.android.R.string.marker_type_hospital,
-				net.creuroja.android.R.drawable.hospital),
-		MARITIMO(net.creuroja.android.R.string.marker_type_maritimo,
-				net.creuroja.android.R.drawable.maritimo),
-		NOSTRUM(net.creuroja.android.R.string.marker_type_nostrum,
-				net.creuroja.android.R.drawable.nostrum),
-		SOCIAL(net.creuroja.android.R.string.marker_type_social,
-				net.creuroja.android.R.drawable.social),
-		TERRESTRE(net.creuroja.android.R.string.marker_type_terrestre,
-				net.creuroja.android.R.drawable.terrestre);
+		NONE(R.string.no_marker_type, 0),
+		ADAPTADAS(R.string.marker_type_adaptadas,
+				R.drawable.adaptadas),
+		ASAMBLEA(R.string.marker_type_asamblea,
+				R.drawable.asamblea),
+		BRAVO(R.string.marker_type_bravo,
+				R.drawable.bravo),
+		CUAP(R.string.marker_type_cuap, R.drawable.cuap),
+		GASOLINERA(R.string.marker_type_gasolinera,
+				R.drawable.gasolinera),
+		HOSPITAL(R.string.marker_type_hospital,
+				R.drawable.hospital),
+		MARITIMO(R.string.marker_type_maritimo,
+				R.drawable.maritimo),
+		NOSTRUM(R.string.marker_type_nostrum,
+				R.drawable.nostrum),
+		SALVAMENTO(R.string.marker_type_salvamento,
+				R.drawable.salvamento),
+		TERRESTRE(R.string.marker_type_terrestre,
+				R.drawable.terrestre);
 		public final int mIcon;
 		public final int mMarkerType;
 
@@ -232,14 +237,16 @@ public class Location {
 				return BRAVO;
 			} else if (type.equals(Settings.SHOW_CUAP)) {
 				return CUAP;
+			} else if (type.equals(Settings.SHOW_GASOLINERA)) {
+				return GASOLINERA;
 			} else if (type.equals(Settings.SHOW_HOSPITAL)) {
 				return HOSPITAL;
 			} else if (type.equals(Settings.SHOW_MARITIMO)) {
 				return MARITIMO;
 			} else if (type.equals(Settings.SHOW_NOSTRUM)) {
 				return NOSTRUM;
-			} else if (type.equals(Settings.SHOW_SOCIAL)) {
-				return SOCIAL;
+			} else if (type.equals(Settings.SHOW_SALVAMENTO)) {
+				return SALVAMENTO;
 			} else if (type.equals(Settings.SHOW_TERRESTRE)) {
 				return TERRESTRE;
 			} else {
