@@ -239,7 +239,7 @@ public class NavigationDrawerFragment extends Fragment {
 		if (mDrawerLayout != null) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
-		if(mapDrawerCallbacks != null) {
+		if (mapDrawerCallbacks != null) {
 			//TODO: Parse the map type from the selection in the list
 			mapDrawerCallbacks.onNavigationMapTypeSelected(0);
 		}
@@ -268,8 +268,9 @@ public class NavigationDrawerFragment extends Fragment {
 		 * Called when an item in the navigation drawer is selected.
 		 */
 		void onViewModeChanged(LocationsIndexActivity.ViewMode newMode);
-		void onNavigationLegendItemSelected(final Location.Type type,
-											final boolean active);
+
+		void onNavigationLegendItemSelected(final Location.Type type, final boolean active);
+
 		void onNavigationMapTypeSelected(final int mapType);
 	}
 

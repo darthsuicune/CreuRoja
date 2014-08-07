@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import net.creuroja.android.R;
 import net.creuroja.android.model.Location;
@@ -21,13 +20,11 @@ import net.creuroja.android.model.Location;
  *
  */
 public class LocationCardFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    // the fragment initialization parameters
     private static final String ARG_LOCATION_ID = "location_id";
-
-    // TODO: Rename and change types of parameters
     private Location mLocation;
 
+	//Callback for the Activity
     private OnLocationCardInteractionListener mListener;
 
     /**
@@ -36,7 +33,6 @@ public class LocationCardFragment extends Fragment {
      *
      * @return A new instance of fragment LocationCardFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static LocationCardFragment newInstance(long locationId) {
         LocationCardFragment fragment = new LocationCardFragment();
         Bundle args = new Bundle();
@@ -59,9 +55,11 @@ public class LocationCardFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        TextView textView = new TextView(getActivity());
-        textView.setText(R.string.hello_blank_fragment);
-        return textView;
+		View v = inflater.inflate(R.layout.fragment_location_card, container, false);
+		if (mLocation != null) {
+
+		}
+		return v;
     }
 
     @Override
@@ -82,7 +80,7 @@ public class LocationCardFragment extends Fragment {
     }
 
 	private void setLocation(long id) {
-		//TODO: Implement
+
 	}
 
     /**
@@ -96,7 +94,6 @@ public class LocationCardFragment extends Fragment {
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnLocationCardInteractionListener {
-        // TODO: Update argument type and name
         public void onDirectionsRequested(Location location);
 		public void onCardCloseRequested();
 		public void onCardDetailsRequested(Location location);
