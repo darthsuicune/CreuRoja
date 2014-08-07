@@ -712,6 +712,7 @@ public class MainActivity extends ActionBarActivity
 		@Override public void onLoadFinished(Loader<Boolean> loader, Boolean isValid) {
 			if (!isValid) {
 				Settings.removeData(getApplicationContext());
+				finish();
 			}
 		}
 
