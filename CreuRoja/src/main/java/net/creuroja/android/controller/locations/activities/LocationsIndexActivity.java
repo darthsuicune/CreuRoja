@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import net.creuroja.android.R;
 import net.creuroja.android.controller.locations.LocationsListListener;
 import net.creuroja.android.model.Location;
+import net.creuroja.android.model.Settings;
 import net.creuroja.android.model.webservice.auth.AccountUtils;
 import net.creuroja.android.model.webservice.auth.AccountUtils.LoginManager;
 import net.creuroja.android.view.fragments.locations.LocationCardFragment;
@@ -26,6 +28,8 @@ import net.creuroja.android.view.fragments.locations.NavigationDrawerFragment;
 public class LocationsIndexActivity extends ActionBarActivity
 		implements LoginManager, NavigationDrawerFragment.MapNavigationDrawerCallbacks,
 		LocationsListListener, LocationCardFragment.OnLocationCardInteractionListener {
+	private static final String TAG_MAP = "mapFragment";
+	private static final String TAG_LIST = "listFragment";
 
 	// Keep the authToken for manual refresh
 	private String mAuthToken;
@@ -48,6 +52,12 @@ public class LocationsIndexActivity extends ActionBarActivity
 	public void successfulLogin(String authToken) {
 		mAuthToken = authToken;
 		startUi();
+		if (currentViewMode == null) {
+			String preferredMode =
+					prefs.getString(Settings.LOCATIONS_INDEX_TYPE, ViewMode.MAP.toString());
+			currentViewMode = ViewMode.getViewMode(preferredMode);
+		}
+		setMainFragment();
 	}
 
 	@Override
@@ -56,22 +66,40 @@ public class LocationsIndexActivity extends ActionBarActivity
 	}
 
 	@Override public void onViewModeChanged(ViewMode newViewMode) {
-		FragmentManager fragmentManager = getSupportFragmentManager();
 		switch (newViewMode) {
-			case MAP:
-				currentViewMode = ViewMode.MAP;
-				mapFragment = SupportMapFragment.newInstance();
-				fragmentManager.beginTransaction().replace(R.id.container, mapFragment).commit();
-				break;
 			case LIST:
 				currentViewMode = ViewMode.LIST;
-				listFragment = LocationListFragment.newInstance();
-				fragmentManager.beginTransaction().replace(R.id.container, listFragment).commit();
+				break;
+			case MAP:
+				currentViewMode = ViewMode.MAP;
 				break;
 			default:
-				//wait, wat?
+				assert false;
+		}
+		setMainFragment();
+	}
+
+	private void setMainFragment() {
+		FragmentManager fragmentManager = getSupportFragmentManager();
+		Fragment fragment;
+		switch (currentViewMode) {
+			case LIST:
+				listFragment = (LocationListFragment) fragmentManager.findFragmentByTag(TAG_LIST);
+				if (listFragment == null) {
+					listFragment = LocationListFragment.newInstance();
+				}
+				fragment = listFragment;
+				break;
+			case MAP:
+			default:
+				mapFragment = (SupportMapFragment) fragmentManager.findFragmentByTag(TAG_MAP);
+				if (mapFragment == null) {
+					mapFragment = SupportMapFragment.newInstance();
+				}
+				fragment = mapFragment;
 				break;
 		}
+		fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
 	}
 
 	@Override public void onLocationListItemSelected(Location location) {
@@ -123,7 +151,6 @@ public class LocationsIndexActivity extends ActionBarActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		AccountUtils utils = new AccountUtils(this, this);
 		utils.getAuth(this);
 	}
@@ -169,5 +196,13 @@ public class LocationsIndexActivity extends ActionBarActivity
 
 	public enum ViewMode {
 		MAP, LIST;
+
+		public static ViewMode getViewMode(String mode) {
+			if (mode.equals(LIST.toString())) {
+				return LIST;
+			} else {
+				return MAP;
+			}
+		}
 	}
 }

@@ -6,4 +6,5 @@ package net.creuroja.android.model;
 public class Settings {
 	public final static String MAP_TYPE = "map_type";
 	public static final String LAST_UPDATE_TIME = "last_update_time";
+	public static final String LOCATIONS_INDEX_TYPE = "index_type";
 }

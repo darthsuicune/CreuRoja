@@ -150,7 +150,19 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private void prepareViewModes(View v) {
-		//TODO: Implement callback for activity
+		TextView viewMap = (TextView) v.findViewById(R.id.navigation_drawer_section_map);
+		TextView viewList = (TextView) v.findViewById(R.id.navigation_drawer_section_list);
+
+		prepareViewMode(viewMap, LocationsIndexActivity.ViewMode.MAP);
+		prepareViewMode(viewList, LocationsIndexActivity.ViewMode.LIST);
+	}
+
+	private void prepareViewMode(final TextView v, final LocationsIndexActivity.ViewMode mode) {
+		v.setOnClickListener(new View.OnClickListener() {
+			@Override public void onClick(View view) {
+				mapDrawerCallbacks.onViewModeChanged(mode);
+			}
+		});
 	}
 
 	private void prepareLegend(View v) {
@@ -313,4 +325,3 @@ public class NavigationDrawerFragment extends Fragment {
 		}
 	}
 }
-

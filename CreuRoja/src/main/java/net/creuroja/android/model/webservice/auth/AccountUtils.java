@@ -34,7 +34,6 @@ public class AccountUtils {
 		accountManager
 				.getAuthTokenByFeatures(ACCOUNT_TYPE, AUTH_TOKEN_TYPE, null, activity, null, null,
 						callback, handler);
-
 	}
 
 	public interface LoginManager {
