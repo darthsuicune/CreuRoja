@@ -1,4 +1,4 @@
-package net.creuroja.android.webservice;
+package net.creuroja.android.model.webservice;
 
 import android.util.Log;
 

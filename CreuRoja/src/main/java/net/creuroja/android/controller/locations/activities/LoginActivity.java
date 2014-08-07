@@ -1,4 +1,4 @@
-package net.creuroja.android.view.activities;
+package net.creuroja.android.controller.locations.activities;
 
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
@@ -29,11 +29,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import net.creuroja.android.R;
-import net.creuroja.android.webservice.CRWebServiceClient;
-import net.creuroja.android.webservice.LoginResponse;
-import net.creuroja.android.webservice.RailsWebServiceClient;
-import net.creuroja.android.webservice.auth.AccountUtils;
-import net.creuroja.android.webservice.lib.RestWebServiceClient;
+import net.creuroja.android.model.webservice.CRWebServiceClient;
+import net.creuroja.android.model.webservice.LoginResponse;
+import net.creuroja.android.model.webservice.RailsWebServiceClient;
+import net.creuroja.android.model.webservice.auth.AccountUtils;
+import net.creuroja.android.model.webservice.lib.RestWebServiceClient;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -10,6 +10,7 @@ import java.util.List;
  * Created by denis on 19.06.14.
  */
 public class CRLocationList implements LocationList {
+	List<Location> locationList;
 	public CRLocationList(String json) {
 
 	}
@@ -20,7 +21,11 @@ public class CRLocationList implements LocationList {
 
 	@Override
 	public List<Location> getLocations() {
-		return null;
+		return locationList;
+	}
+
+	@Override public Location get(long id) {
+		return locationList.get((int)id);
 	}
 
 	@Override public String save(ContentResolver cr) {

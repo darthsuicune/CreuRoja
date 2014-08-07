@@ -1,19 +1,14 @@
-package net.creuroja.android.webservice;
+package net.creuroja.android.model.webservice;
 
 import net.creuroja.android.model.CRLocationList;
 import net.creuroja.android.model.LocationList;
-import net.creuroja.android.webservice.lib.RestWebServiceClient;
-import net.creuroja.android.webservice.lib.WebServiceFormat;
-import net.creuroja.android.webservice.lib.WebServiceOption;
+import net.creuroja.android.model.webservice.lib.RestWebServiceClient;
+import net.creuroja.android.model.webservice.lib.WebServiceFormat;
+import net.creuroja.android.model.webservice.lib.WebServiceOption;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,7 +39,7 @@ public class RailsWebServiceClient implements CRWebServiceClient {
 	@Override public LoginResponse signInUser(String email, String password) {
 		try {
 			List<WebServiceOption> options = getLoginOptions(email, password);
-			HttpResponse response = mClient.get(RESOURCE_SESSIONS, WebServiceFormat.JSON, options);
+			HttpResponse response = mClient.post(RESOURCE_SESSIONS, WebServiceFormat.JSON, options);
 			return new RailsLoginResponse(response);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -67,25 +62,7 @@ public class RailsWebServiceClient implements CRWebServiceClient {
 		}
 	}
 
-	private HttpClient getHttpClient() {
-		BasicHttpParams params = new BasicHttpParams();
-		DefaultHttpClient client = new DefaultHttpClient(params);
-		return client;
-	}
-
-	private String readResponse(HttpResponse response) throws IOException {
-		StringBuilder builder = new StringBuilder();
-		BufferedReader reader =
-				new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		String line;
-		while ((line = reader.readLine()) != null) {
-			builder.append(line);
-		}
-		reader.close();
-		return builder.toString();
-	}
-
-	public List<WebServiceOption> getLoginOptions(String email, String password) {
+	private List<WebServiceOption> getLoginOptions(String email, String password) {
 		List<WebServiceOption> options = new ArrayList<>();
 		options.add(new WebServiceOption(WebServiceOption.OptionType.POST, ARG_EMAIL, email));
 		options.add(new WebServiceOption(WebServiceOption.OptionType.POST, ARG_PASSWORD, password));

@@ -1,4 +1,4 @@
-package net.creuroja.android.webservice;
+package net.creuroja.android.model.webservice;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package net.creuroja.android.view.fragments;
+package net.creuroja.android.view.fragments.locations;
 
 import android.app.Activity;
 import android.app.Fragment;

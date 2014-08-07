@@ -1,4 +1,4 @@
-package net.creuroja.android.webservice.lib;
+package net.creuroja.android.model.webservice.lib;
 
 /**
  * Created by lapuente on 30.07.14.

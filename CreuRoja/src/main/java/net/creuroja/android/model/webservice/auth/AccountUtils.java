@@ -1,4 +1,4 @@
-package net.creuroja.android.webservice.auth;
+package net.creuroja.android.model.webservice.auth;
 
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 
-import net.creuroja.android.view.activities.LocationsIndexActivity;
+import net.creuroja.android.controller.locations.activities.LocationsIndexActivity;
 
 /**
  * Created by lapuente on 18.06.14.
@@ -39,7 +39,6 @@ public class AccountUtils {
 
 	public interface LoginManager {
 		public void successfulLogin(String authToken);
-
 		public void failedLogin();
 	}
 

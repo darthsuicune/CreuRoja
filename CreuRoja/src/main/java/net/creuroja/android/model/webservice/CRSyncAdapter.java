@@ -1,4 +1,4 @@
-package net.creuroja.android.webservice;
+package net.creuroja.android.model.webservice;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -14,9 +14,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import net.creuroja.android.app.Settings;
+import net.creuroja.android.model.Settings;
 import net.creuroja.android.model.LocationList;
-import net.creuroja.android.webservice.auth.AccountUtils;
+import net.creuroja.android.model.webservice.auth.AccountUtils;
 
 import java.io.IOException;
 

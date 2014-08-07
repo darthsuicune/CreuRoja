@@ -1,4 +1,4 @@
-package net.creuroja.android.view.fragments;
+package net.creuroja.android.view.fragments.locations;
 
 
 import android.app.ActionBar;
@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -23,7 +24,8 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 
 import net.creuroja.android.R;
-import net.creuroja.android.controller.NavigationDrawerController;
+import net.creuroja.android.controller.locations.activities.LocationsIndexActivity;
+import net.creuroja.android.model.Location;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -31,9 +33,6 @@ import net.creuroja.android.controller.NavigationDrawerController;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-	public static final int SEE_MAP = 0;
-	public static final int SEE_LIST = 17;
-
 	// Remember the position of the selected item.
 	private static final String STATE_SELECTED_MAP_TYPE = "selected_map_type";
 
@@ -43,8 +42,7 @@ public class NavigationDrawerFragment extends Fragment {
 	 */
 	private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
-	// A pointer to the current callbacks instance (the Activity).
-	private NavigationDrawerCallbacks mCallbacks;
+	private MapNavigationDrawerCallbacks mapDrawerCallbacks;
 
 	// Helper component that ties the action bar to the navigation drawer.
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -56,7 +54,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private boolean mFromSavedInstanceState;
 	private boolean mUserLearnedDrawer;
 
-	private NavigationDrawerController mDrawerController;
+	private SharedPreferences prefs;
 
 	public NavigationDrawerFragment() {
 	}
@@ -67,8 +65,8 @@ public class NavigationDrawerFragment extends Fragment {
 
 		// Read in the flag indicating whether or not the user has demonstrated awareness of the
 		// drawer. See PREF_USER_LEARNED_DRAWER for details.
-		SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
+		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+		mUserLearnedDrawer = prefs.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
 		if (savedInstanceState != null) {
 			mCurrentSelectedMapType = savedInstanceState.getInt(STATE_SELECTED_MAP_TYPE);
@@ -89,16 +87,86 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 							 Bundle savedInstanceState) {
-		mDrawerController = new NavigationDrawerController(this);
 		View v = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
+		prepareViewModes(v);
 		prepareLegend(v);
 		prepareMapTypes(v);
 		return v;
+	}
 
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mapDrawerCallbacks = (MapNavigationDrawerCallbacks) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException("Activity must implement MapNavigationDrawerCallbacks.");
+		}
+	}
+
+	@Override
+	public void onDetach() {
+		super.onDetach();
+		mapDrawerCallbacks = null;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		outState.putInt(STATE_SELECTED_MAP_TYPE, mCurrentSelectedMapType);
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Forward the new configuration the drawer toggle component.
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// If the drawer is open, show the global app actions in the action bar. See also
+		// showGlobalContextActionBar, which controls the top-left area of the action bar.
+		if (mDrawerLayout != null && isDrawerOpen()) {
+			inflater.inflate(R.menu.global, menu);
+			showGlobalContextActionBar();
+		}
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+
+		switch (item.getItemId()) {
+			case R.id.action_example:
+				Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void prepareViewModes(View v) {
+		//TODO: Implement callback for activity
 	}
 
 	private void prepareLegend(View v) {
+		//TODO: Implement callback for activity
+	}
 
+	public void prepareLegendObject(final TextView v, final Location.Type type,
+									final boolean active) {
+		if (v != null) {
+			v.setOnClickListener(new View.OnClickListener() {
+				@Override public void onClick(View view) {
+					v.setBackgroundColor((active) ? Color.parseColor("") : Color.parseColor(""));
+					mapDrawerCallbacks.onNavigationLegendItemSelected(type, active);
+				}
+			});
+		}
 	}
 
 	private void prepareMapTypes(View v) {
@@ -107,18 +175,20 @@ public class NavigationDrawerFragment extends Fragment {
 		TextView satellite = (TextView) v.findViewById(R.id.navigation_map_type_satellite);
 		TextView hybrid = (TextView) v.findViewById(R.id.navigation_map_type_hybrid);
 
-		mDrawerController.prepareMapType(normal, GoogleMap.MAP_TYPE_NORMAL);
-		mDrawerController.prepareMapType(terrain, GoogleMap.MAP_TYPE_TERRAIN);
-		mDrawerController.prepareMapType(satellite, GoogleMap.MAP_TYPE_SATELLITE);
-		mDrawerController.prepareMapType(hybrid, GoogleMap.MAP_TYPE_HYBRID);
+		prepareMapType(normal, GoogleMap.MAP_TYPE_NORMAL);
+		prepareMapType(terrain, GoogleMap.MAP_TYPE_TERRAIN);
+		prepareMapType(satellite, GoogleMap.MAP_TYPE_SATELLITE);
+		prepareMapType(hybrid, GoogleMap.MAP_TYPE_HYBRID);
 	}
 
-	public void legendObjectToggled(int legend, boolean newStatus) {
-
-	}
-
-	public void mapTypeChanged(int newMapType) {
-
+	public void prepareMapType(final TextView v, final int mapType) {
+		if (v != null) {
+			v.setOnClickListener(new View.OnClickListener() {
+				@Override public void onClick(View view) {
+					mapDrawerCallbacks.onNavigationMapTypeSelected(mapType);
+				}
+			});
+		}
 	}
 
 	public boolean isDrawerOpen() {
@@ -169,63 +239,10 @@ public class NavigationDrawerFragment extends Fragment {
 		if (mDrawerLayout != null) {
 			mDrawerLayout.closeDrawer(mFragmentContainerView);
 		}
-		if (mCallbacks != null) {
-			mCallbacks.onNavigationDrawerItemSelected(position);
+		if(mapDrawerCallbacks != null) {
+			//TODO: Parse the map type from the selection in the list
+			mapDrawerCallbacks.onNavigationMapTypeSelected(0);
 		}
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-		try {
-			mCallbacks = (NavigationDrawerCallbacks) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
-		}
-	}
-
-	@Override
-	public void onDetach() {
-		super.onDetach();
-		mCallbacks = null;
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(STATE_SELECTED_MAP_TYPE, mCurrentSelectedMapType);
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Forward the new configuration the drawer toggle component.
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		// If the drawer is open, show the global app actions in the action bar. See also
-		// showGlobalContextActionBar, which controls the top-left area of the action bar.
-		if (mDrawerLayout != null && isDrawerOpen()) {
-			inflater.inflate(R.menu.global, menu);
-			showGlobalContextActionBar();
-		}
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			return true;
-		}
-
-		if (item.getItemId() == R.id.action_example) {
-			Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-			return true;
-		}
-
-		return super.onOptionsItemSelected(item);
 	}
 
 	/**
@@ -246,11 +263,14 @@ public class NavigationDrawerFragment extends Fragment {
 	/**
 	 * Callbacks interface that all activities using this fragment must implement.
 	 */
-	public static interface NavigationDrawerCallbacks {
+	public static interface MapNavigationDrawerCallbacks {
 		/**
 		 * Called when an item in the navigation drawer is selected.
 		 */
-		void onNavigationDrawerItemSelected(int position);
+		void onViewModeChanged(LocationsIndexActivity.ViewMode newMode);
+		void onNavigationLegendItemSelected(final Location.Type type,
+											final boolean active);
+		void onNavigationMapTypeSelected(final int mapType);
 	}
 
 	private class MyDrawerToggle extends ActionBarDrawerToggle {

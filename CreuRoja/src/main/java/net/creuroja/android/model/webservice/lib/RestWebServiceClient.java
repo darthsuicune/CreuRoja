@@ -1,7 +1,8 @@
-package net.creuroja.android.webservice.lib;
+package net.creuroja.android.model.webservice.lib;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -30,11 +31,13 @@ public class RestWebServiceClient {
 
 	public HttpResponse get(String resource, WebServiceFormat format,
 									 List<WebServiceOption> options) throws IOException{
-		return null;
+		HttpClient client = getClient();
+		return client.execute(getRequest(WebServiceRequestType.GET, resource, format, options));
 	}
 	public HttpResponse post(String resource, WebServiceFormat format,
 									 List<WebServiceOption> options) throws IOException{
-		return null;
+		HttpClient client = getClient();
+		return client.execute(getRequest(WebServiceRequestType.POST, resource, format, options));
 	}
 
 	public static String getAsString(HttpResponse response) throws IOException {
@@ -47,11 +50,6 @@ public class RestWebServiceClient {
 			line = reader.readLine();
 		}
 		return builder.toString();
-	}
-
-	public String getStringResponse(String resource, WebServiceFormat format,
-									   List<WebServiceOption> options) throws IOException {
-		return getAsString(get(resource, format, options));
 	}
 
 	protected DefaultHttpClient getClient() {

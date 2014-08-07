@@ -1,6 +1,6 @@
-package net.creuroja.android.webservice;
+package net.creuroja.android.model.webservice;
 
-import net.creuroja.android.webservice.lib.RestWebServiceClient;
+import net.creuroja.android.model.webservice.lib.RestWebServiceClient;
 
 import org.apache.http.HttpResponse;
 import org.json.JSONException;

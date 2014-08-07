@@ -1,4 +1,4 @@
-package net.creuroja.android.webservice.auth;
+package net.creuroja.android.model.webservice.auth;
 
 import android.accounts.AbstractAccountAuthenticator;
 import android.accounts.Account;
@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import net.creuroja.android.view.activities.LoginActivity;
+import net.creuroja.android.controller.locations.activities.LoginActivity;
 
 /**
  * Created by lapuente on 16.06.14.
