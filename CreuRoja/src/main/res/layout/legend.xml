@@ -12,56 +12,70 @@
         android:text="@string/marker_type_adaptadas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/adaptadas"/>
+        android:drawableLeft="@drawable/adaptadas"
+        style="@style/NavigationDrawerToggeableButton"/>
     <TextView
         android:id="@+id/navigation_legend_asamblea"
         android:text="@string/marker_type_asamblea"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/asamblea"/>
+        android:drawableLeft="@drawable/asamblea"
+        style="@style/NavigationDrawerToggeableButton"/>
     <TextView
         android:id="@+id/navigation_legend_bravo"
         android:text="@string/marker_type_bravo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/bravo"/>
+        android:drawableLeft="@drawable/bravo"
+        style="@style/NavigationDrawerToggeableButton"/>
     <TextView
         android:id="@+id/navigation_legend_cuap"
         android:text="@string/marker_type_cuap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/cuap"/>
+        android:drawableLeft="@drawable/cuap"
+        style="@style/NavigationDrawerToggeableButton"/>
+    <TextView
+        android:id="@+id/navigation_legend_gasolinera"
+        android:text="@string/marker_type_gasolinera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/gasolinera"
+        style="@style/NavigationDrawerToggeableButton"/>
     <TextView
         android:id="@+id/navigation_legend_hospital"
         android:text="@string/marker_type_hospital"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/hospital"/>
+        android:drawableLeft="@drawable/hospital"
+        style="@style/NavigationDrawerToggeableButton"/>
     <TextView
         android:id="@+id/navigation_legend_maritimo"
         android:text="@string/marker_type_maritimo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/maritimo"/>
+        android:drawableLeft="@drawable/maritimo"
+        style="@style/NavigationDrawerToggeableButton"/>
     <TextView
         android:id="@+id/navigation_legend_nostrum"
         android:text="@string/marker_type_nostrum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/nostrum"/>
+        android:drawableLeft="@drawable/nostrum"
+        style="@style/NavigationDrawerToggeableButton"/>
+    <TextView
+        android:id="@+id/navigation_legend_salvamento"
+        android:text="@string/marker_type_salvamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/salvamento"
+        style="@style/NavigationDrawerToggeableButton"/>
     <TextView
         android:id="@+id/navigation_legend_terrestre"
         android:text="@string/marker_type_terrestre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:drawableLeft="@drawable/terrestre"/>
+        android:drawableLeft="@drawable/terrestre"
+        style="@style/NavigationDrawerToggeableButton"/>
 
 </LinearLayout>

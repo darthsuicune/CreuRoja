@@ -11,7 +11,6 @@
     <string name="marker_type_hospital">Hospitales</string>
     <string name="marker_type_maritimo">Marítimos</string>
     <string name="marker_type_nostrum">Clave 2</string>
-    <string name="marker_type_social">Social</string>
     <string name="marker_type_terrestre">Preventivos</string>
     <string name="no_marker_type">Desconocido</string>
 
@@ -29,7 +28,6 @@
         <item>@string/marker_type_hospital</item>
         <item>@string/marker_type_maritimo</item>
         <item>@string/marker_type_nostrum</item>
-        <item>@string/marker_type_social</item>
         <item>@string/marker_type_terrestre</item>
     </string-array>
 

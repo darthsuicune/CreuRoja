@@ -8,42 +8,42 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        tools:context="org.creuroja.android.view.fragments.NavigationDrawerFragment"
+        tools:context="net.creuroja.android.view.fragments.locations.NavigationDrawerFragment"
         android:background="#eeee">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/navigation_drawer_sections"/>
+            android:text="@string/navigation_drawer_sections"
+            style="@style/NavigationDrawerSectionHeader"/>
 
         <TextView
-            android:layout_marginLeft="10dp"
             android:id="@+id/navigation_drawer_section_map"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style="@style/NavigationDrawerToggeableButton"/>
 
         <TextView
-            android:layout_marginLeft="10dp"
             android:id="@+id/navigation_drawer_section_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            style="@style/NavigationDrawerToggeableButton"/>
 
         <TextView
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/navigation_drawer_location_types"/>
+            android:text="@string/navigation_drawer_location_types"
+            style="@style/NavigationDrawerSectionHeader"/>
 
         <include layout="@layout/legend"/>
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:text="@string/navigation_drawer_map_types"/>
+            android:text="@string/navigation_drawer_map_types"
+            style="@style/NavigationDrawerSectionHeader"/>
 
         <include layout="@layout/map_type"/>
 
