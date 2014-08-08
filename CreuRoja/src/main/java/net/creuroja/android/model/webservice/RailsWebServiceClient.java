@@ -1,7 +1,5 @@
 package net.creuroja.android.model.webservice;
 
-import net.creuroja.android.model.CRLocationList;
-import net.creuroja.android.model.LocationList;
 import net.creuroja.android.model.webservice.lib.RestWebServiceClient;
 import net.creuroja.android.model.webservice.lib.WebServiceFormat;
 import net.creuroja.android.model.webservice.lib.WebServiceOption;
@@ -21,44 +19,60 @@ public class RailsWebServiceClient implements CRWebServiceClient {
 	private static final String WS_CR_TAG = "CreuRoja Rails webservice";
 	private static final String ARG_EMAIL = "email";
 	private static final String ARG_PASSWORD = "password";
-	private static final String ARG_ACCESS_TOKEN = "token";
+	private static final String ARG_ACCESS_TOKEN = "Authorization: Token token=";
 	private static final String ARG_LAST_UPDATE = "updated_at";
 	private static final String RESOURCE_SESSIONS = "sessions";
 	private static final String RESOURCE_LOCATIONS = "locations";
 
 	private RestWebServiceClient mClient;
+	private ClientConnectionListener listener;
 
-	public RailsWebServiceClient(RestWebServiceClient client) {
+	public RailsWebServiceClient(RestWebServiceClient client, ClientConnectionListener listener) {
 		if (client == null) {
-			new RestWebServiceClient(PROTOCOL, URL);
+			mClient = new RestWebServiceClient(PROTOCOL, URL);
 		} else {
 			mClient = client;
 		}
+		this.listener = listener;
 	}
 
-	@Override public LoginResponse signInUser(String email, String password) {
+	@Override public void signInUser(String email, String password) {
 		try {
 			List<WebServiceOption> options = getLoginOptions(email, password);
 			HttpResponse response = mClient.post(RESOURCE_SESSIONS, WebServiceFormat.JSON, options);
-			return new RailsLoginResponse(response);
+			sendResponse(response);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			listener.onServerError();
 		}
 	}
 
-	@Override public LocationList getLocations(String accessToken) {
-		return getLocations(accessToken, "0");
+	@Override public void getLocations(String accessToken) {
+		getLocations(accessToken, "0");
 	}
 
-	@Override public LocationList getLocations(String accessToken, String lastUpdateTime) {
+	@Override public void getLocations(String accessToken, String lastUpdateTime) {
 		try {
 			List<WebServiceOption> options = getLocationOptions(accessToken, lastUpdateTime);
 			HttpResponse response = mClient.get(RESOURCE_LOCATIONS, WebServiceFormat.JSON, options);
-			return new CRLocationList(response);
+			sendResponse(response);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			listener.onServerError();
+		}
+	}
+
+	private void sendResponse(HttpResponse response) {
+		switch(response.getStatusLine().getStatusCode()) {
+			case 200:
+				listener.onValidResponse(response);
+				break;
+			case 401:
+				listener.onUnauthorized();
+				break;
+			case 500:
+				listener.onServerError();
+				break;
 		}
 	}
 
@@ -72,7 +86,7 @@ public class RailsWebServiceClient implements CRWebServiceClient {
 	private List<WebServiceOption> getLocationOptions(String accessToken, String lastUpdateTime) {
 		List<WebServiceOption> options = new ArrayList<>();
 		options.add(new WebServiceOption(WebServiceOption.OptionType.HEADER, ARG_ACCESS_TOKEN,
-				accessToken));
+				"\"" + accessToken + "\""));
 		if (!lastUpdateTime.equals("0")) {
 			options.add(new WebServiceOption(WebServiceOption.OptionType.GET, ARG_LAST_UPDATE,
 					lastUpdateTime));

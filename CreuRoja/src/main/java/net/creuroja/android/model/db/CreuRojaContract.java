@@ -10,7 +10,6 @@ public final class CreuRojaContract {
 				Uri.parse("content://" + CreuRojaProvider.CONTENT_NAME + "/locations");
 		public static final String TABLE_NAME = "locations";
 		public static final String DEFAULT_ORDER = _ID + " DESC";
-
 		public static final String NAME = "name";
 		public static final String DESCRIPTION = "description";
 		public static final String ADDRESS = "address";
@@ -20,6 +19,9 @@ public final class CreuRojaContract {
 		public static final String TYPE = "location_type";
 		public static final String UPDATED_AT = "updated_at";
 		public static final String ACTIVE = "active";
+		protected static final String DISTINCT_LOCATIONS = "distinctLocations";
+		public static final Uri CONTENT_DISTINCT_LOCATIONS =
+				Uri.parse("content://" + CreuRojaProvider.CONTENT_NAME + "/" + DISTINCT_LOCATIONS);
 	}
 
 	public static final class Services implements BaseColumns {

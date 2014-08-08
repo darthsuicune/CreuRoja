@@ -1,4 +1,4 @@
-package net.creuroja.android.model;
+package net.creuroja.android.model.locations;
 
 import android.content.ContentResolver;
 

@@ -1,6 +1,6 @@
 package net.creuroja.android.controller.locations;
 
-import net.creuroja.android.model.Location;
+import net.creuroja.android.model.locations.Location;
 
 /**
  * Created by lapuente on 07.08.14.

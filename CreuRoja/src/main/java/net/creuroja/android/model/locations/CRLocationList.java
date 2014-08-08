@@ -1,9 +1,11 @@
-package net.creuroja.android.model;
+package net.creuroja.android.model.locations;
 
 import android.content.ContentResolver;
+import android.database.Cursor;
 
 import org.apache.http.HttpResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,11 +14,15 @@ import java.util.List;
 public class CRLocationList implements LocationList {
 	List<Location> locationList;
 	public CRLocationList(String json) {
-
+		locationList = new ArrayList<>();
 	}
 
 	public CRLocationList(HttpResponse response) {
+		locationList = new ArrayList<>();
+	}
 
+	public CRLocationList(Cursor cursor) {
+		locationList = new ArrayList<>();
 	}
 
 	@Override

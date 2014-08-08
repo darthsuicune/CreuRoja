@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import net.creuroja.android.R;
-import net.creuroja.android.model.Location;
+import net.creuroja.android.model.locations.Location;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -1,6 +1,8 @@
 package net.creuroja.android.controller.locations.activities;
 
+import android.accounts.Account;
 import android.app.ActionBar;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,10 +19,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 
 import net.creuroja.android.R;
 import net.creuroja.android.controller.locations.LocationsListListener;
-import net.creuroja.android.model.Location;
 import net.creuroja.android.model.Settings;
+import net.creuroja.android.model.db.CreuRojaProvider;
+import net.creuroja.android.model.locations.Location;
+import net.creuroja.android.model.locations.LocationType;
 import net.creuroja.android.model.webservice.auth.AccountUtils;
 import net.creuroja.android.model.webservice.auth.AccountUtils.LoginManager;
+import net.creuroja.android.view.fragments.locations.GoogleMapFragmentUtils;
 import net.creuroja.android.view.fragments.locations.LocationCardFragment;
 import net.creuroja.android.view.fragments.locations.LocationListFragment;
 import net.creuroja.android.view.fragments.locations.NavigationDrawerFragment;
@@ -32,7 +37,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	private static final String TAG_LIST = "listFragment";
 
 	// Keep the authToken for manual refresh
-	private String mAuthToken;
+	private Account mAccount;
 
 	// Fragment managing the behaviors, interactions and presentation of the navigation drawer.
 	private NavigationDrawerFragment mNavigationDrawerFragment;
@@ -50,7 +55,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	// Callbacks for when the auth token is returned
 	@Override
 	public void successfulLogin(String authToken) {
-		mAuthToken = authToken;
+
 		startUi();
 		if (currentViewMode == null) {
 			String preferredMode =
@@ -58,6 +63,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 			currentViewMode = ViewMode.getViewMode(preferredMode);
 		}
 		setMainFragment();
+		requestSync();
 	}
 
 	@Override
@@ -94,7 +100,8 @@ public class LocationsIndexActivity extends ActionBarActivity
 			default:
 				mapFragment = (SupportMapFragment) fragmentManager.findFragmentByTag(TAG_MAP);
 				if (mapFragment == null) {
-					mapFragment = SupportMapFragment.newInstance();
+					mapFragment =
+							SupportMapFragment.newInstance(GoogleMapFragmentUtils.getMapOptions());
 				}
 				fragment = mapFragment;
 				break;
@@ -107,7 +114,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	}
 
 	@Override public void onDirectionsRequested(Location location) {
-		//TODO: Implement
+		//TODO: Implement route calculation and map drawing
 	}
 
 	@Override public void onCardCloseRequested() {
@@ -118,7 +125,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 		openLocationDetails(location);
 	}
 
-	@Override public void onNavigationLegendItemSelected(Location.Type type, boolean active) {
+	@Override public void onNavigationLegendItemSelected(LocationType type, boolean active) {
 		//TODO: implement, whatever i had in mind when I thought of this.
 	}
 
@@ -177,9 +184,29 @@ public class LocationsIndexActivity extends ActionBarActivity
 			case R.id.action_settings:
 				openSettings();
 				return true;
+			case R.id.action_refresh:
+				performSync();
+				return true;
+			case R.id.action_search:
+				//TODO: implement, change to true
+				return false;
+			case R.id.action_locate:
+				//TODO: implement, change to true
+				return false;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void requestSync() {
+
+	}
+
+	private void performSync() {
+		Bundle bundle = new Bundle();
+		bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
+		bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+		ContentResolver.requestSync(mAccount, CreuRojaProvider.CONTENT_NAME, bundle);
 	}
 
 	private void openSettings() {
@@ -188,7 +215,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	}
 
 	private void openLocationDetails(Location location) {
-		//TODO: Attach fragment if landscape / enough width. Open Activity if not.
+		//TODO: Attach fragment if landscape / enough width.
 		Intent intent = new Intent(this, LocationDetailsActivity.class);
 		intent.putExtra(LocationDetailsActivity.EXTRA_LOCATION_ID, location.mId);
 		startActivity(intent);

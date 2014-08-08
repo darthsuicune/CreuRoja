@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import net.creuroja.android.R;
 import net.creuroja.android.controller.locations.LocationsListListener;
-import net.creuroja.android.model.LocationList;
+import net.creuroja.android.model.locations.LocationList;
 
 /**
  * A fragment representing a list of Items.

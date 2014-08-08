@@ -30,10 +30,14 @@ import android.widget.Toast;
 
 import net.creuroja.android.R;
 import net.creuroja.android.model.webservice.CRWebServiceClient;
+import net.creuroja.android.model.webservice.ClientConnectionListener;
 import net.creuroja.android.model.webservice.LoginResponse;
+import net.creuroja.android.model.webservice.RailsLoginResponse;
 import net.creuroja.android.model.webservice.RailsWebServiceClient;
 import net.creuroja.android.model.webservice.auth.AccountUtils;
 import net.creuroja.android.model.webservice.lib.RestWebServiceClient;
+
+import org.apache.http.HttpResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -262,51 +266,42 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-	public class UserLoginTask extends AsyncTask<Void, Void, Intent> {
+	public class UserLoginTask extends AsyncTask<Void, Void, Void>
+			implements ClientConnectionListener {
 
 		private final CRWebServiceClient mClient;
 		private final String mEmail;
 		private final String mPassword;
+		private Intent intent;
 
 		UserLoginTask(String email, String password) {
 			mClient = new RailsWebServiceClient(
 					new RestWebServiceClient(RailsWebServiceClient.PROTOCOL,
-							RailsWebServiceClient.URL));
+							RailsWebServiceClient.URL), this);
 			mEmail = email;
 			mPassword = password;
+			intent = new Intent();
 		}
 
 		@Override
-		protected Intent doInBackground(Void... params) {
-			Intent result = new Intent();
-			LoginResponse response = mClient.signInUser(mEmail, mPassword);
-			if (response.isValid()) {
-				result.putExtra(LoginResponse.IS_VALID, true);
-				result.putExtra(AccountManager.KEY_ACCOUNT_NAME, mEmail);
-				result.putExtra(AccountManager.KEY_ACCOUNT_TYPE, AccountUtils.ACCOUNT_TYPE);
-				result.putExtra(AccountManager.KEY_AUTHTOKEN, response.authToken());
-				result.putExtra(AccountManager.KEY_PASSWORD, mPassword);
-			} else {
-				result.putExtra(LoginResponse.IS_VALID, false);
-				result.putExtra(LoginResponse.ERROR_CODE, response.errorCode());
-				result.putExtra(LoginResponse.ERROR_MESSAGE, response.errorMessage());
-			}
-			return result;
+		protected Void doInBackground(Void... params) {
+			mClient.signInUser(mEmail, mPassword);
+			return null;
 		}
 
 		@Override
-		protected void onPostExecute(final Intent result) {
+		protected void onPostExecute(final Void result) {
 			mAuthTask = null;
 			showProgress(false);
 
-			if (result.getBooleanExtra(LoginResponse.IS_VALID, false)) {
-				successfulLogin(result);
+			if (intent.getBooleanExtra(LoginResponse.IS_VALID, false)) {
+				successfulLogin(intent);
 			} else {
 				mPasswordView.setError(getString(R.string.error_invalid_password));
 				mPasswordView.setText("");
 				mPasswordView.requestFocus();
 				Toast.makeText(getApplicationContext(),
-						result.getStringExtra(LoginResponse.ERROR_MESSAGE), Toast.LENGTH_LONG)
+						intent.getStringExtra(LoginResponse.ERROR_MESSAGE), Toast.LENGTH_LONG)
 						.show();
 			}
 		}
@@ -337,6 +332,29 @@ public class LoginActivity extends AccountAuthenticatorActivity implements Loade
 			setAccountAuthenticatorResult(intent.getExtras());
 			setResult(RESULT_OK);
 			finish();
+		}
+
+		@Override public void onValidResponse(HttpResponse httpResponse) {
+			LoginResponse response = new RailsLoginResponse(httpResponse);
+			intent.putExtra(LoginResponse.IS_VALID, response.isValid());
+			intent.putExtra(AccountManager.KEY_ACCOUNT_NAME, mEmail);
+			intent.putExtra(AccountManager.KEY_ACCOUNT_TYPE, AccountUtils.ACCOUNT_TYPE);
+			intent.putExtra(AccountManager.KEY_AUTHTOKEN, response.authToken());
+			intent.putExtra(AccountManager.KEY_PASSWORD, mPassword);
+		}
+
+
+		@Override public void onUnauthorized() {
+			intent.putExtra(LoginResponse.IS_VALID, false);
+			intent.putExtra(LoginResponse.ERROR_CODE, 401);
+			intent.putExtra(LoginResponse.ERROR_MESSAGE, R.string.error_invalid_user);
+
+		}
+
+		@Override public void onServerError() {
+			intent.putExtra(LoginResponse.IS_VALID, false);
+			intent.putExtra(LoginResponse.ERROR_CODE, 500);
+			intent.putExtra(LoginResponse.ERROR_MESSAGE, R.string.error_invalid_response);
 		}
 	}
 }

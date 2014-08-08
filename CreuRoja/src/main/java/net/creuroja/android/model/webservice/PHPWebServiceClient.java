@@ -11,12 +11,8 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
-import net.creuroja.android.model.CRLocationList;
-import net.creuroja.android.model.LocationList;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -38,44 +34,62 @@ public class PHPWebServiceClient implements CRWebServiceClient {
 	private static final String WS_RESOURCE_LOCATIONS = "?q=get_locations";
 	private static final String WS_VERSION = "&version=";
 	private static final String ARG_VERSION = "2.0";
+	private ClientConnectionListener listener;
+
+	public PHPWebServiceClient(ClientConnectionListener listener) {
+		this.listener = listener;
+	}
 
 	@Override
-	public LoginResponse signInUser(String username, String password) {
+	public void signInUser(String username, String password) {
 		HttpClient client = getHttpClient();
 		try {
 			HttpUriRequest request = getLoginRequest(username, password);
 			HttpResponse response = client.execute(request);
-			String result = readResponse(response);
-			return new PHPLoginResponse(result);
+			sendResponse(response);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			listener.onServerError();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
-			return null;
+			listener.onServerError();
+			Log.d(WS_CR_TAG, "Incorrect URL " + e.getMessage());
 		}
 	}
 
 	@Override
-	public LocationList getLocations(String accessToken) {
-		return getLocations(accessToken, "0");
+	public void getLocations(String accessToken) {
+		getLocations(accessToken, "0");
 	}
 
 	@Override
-	public LocationList getLocations(String accessToken, String lastUpdateTime) {
+	public void getLocations(String accessToken, String lastUpdateTime) {
 		HttpClient client = getHttpClient();
 		try {
 			HttpUriRequest request = getLocationsRequest(lastUpdateTime, accessToken);
 			HttpResponse response = client.execute(request);
-			String result = readResponse(response);
-			return new CRLocationList(result);
+			sendResponse(response);
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+			listener.onServerError();
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 			Log.d(WS_CR_TAG, "Incorrect URL " + e.getMessage());
-			return null;
+			listener.onServerError();
+		}
+	}
+
+	private void sendResponse(HttpResponse response) {
+		switch(response.getStatusLine().getStatusCode()) {
+			case 200:
+				listener.onValidResponse(response);
+				break;
+			case 401:
+				listener.onUnauthorized();
+				break;
+			case 500:
+				listener.onServerError();
+				break;
 		}
 	}
 
@@ -106,17 +120,5 @@ public class PHPWebServiceClient implements CRWebServiceClient {
 		nameValuePairs.add(new BasicNameValuePair(ARG_ACCESS_TOKEN, accessToken));
 		request.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		return request;
-	}
-
-	private String readResponse(HttpResponse response) throws IOException {
-		StringBuilder builder = new StringBuilder();
-		BufferedReader reader =
-				new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		String line;
-		while ((line = reader.readLine()) != null) {
-			builder.append(line);
-		}
-		reader.close();
-		return builder.toString();
 	}
 }

@@ -1,4 +1,4 @@
-package net.creuroja.android.model.webservice;
+package net.creuroja.android.model.webservice.sync;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -15,18 +15,27 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import net.creuroja.android.model.Settings;
-import net.creuroja.android.model.LocationList;
+import net.creuroja.android.model.locations.CRLocationList;
+import net.creuroja.android.model.locations.LocationList;
+import net.creuroja.android.model.webservice.CRWebServiceClient;
+import net.creuroja.android.model.webservice.ClientConnectionListener;
+import net.creuroja.android.model.webservice.RailsWebServiceClient;
 import net.creuroja.android.model.webservice.auth.AccountUtils;
+import net.creuroja.android.model.webservice.lib.RestWebServiceClient;
+
+import org.apache.http.HttpResponse;
 
 import java.io.IOException;
 
 /**
  * Created by lapuente on 20.06.14.
  */
-public class CRSyncAdapter extends AbstractThreadedSyncAdapter {
+public class CRSyncAdapter extends AbstractThreadedSyncAdapter implements ClientConnectionListener {
 	private static final String SYNC_ADAPTER_TAG = "CreuRoja SyncAdapter";
 	private final AccountManager mAccountManager;
 	Context mContext;
+	String lastUpdateTime;
+	SharedPreferences prefs;
 
 	public CRSyncAdapter(Context context, boolean autoInitialize) {
 		super(context, autoInitialize);
@@ -50,17 +59,17 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter {
 		if (connectivity.getActiveNetworkInfo().isAvailable() &&
 			connectivity.getActiveNetworkInfo().isConnected()) {
 			try {
-				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
-				CRWebServiceClient client = new PHPWebServiceClient();
+				prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
+				RestWebServiceClient restClient =
+						new RestWebServiceClient(RailsWebServiceClient.PROTOCOL,
+								RailsWebServiceClient.URL);
+				CRWebServiceClient client = new RailsWebServiceClient(restClient, this);
 
 				String accessToken = mAccountManager
 						.blockingGetAuthToken(account, AccountUtils.AUTH_TOKEN_TYPE, true);
 
-				String lastUpdateTime = prefs.getString(Settings.LAST_UPDATE_TIME, "0");
-				LocationList locationList = client.getLocations(lastUpdateTime, accessToken);
-				lastUpdateTime = locationList.save(mContext.getContentResolver());
-
-				prefs.edit().putString(Settings.LAST_UPDATE_TIME, lastUpdateTime).commit();
+				lastUpdateTime = prefs.getString(Settings.LAST_UPDATE_TIME, "0");
+				client.getLocations(accessToken, lastUpdateTime);
 			} catch (OperationCanceledException e) {
 				Log.i(SYNC_ADAPTER_TAG, "Synchronization cancelled by the user");
 				e.printStackTrace();
@@ -72,5 +81,20 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override public void onValidResponse(HttpResponse response) {
+		LocationList locationList = new CRLocationList(response);
+		lastUpdateTime = locationList.save(mContext.getContentResolver());
+
+		prefs.edit().putString(Settings.LAST_UPDATE_TIME, lastUpdateTime).commit();
+	}
+
+	@Override public void onUnauthorized() {
+		Log.d(SYNC_ADAPTER_TAG, "You are unauthorized.");
+	}
+
+	@Override public void onServerError() {
+		Log.d(SYNC_ADAPTER_TAG, "Server error");
 	}
 }

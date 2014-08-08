@@ -9,7 +9,7 @@ import android.database.Cursor;
 import android.net.Uri;
 
 public class CreuRojaProvider extends ContentProvider {
-	protected static final String CONTENT_NAME = "net.creuroja.android.model.db.Provider";
+	public static final String CONTENT_NAME = "net.creuroja.android.model.db.Provider";
 	private static final int LOCATIONS = 1;
 	private static final int LOCATIONS_ID = 2;
 	private static final int SERVICES = 3;
@@ -18,6 +18,7 @@ public class CreuRojaProvider extends ContentProvider {
 	private static final int VEHICLES_ID = 6;
 	private static final int USERS = 7;
 	private static final int USERS_ID = 8;
+	private static final int DISTINCT_LOCATIONS = 9;
 	static UriMatcher sUriMatcher;
 
 	static {
@@ -31,6 +32,8 @@ public class CreuRojaProvider extends ContentProvider {
 		sUriMatcher.addURI(CONTENT_NAME, CreuRojaContract.Vehicles.TABLE_NAME + "/#", VEHICLES_ID);
 		sUriMatcher.addURI(CONTENT_NAME, CreuRojaContract.Users.TABLE_NAME, USERS);
 		sUriMatcher.addURI(CONTENT_NAME, CreuRojaContract.Users.TABLE_NAME + "/#", USERS_ID);
+		sUriMatcher.addURI(CONTENT_NAME, CreuRojaContract.Locations.DISTINCT_LOCATIONS,
+				DISTINCT_LOCATIONS);
 	}
 
 	CreuRojaOpenHelper mDbHelper;
@@ -62,6 +65,8 @@ public class CreuRojaProvider extends ContentProvider {
 				return dirBase + CreuRojaContract.Users.TABLE_NAME;
 			case USERS_ID:
 				return itemBase + CreuRojaContract.Users.TABLE_NAME;
+			case DISTINCT_LOCATIONS:
+				return dirBase + CreuRojaContract.Locations.DISTINCT_LOCATIONS;
 			default:
 				return null;
 		}
@@ -69,6 +74,7 @@ public class CreuRojaProvider extends ContentProvider {
 
 	private String getTable(Uri uri) {
 		switch (sUriMatcher.match(uri)) {
+			case DISTINCT_LOCATIONS:
 			case LOCATIONS_ID:
 			case LOCATIONS:
 				return CreuRojaContract.Locations.TABLE_NAME;
@@ -103,7 +109,7 @@ public class CreuRojaProvider extends ContentProvider {
 	public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs,
 						String sortOrder) {
 		String table = getTable(uri);
-		boolean distinct = false;
+		boolean distinct = (sUriMatcher.match(uri) == DISTINCT_LOCATIONS);
 		String groupBy = null;
 		String having = null;
 		String limit = null;

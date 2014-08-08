@@ -1,7 +1,6 @@
 package net.creuroja.android.view.fragments.locations;
 
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.SharedPreferences;
@@ -12,6 +11,8 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,13 +20,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 
 import net.creuroja.android.R;
 import net.creuroja.android.controller.locations.activities.LocationsIndexActivity;
-import net.creuroja.android.model.Location;
+import net.creuroja.android.model.Settings;
+import net.creuroja.android.model.locations.LocationType;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -89,7 +90,7 @@ public class NavigationDrawerFragment extends Fragment {
 							 Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
 		prepareViewModes(v);
-		prepareLegend(v);
+		prepareLegendItems(v);
 		prepareMapTypes(v);
 		return v;
 	}
@@ -141,9 +142,6 @@ public class NavigationDrawerFragment extends Fragment {
 		}
 
 		switch (item.getItemId()) {
-			case R.id.action_example:
-				Toast.makeText(getActivity(), "Example action.", Toast.LENGTH_SHORT).show();
-				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -165,13 +163,20 @@ public class NavigationDrawerFragment extends Fragment {
 		});
 	}
 
-	private void prepareLegend(View v) {
-		//TODO: Implement callback for activity
+	private void prepareLegendItems(View v) {
+		if (getActivity() != null) {
+			for (LocationType type : LocationType
+					.getCurrentItems(getActivity().getContentResolver())) {
+				prepareLegendItem((TextView) v.findViewById(type.mLegendViewId), type,
+						type.getViewable(prefs));
+			}
+
+		}
 	}
 
-	public void prepareLegendObject(final TextView v, final Location.Type type,
-									final boolean active) {
+	public void prepareLegendItem(final TextView v, final LocationType type, final boolean active) {
 		if (v != null) {
+			v.setVisibility(View.VISIBLE);
 			v.setOnClickListener(new View.OnClickListener() {
 				@Override public void onClick(View view) {
 					v.setBackgroundColor((active) ? Color.parseColor("") : Color.parseColor(""));
@@ -191,6 +196,9 @@ public class NavigationDrawerFragment extends Fragment {
 		prepareMapType(terrain, GoogleMap.MAP_TYPE_TERRAIN);
 		prepareMapType(satellite, GoogleMap.MAP_TYPE_SATELLITE);
 		prepareMapType(hybrid, GoogleMap.MAP_TYPE_HYBRID);
+
+		mapDrawerCallbacks.onNavigationMapTypeSelected(
+				prefs.getInt(Settings.MAP_TYPE, GoogleMap.MAP_TYPE_NORMAL));
 	}
 
 	public void prepareMapType(final TextView v, final int mapType) {
@@ -198,6 +206,7 @@ public class NavigationDrawerFragment extends Fragment {
 			v.setOnClickListener(new View.OnClickListener() {
 				@Override public void onClick(View view) {
 					mapDrawerCallbacks.onNavigationMapTypeSelected(mapType);
+					prefs.edit().putInt(Settings.MAP_TYPE, mapType).apply();
 				}
 			});
 		}
@@ -219,7 +228,6 @@ public class NavigationDrawerFragment extends Fragment {
 
 		// set a custom shadow that overlays the main content when the drawer opens
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		// set up the drawer's list view with items and click listener
 
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
@@ -269,7 +277,7 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private ActionBar getActionBar() {
-		return getActivity().getActionBar();
+		return ((ActionBarActivity) getActivity()).getSupportActionBar();
 	}
 
 	/**
@@ -281,7 +289,7 @@ public class NavigationDrawerFragment extends Fragment {
 		 */
 		void onViewModeChanged(LocationsIndexActivity.ViewMode newMode);
 
-		void onNavigationLegendItemSelected(final Location.Type type, final boolean active);
+		void onNavigationLegendItemSelected(final LocationType type, final boolean active);
 
 		void onNavigationMapTypeSelected(final int mapType);
 	}
