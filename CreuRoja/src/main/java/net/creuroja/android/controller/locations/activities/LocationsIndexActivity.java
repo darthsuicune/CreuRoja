@@ -22,6 +22,7 @@ import net.creuroja.android.controller.locations.LocationsListListener;
 import net.creuroja.android.model.Settings;
 import net.creuroja.android.model.db.CreuRojaProvider;
 import net.creuroja.android.model.locations.Location;
+import net.creuroja.android.model.locations.LocationList;
 import net.creuroja.android.model.locations.LocationType;
 import net.creuroja.android.model.webservice.auth.AccountUtils;
 import net.creuroja.android.model.webservice.auth.AccountUtils.LoginManager;
@@ -52,10 +53,11 @@ public class LocationsIndexActivity extends ActionBarActivity
 	private ViewMode currentViewMode;
 	private GoogleMap map;
 
+	private LocationList mLocationList;
+
 	// Callbacks for when the auth token is returned
 	@Override
 	public void successfulLogin(String authToken) {
-
 		startUi();
 		if (currentViewMode == null) {
 			String preferredMode =
@@ -92,7 +94,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 			case LIST:
 				listFragment = (LocationListFragment) fragmentManager.findFragmentByTag(TAG_LIST);
 				if (listFragment == null) {
-					listFragment = LocationListFragment.newInstance();
+					listFragment = LocationListFragment.newInstance(mLocationList);
 				}
 				fragment = listFragment;
 				break;
@@ -199,7 +201,8 @@ public class LocationsIndexActivity extends ActionBarActivity
 	}
 
 	private void requestSync() {
-
+		//TODO: Check for sync preferences
+		performSync();
 	}
 
 	private void performSync() {

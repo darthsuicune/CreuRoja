@@ -15,7 +15,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import net.creuroja.android.model.Settings;
-import net.creuroja.android.model.locations.CRLocationList;
+import net.creuroja.android.model.locations.RailsLocationList;
 import net.creuroja.android.model.locations.LocationList;
 import net.creuroja.android.model.webservice.CRWebServiceClient;
 import net.creuroja.android.model.webservice.ClientConnectionListener;
@@ -34,7 +34,6 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter implements Client
 	private static final String SYNC_ADAPTER_TAG = "CreuRoja SyncAdapter";
 	private final AccountManager mAccountManager;
 	Context mContext;
-	String lastUpdateTime;
 	SharedPreferences prefs;
 
 	public CRSyncAdapter(Context context, boolean autoInitialize) {
@@ -68,7 +67,7 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter implements Client
 				String accessToken = mAccountManager
 						.blockingGetAuthToken(account, AccountUtils.AUTH_TOKEN_TYPE, true);
 
-				lastUpdateTime = prefs.getString(Settings.LAST_UPDATE_TIME, "0");
+				String lastUpdateTime = prefs.getString(Settings.LAST_UPDATE_TIME, "0");
 				client.getLocations(accessToken, lastUpdateTime);
 			} catch (OperationCanceledException e) {
 				Log.i(SYNC_ADAPTER_TAG, "Synchronization cancelled by the user");
@@ -84,10 +83,11 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter implements Client
 	}
 
 	@Override public void onValidResponse(HttpResponse response) {
-		LocationList locationList = new CRLocationList(response);
-		lastUpdateTime = locationList.save(mContext.getContentResolver());
+		LocationList locationList = new RailsLocationList(response);
+		locationList.save(mContext.getContentResolver());
 
-		prefs.edit().putString(Settings.LAST_UPDATE_TIME, lastUpdateTime).commit();
+		prefs.edit().putString(Settings.LAST_UPDATE_TIME, locationList.getLastUpdateTime())
+				.apply();
 	}
 
 	@Override public void onUnauthorized() {

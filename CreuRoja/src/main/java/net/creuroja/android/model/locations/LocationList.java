@@ -10,5 +10,7 @@ import java.util.List;
 public interface LocationList {
 	public List<Location> getLocations();
 	public Location get(long id);
-	public String save(ContentResolver cr);
+	public void save(ContentResolver cr);
+	public boolean has(Location location);
+	public String getLastUpdateTime();
 }

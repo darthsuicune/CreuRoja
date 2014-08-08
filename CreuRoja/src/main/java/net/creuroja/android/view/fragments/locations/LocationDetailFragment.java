@@ -21,9 +21,6 @@ import net.creuroja.android.model.locations.Location;
  * interface.
  */
 public class LocationDetailFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_LOCATION_ID = "locationId";
 
     // TODO: Rename and change types of parameters
@@ -52,7 +49,7 @@ public class LocationDetailFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mLocation = new Location(getArguments().getInt(ARG_LOCATION_ID));
+            //TODO: Find location through ARG_LOCATION_ID
         }
     }
 

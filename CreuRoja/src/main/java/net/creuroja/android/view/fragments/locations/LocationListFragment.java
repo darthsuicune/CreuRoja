@@ -1,8 +1,8 @@
 package net.creuroja.android.view.fragments.locations;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,25 +24,16 @@ import net.creuroja.android.model.locations.LocationList;
  * Activities containing this fragment MUST implement the {@link LocationsListListener} callbacks
  * interface.
  */
-public class LocationListFragment extends Fragment implements AbsListView.OnItemClickListener {
+public class LocationListFragment extends ListFragment implements AbsListView.OnItemClickListener {
 
-	// TODO: Rename parameter arguments, choose names that match
-	// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-
-	// TODO: Rename and change types of parameters
 	private LocationList mLocationList;
 
 	private LocationsListListener mListener;
 
-	/**
-	 * The fragment's ListView/GridView.
-	 */
+	// The fragment's ListView/GridView.
 	private AbsListView mListView;
 
-	/**
-	 * The Adapter which will be used to populate the ListView/GridView with
-	 * Views.
-	 */
+	// The Adapter which will be used to populate the ListView/GridView with Views.
 	private ListAdapter mAdapter;
 
 	/**
@@ -52,21 +43,19 @@ public class LocationListFragment extends Fragment implements AbsListView.OnItem
 	public LocationListFragment() {
 	}
 
-	// TODO: Rename and change types of parameters
-	public static LocationListFragment newInstance() {
+	public static LocationListFragment newInstance(LocationList locationList) {
 		LocationListFragment fragment = new LocationListFragment();
-		//TODO: Delete this two lines if no arguments are required
-		Bundle args = new Bundle();
-		fragment.setArguments(args);
+		fragment.mLocationList = locationList;
 		return fragment;
+	}
+
+	public void setLocationList(LocationList locationList) {
+		mLocationList = locationList;
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		if (getArguments() != null) {
-		}
 
 		// TODO: Change Adapter to display your content
 		mAdapter = null;

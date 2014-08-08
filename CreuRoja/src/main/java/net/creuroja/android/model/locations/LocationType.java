@@ -48,6 +48,33 @@ public enum LocationType {
 		mLegendViewId = legendId;
 		mNameString = nameString;
 	}
+	
+	@Override public String toString() {
+		switch (this) {
+			case ADAPTED:
+				return sAdapted;
+			case ASSEMBLY:
+				return sAssembly;
+			case BRAVO:
+				return sBravo;
+			case CUAP:
+				return sCuap;
+			case GAS_STATION:
+				return sGasStation;
+			case HOSPITAL:
+				return sHospital;
+			case SEA_SERVICE:
+				return sSeaService;
+			case NOSTRUM:
+				return sNostrum;
+			case SEA_BASE:
+				return sSeaBase;
+			case TERRESTRIAL:
+				return sTerrestrial;
+			default:
+				return "";
+		}
+	}
 
 	public static LocationType getType(String s) {
 		switch (s.toLowerCase()) {

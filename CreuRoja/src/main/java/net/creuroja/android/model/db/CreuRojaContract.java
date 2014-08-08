@@ -11,6 +11,7 @@ public final class CreuRojaContract {
 		public static final String TABLE_NAME = "locations";
 		public static final String DEFAULT_ORDER = _ID + " DESC";
 		public static final String NAME = "name";
+		public static final String REMOTE_ID = "remote_id";
 		public static final String DESCRIPTION = "description";
 		public static final String ADDRESS = "address";
 		public static final String PHONE = "phone";

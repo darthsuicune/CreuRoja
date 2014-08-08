@@ -30,6 +30,7 @@ public class CreuRojaOpenHelper extends SQLiteOpenHelper {
 				   CreuRojaContract.Locations.LATITUD + " DOUBLE NOT NULL, " +
 				   CreuRojaContract.Locations.LONGITUD + " DOUBLE NOT NULL, " +
 				   CreuRojaContract.Locations.TYPE + " TEXT NOT NULL, " +
+				   CreuRojaContract.Locations.REMOTE_ID + " INTEGER NOT NULL, " +
 				   CreuRojaContract.Locations.UPDATED_AT + " DATETIME NOT NULL, " +
 				   CreuRojaContract.Locations.ACTIVE + " BOOLEAN)"
 		);

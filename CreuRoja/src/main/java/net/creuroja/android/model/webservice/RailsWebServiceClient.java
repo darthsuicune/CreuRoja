@@ -19,7 +19,7 @@ public class RailsWebServiceClient implements CRWebServiceClient {
 	private static final String WS_CR_TAG = "CreuRoja Rails webservice";
 	private static final String ARG_EMAIL = "email";
 	private static final String ARG_PASSWORD = "password";
-	private static final String ARG_ACCESS_TOKEN = "Authorization: Token token=";
+	private static final String ARG_ACCESS_TOKEN = "Authorization: Token ";
 	private static final String ARG_LAST_UPDATE = "updated_at";
 	private static final String RESOURCE_SESSIONS = "sessions";
 	private static final String RESOURCE_LOCATIONS = "locations";
@@ -86,7 +86,8 @@ public class RailsWebServiceClient implements CRWebServiceClient {
 	private List<WebServiceOption> getLocationOptions(String accessToken, String lastUpdateTime) {
 		List<WebServiceOption> options = new ArrayList<>();
 		options.add(new WebServiceOption(WebServiceOption.OptionType.HEADER, ARG_ACCESS_TOKEN,
-				"\"" + accessToken + "\""));
+				"token=\"" + accessToken + "\""));
+
 		if (!lastUpdateTime.equals("0")) {
 			options.add(new WebServiceOption(WebServiceOption.OptionType.GET, ARG_LAST_UPDATE,
 					lastUpdateTime));
