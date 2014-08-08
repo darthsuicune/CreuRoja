@@ -1,5 +1,6 @@
 package net.creuroja.android.model.webservice.auth;
 
+import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
@@ -26,6 +27,10 @@ public class AccountUtils {
 		mEntryPoint = entryPoint;
 	}
 
+	public Account getAccount() {
+		return AccountManager.get(mContext).getAccountsByType(ACCOUNT_TYPE)[0];
+	}
+
 	public void getAuth(final LocationsIndexActivity activity) {
 		AccountManager accountManager = AccountManager.get(activity);
 		MyAccountCallback callback = new MyAccountCallback(mEntryPoint);
@@ -41,7 +46,7 @@ public class AccountUtils {
 		public void failedLogin();
 	}
 
-	public static class MyAccountCallback implements AccountManagerCallback {
+	public static class MyAccountCallback implements AccountManagerCallback<Bundle> {
 		private LoginManager mEntryPoint;
 
 		public MyAccountCallback(LoginManager entryPoint) {
@@ -55,13 +60,12 @@ public class AccountUtils {
 		}
 	}
 
-	public static class MyAccountHandler extends Handler {
-
-	}
+	public static class MyAccountHandler extends Handler {	}
 
 	public static class LoginResponseTask extends AsyncTask<Void, Void, String> {
 		private LoginManager mEntryPoint;
 		private AccountManagerFuture<Bundle> mAccountManagerFuture;
+		private boolean isUnauthorized;
 
 		public LoginResponseTask(AccountManagerFuture accountManagerFuture,
 								 LoginManager entryPoint) {

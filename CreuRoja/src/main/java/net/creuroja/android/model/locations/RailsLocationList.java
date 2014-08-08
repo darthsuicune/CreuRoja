@@ -38,6 +38,13 @@ public class RailsLocationList implements LocationList {
 	}
 
 	public RailsLocationList(Cursor cursor) {
+		if(cursor.moveToFirst()) {
+			do {
+				Location location = new Location(cursor);
+				locationList.add(location);
+				mIdList.add(location.mRemoteId);
+			} while(cursor.moveToNext());
+		}
 		cursor.close();
 	}
 
@@ -82,7 +89,7 @@ public class RailsLocationList implements LocationList {
 		}
 		if(forInsert.size() > 0) {
 			cr.bulkInsert(CreuRojaContract.Locations.CONTENT_LOCATIONS,
-					(ContentValues[]) forInsert.toArray());
+					forInsert.toArray(new ContentValues[forInsert.size()]));
 		}
 	}
 

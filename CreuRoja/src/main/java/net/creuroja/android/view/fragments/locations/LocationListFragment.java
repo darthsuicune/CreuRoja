@@ -27,7 +27,6 @@ import net.creuroja.android.model.locations.LocationList;
 public class LocationListFragment extends ListFragment implements AbsListView.OnItemClickListener {
 
 	private LocationList mLocationList;
-
 	private LocationsListListener mListener;
 
 	// The fragment's ListView/GridView.

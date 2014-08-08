@@ -92,6 +92,7 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter implements Client
 
 	@Override public void onUnauthorized() {
 		Log.d(SYNC_ADAPTER_TAG, "You are unauthorized.");
+		Settings.clean(prefs, mContext.getContentResolver());
 	}
 
 	@Override public void onServerError() {

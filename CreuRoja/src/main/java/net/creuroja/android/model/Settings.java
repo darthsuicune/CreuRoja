@@ -1,5 +1,10 @@
 package net.creuroja.android.model;
 
+import android.content.ContentResolver;
+import android.content.SharedPreferences;
+
+import net.creuroja.android.model.db.CreuRojaContract;
+
 /**
  * Created by denis on 14.06.14.
  */
@@ -17,4 +22,12 @@ public class Settings {
 	public static final String SHOW_NOSTRUM = "show_nostrum";
 	public static final String SHOW_SEA_BASE = "show_sea_base";
 	public static final String SHOW_TERRESTRIAL = "show_terrestrial";
+
+	public static void clean(SharedPreferences prefs, ContentResolver cr) {
+		prefs.edit().clear().apply();
+		cr.delete(CreuRojaContract.Locations.CONTENT_LOCATIONS, null, null);
+		cr.delete(CreuRojaContract.Services.CONTENT_SERVICES, null, null);
+		cr.delete(CreuRojaContract.Vehicles.CONTENT_VEHICLES, null, null);
+		cr.delete(CreuRojaContract.Users.CONTENT_USERS, null, null);
+	}
 }

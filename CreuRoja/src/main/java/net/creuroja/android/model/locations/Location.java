@@ -2,12 +2,18 @@ package net.creuroja.android.model.locations;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.net.Uri;
+import android.text.TextUtils;
 
 import net.creuroja.android.model.db.CreuRojaContract;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by denis on 14.06.14.
@@ -51,6 +57,23 @@ public class Location {
 		mActive = json.getBoolean(sActive);
 	}
 
+	public Location(Cursor cursor) {
+		mId = cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations._ID));
+		mRemoteId = cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.REMOTE_ID));
+		mName = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.NAME));
+		mDescription =
+				cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.DESCRIPTION));
+		mPhone = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.PHONE));
+		mAddress = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.ADDRESS));
+		mLatitude = cursor.getDouble(cursor.getColumnIndex(CreuRojaContract.Locations.LATITUD));
+		mLongitude = cursor.getDouble(cursor.getColumnIndex(CreuRojaContract.Locations.LONGITUD));
+		mType = LocationType
+				.getType(cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.TYPE)));
+		mUpdatedAt = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.UPDATED_AT));
+		mActive =
+				(cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.UPDATED_AT)) == 1);
+	}
+
 	public ContentValues getAsValues() {
 		ContentValues values = new ContentValues();
 		values.put(CreuRojaContract.Locations.ACTIVE, mActive);
@@ -69,18 +92,29 @@ public class Location {
 	public void update(ContentResolver cr) {
 		Uri uri = CreuRojaContract.Locations.CONTENT_LOCATIONS;
 		String where = CreuRojaContract.Locations.REMOTE_ID + "=?";
-		String[] selectionArgs = { Integer.toString(mRemoteId) };
+		String[] selectionArgs = {Integer.toString(mRemoteId)};
 		cr.update(uri, this.getAsValues(), where, selectionArgs);
 	}
 
 	public void delete(ContentResolver cr) {
 		Uri uri = CreuRojaContract.Locations.CONTENT_LOCATIONS;
 		String where = CreuRojaContract.Locations.REMOTE_ID + "=?";
-		String[] selectionArgs = { Integer.toString(mRemoteId) };
+		String[] selectionArgs = {Integer.toString(mRemoteId)};
 		cr.delete(uri, where, selectionArgs);
 	}
 
-	public boolean newerThan(String time) {
-		return true;
+	public boolean newerThan(String lastUpdate) {
+		if (TextUtils.isEmpty(lastUpdate)) {
+			return true;
+		}
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss.SSS'Z'");
+			Date updatedAt = format.parse(mUpdatedAt);
+			Date saved = format.parse(lastUpdate);
+			return updatedAt.after(saved);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }

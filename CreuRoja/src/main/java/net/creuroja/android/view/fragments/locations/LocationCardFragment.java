@@ -1,7 +1,7 @@
 package net.creuroja.android.view.fragments.locations;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +21,12 @@ import net.creuroja.android.model.locations.Location;
  */
 public class LocationCardFragment extends Fragment {
     // the fragment initialization parameters
-    private static final String ARG_LOCATION_ID = "location_id";
     private Location mLocation;
 
 	//Callback for the Activity
     private OnLocationCardInteractionListener mListener;
+	//General location cardview
+	private View cardView;
 
     /**
      * Use this factory method to create a new instance of
@@ -33,11 +34,9 @@ public class LocationCardFragment extends Fragment {
      *
      * @return A new instance of fragment LocationCardFragment.
      */
-    public static LocationCardFragment newInstance(long locationId) {
+    public static LocationCardFragment newInstance(Location location) {
         LocationCardFragment fragment = new LocationCardFragment();
-        Bundle args = new Bundle();
-		args.putLong(ARG_LOCATION_ID, locationId);
-        fragment.setArguments(args);
+		fragment.setLocation(location);
         return fragment;
     }
     public LocationCardFragment() {
@@ -47,19 +46,14 @@ public class LocationCardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-			setLocation(getArguments().getLong(ARG_LOCATION_ID));
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-		View v = inflater.inflate(R.layout.fragment_location_card, container, false);
-		if (mLocation != null) {
-
-		}
-		return v;
+		cardView = inflater.inflate(R.layout.fragment_location_card, container, false);
+		updateView();
+		return cardView;
     }
 
     @Override
@@ -79,8 +73,15 @@ public class LocationCardFragment extends Fragment {
         mListener = null;
     }
 
-	private void setLocation(long id) {
+	public void setLocation(Location location) {
+		mLocation = location;
+		updateView();
+	}
 
+	private void updateView() {
+		if(cardView != null && mLocation != null) {
+			//TODO: Implement
+		}
 	}
 
     /**
