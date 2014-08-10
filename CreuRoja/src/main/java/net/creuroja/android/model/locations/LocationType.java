@@ -18,20 +18,32 @@ import java.util.List;
 
 public enum LocationType {
 	//TODO replace with actual values
-	NONE(0, 0),
-	ADAPTED(R.id.navigation_legend_adaptadas, R.string.marker_type_adaptadas),
-	ASSEMBLY(R.id.navigation_legend_asamblea, R.string.marker_type_asamblea),
-	BRAVO(R.id.navigation_legend_bravo, R.string.marker_type_bravo),
-	CUAP(R.id.navigation_legend_cuap, R.string.marker_type_cuap),
-	GAS_STATION(R.id.navigation_legend_gasolinera, R.string.marker_type_gasolinera),
-	HOSPITAL(R.id.navigation_legend_hospital, R.string.marker_type_hospital),
-	SEA_SERVICE(R.id.navigation_legend_maritimo, R.string.marker_type_maritimo),
-	NOSTRUM(R.id.navigation_legend_nostrum, R.string.marker_type_nostrum),
-	SEA_BASE(R.id.navigation_legend_salvamento, R.string.marker_type_salvamento),
-	TERRESTRIAL(R.id.navigation_legend_terrestre, R.string.marker_type_terrestre);
+	NONE(0, 0, 0, ""),
+	ADAPTED(R.id.navigation_legend_adaptadas, R.string.marker_type_adaptadas, R.drawable.adaptadas,
+			Settings.SHOW_ADAPTED),
+	ASSEMBLY(R.id.navigation_legend_asamblea, R.string.marker_type_asamblea, R.drawable.asamblea,
+			Settings.SHOW_ASSEMBLY),
+	BRAVO(R.id.navigation_legend_bravo, R.string.marker_type_bravo, R.drawable.bravo,
+			Settings.SHOW_BRAVO),
+	CUAP(R.id.navigation_legend_cuap, R.string.marker_type_cuap, R.drawable.cuap,
+			Settings.SHOW_CUAP),
+	GAS_STATION(R.id.navigation_legend_gasolinera, R.string.marker_type_gasolinera,
+			R.drawable.gasolinera, Settings.SHOW_GAS_STATION),
+	HOSPITAL(R.id.navigation_legend_hospital, R.string.marker_type_hospital, R.drawable.hospital,
+			Settings.SHOW_HOSPITAL),
+	SEA_SERVICE(R.id.navigation_legend_maritimo, R.string.marker_type_maritimo, R.drawable.maritimo,
+			Settings.SHOW_SEA_SERVICE),
+	NOSTRUM(R.id.navigation_legend_nostrum, R.string.marker_type_nostrum, R.drawable.nostrum,
+			Settings.SHOW_NOSTRUM),
+	SEA_BASE(R.id.navigation_legend_salvamento, R.string.marker_type_salvamento,
+			R.drawable.salvamento, Settings.SHOW_SEA_BASE),
+	TERRESTRIAL(R.id.navigation_legend_terrestre, R.string.marker_type_terrestre,
+			R.drawable.terrestre, Settings.SHOW_TERRESTRIAL);
 
 	public int mLegendViewId;
 	public int mNameString;
+	public int mIcon;
+	public String mPrefs;
 
 	private static final String sAdapted = "adaptadas";
 	private static final String sAssembly = "asamblea";
@@ -44,11 +56,13 @@ public enum LocationType {
 	private static final String sSeaBase = "salvamento";
 	private static final String sTerrestrial = "terrestre";
 
-	LocationType(int legendId, int nameString) {
+	LocationType(int legendId, int nameString, int icon, String prefs) {
 		mLegendViewId = legendId;
 		mNameString = nameString;
+		mIcon = icon;
+		mPrefs = prefs;
 	}
-	
+
 	@Override public String toString() {
 		switch (this) {
 			case ADAPTED:
@@ -72,7 +86,7 @@ public enum LocationType {
 			case TERRESTRIAL:
 				return sTerrestrial;
 			default:
-				return "";
+				return "N/A";
 		}
 	}
 
@@ -105,10 +119,7 @@ public enum LocationType {
 
 	public static List<LocationType> getCurrentItems(ContentResolver cr) {
 		Uri uri = CreuRojaContract.Locations.CONTENT_DISTINCT_LOCATIONS;
-		String[] projection = {
-				CreuRojaContract.Locations._ID,
-				CreuRojaContract.Locations.TYPE
-		};
+		String[] projection = {CreuRojaContract.Locations._ID, CreuRojaContract.Locations.TYPE};
 
 		Cursor cursor = cr.query(uri, projection, null, null, null);
 
@@ -126,29 +137,6 @@ public enum LocationType {
 	}
 
 	public boolean getViewable(SharedPreferences prefs) {
-		switch (this) {
-			case ADAPTED:
-				return prefs.getBoolean(Settings.SHOW_ADAPTED, true);
-			case ASSEMBLY:
-				return prefs.getBoolean(Settings.SHOW_ASSEMBLY, true);
-			case BRAVO:
-				return prefs.getBoolean(Settings.SHOW_BRAVO, true);
-			case CUAP:
-				return prefs.getBoolean(Settings.SHOW_CUAP, true);
-			case GAS_STATION:
-				return prefs.getBoolean(Settings.SHOW_GAS_STATION, true);
-			case HOSPITAL:
-				return prefs.getBoolean(Settings.SHOW_HOSPITAL, true);
-			case SEA_SERVICE:
-				return prefs.getBoolean(Settings.SHOW_SEA_SERVICE, true);
-			case NOSTRUM:
-				return prefs.getBoolean(Settings.SHOW_NOSTRUM, true);
-			case SEA_BASE:
-				return prefs.getBoolean(Settings.SHOW_SEA_BASE, true);
-			case TERRESTRIAL:
-				return prefs.getBoolean(Settings.SHOW_TERRESTRIAL, true);
-			default:
-				return true;
-		}
+		return prefs.getBoolean(mPrefs, true);
 	}
 }

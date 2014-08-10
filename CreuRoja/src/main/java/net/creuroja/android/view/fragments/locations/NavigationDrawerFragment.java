@@ -1,8 +1,7 @@
 package net.creuroja.android.view.fragments.locations;
 
-
 import android.app.Activity;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -19,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.GoogleMap;
 
@@ -167,18 +167,22 @@ public class NavigationDrawerFragment extends Fragment {
 			for (LocationType type : LocationType
 					.getCurrentItems(getActivity().getContentResolver())) {
 				prepareLegendItem((TextView) v.findViewById(type.mLegendViewId), type,
-						type.getViewable(prefs));
+						!type.getViewable(prefs));
 			}
 
 		}
 	}
 
-	public void prepareLegendItem(final TextView v, final LocationType type, final boolean active) {
+	public void prepareLegendItem(final TextView v, final LocationType type,
+								  final boolean newState) {
 		if (v != null) {
 			v.setVisibility(View.VISIBLE);
 			v.setOnClickListener(new View.OnClickListener() {
 				@Override public void onClick(View view) {
-					mapDrawerCallbacks.onNavigationLegendItemSelected(type, active);
+					//TODO: Fix this
+					Toast.makeText(getActivity(), "TEST" + newState, Toast.LENGTH_SHORT).show();
+					prefs.edit().putBoolean(type.mPrefs, newState).apply();
+					mapDrawerCallbacks.onNavigationLegendItemSelected(type, newState);
 				}
 			});
 		}
@@ -287,7 +291,7 @@ public class NavigationDrawerFragment extends Fragment {
 		 */
 		void onViewModeChanged(LocationsIndexActivity.ViewMode newMode);
 
-		void onNavigationLegendItemSelected(final LocationType type, final boolean active);
+		void onNavigationLegendItemSelected(final LocationType type, final boolean newState);
 
 		void onNavigationMapTypeSelected(final int mapType);
 	}

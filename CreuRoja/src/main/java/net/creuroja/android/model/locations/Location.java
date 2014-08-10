@@ -30,7 +30,6 @@ public class Location {
 	public static final String sUpdatedAt = "updated_at";
 	public static final String sActive = "active";
 
-
 	public final int mId;
 	public final int mRemoteId;
 	public final String mName;
@@ -70,8 +69,7 @@ public class Location {
 		mType = LocationType
 				.getType(cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.TYPE)));
 		mUpdatedAt = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.UPDATED_AT));
-		mActive =
-				(cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.UPDATED_AT)) == 1);
+		mActive = cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.UPDATED_AT)) == 1;
 	}
 
 	public ContentValues getAsValues() {

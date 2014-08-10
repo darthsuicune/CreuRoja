@@ -27,6 +27,7 @@ public class RailsLocationList implements LocationList {
 	private String lastUpdateTime = "";
 
 	public RailsLocationList(HttpResponse response) {
+		Log.d("TEST", "List created");
 		try {
 			createFromJson(RestWebServiceClient.getAsString(response));
 		} catch (IOException e) {
@@ -34,10 +35,10 @@ public class RailsLocationList implements LocationList {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		Log.d("TEST", "List created");
 	}
 
 	public RailsLocationList(Cursor cursor) {
+		Log.d("TEST", "List created");
 		if(cursor.moveToFirst()) {
 			do {
 				Location location = new Location(cursor);
@@ -63,8 +64,17 @@ public class RailsLocationList implements LocationList {
 		return locationList;
 	}
 
-	@Override public Location get(long id) {
-		return locationList.get((int) id);
+	@Override public Location getById(long id) {
+		for(Location location : locationList) {
+			if(location.mId == id) {
+				return location;
+			}
+		}
+		return null;
+	}
+
+	@Override public Location get(int position) {
+		return locationList.get(position);
 	}
 
 	@Override public void save(ContentResolver cr) {
@@ -78,7 +88,6 @@ public class RailsLocationList implements LocationList {
 			}
 			if(!location.mActive) {
 				location.delete(cr);
-				locationList.remove(location);
 			} else {
 				if (currentLocations.has(location)) {
 					location.update(cr);
