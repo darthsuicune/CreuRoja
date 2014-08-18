@@ -436,19 +436,22 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	private void createMarkers(Cursor locations) {
-		mMarkerLocationMap = new HashMap<>();
-		mGoogleMap.clear();
-		List<Location> locationList = LocationsProvider.getLocationList(locations);
-		for (Location location : locationList) {
-			if (mPolyline != null) {
-				drawDirections(mPolyline.getPoints());
+		if (mGoogleMap != null) {
+			mMarkerLocationMap = new HashMap<>();
+			mGoogleMap.clear();
+
+			List<Location> locationList = LocationsProvider.getLocationList(locations);
+			for (Location location : locationList) {
+				if (mPolyline != null) {
+					drawDirections(mPolyline.getPoints());
+				}
+				Marker marker = mGoogleMap.addMarker(location.getMarker());
+				location.mMarker = marker;
+				mMarkerLocationMap.put(marker, location);
+				marker.setVisible(location.shouldBeShown(mFilter, prefs));
 			}
-			Marker marker = mGoogleMap.addMarker(location.getMarker());
-			location.mMarker = marker;
-			mMarkerLocationMap.put(marker, location);
-			marker.setVisible(location.shouldBeShown(mFilter, prefs));
+			mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
 		}
-		mGoogleMap.setInfoWindowAdapter(new MarkerAdapter());
 	}
 
 	private void drawMarkers() {
@@ -640,6 +643,8 @@ public class MainActivity extends ActionBarActivity
 			switch (loader.getId()) {
 				case LOADER_GET_DIRECTIONS:
 					drawDirections(directions);
+					((TextView) findViewById(R.id.location_card_get_directions))
+							.setText(R.string.location_card_remove_directions);
 					break;
 				default:
 					break;
@@ -681,27 +686,40 @@ public class MainActivity extends ActionBarActivity
 			((TextView) mCard.findViewById(R.id.location_card_phone)).setText(mLocation.mPhone);
 			((TextView) mCard.findViewById(R.id.location_card_other))
 					.setText(mLocation.mDescription);
-			mCard.findViewById(R.id.location_card_get_directions)
+			mCard.findViewById(R.id.location_card_close)
 					.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							if (ConnectionClient.isConnected(MainActivity.this) &&
-								mLocationClient != null &&
-								mLocationClient.isConnected()) {
-								getDirections(mLocation);
+						@Override public void onClick(View view) {
+							if (mCard.isShown()) {
+								mCard.setVisibility(View.GONE);
 							}
-							/* For rewrite
-							if(mDirections != null){
-                                switchDirectionsButton();
-                            }
-                            */
 						}
 					});
+			View getDirectionsView = mCard.findViewById(R.id.location_card_get_directions);
+
+			getDirectionsView.setOnClickListener(new DirectionsClickListener(mLocation));
+		}
+	}
+
+	private class DirectionsClickListener implements View.OnClickListener {
+		public Location mLocation;
+
+		public DirectionsClickListener(Location location) {
+			mLocation = location;
 		}
 
-		//TODO: For rewrite
-		//        private void switchDirectionsButton(){
-		//        }
+		@Override
+		public void onClick(View view) {
+			if (mPolyline != null && mPolyline.isVisible()) {
+				mPolyline.remove();
+				mPolyline = null;
+				((TextView) view).setText(R.string.location_card_get_directions);
+			} else {
+				if (ConnectionClient.isConnected(MainActivity.this) &&
+					mLocationClient != null && mLocationClient.isConnected()) {
+					getDirections(mLocation);
+				}
+			}
+		}
 	}
 
 	private class LoginValidationLoaderCallbacks implements LoaderManager.LoaderCallbacks<Boolean> {
@@ -712,6 +730,7 @@ public class MainActivity extends ActionBarActivity
 		@Override public void onLoadFinished(Loader<Boolean> loader, Boolean isValid) {
 			if (!isValid) {
 				Settings.removeData(getApplicationContext());
+				finish();
 			}
 		}
 

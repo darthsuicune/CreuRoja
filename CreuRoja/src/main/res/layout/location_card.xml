@@ -4,7 +4,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="8dp"
-            android:id="@+id/location_card">
+            android:id="@+id/location_card"
+            android:fillViewport="false">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,6 +16,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="-30dp"
             android:gravity="center"
             android:drawableTop="@drawable/ic_action_directions"
             style="@android:color/transparent"
@@ -25,7 +28,7 @@
             android:layout_weight="4"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="8dp">
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/location_card_name"
@@ -51,6 +54,17 @@
                 android:autoLink="phone"/>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/location_card_close"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_marginTop="20dp"
+            android:drawablePadding="-30dp"
+            android:gravity="center"
+            android:drawableTop="@android:drawable/ic_menu_close_clear_cancel"
+            style="@android:color/transparent"
+            android:text="@string/location_card_close" />
 
     </LinearLayout>
 </ScrollView>
