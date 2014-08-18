@@ -436,7 +436,7 @@ public class MainActivity extends ActionBarActivity
 	}
 
 	private void createMarkers(Cursor locations) {
-		if(mGoogleMap != null) {
+		if (mGoogleMap != null) {
 			mMarkerLocationMap = new HashMap<>();
 			mGoogleMap.clear();
 
@@ -643,6 +643,8 @@ public class MainActivity extends ActionBarActivity
 			switch (loader.getId()) {
 				case LOADER_GET_DIRECTIONS:
 					drawDirections(directions);
+					((TextView) findViewById(R.id.location_card_get_directions))
+							.setText(R.string.location_card_remove_directions);
 					break;
 				default:
 					break;
@@ -692,12 +694,7 @@ public class MainActivity extends ActionBarActivity
 							}
 						}
 					});
-			prepareDirectionsButton();
-		}
-
-		private void prepareDirectionsButton() {
-			final TextView getDirectionsView =
-					(TextView) mCard.findViewById(R.id.location_card_get_directions);
+			View getDirectionsView = mCard.findViewById(R.id.location_card_get_directions);
 
 			getDirectionsView.setOnClickListener(new DirectionsClickListener(mLocation));
 		}
@@ -705,7 +702,6 @@ public class MainActivity extends ActionBarActivity
 
 	private class DirectionsClickListener implements View.OnClickListener {
 		public Location mLocation;
-		private boolean isActive = false;
 
 		public DirectionsClickListener(Location location) {
 			mLocation = location;
@@ -713,20 +709,14 @@ public class MainActivity extends ActionBarActivity
 
 		@Override
 		public void onClick(View view) {
-			if (isActive) {
-				if (mPolyline.isVisible()) {
-					mPolyline.remove();
-					mPolyline = null;
-				}
-				isActive = false;
+			if (mPolyline != null && mPolyline.isVisible()) {
+				mPolyline.remove();
+				mPolyline = null;
+				((TextView) view).setText(R.string.location_card_get_directions);
 			} else {
 				if (ConnectionClient.isConnected(MainActivity.this) &&
-					mLocationClient != null &&
-					mLocationClient.isConnected()) {
+					mLocationClient != null && mLocationClient.isConnected()) {
 					getDirections(mLocation);
-				}
-				if (mDirections != null) {
-					isActive = true;
 				}
 			}
 		}
