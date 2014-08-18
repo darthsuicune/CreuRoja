@@ -25,7 +25,7 @@
             android:layout_weight="4"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingLeft="8dp">
+            android:padding="4dp">
 
             <TextView
                 android:id="@+id/location_card_name"
@@ -51,6 +51,15 @@
                 android:autoLink="phone"/>
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/location_card_close"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:drawableTop="@android:drawable/ic_menu_close_clear_cancel"
+            style="@android:color/transparent"
+            android:text="@string/location_card_close" />
 
     </LinearLayout>
 </ScrollView>
