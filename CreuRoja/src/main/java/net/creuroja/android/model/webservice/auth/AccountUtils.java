@@ -4,13 +4,12 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
+import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-
-import net.creuroja.android.controller.locations.activities.LocationsIndexActivity;
 
 /**
  * Created by lapuente on 18.06.14.
@@ -19,21 +18,13 @@ public class AccountUtils {
 	public static final String ACCOUNT_TYPE = "Creu Roja";
 	public static final String AUTH_TOKEN_TYPE = "";
 
-	private Context mContext;
-	private LoginManager mEntryPoint;
-
-	public AccountUtils(Context context, LoginManager entryPoint) {
-		mContext = context;
-		mEntryPoint = entryPoint;
+	public static Account getAccount(Context context) {
+		return AccountManager.get(context).getAccountsByType(ACCOUNT_TYPE)[0];
 	}
 
-	public Account getAccount() {
-		return AccountManager.get(mContext).getAccountsByType(ACCOUNT_TYPE)[0];
-	}
-
-	public void getAuth(final LocationsIndexActivity activity) {
+	public static void validateLogin(final Activity activity, final LoginManager entryPoint) {
 		AccountManager accountManager = AccountManager.get(activity);
-		MyAccountCallback callback = new MyAccountCallback(mEntryPoint);
+		MyAccountCallback callback = new MyAccountCallback(entryPoint);
 		Handler handler = new MyAccountHandler();
 
 		accountManager
@@ -43,6 +34,7 @@ public class AccountUtils {
 
 	public interface LoginManager {
 		public void successfulLogin(String authToken);
+
 		public void failedLogin();
 	}
 
@@ -54,20 +46,20 @@ public class AccountUtils {
 		}
 
 		@Override
-		public void run(AccountManagerFuture accountManagerFuture) {
+		public void run(AccountManagerFuture<Bundle> accountManagerFuture) {
 			LoginResponseTask response = new LoginResponseTask(accountManagerFuture, mEntryPoint);
 			response.execute();
 		}
 	}
 
-	public static class MyAccountHandler extends Handler {	}
+	public static class MyAccountHandler extends Handler {
+	}
 
 	public static class LoginResponseTask extends AsyncTask<Void, Void, String> {
 		private LoginManager mEntryPoint;
 		private AccountManagerFuture<Bundle> mAccountManagerFuture;
-		private boolean isUnauthorized;
 
-		public LoginResponseTask(AccountManagerFuture accountManagerFuture,
+		public LoginResponseTask(AccountManagerFuture<Bundle> accountManagerFuture,
 								 LoginManager entryPoint) {
 			mEntryPoint = entryPoint;
 			mAccountManagerFuture = accountManagerFuture;

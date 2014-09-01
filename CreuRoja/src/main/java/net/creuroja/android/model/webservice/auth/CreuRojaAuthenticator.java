@@ -87,9 +87,9 @@ public class CreuRojaAuthenticator extends AbstractAccountAuthenticator {
 	}
 
 	/**
-	 * @param response    used to set the result for the request. If the Constants.INTENT_KEY is set
-	 *                    in the bundle then this response field is to be used for sending future results if and
-	 *                    when the Intent is started.
+	 * @param response    used to set the result for the request. If the Constants.INTENT_KEY is
+	 *                    set in the bundle then this response field is to be used for sending
+	 *                    future results if and when the Intent is started.
 	 * @param accountType type of account
 	 * @return a Bundle containing the result or the Intent to start to continue the request. If
 	 * this is null then the request is considered to still be active and the result should

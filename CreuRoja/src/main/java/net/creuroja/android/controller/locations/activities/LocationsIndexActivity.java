@@ -1,6 +1,5 @@
 package net.creuroja.android.controller.locations.activities;
 
-import android.accounts.Account;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +7,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.LoaderManager;
@@ -19,7 +19,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import net.creuroja.android.R;
@@ -33,14 +32,12 @@ import net.creuroja.android.model.locations.LocationType;
 import net.creuroja.android.model.locations.RailsLocationList;
 import net.creuroja.android.model.webservice.auth.AccountUtils;
 import net.creuroja.android.model.webservice.auth.AccountUtils.LoginManager;
-import net.creuroja.android.view.fragments.locations.GoogleMapFragmentHandler;
 import net.creuroja.android.view.fragments.locations.LocationCardFragment;
 import net.creuroja.android.view.fragments.locations.LocationListFragment;
 import net.creuroja.android.view.fragments.locations.MapFragmentHandler;
 import net.creuroja.android.view.fragments.locations.NavigationDrawerFragment;
 
 import static net.creuroja.android.view.fragments.locations.GoogleMapFragmentHandler.MapInteractionListener;
-import static net.creuroja.android.view.fragments.locations.GoogleMapFragmentHandler.getMapOptions;
 import static net.creuroja.android.view.fragments.locations.LocationCardFragment.OnLocationCardInteractionListener;
 import static net.creuroja.android.view.fragments.locations.NavigationDrawerFragment.MapNavigationDrawerCallbacks;
 
@@ -52,12 +49,8 @@ public class LocationsIndexActivity extends ActionBarActivity
 	private static final String TAG_LIST = "CreuRojaLocationList";
 	private static final String TAG_CARD = "CreuRojaLocationCard";
 
-	// Keep the authToken for manual refresh
-	private Account mAccount;
-
 	// Fragment managing the behaviors, interactions and presentation of the navigation drawer.
 	private NavigationDrawerFragment mNavigationDrawerFragment;
-	private SupportMapFragment mapFragment;
 	private MapFragmentHandler mapFragmentHandler;
 	private LocationListFragment listFragment;
 	private LocationCardFragment cardFragment;
@@ -82,7 +75,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 		setMainFragment();
 		requestSync();
 		getSupportLoaderManager()
-				.initLoader(LOADER_LOCATIONS, null, new LocationListCallbacks());
+				.restartLoader(LOADER_LOCATIONS, null, new LocationListCallbacks());
 	}
 
 	@Override
@@ -101,9 +94,11 @@ public class LocationsIndexActivity extends ActionBarActivity
 				currentViewMode = ViewMode.MAP;
 				break;
 			default:
-				assert false;
+				//Nothing to do here
+				break;
 		}
 		setMainFragment();
+		onMarkerListUpdated(); //After modifying the fragment we report the details for redrawing
 	}
 
 	private void setMainFragment() {
@@ -111,31 +106,30 @@ public class LocationsIndexActivity extends ActionBarActivity
 		FragmentTransaction transaction = fragmentManager.beginTransaction();
 		switch (currentViewMode) {
 			case LIST:
-				if(listFragment == null) {
-					listFragment = (LocationListFragment) fragmentManager.findFragmentByTag(TAG_LIST);
+				if (listFragment == null) {
+					listFragment =
+							(LocationListFragment) fragmentManager.findFragmentByTag(TAG_LIST);
 					if (listFragment == null) {
 						listFragment = LocationListFragment.newInstance(mLocationList);
 					}
 				}
-				transaction.replace(R.id.locations_container, listFragment, TAG_LIST);
-				if(cardFragment != null && cardFragment.isVisible()) {
+				if (cardFragment != null && cardFragment.isVisible()) {
 					transaction.remove(cardFragment);
 				}
+				transaction.replace(R.id.locations_container, listFragment, TAG_LIST);
 				break;
 			case MAP:
 			default:
-				if (mapFragment == null) {
-					mapFragment = (SupportMapFragment) fragmentManager.findFragmentByTag(TAG_MAP);
-					if (mapFragment == null) {
-						mapFragment = SupportMapFragment.newInstance(getMapOptions());
-						mapFragment.setRetainInstance(true);
-						mapFragmentHandler = new GoogleMapFragmentHandler(mapFragment, this);
-					}
+				if (mapFragmentHandler == null) {
+					Fragment fragment = fragmentManager.findFragmentByTag(TAG_MAP);
+					mapFragmentHandler = MapFragmentHandler.getHandler(fragment, this);
 				}
-				transaction.replace(R.id.locations_container, mapFragment, TAG_MAP);
+				transaction.replace(R.id.locations_container, mapFragmentHandler.getFragment(),
+						TAG_MAP);
 				break;
 		}
 		transaction.commit();
+		fragmentManager.executePendingTransactions();
 	}
 
 	@Override public void onLocationListItemSelected(Location location) {
@@ -165,15 +159,15 @@ public class LocationsIndexActivity extends ActionBarActivity
 
 	}
 
-	@Override public void onNavigationMapTypeSelected(int mapType) {
-		if (ViewMode.MAP == currentViewMode && mapFragment != null) {
+	@Override public void onNavigationMapTypeSelected(MapFragmentHandler.MapType mapType) {
+		if (ViewMode.MAP == currentViewMode) {
 			mapFragmentHandler.setMapType(mapType);
 		}
 	}
 
 	@Override public void onLocationClicked(Location location) {
 		FragmentManager manager = getSupportFragmentManager();
-		if(cardFragment == null) {
+		if (cardFragment == null) {
 			cardFragment = (LocationCardFragment) manager.findFragmentByTag(TAG_CARD);
 			if (cardFragment == null) {
 				cardFragment = LocationCardFragment.newInstance(location);
@@ -186,13 +180,11 @@ public class LocationsIndexActivity extends ActionBarActivity
 	}
 
 	private void onMarkerListUpdated() {
-		if (ViewMode.LIST == currentViewMode && listFragment != null) {
+		if (listFragment != null) {
 			listFragment.setLocationList(mLocationList);
-		} else {
-			if(mapFragmentHandler != null) {
-				mapFragmentHandler.setLocationList(mLocationList);
-				mapFragmentHandler.drawMarkers();
-			}
+		}
+		if (mapFragmentHandler != null) {
+			mapFragmentHandler.setLocationList(mLocationList);
 		}
 	}
 
@@ -219,8 +211,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AccountUtils utils = new AccountUtils(this, this);
-		utils.getAuth(this);
+		AccountUtils.validateLogin(this, this);
 	}
 
 	@Override
@@ -249,14 +240,24 @@ public class LocationsIndexActivity extends ActionBarActivity
 				performSync();
 				return true;
 			case R.id.action_search:
-				//TODO: implement, change to true
+				//TODO: Change to true after implementation
+				search();
 				return false;
 			case R.id.action_locate:
-				//TODO: implement, change to true
+				//TODO: Change to true after implementation
+				locate();
 				return false;
 			default:
 				return super.onOptionsItemSelected(item);
 		}
+	}
+
+	private void locate() {
+		//TODO: implement
+	}
+
+	private void search() {
+		//TODO: implement
 	}
 
 	private void requestSync() {
@@ -268,7 +269,8 @@ public class LocationsIndexActivity extends ActionBarActivity
 		Bundle bundle = new Bundle();
 		bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
 		bundle.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-		ContentResolver.requestSync(mAccount, CreuRojaProvider.CONTENT_NAME, bundle);
+		ContentResolver.requestSync(AccountUtils.getAccount(getApplicationContext()),
+				CreuRojaProvider.CONTENT_NAME, bundle);
 	}
 
 	private void openSettings() {
@@ -277,14 +279,20 @@ public class LocationsIndexActivity extends ActionBarActivity
 	}
 
 	private void openLocationDetails(Location location) {
-		//TODO: Attach fragment if landscape / enough width.
+		//TODO: Attach fragment if landscape / enough width and not map.
 		Intent intent = new Intent(this, LocationDetailsActivity.class);
 		intent.putExtra(LocationDetailsActivity.EXTRA_LOCATION_ID, location.mId);
 		startActivity(intent);
 	}
 
 	public enum ViewMode {
-		MAP, LIST;
+		MAP(0), LIST(1);
+
+		final int mValue;
+
+		ViewMode(final int value) {
+			mValue = value;
+		}
 
 		public static ViewMode getViewMode(String mode) {
 			if (mode.equals(LIST.toString())) {
@@ -292,6 +300,10 @@ public class LocationsIndexActivity extends ActionBarActivity
 			} else {
 				return MAP;
 			}
+		}
+
+		public int getValue() {
+			return mValue;
 		}
 	}
 
@@ -307,7 +319,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 		}
 
 		@Override public void onLoaderReset(Loader<Cursor> loader) {
-
+			//Nothing to do here
 		}
 	}
 }

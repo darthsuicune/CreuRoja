@@ -1,12 +1,14 @@
 package net.creuroja.android.view.fragments.locations;
 
 import android.app.Activity;
-import android.support.v4.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -18,9 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.google.android.gms.maps.GoogleMap;
 
 import net.creuroja.android.R;
 import net.creuroja.android.controller.locations.activities.LocationsIndexActivity;
@@ -33,14 +32,8 @@ import net.creuroja.android.model.locations.LocationType;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
-	// Remember the position of the selected item.
-	private static final String STATE_SELECTED_MAP_TYPE = "selected_map_type";
-
-	/**
-	 * Per the design guidelines, you should show the drawer on launch until the user manually
-	 * expands it. This shared preference tracks this.
-	 */
-	private static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
+	private static final int selected = Color.CYAN;
+	private static final int unselected = Color.TRANSPARENT;
 
 	private MapNavigationDrawerCallbacks mapDrawerCallbacks;
 
@@ -50,9 +43,7 @@ public class NavigationDrawerFragment extends Fragment {
 	private DrawerLayout mDrawerLayout;
 	private View mFragmentContainerView;
 
-	private int mCurrentSelectedMapType = GoogleMap.MAP_TYPE_NORMAL;
 	private boolean mFromSavedInstanceState;
-	private boolean mUserLearnedDrawer;
 
 	private SharedPreferences prefs;
 
@@ -62,19 +53,11 @@ public class NavigationDrawerFragment extends Fragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		// Read in the flag indicating whether or not the user has demonstrated awareness of the
-		// drawer. See PREF_USER_LEARNED_DRAWER for details.
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-		mUserLearnedDrawer = prefs.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
 		if (savedInstanceState != null) {
-			mCurrentSelectedMapType = savedInstanceState.getInt(STATE_SELECTED_MAP_TYPE);
 			mFromSavedInstanceState = true;
 		}
-
-		// Select either the default item (0) or the last selected item.
-		selectMapType(mCurrentSelectedMapType);
 	}
 
 	@Override
@@ -108,12 +91,6 @@ public class NavigationDrawerFragment extends Fragment {
 	public void onDetach() {
 		super.onDetach();
 		mapDrawerCallbacks = null;
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		outState.putInt(STATE_SELECTED_MAP_TYPE, mCurrentSelectedMapType);
 	}
 
 	@Override
@@ -158,34 +135,34 @@ public class NavigationDrawerFragment extends Fragment {
 		v.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View view) {
 				mapDrawerCallbacks.onViewModeChanged(mode);
+				prefs.edit().putInt(Settings.VIEW_MODE, mode.getValue()).apply();
 			}
 		});
 	}
 
 	private void prepareLegendItems(View v) {
-		if (getActivity() != null) {
-			for (LocationType type : LocationType
-					.getCurrentItems(getActivity().getContentResolver())) {
-				prepareLegendItem((TextView) v.findViewById(type.mLegendViewId), type,
-						!type.getViewable(prefs));
-			}
-
+		for (LocationType type : LocationType.getCurrentItems(getActivity().getContentResolver())) {
+			prepareLegendItem((TextView) v.findViewById(type.mLegendViewId), type);
 		}
 	}
 
-	public void prepareLegendItem(final TextView v, final LocationType type,
-								  final boolean newState) {
+	public void prepareLegendItem(final TextView v, final LocationType type) {
 		if (v != null) {
 			v.setVisibility(View.VISIBLE);
 			v.setOnClickListener(new View.OnClickListener() {
 				@Override public void onClick(View view) {
-					//TODO: Fix this
-					Toast.makeText(getActivity(), "TEST" + newState, Toast.LENGTH_SHORT).show();
+					boolean newState = !type.getViewable(prefs);
 					prefs.edit().putBoolean(type.mPrefs, newState).apply();
 					mapDrawerCallbacks.onNavigationLegendItemSelected(type, newState);
+					changeToggleBackground(view, newState);
 				}
 			});
+			changeToggleBackground(v, type.getViewable(prefs));
 		}
+	}
+
+	private void changeToggleBackground(final View v, boolean newState) {
+		v.setBackgroundColor(newState ? selected : unselected);
 	}
 
 	private void prepareMapTypes(View v) {
@@ -194,23 +171,44 @@ public class NavigationDrawerFragment extends Fragment {
 		TextView satellite = (TextView) v.findViewById(R.id.navigation_map_type_satellite);
 		TextView hybrid = (TextView) v.findViewById(R.id.navigation_map_type_hybrid);
 
-		prepareMapType(normal, GoogleMap.MAP_TYPE_NORMAL);
-		prepareMapType(terrain, GoogleMap.MAP_TYPE_TERRAIN);
-		prepareMapType(satellite, GoogleMap.MAP_TYPE_SATELLITE);
-		prepareMapType(hybrid, GoogleMap.MAP_TYPE_HYBRID);
-
-		mapDrawerCallbacks.onNavigationMapTypeSelected(
-				prefs.getInt(Settings.MAP_TYPE, GoogleMap.MAP_TYPE_NORMAL));
+		prepareMapType(normal, MapFragmentHandler.MapType.MAP_TYPE_NORMAL);
+		prepareMapType(terrain, MapFragmentHandler.MapType.MAP_TYPE_TERRAIN);
+		prepareMapType(satellite, MapFragmentHandler.MapType.MAP_TYPE_SATELLITE);
+		prepareMapType(hybrid, MapFragmentHandler.MapType.MAP_TYPE_HYBRID);
 	}
 
-	public void prepareMapType(final TextView v, final int mapType) {
+	public void prepareMapType(final TextView v, final MapFragmentHandler.MapType mapType) {
 		if (v != null) {
 			v.setOnClickListener(new View.OnClickListener() {
 				@Override public void onClick(View view) {
 					mapDrawerCallbacks.onNavigationMapTypeSelected(mapType);
-					prefs.edit().putInt(Settings.MAP_TYPE, mapType).apply();
+					prefs.edit().putInt(Settings.MAP_TYPE, mapType.getValue()).apply();
+					toggleMapType();
 				}
 			});
+		}
+	}
+
+	private void toggleMapType() {
+		if (getActivity() != null) {
+			TextView normal =
+					(TextView) getActivity().findViewById(R.id.navigation_map_type_normal);
+			TextView terrain =
+					(TextView) getActivity().findViewById(R.id.navigation_map_type_terrain);
+			TextView satellite =
+					(TextView) getActivity().findViewById(R.id.navigation_map_type_satellite);
+			TextView hybrid =
+					(TextView) getActivity().findViewById(R.id.navigation_map_type_hybrid);
+
+			MapFragmentHandler.MapType type = MapFragmentHandler.MapType.fromValue(
+					prefs.getInt(Settings.MAP_TYPE,
+							MapFragmentHandler.MapType.MAP_TYPE_NORMAL.getValue()));
+
+			changeToggleBackground(normal, MapFragmentHandler.MapType.MAP_TYPE_NORMAL == type);
+			changeToggleBackground(terrain, MapFragmentHandler.MapType.MAP_TYPE_TERRAIN == type);
+			changeToggleBackground(satellite,
+					MapFragmentHandler.MapType.MAP_TYPE_SATELLITE == type);
+			changeToggleBackground(hybrid, MapFragmentHandler.MapType.MAP_TYPE_HYBRID == type);
 		}
 	}
 
@@ -241,7 +239,9 @@ public class NavigationDrawerFragment extends Fragment {
 
 		// If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
 		// per the navigation drawer design guidelines.
-		if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
+
+		boolean userLearnedDrawer = prefs.getBoolean(Settings.PREF_USER_LEARNED_DRAWER, false);
+		if (!userLearnedDrawer && !mFromSavedInstanceState) {
 			mDrawerLayout.openDrawer(mFragmentContainerView);
 		}
 
@@ -254,17 +254,7 @@ public class NavigationDrawerFragment extends Fragment {
 		});
 
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-	}
-
-	private void selectMapType(int position) {
-		mCurrentSelectedMapType = position;
-		if (mDrawerLayout != null) {
-			mDrawerLayout.closeDrawer(mFragmentContainerView);
-		}
-		if (mapDrawerCallbacks != null) {
-			//TODO: Parse the map type from the selection in the list
-			mapDrawerCallbacks.onNavigationMapTypeSelected(0);
-		}
+		toggleMapType();
 	}
 
 	/**
@@ -293,7 +283,7 @@ public class NavigationDrawerFragment extends Fragment {
 
 		void onNavigationLegendItemSelected(final LocationType type, final boolean newState);
 
-		void onNavigationMapTypeSelected(final int mapType);
+		void onNavigationMapTypeSelected(final MapFragmentHandler.MapType mapType);
 	}
 
 	private class MyDrawerToggle extends ActionBarDrawerToggle {
@@ -313,8 +303,9 @@ public class NavigationDrawerFragment extends Fragment {
 			if (!isAdded()) {
 				return;
 			}
-
-			mActivity.invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+			if (Build.VERSION.SDK_INT >= 11) {
+				mActivity.invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+			}
 		}
 
 		@Override public void onDrawerOpened(View drawerView) {
@@ -322,16 +313,16 @@ public class NavigationDrawerFragment extends Fragment {
 			if (!isAdded()) {
 				return;
 			}
-
-			if (!mUserLearnedDrawer) {
-				// The user manually opened the drawer; store this flag to prevent auto-showing
-				// the navigation drawer automatically in the future.
-				mUserLearnedDrawer = true;
-				SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
-				sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).apply();
+			// The user manually opened the drawer; store this flag to prevent auto-showing
+			// the navigation drawer automatically in the future.
+			SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+			if (!sp.getBoolean(Settings.PREF_USER_LEARNED_DRAWER, false)) {
+				sp.edit().putBoolean(Settings.PREF_USER_LEARNED_DRAWER, true).apply();
 			}
 
-			getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+			if (Build.VERSION.SDK_INT >= 11) {
+				getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+			}
 		}
 	}
 }

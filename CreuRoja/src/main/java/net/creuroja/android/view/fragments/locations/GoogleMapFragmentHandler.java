@@ -1,5 +1,6 @@
 package net.creuroja.android.view.fragments.locations;
 
+import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.Toast;
 
@@ -22,7 +23,7 @@ import java.util.Map;
 /**
  * Created by lapuente on 08.08.14.
  */
-public class GoogleMapFragmentHandler implements MapFragmentHandler {
+public class GoogleMapFragmentHandler extends MapFragmentHandler {
 	private static final LatLng DEFAULT_POSITION = new LatLng(41.3958, 2.1739);
 
 	SupportMapFragment mMapFragment;
@@ -33,8 +34,8 @@ public class GoogleMapFragmentHandler implements MapFragmentHandler {
 	LocationList locationList;
 	Map<Marker, Location> mCurrentMarkers;
 
-	public GoogleMapFragmentHandler(SupportMapFragment fragment, MapInteractionListener listener) {
-		this.mMapFragment = fragment;
+	public GoogleMapFragmentHandler(Fragment fragment, MapInteractionListener listener) {
+		this.mMapFragment = (SupportMapFragment) fragment;
 		this.listener = listener;
 		mCurrentMarkers = new HashMap<>();
 	}
@@ -49,19 +50,39 @@ public class GoogleMapFragmentHandler implements MapFragmentHandler {
 		return options;
 	}
 
-	@Override public void setMapType(int mapType) {
-		map.setMapType(mapType);
+	@Override public void setMapType(MapType mapType) {
+		if(setUpMap()) {
+			map.setMapType(getMapType(mapType));
+		}
 	}
 
-	@Override public void drawMarkers() {
-		if (map == null && mMapFragment != null) {
-			map = mMapFragment.getMap();
-			if (map != null) {
-				for (Location location : locationList.getLocations()) {
-					drawMarker(location);
-				}
+	private int getMapType(MapType mapType) {
+		switch (mapType) {
+			case MAP_TYPE_TERRAIN:
+				return GoogleMap.MAP_TYPE_TERRAIN;
+			case MAP_TYPE_SATELLITE:
+				return GoogleMap.MAP_TYPE_SATELLITE;
+			case MAP_TYPE_HYBRID:
+				return GoogleMap.MAP_TYPE_HYBRID;
+			case MAP_TYPE_NORMAL:
+			default:
+				return GoogleMap.MAP_TYPE_NORMAL;
+		}
+	}
+
+	public void drawMarkers() {
+		if (setUpMap() && locationList != null) {
+			for (Location location : locationList.getLocations()) {
+				drawMarker(location);
 			}
 		}
+	}
+
+	private boolean setUpMap() {
+		if (map == null && mMapFragment != null) {
+			map = mMapFragment.getMap();
+		}
+		return map != null;
 	}
 
 	@Override public void drawDirections(LatLng currentPosition, Location location) {
@@ -79,10 +100,11 @@ public class GoogleMapFragmentHandler implements MapFragmentHandler {
 
 	@Override public void setLocationList(LocationList locationList) {
 		this.locationList = locationList;
+		drawMarkers();
 	}
 
-	public interface MapInteractionListener {
-		public void onLocationClicked(Location location);
+	@Override public Fragment getFragment() {
+		return mMapFragment;
 	}
 
 	private void drawMarker(Location location) {
@@ -91,6 +113,10 @@ public class GoogleMapFragmentHandler implements MapFragmentHandler {
 		options.icon(BitmapDescriptorFactory.fromResource(location.mType.mIcon));
 		mCurrentMarkers.put(map.addMarker(options), location);
 		map.setInfoWindowAdapter(new OnLocationClickAdapter());
+	}
+
+	public interface MapInteractionListener {
+		public void onLocationClicked(Location location);
 	}
 
 	private class OnLocationClickAdapter implements GoogleMap.InfoWindowAdapter {

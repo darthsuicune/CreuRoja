@@ -27,7 +27,7 @@ public class RailsLocationList implements LocationList {
 	private String lastUpdateTime = "";
 
 	public RailsLocationList(HttpResponse response) {
-		Log.d("TEST", "List created");
+		Log.d("TEST", "HTTP List created");
 		try {
 			createFromJson(RestWebServiceClient.getAsString(response));
 		} catch (IOException e) {
@@ -38,7 +38,7 @@ public class RailsLocationList implements LocationList {
 	}
 
 	public RailsLocationList(Cursor cursor) {
-		Log.d("TEST", "List created");
+		Log.d("TEST", "Cursor list created");
 		if(cursor.moveToFirst()) {
 			do {
 				Location location = new Location(cursor);
