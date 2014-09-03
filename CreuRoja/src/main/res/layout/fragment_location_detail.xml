@@ -5,13 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".view.fragments.LocationDetailFragment">
 
-    <ListView
-        android:id="@android:id/list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
     <TextView
-        android:id="@android:id/empty"
+        android:id="@+id/fragment_location_detail_name"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center" />

@@ -2,6 +2,7 @@ package net.creuroja.android.model.locations;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -74,7 +75,7 @@ public class Location {
 
 	public ContentValues getAsValues() {
 		ContentValues values = new ContentValues();
-		values.put(CreuRojaContract.Locations.ACTIVE, mActive);
+		values.put(CreuRojaContract.Locations.ACTIVE, (mActive) ? 1 : 0);
 		values.put(CreuRojaContract.Locations.ADDRESS, mAddress);
 		values.put(CreuRojaContract.Locations.DESCRIPTION, mDescription);
 		values.put(CreuRojaContract.Locations.LATITUD, mLatitude);
@@ -114,5 +115,9 @@ public class Location {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public boolean isVisible(SharedPreferences prefs) {
+		return mType.getViewable(prefs);
 	}
 }

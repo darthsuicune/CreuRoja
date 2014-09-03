@@ -2,9 +2,9 @@ package net.creuroja.android.model.locations;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
 import net.creuroja.android.model.db.CreuRojaContract;
 import net.creuroja.android.model.webservice.lib.RestWebServiceClient;
@@ -16,37 +16,47 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by denis on 19.06.14.
  */
 public class RailsLocationList implements LocationList {
-	private List<Location> locationList = new ArrayList<>();
+	private List<Location> mLocationList = new ArrayList<>();
 	private List<Integer> mIdList = new ArrayList<>();
 	private String lastUpdateTime = "";
+	private Map<LocationType, Boolean> mToggledLocations;
+	private SharedPreferences prefs;
 
-	public RailsLocationList(HttpResponse response) {
-		Log.d("TEST", "HTTP List created");
+	public RailsLocationList(HttpResponse response, SharedPreferences prefs) {
 		try {
 			createFromJson(RestWebServiceClient.getAsString(response));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (JSONException e) {
+		} catch (IOException | JSONException e) {
 			e.printStackTrace();
 		}
+		init(prefs);
 	}
 
-	public RailsLocationList(Cursor cursor) {
-		Log.d("TEST", "Cursor list created");
+	public RailsLocationList(Cursor cursor, SharedPreferences prefs) {
 		if(cursor.moveToFirst()) {
 			do {
 				Location location = new Location(cursor);
-				locationList.add(location);
+				mLocationList.add(location);
 				mIdList.add(location.mRemoteId);
 			} while(cursor.moveToNext());
 		}
 		cursor.close();
+		init(prefs);
+	}
+
+	private void init(SharedPreferences prefs) {
+		this.prefs = prefs;
+		mToggledLocations = new HashMap<>();
+		for(LocationType type : LocationType.values()) {
+			mToggledLocations.put(type, type.getViewable(prefs));
+		}
 	}
 
 	private void createFromJson(String json) throws JSONException {
@@ -54,18 +64,24 @@ public class RailsLocationList implements LocationList {
 		for(int i = 0; i < array.length(); i++) {
 			JSONObject object = array.getJSONObject(i);
 			Location location = new Location(object);
-			locationList.add(location);
+			mLocationList.add(location);
 			mIdList.add(location.mRemoteId);
 		}
 	}
 
 	@Override
 	public List<Location> getLocations() {
-		return locationList;
+		List<Location> result = new ArrayList<>();
+		for(Location location : mLocationList) {
+			if(mToggledLocations.get(location.mType)) {
+				result.add(location);
+			}
+		}
+		return result;
 	}
 
 	@Override public Location getById(long id) {
-		for(Location location : locationList) {
+		for(Location location : mLocationList) {
 			if(location.mId == id) {
 				return location;
 			}
@@ -74,26 +90,26 @@ public class RailsLocationList implements LocationList {
 	}
 
 	@Override public Location get(int position) {
-		return locationList.get(position);
+		return mLocationList.get(position);
 	}
 
 	@Override public void save(ContentResolver cr) {
 		Uri uri = CreuRojaContract.Locations.CONTENT_LOCATIONS;
 		LocationList currentLocations =
-				new RailsLocationList(cr.query(uri, null, null, null, null));
+				new RailsLocationList(cr.query(uri, null, null, null, null), prefs);
 		List<ContentValues> forInsert = new ArrayList<>();
-		for(Location location : locationList) {
+		for(Location location : mLocationList) {
 			if(location.newerThan(lastUpdateTime)) {
 				lastUpdateTime = location.mUpdatedAt;
 			}
-			if(!location.mActive) {
-				location.delete(cr);
-			} else {
+			if(location.mActive) {
 				if (currentLocations.has(location)) {
 					location.update(cr);
 				} else {
 					forInsert.add(location.getAsValues());
 				}
+			} else {
+				location.delete(cr);
 			}
 		}
 		if(forInsert.size() > 0) {
@@ -113,5 +129,13 @@ public class RailsLocationList implements LocationList {
 
 	@Override public String getLastUpdateTime() {
 		return lastUpdateTime;
+	}
+
+	@Override public void toggleLocationType(LocationType type, boolean newState) {
+		mToggledLocations.put(type, newState);
+	}
+
+	@Override public boolean isVisible(int position) {
+		return mLocationList.get(position).isVisible(prefs);
 	}
 }

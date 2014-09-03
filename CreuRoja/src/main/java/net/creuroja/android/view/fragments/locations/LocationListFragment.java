@@ -3,13 +3,17 @@ package net.creuroja.android.view.fragments.locations;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -19,14 +23,13 @@ import android.widget.TextView;
 
 import net.creuroja.android.R;
 import net.creuroja.android.controller.locations.LocationsListListener;
+import net.creuroja.android.model.db.CreuRojaContract;
 import net.creuroja.android.model.locations.Location;
 import net.creuroja.android.model.locations.LocationList;
 import net.creuroja.android.model.locations.LocationType;
+import net.creuroja.android.model.locations.RailsLocationList;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * A fragment representing a list of Items.
@@ -37,15 +40,13 @@ import java.util.Map;
  * Activities containing this fragment MUST implement the {@link LocationsListListener} callbacks
  * interface.
  */
-public class LocationListFragment extends ListFragment implements AbsListView.OnItemClickListener {
-
+public class LocationListFragment extends ListFragment {
+	public static final int LOADER_LOCATIONS = 1;
 	private LocationList mLocationList;
-	private List<Location> mShownLocations;
-	private Map<LocationType, Boolean> toggledLocations;
 	private LocationsListListener mListener;
 
 	// The fragment's ListView/GridView.
-	private ListView mListView;
+	private AdapterView<ListAdapter> mListView;
 
 	// The Adapter which will be used to populate the ListView/GridView with Views.
 	private ListAdapter mAdapter;
@@ -59,34 +60,14 @@ public class LocationListFragment extends ListFragment implements AbsListView.On
 	public LocationListFragment() {
 	}
 
-	public static LocationListFragment newInstance(LocationList locationList) {
-		LocationListFragment fragment = new LocationListFragment();
-		fragment.setLocationList(locationList);
-		return fragment;
-	}
-
-	public void setLocationList(LocationList locationList) {
-		mLocationList = locationList;
+	public static LocationListFragment newInstance() {
+		return new LocationListFragment();
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-
-		toggledLocations = new HashMap<>();
-		for(LocationType type : LocationType.values()) {
-			toggledLocations.put(type, type.getViewable(prefs));
-		}
-		mShownLocations = new ArrayList<>();
-		if(mShownLocations.isEmpty()) {
-			for (Location location : mLocationList.getLocations()) {
-				if (location.mType.getViewable(prefs)) {
-					mShownLocations.add(location);
-				}
-			}
-		}
-		mAdapter = new LocationListAdapter(getActivity());
 	}
 
 	@Override
@@ -95,11 +76,8 @@ public class LocationListFragment extends ListFragment implements AbsListView.On
 		View view = inflater.inflate(R.layout.fragment_locationlist, container, false);
 
 		// Set the adapter
-		mListView = (ListView) view.findViewById(android.R.id.list);
-		mListView.setAdapter(mAdapter);
-
-		// Set OnItemClickListener so we can be notified on item clicks
-		mListView.setOnItemClickListener(this);
+		mListView = (AdapterView<ListAdapter>) view.findViewById(android.R.id.list);
+		setListAdapter(mAdapter);
 
 		return view;
 	}
@@ -113,6 +91,7 @@ public class LocationListFragment extends ListFragment implements AbsListView.On
 			throw new ClassCastException(
 					activity.toString() + " must implement LocationsListListener");
 		}
+		getLoaderManager().restartLoader(LOADER_LOCATIONS, null, new LocationListCallbacks());
 	}
 
 	@Override
@@ -121,34 +100,33 @@ public class LocationListFragment extends ListFragment implements AbsListView.On
 		mListener = null;
 	}
 
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		if (null != mListener) {
-			// Notify the active callbacks interface (the activity, if the
-			// fragment is attached to one) that an item has been selected.
-			mListener.onLocationListItemSelected(mLocationList.getById(id));
-		}
+	@Override public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		// Notify the active callbacks interface (the activity, if the
+		// fragment is attached to one) that an item has been selected.
+		mListener.onLocationListItemSelected(mLocationList.get(position));
 	}
 
 	public void toggleLocations(LocationType type, boolean newState) {
-		//TODO: Fix this
-		toggledLocations.put(type, newState);
-		for(Location location : mLocationList.getLocations()) {
-			if(location.mType == type) {
-				if (newState) {
-					mShownLocations.add(location);
-				} else {
-					mShownLocations.remove(location);
-				}
-			}
-		}
+		mLocationList.toggleLocationType(type, newState);
 		mAdapter = new LocationListAdapter(getActivity());
-		mListView.setAdapter(mAdapter);
+		setListAdapter(mAdapter);
+	}
+
+	static class ViewHolder {
+		ImageView icon;
+		TextView name;
+		TextView description;
+		TextView phone;
+		TextView address;
 	}
 
 	private class LocationListAdapter extends ArrayAdapter<Location> {
+		List<Location> locationList;
+
 		public LocationListAdapter(Context context) {
-			super(context, R.layout.location_list_entry, mShownLocations);
+			super(context, R.layout.location_list_entry, mLocationList.getLocations());
+			locationList = mLocationList.getLocations();
 		}
 
 		@Override public View getView(int position, View convertView, ViewGroup parent) {
@@ -161,8 +139,7 @@ public class LocationListFragment extends ListFragment implements AbsListView.On
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-
-			populateView(holder, mLocationList.get(position));
+			populateView(holder, locationList.get(position));
 			return convertView;
 		}
 
@@ -188,11 +165,20 @@ public class LocationListFragment extends ListFragment implements AbsListView.On
 		}
 	}
 
-	static class ViewHolder {
-		ImageView icon;
-		TextView name;
-		TextView description;
-		TextView phone;
-		TextView address;
+	private class LocationListCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
+		@Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+			Uri uri = CreuRojaContract.Locations.CONTENT_LOCATIONS;
+			return new CursorLoader(getActivity(), uri, null, null, null, null);
+		}
+
+		@Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+			mLocationList = new RailsLocationList(data, prefs);
+			mAdapter = new LocationListAdapter(getActivity());
+			setListAdapter(mAdapter);
+		}
+
+		@Override public void onLoaderReset(Loader<Cursor> loader) {
+			//Nothing to do here
+		}
 	}
 }

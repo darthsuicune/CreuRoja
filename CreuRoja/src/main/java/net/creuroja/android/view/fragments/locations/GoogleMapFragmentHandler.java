@@ -1,6 +1,13 @@
 package net.creuroja.android.view.fragments.locations;
 
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.view.View;
 import android.widget.Toast;
 
@@ -13,9 +20,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import net.creuroja.android.model.db.CreuRojaContract;
 import net.creuroja.android.model.locations.Location;
 import net.creuroja.android.model.locations.LocationList;
 import net.creuroja.android.model.locations.LocationType;
+import net.creuroja.android.model.locations.RailsLocationList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,20 +32,24 @@ import java.util.Map;
 /**
  * Created by lapuente on 08.08.14.
  */
-public class GoogleMapFragmentHandler extends MapFragmentHandler {
+public class GoogleMapFragmentHandler implements MapFragmentHandler {
 	private static final LatLng DEFAULT_POSITION = new LatLng(41.3958, 2.1739);
+	private static final int LOADER_LOCATIONS = 1;
 
 	SupportMapFragment mMapFragment;
 	GoogleMap map;
 
 	MapInteractionListener listener;
 
-	LocationList locationList;
+	LocationList mLocationList;
 	Map<Marker, Location> mCurrentMarkers;
+	SharedPreferences prefs;
 
-	public GoogleMapFragmentHandler(Fragment fragment, MapInteractionListener listener) {
+	public GoogleMapFragmentHandler(Fragment fragment, MapInteractionListener listener,
+									SharedPreferences prefs) {
 		this.mMapFragment = (SupportMapFragment) fragment;
 		this.listener = listener;
+		this.prefs = prefs;
 		mCurrentMarkers = new HashMap<>();
 	}
 
@@ -51,7 +64,7 @@ public class GoogleMapFragmentHandler extends MapFragmentHandler {
 	}
 
 	@Override public void setMapType(MapType mapType) {
-		if(setUpMap()) {
+		if (setUpMap()) {
 			map.setMapType(getMapType(mapType));
 		}
 	}
@@ -71,8 +84,8 @@ public class GoogleMapFragmentHandler extends MapFragmentHandler {
 	}
 
 	public void drawMarkers() {
-		if (setUpMap() && locationList != null) {
-			for (Location location : locationList.getLocations()) {
+		if (setUpMap() && mLocationList != null) {
+			for (Location location : mLocationList.getLocations()) {
 				drawMarker(location);
 			}
 		}
@@ -81,12 +94,14 @@ public class GoogleMapFragmentHandler extends MapFragmentHandler {
 	private boolean setUpMap() {
 		if (map == null && mMapFragment != null) {
 			map = mMapFragment.getMap();
+			mMapFragment.getLoaderManager()
+					.restartLoader(LOADER_LOCATIONS, null, new LocationListCallbacks());
 		}
 		return map != null;
 	}
 
-	@Override public void drawDirections(LatLng currentPosition, Location location) {
-		//TODO: Implement
+	@Override public void drawDirections(Location location) {
+		//TODO: Calculate your current position and draw route
 		Toast.makeText(mMapFragment.getActivity(), "NOT YET IMPLEMENTED", Toast.LENGTH_LONG).show();
 	}
 
@@ -96,11 +111,6 @@ public class GoogleMapFragmentHandler extends MapFragmentHandler {
 				marker.setVisible(newState);
 			}
 		}
-	}
-
-	@Override public void setLocationList(LocationList locationList) {
-		this.locationList = locationList;
-		drawMarkers();
 	}
 
 	@Override public Fragment getFragment() {
@@ -127,6 +137,22 @@ public class GoogleMapFragmentHandler extends MapFragmentHandler {
 		@Override public View getInfoContents(Marker marker) {
 			listener.onLocationClicked(mCurrentMarkers.get(marker));
 			return null;
+		}
+	}
+
+	private class LocationListCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
+		@Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+			Uri uri = CreuRojaContract.Locations.CONTENT_LOCATIONS;
+			return new CursorLoader(mMapFragment.getActivity(), uri, null, null, null, null);
+		}
+
+		@Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+			mLocationList = new RailsLocationList(data, prefs);
+			drawMarkers();
+		}
+
+		@Override public void onLoaderReset(Loader<Cursor> loader) {
+			//Nothing to do here
 		}
 	}
 }

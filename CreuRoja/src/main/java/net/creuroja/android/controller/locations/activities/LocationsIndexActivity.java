@@ -3,39 +3,31 @@ package net.creuroja.android.controller.locations.activities;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import net.creuroja.android.R;
+import net.creuroja.android.controller.general.SettingsActivity;
 import net.creuroja.android.controller.locations.LocationsListListener;
 import net.creuroja.android.model.Settings;
-import net.creuroja.android.model.db.CreuRojaContract;
 import net.creuroja.android.model.db.CreuRojaProvider;
 import net.creuroja.android.model.locations.Location;
-import net.creuroja.android.model.locations.LocationList;
 import net.creuroja.android.model.locations.LocationType;
-import net.creuroja.android.model.locations.RailsLocationList;
 import net.creuroja.android.model.webservice.auth.AccountUtils;
 import net.creuroja.android.model.webservice.auth.AccountUtils.LoginManager;
 import net.creuroja.android.view.fragments.locations.LocationCardFragment;
 import net.creuroja.android.view.fragments.locations.LocationListFragment;
 import net.creuroja.android.view.fragments.locations.MapFragmentHandler;
 import net.creuroja.android.view.fragments.locations.NavigationDrawerFragment;
+import net.creuroja.android.view.fragments.locations.factories.MapFragmentHandlerFactory;
 
 import static net.creuroja.android.view.fragments.locations.GoogleMapFragmentHandler.MapInteractionListener;
 import static net.creuroja.android.view.fragments.locations.LocationCardFragment.OnLocationCardInteractionListener;
@@ -44,7 +36,6 @@ import static net.creuroja.android.view.fragments.locations.NavigationDrawerFrag
 public class LocationsIndexActivity extends ActionBarActivity
 		implements LoginManager, MapNavigationDrawerCallbacks, LocationsListListener,
 		OnLocationCardInteractionListener, MapInteractionListener {
-	private static final int LOADER_LOCATIONS = 1;
 	private static final String TAG_MAP = "CreuRojaMap";
 	private static final String TAG_LIST = "CreuRojaLocationList";
 	private static final String TAG_CARD = "CreuRojaLocationCard";
@@ -59,9 +50,8 @@ public class LocationsIndexActivity extends ActionBarActivity
 	private CharSequence mTitle;
 	private SharedPreferences prefs;
 
-	private ViewMode currentViewMode;
 
-	private LocationList mLocationList;
+	private ViewMode currentViewMode;
 
 	// Callbacks for when the auth token is returned
 	@Override
@@ -74,8 +64,6 @@ public class LocationsIndexActivity extends ActionBarActivity
 		}
 		setMainFragment();
 		requestSync();
-		getSupportLoaderManager()
-				.restartLoader(LOADER_LOCATIONS, null, new LocationListCallbacks());
 	}
 
 	@Override
@@ -97,8 +85,8 @@ public class LocationsIndexActivity extends ActionBarActivity
 				//Nothing to do here
 				break;
 		}
+		prefs.edit().putString(Settings.LOCATIONS_INDEX_TYPE, currentViewMode.toString()).apply();
 		setMainFragment();
-		onMarkerListUpdated(); //After modifying the fragment we report the details for redrawing
 	}
 
 	private void setMainFragment() {
@@ -110,7 +98,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 					listFragment =
 							(LocationListFragment) fragmentManager.findFragmentByTag(TAG_LIST);
 					if (listFragment == null) {
-						listFragment = LocationListFragment.newInstance(mLocationList);
+						listFragment = LocationListFragment.newInstance();
 					}
 				}
 				if (cardFragment != null && cardFragment.isVisible()) {
@@ -122,7 +110,8 @@ public class LocationsIndexActivity extends ActionBarActivity
 			default:
 				if (mapFragmentHandler == null) {
 					Fragment fragment = fragmentManager.findFragmentByTag(TAG_MAP);
-					mapFragmentHandler = MapFragmentHandler.getHandler(fragment, this);
+					mapFragmentHandler =
+							MapFragmentHandlerFactory.getHandler(fragment, this, prefs);
 				}
 				transaction.replace(R.id.locations_container, mapFragmentHandler.getFragment(),
 						TAG_MAP);
@@ -141,9 +130,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	}
 
 	@Override public void onDirectionsRequested(Location location) {
-		//TODO: Calculate your current position
-		LatLng currentPosition = new LatLng(0, 0);
-		mapFragmentHandler.drawDirections(currentPosition, location);
+		mapFragmentHandler.drawDirections(location);
 	}
 
 	@Override public void onCardCloseRequested() {
@@ -176,15 +163,6 @@ public class LocationsIndexActivity extends ActionBarActivity
 					.commit();
 		} else {
 			cardFragment.setLocation(location);
-		}
-	}
-
-	private void onMarkerListUpdated() {
-		if (listFragment != null) {
-			listFragment.setLocationList(mLocationList);
-		}
-		if (mapFragmentHandler != null) {
-			mapFragmentHandler.setLocationList(mLocationList);
 		}
 	}
 
@@ -281,7 +259,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	private void openLocationDetails(Location location) {
 		//TODO: Attach fragment if landscape / enough width and not map.
 		Intent intent = new Intent(this, LocationDetailsActivity.class);
-		intent.putExtra(LocationDetailsActivity.EXTRA_LOCATION_ID, location.mId);
+		intent.putExtra(LocationDetailsActivity.EXTRA_LOCATION_ID, location.mRemoteId);
 		startActivity(intent);
 	}
 
@@ -304,22 +282,6 @@ public class LocationsIndexActivity extends ActionBarActivity
 
 		public int getValue() {
 			return mValue;
-		}
-	}
-
-	private class LocationListCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
-		@Override public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-			Uri uri = CreuRojaContract.Locations.CONTENT_LOCATIONS;
-			return new CursorLoader(LocationsIndexActivity.this, uri, null, null, null, null);
-		}
-
-		@Override public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
-			mLocationList = new RailsLocationList(data);
-			onMarkerListUpdated();
-		}
-
-		@Override public void onLoaderReset(Loader<Cursor> loader) {
-			//Nothing to do here
 		}
 	}
 }

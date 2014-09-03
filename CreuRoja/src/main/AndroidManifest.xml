@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".controller.locations.activities.LoginActivity"
+            android:name=".controller.general.LoginActivity"
             android:label="@string/title_activity_login"
             android:parentActivityName=".controller.locations.activities.LocationsIndexActivity"
             android:theme="@style/NoActionBar"
@@ -51,7 +51,7 @@
                 android:value="net.creuroja.android.view.activities.LocationsIndexActivity" />
         </activity>
         <activity
-            android:name=".controller.locations.activities.SettingsActivity"
+            android:name=".controller.general.SettingsActivity"
             android:label="@string/action_settings" >
         </activity>
 

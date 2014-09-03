@@ -17,7 +17,6 @@ import java.util.List;
  */
 
 public enum LocationType {
-	//TODO replace with actual values
 	NONE(0, 0, 0, ""),
 	ADAPTED(R.id.navigation_legend_adaptadas, R.string.marker_type_adaptadas, R.drawable.adaptadas,
 			Settings.SHOW_ADAPTED),

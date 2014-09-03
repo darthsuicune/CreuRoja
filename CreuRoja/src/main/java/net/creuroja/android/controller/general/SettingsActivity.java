@@ -1,4 +1,4 @@
-package net.creuroja.android.controller.locations.activities;
+package net.creuroja.android.controller.general;
 
 import android.annotation.TargetApi;
 import android.content.Context;

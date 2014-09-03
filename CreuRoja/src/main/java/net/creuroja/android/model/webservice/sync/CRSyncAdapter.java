@@ -40,6 +40,7 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter implements Client
 		super(context, autoInitialize);
 		mContext = context;
 		mAccountManager = AccountManager.get(context);
+		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 	}
 
 	/**
@@ -55,10 +56,10 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter implements Client
 		ConnectivityManager connectivity =
 				(ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
-		if (connectivity.getActiveNetworkInfo().isAvailable() &&
+		if (connectivity != null && connectivity.getActiveNetworkInfo() != null &&
+			connectivity.getActiveNetworkInfo().isAvailable() &&
 			connectivity.getActiveNetworkInfo().isConnected()) {
 			try {
-				prefs = PreferenceManager.getDefaultSharedPreferences(mContext);
 				RestWebServiceClient restClient =
 						new RestWebServiceClient(RailsWebServiceClient.PROTOCOL,
 								RailsWebServiceClient.URL);
@@ -83,7 +84,7 @@ public class CRSyncAdapter extends AbstractThreadedSyncAdapter implements Client
 	}
 
 	@Override public void onValidResponse(HttpResponse response) {
-		LocationList locationList = new RailsLocationList(response);
+		LocationList locationList = new RailsLocationList(response, prefs);
 		locationList.save(mContext.getContentResolver());
 
 		prefs.edit().putString(Settings.LAST_UPDATE_TIME, locationList.getLastUpdateTime())

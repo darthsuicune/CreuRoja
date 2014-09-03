@@ -1,12 +1,15 @@
 package net.creuroja.android.controller.locations.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import net.creuroja.android.R;
 
-public class LocationDetailsActivity extends Activity {
+import net.creuroja.android.R;
+import net.creuroja.android.view.fragments.locations.LocationDetailFragment;
+
+public class LocationDetailsActivity extends ActionBarActivity implements
+		LocationDetailFragment.OnLocationDetailsInteractionListener {
 	public final static String EXTRA_LOCATION_ID = "locationId";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

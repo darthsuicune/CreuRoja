@@ -14,4 +14,6 @@ public interface LocationList {
 	public void save(ContentResolver cr);
 	public boolean has(Location location);
 	public String getLastUpdateTime();
+	public void toggleLocationType(LocationType type, boolean newState);
+	public boolean isVisible(int position);
 }
