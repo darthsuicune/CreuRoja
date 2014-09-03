@@ -25,7 +25,7 @@ public class LocationCardFragment extends Fragment {
 
 	//Callback for the Activity
 	private OnLocationCardInteractionListener mListener;
-	//General location cardview
+	//General location card view
 	private View cardView;
 
 	private TextView mNameView;
@@ -45,9 +45,8 @@ public class LocationCardFragment extends Fragment {
 		return fragment;
 	}
 
-	public LocationCardFragment() {
-		// Required empty public constructor
-	}
+	// Required empty public constructor
+	public LocationCardFragment() {}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

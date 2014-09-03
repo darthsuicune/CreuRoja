@@ -33,7 +33,7 @@ public class AccountUtils {
 	}
 
 	public interface LoginManager {
-		public void successfulLogin(String authToken);
+		public void successfulLogin();
 
 		public void failedLogin();
 	}
@@ -84,7 +84,7 @@ public class AccountUtils {
 			if (TextUtils.isEmpty(authToken)) {
 				mEntryPoint.failedLogin();
 			} else {
-				mEntryPoint.successfulLogin(authToken);
+				mEntryPoint.successfulLogin();
 			}
 		}
 	}

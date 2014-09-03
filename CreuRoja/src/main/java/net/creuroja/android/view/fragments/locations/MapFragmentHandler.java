@@ -16,6 +16,8 @@ public interface MapFragmentHandler {
 
 	public abstract void toggleLocations(LocationType type, boolean active);
 
+	public void setUp();
+
 	public abstract Fragment getFragment();
 
 	public enum MapType {

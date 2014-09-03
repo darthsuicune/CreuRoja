@@ -92,10 +92,8 @@ public class GoogleMapFragmentHandler implements MapFragmentHandler {
 	}
 
 	private boolean setUpMap() {
-		if (map == null && mMapFragment != null) {
+		if (map == null) {
 			map = mMapFragment.getMap();
-			mMapFragment.getLoaderManager()
-					.restartLoader(LOADER_LOCATIONS, null, new LocationListCallbacks());
 		}
 		return map != null;
 	}
@@ -111,6 +109,11 @@ public class GoogleMapFragmentHandler implements MapFragmentHandler {
 				marker.setVisible(newState);
 			}
 		}
+	}
+
+	@Override public void setUp() {
+		mMapFragment.getLoaderManager()
+				.restartLoader(LOADER_LOCATIONS, null, new LocationListCallbacks());
 	}
 
 	@Override public Fragment getFragment() {

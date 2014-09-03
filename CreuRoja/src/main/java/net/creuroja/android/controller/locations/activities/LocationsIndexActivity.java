@@ -50,19 +50,19 @@ public class LocationsIndexActivity extends ActionBarActivity
 	private CharSequence mTitle;
 	private SharedPreferences prefs;
 
-
 	private ViewMode currentViewMode;
+
+	private boolean alreadyCreated;
 
 	// Callbacks for when the auth token is returned
 	@Override
-	public void successfulLogin(String authToken) {
-		startUi();
+	public void successfulLogin() {
 		if (currentViewMode == null) {
 			String preferredMode =
 					prefs.getString(Settings.LOCATIONS_INDEX_TYPE, ViewMode.MAP.toString());
 			currentViewMode = ViewMode.getViewMode(preferredMode);
 		}
-		setMainFragment();
+		startUi();
 		requestSync();
 	}
 
@@ -119,6 +119,9 @@ public class LocationsIndexActivity extends ActionBarActivity
 		}
 		transaction.commit();
 		fragmentManager.executePendingTransactions();
+		if (currentViewMode == ViewMode.MAP) {
+			mapFragmentHandler.setUp();
+		}
 	}
 
 	@Override public void onLocationListItemSelected(Location location) {
@@ -167,9 +170,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	}
 
 	private void startUi() {
-		prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		setContentView(R.layout.activity_locations);
-
 		mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.navigation_drawer);
 		mTitle = getTitle();
@@ -177,6 +178,8 @@ public class LocationsIndexActivity extends ActionBarActivity
 		// Set up the drawer.
 		mNavigationDrawerFragment
 				.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
+
+		setMainFragment();
 	}
 
 	public void restoreActionBar() {
@@ -189,7 +192,14 @@ public class LocationsIndexActivity extends ActionBarActivity
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		AccountUtils.validateLogin(this, this);
+		prefs = PreferenceManager.getDefaultSharedPreferences(this);
+		alreadyCreated = (savedInstanceState != null);
+		if (alreadyCreated && AccountUtils.getAccount(this) != null) {
+			successfulLogin();
+		} else {
+			AccountUtils.validateLogin(this, this);
+		}
+
 	}
 
 	@Override
@@ -220,11 +230,11 @@ public class LocationsIndexActivity extends ActionBarActivity
 			case R.id.action_search:
 				//TODO: Change to true after implementation
 				search();
-				return false;
+				return super.onOptionsItemSelected(item);
 			case R.id.action_locate:
 				//TODO: Change to true after implementation
 				locate();
-				return false;
+				return super.onOptionsItemSelected(item);
 			default:
 				return super.onOptionsItemSelected(item);
 		}

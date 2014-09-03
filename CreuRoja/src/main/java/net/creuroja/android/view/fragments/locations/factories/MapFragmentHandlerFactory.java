@@ -19,6 +19,7 @@ public class MapFragmentHandlerFactory {
 												SharedPreferences prefs) {
 		if (fragment == null) {
 			fragment = SupportMapFragment.newInstance(getMapOptions());
+			fragment.setRetainInstance(true);
 		}
 		return new GoogleMapFragmentHandler(fragment, listener, prefs);
 	}

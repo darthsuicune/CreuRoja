@@ -3,12 +3,17 @@ package net.creuroja.android.view.fragments.locations;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -24,7 +29,10 @@ import android.widget.TextView;
 import net.creuroja.android.R;
 import net.creuroja.android.controller.locations.activities.LocationsIndexActivity;
 import net.creuroja.android.model.Settings;
+import net.creuroja.android.model.db.CreuRojaContract;
 import net.creuroja.android.model.locations.LocationType;
+
+import java.util.List;
 
 /**
  * Fragment used for managing interactions for and presentation of a navigation drawer.
@@ -32,6 +40,7 @@ import net.creuroja.android.model.locations.LocationType;
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
 public class NavigationDrawerFragment extends Fragment {
+	private static final int LOADER_LOCATION_TYPES = 1;
 	private static final int selected = Color.CYAN;
 	private static final int unselected = Color.TRANSPARENT;
 
@@ -141,9 +150,7 @@ public class NavigationDrawerFragment extends Fragment {
 	}
 
 	private void prepareLegendItems(View v) {
-		for (LocationType type : LocationType.getCurrentItems(getActivity().getContentResolver())) {
-			prepareLegendItem((TextView) v.findViewById(type.mLegendViewId), type);
-		}
+		getLoaderManager().restartLoader(LOADER_LOCATION_TYPES, null, new LocationTypesCallback());
 	}
 
 	public void prepareLegendItem(final TextView v, final LocationType type) {
@@ -323,6 +330,26 @@ public class NavigationDrawerFragment extends Fragment {
 			if (Build.VERSION.SDK_INT >= 11) {
 				getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
 			}
+		}
+	}
+
+	private class LocationTypesCallback implements LoaderManager.LoaderCallbacks<Cursor>{
+
+		@Override public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+			Uri uri = CreuRojaContract.Locations.CONTENT_DISTINCT_LOCATIONS;
+			String[] projection = {CreuRojaContract.Locations._ID, CreuRojaContract.Locations.TYPE};
+			return new CursorLoader(getActivity(), uri, projection, null, null, null);
+		}
+
+		@Override public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+			List<LocationType> types = LocationType.getCurrentTypes(cursor);
+			for (LocationType type : types) {
+				prepareLegendItem((TextView) getActivity().findViewById(type.mLegendViewId), type);
+			}
+		}
+
+		@Override public void onLoaderReset(Loader<Cursor> cursorLoader) {
+
 		}
 	}
 }

@@ -1,9 +1,7 @@
 package net.creuroja.android.model.locations;
 
-import android.content.ContentResolver;
 import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.net.Uri;
 
 import net.creuroja.android.R;
 import net.creuroja.android.model.Settings;
@@ -116,12 +114,7 @@ public enum LocationType {
 		}
 	}
 
-	public static List<LocationType> getCurrentItems(ContentResolver cr) {
-		Uri uri = CreuRojaContract.Locations.CONTENT_DISTINCT_LOCATIONS;
-		String[] projection = {CreuRojaContract.Locations._ID, CreuRojaContract.Locations.TYPE};
-
-		Cursor cursor = cr.query(uri, projection, null, null, null);
-
+	public static List<LocationType> getCurrentTypes(Cursor cursor) {
 		List<LocationType> currentTypes = new ArrayList<>();
 		if (cursor != null && cursor.moveToFirst()) {
 			do {
