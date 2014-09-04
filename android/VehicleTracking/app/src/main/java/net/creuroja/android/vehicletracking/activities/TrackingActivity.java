@@ -1,4 +1,4 @@
-package net.creuroja.android.vehicletracking;
+package net.creuroja.android.vehicletracking.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,20 +6,31 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import net.creuroja.android.vehicletracking.R;
+import net.creuroja.android.vehicletracking.fragments.TrackingFragment;
+
 
 public class TrackingActivity extends ActionBarActivity
 		implements TrackingFragment.OnTrackingFragmentInteractionListener {
+	public static final String TAG_TRACKING_FRAGMENT = "trackingFragment";
+	public static final String KEY_PERMANENT_NOTIFICATION = "permanentNotification";
+	private static final String KEY_FINISHED_NOTIFICATION = "finishedNotification";
+
+	private OnNotificationReceivedListener mListener;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_tracking);
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, TrackingFragment.newInstance()).commit();
+		Bundle extras = getIntent().getExtras();
+		if (extras != null) {
+			if (extras.containsKey(KEY_PERMANENT_NOTIFICATION)) {
+				mListener.onNotificationReceived(TrackingFragment.NOTIFICATION_PERMANENT);
+			} else if (extras.containsKey(KEY_FINISHED_NOTIFICATION)) {
+				mListener.onNotificationReceived(TrackingFragment.NOTIFICATION_FINISHED);
+			}
 		}
 	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -45,5 +56,13 @@ public class TrackingActivity extends ActionBarActivity
 	private void openSettings() {
 		Intent intent = new Intent(this, SettingsActivity.class);
 		startActivity(intent);
+	}
+
+	@Override public void onTrackingStarted() {
+		//Nothing to do for now
+	}
+
+	@Override public void onTrackingStopped() {
+		//Nothing to do for now
 	}
 }

@@ -1,4 +1,4 @@
-package net.creuroja.android.vehicletracking;
+package net.creuroja.android.vehicletracking.activities;
 
 import android.annotation.TargetApi;
 import android.content.Context;
@@ -17,6 +17,8 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 
+
+import net.creuroja.android.vehicletracking.R;
 
 import java.util.List;
 
