@@ -1,8 +1,0 @@
-CreuRoja
-Locations
-Latitud DOUBLE NOT NULL
-Longitud DOUBLE NOT NULL
-Icon TEXT NOT NULL
-Name TEXT NOT NULL
-Address TEXT
-Details TEXT
