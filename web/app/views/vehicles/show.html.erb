@@ -1,0 +1,47 @@
+<% provide(:title, t(:form_vehicle_show_title)) %>
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+
+<p>
+  <strong><%= t(:form_vehicle_brand) %>:</strong>
+  <%= @vehicle.brand %>
+</p>
+
+<p>
+  <strong><%= t(:form_vehicle_model) %>:</strong>
+  <%= @vehicle.model %>
+</p>
+
+<p>
+  <strong><%= t(:form_vehicle_license) %>:</strong>
+  <%= @vehicle.license %>
+</p>
+
+<p>
+  <strong><%= t(:form_vehicle_indicative) %>:</strong>
+  <%= @vehicle.indicative %>
+</p>
+
+<p>
+  <strong><%= t(:form_vehicle_type) %>:</strong>
+  <%= @vehicle.vehicle_type %>
+</p>
+
+<p>
+  <strong><%= t(:form_vehicle_places) %>:</strong>
+  <%= @vehicle.places %>
+</p>
+
+<p>
+  <strong><%= t(:form_vehicle_notes) %>:</strong>
+  <%= @vehicle.notes %>
+</p>
+
+<p>
+  <strong><%= t(:form_vehicle_operative) %>:</strong>
+  <%= @vehicle.operative %>
+</p>
+
+<%= link_to t(:resource_edit), edit_vehicle_path(@vehicle) if current_user.allowed_to?(:manage_vehicles) %> |
+<%= link_to t(:resource_back), vehicles_path %>

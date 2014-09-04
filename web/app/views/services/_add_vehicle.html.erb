@@ -1,0 +1,53 @@
+<div id="assign_vehicle_to_service" class="add_to_service_form">
+	<% available_vehicles = get_available_vehicles @service %>
+	<% unless available_vehicles.empty? %>
+		<strong> <%= t(:form_service_assign_vehicle) %>: </strong>
+		<%= form_for(@vehicle_service) do |f| %>
+		<% if @vehicle_service.errors.any? %>
+			<div id="error_explanation">
+				<h2><%= "#{pluralize(@vehicle_service.errors.count, "error")} #{t(:form_errors_found)}:" %></h2>
+				<ul>
+				<% @vehicle_service.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+				<% end %>
+				</ul>
+			</div>
+		<% end %>
+		<%= f.hidden_field :service_id, :value => @service.id %>
+		
+		<%= f.label :vehicle_id, t(:form_add_vehicle_to_service_vehicle_id) %>
+		<%= f.select(:vehicle_id, available_vehicles) %>
+		
+		<%= f.label :doc, t(:form_add_vehicle_to_service_doc) %>
+		<%= f.number_field(:doc, { value: 0 }) %>
+		
+		<%= f.label :due, t(:form_add_vehicle_to_service_due) %>
+		<%= f.number_field(:due, { value: 0 }) %>
+		
+		<%= f.label :tes, t(:form_add_vehicle_to_service_tes) %>
+		<%= f.number_field(:tes, { value: 0 }) %>
+		
+		<%= f.label :ci, t(:form_add_vehicle_to_service_ci) %>
+		<%= f.number_field(:ci, { value: 0 }) %>
+		
+		<%= f.label :asi, t(:form_add_vehicle_to_service_asi) %>
+		<%= f.number_field(:asi, { value: 0 }) %>
+		
+		<%= f.label :btp, t(:form_add_vehicle_to_service_btp) %>
+		<%= f.number_field(:btp, { value: 0 }) %>
+		
+		<%= f.label :b1, t(:form_add_vehicle_to_service_b1) %>
+		<%= f.number_field(:b1, { value: 0 }) %>
+		
+		<%= f.label :acu, t(:form_add_vehicle_to_service_acu) %>
+		<%= f.number_field(:acu, { value: 0 }) %>
+		
+		<%= f.label :per, t(:form_add_vehicle_to_service_per) %>
+		<%= f.number_field(:per, { value: 0 }) %>
+
+		<div class="vehicle_service_vehicle_id">
+			<%= f.submit t(:form_add_vehicle_to_service_submit) %>
+		</div>
+		<% end %>
+	<% end %>
+</div>

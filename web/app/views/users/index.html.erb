@@ -1,0 +1,41 @@
+<% provide(:title, t(:user_list_title)) %>
+
+<h1><%= t(:user_list_title) %></h1>
+
+<%= link_to t(:form_user_new_title), new_user_path %>
+
+<br><br>
+
+<table>
+	<thead>
+		<tr>
+			<th><%= t(:form_user_name) %></th>
+			<th><%= t(:form_user_role) %></th>
+			<th><%= t(:form_user_active) %></th>
+			<th></th>
+			<th></th>
+			<th></th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% @users.each do |user| %>
+			<tr>
+			<td><%= "#{user.name} #{user.surname}" %></td>
+			<td><%= user.translated_role %></td>
+			<td><%= user.active %></td>
+			<td><%= link_to t(:resource_show), user %></td>
+			<td><%= link_to t(:resource_edit), edit_user_path(user) if current_user?(user) || current_user.allowed_to?(:edit_user) %></td>
+			<% if user.active %>
+				<% if current_user && current_user != user && current_user.allowed_to?(:destroy_users) %>
+				<td><%= link_to t(:deactivate_user), user_path(user, :user => {:active => false}), method: :put, data: { confirm: t(:resource_destroy_confirm) } %></td>
+				<% end %>
+			<% else %>
+				<% if current_user && current_user.allowed_to?(:destroy_users) %>
+				<td><%= link_to t(:reactivate_user), user_path(user, :user => {:active => true}), method: :put %></td>
+				<% end %>
+			<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

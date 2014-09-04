@@ -1,0 +1,15 @@
+<div id="collaboration_form">
+	<h3><%= t(:form_user_add_collaboration) %></h3>
+	<% assemblies = [] %>
+	<% Location.assemblies.each do |assembly| %>
+		<% assemblies << [assembly.name, assembly.id] unless @user.assemblies.include?(assembly) %>
+	<% end %>
+	<%= form_for(LocationUser.new) do |f| %>
+		<%= f.hidden_field :user_id, value: @user.id %>
+		
+		<%= f.label :location_id, t(:form_user_assemblies) %>
+		<%= f.select :location_id, assemblies %>
+		
+		<%= f.submit t(:form_user_submit) %>
+	<% end %>
+</div>

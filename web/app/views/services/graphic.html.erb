@@ -1,0 +1,70 @@
+<% provide(:title, t(:form_service_show_title)) %>
+
+<h1><%= t(:service_list_title) %></h1>
+
+<% day_services = @services.where(base_time: DateTime.now.beginning_of_day..DateTime.now.end_of_day) %>
+<% not_occupied = "<td style=\"background-color: white; border:thin solid black; padding: 3px;\"></td>" %>
+<% base = "<td style=\"background-color: green; border:thin solid black; padding: 3px;\"></td>" %>
+<% started = "<td style=\"background-color: red; border:thin solid black; padding: 3px;\"></td>" %>
+<div id="services_graphic">
+	<table cellpadding="10" cellspacing="0">
+		<thead>
+			<tr style="outline:1px solid black;">
+				<th><%= t(:form_service_name) %></th>
+				<th><%= t(:form_service_code) %></th>
+				<th><%= t(:vehicle) %></th>
+				<% (6..23).each do |hour| %>
+					<th align="left" colspan="4" style="border:1px solid black;"><%= hour %></th>
+				<% end %>
+				<% (0..5).each do |hour| %>
+					<th align="left" colspan="4" style="border:1px solid black;"><%= hour %></th>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody>
+			<% day_services.each do |service| %>
+			<tr style="outline:1px solid black;" >
+				<td><%= link_to service.name, service %></td>
+				<td><%= link_to service.code, service %></td>
+				<td>
+					<% service.vehicles.each do |vehicle| %>
+						<%= raw "#{link_to vehicle, vehicle}" %>
+						<% driver = vehicle.driver(service) %>
+						<% unless driver.nil? %>
+							<% driver_name = "#{driver.name} #{driver.surname}" %>
+							<%= raw " - #{link_to driver_name, user_path(driver.user_id)}" %><br>
+						<% end %>
+					<% end %>
+				</td>
+				<% (6..23).each do |hour| %>
+					<% (0..3).each do |quarter| %>
+						<% time = service.base_time.change(hour: hour, min: quarter * 15) %>
+						<% if service.in_base_time? time %>
+							<%= raw base %>
+						<% elsif service.started? time %>
+							<%= raw started %>
+						<% else %>
+							<%= raw not_occupied %>
+						<% end %>
+					<% end %>
+				<% end %>
+				<% (0..5).each do |hour| %>
+					<% (0..3).each do |quarter| %>
+						<% time = service.base_time.change(hour: hour, min: quarter * 15) %>
+						<% time = service.base_time.tomorrow %>
+						<% if service.in_base_time? time %>
+							<%= raw base %>
+						<% elsif service.started? time %>
+							<%= raw started %>
+						<% else %>
+							<%= raw not_occupied %>
+						<% end %>
+					<% end %>
+				<% end %>
+			</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+<%= link_to t(:form_service_new), new_service_path %>

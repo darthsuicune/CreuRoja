@@ -1,0 +1,70 @@
+/* Styling for the header of the page */
+
+header {
+	height: 50px;
+	background-color: white;
+
+	img {
+		background-color: white;
+		float: left;
+		height: 50px;
+		
+		&:hover {
+			color: white;
+			text-decoration: none;
+		}
+	}
+
+	ul.nav_menu {
+		z-index: 1000;
+		float: right;
+		list-style-type: none;
+		
+		li {
+			display: inline-block;
+			
+			padding: .2em 1em;
+			background-color: #a00;
+			border-radius: 5px;
+			margin-left: 0;
+			
+			text-decoration: none;
+			color: white;
+			
+			a {
+				text-decoration: none;
+				color: white;
+				
+				&:hover {
+					background-color: #600;
+				}
+			}
+			
+			&:hover {
+				background-color: #600;
+				
+				ul.sub_menu {
+					display: block;
+					margin-right: 10px;
+					background-color: #a00;
+					margin-left: 0px;
+					border-radius: 5px;
+					
+					li {
+						display: block;
+						border-radius: 0px;
+						padding: .2em 1em;
+					}
+				}
+			}
+			
+			ul.sub_menu {
+				z-index: 1000;
+				padding: 2px;
+				display: none;
+				position: absolute;
+				background-color: #600;
+			}
+		}
+	}
+}

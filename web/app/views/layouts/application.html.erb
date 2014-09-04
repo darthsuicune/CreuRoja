@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title><%= full_title(yield(:title)) %></title>
+		<%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+		<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+		<%= render 'layouts/shim' %>
+		<%= csrf_meta_tags %>
+		<%= favicon_link_tag "favicon.ico" %>
+	</head>
+	<body>
+		<div class="container">
+			<%= render 'layouts/header' %>
+		</div>
+		<div class="container">
+			<%= yield %>
+		</div>
+		<div class="container">
+			<%= debug(params) if Rails.env.development? %>
+		</div>
+	</body>
+</html>

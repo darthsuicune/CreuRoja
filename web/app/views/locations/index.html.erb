@@ -1,0 +1,44 @@
+<% provide(:title, t(:location_list_title)) %>
+<h1><%= t(:location_list_title) %></h1>
+
+<%= link_to t(:form_location_new), new_location_path %>
+
+<br><br>
+
+<table>
+	<thead>
+		<tr>
+			<th><%= t(:form_location_name) %></th>
+			<th><%= t(:form_location_address) %></th>
+			<th><%= t(:form_location_phone) %></th>
+			<th><%= t(:form_location_type) %></th>
+			<th><%= t(:form_location_active) %></th>
+			<th></th>
+			<% if current_user.allowed_to?(:manage_locations) %>
+				<th></th>
+				<th></th>
+			<% end %>
+		</tr>
+	</thead>
+
+	<tbody>
+		<% @locations.each do |location| %>
+			<tr>
+				<td><%= location.name %></td>
+				<td><%= location.address %></td>
+				<td><%= location.phone %></td>
+				<td><%= location.location_type %></td>
+				<td><%= location.active %></td>
+				<td><%= link_to t(:resource_show), location %></td>
+				<% if current_user.allowed_to?(:manage_locations) %>
+					<td><%= link_to t(:resource_edit), edit_location_path(location) %></td>
+					<% if location.active %>
+						<td><%= link_to t(:deactivate_location), location_path(location, :location => { :active => false }), method: :put, data: { confirm: t(:resource_destroy_confirm) } %></td>
+					<% else %>
+						<td><%= link_to t(:reactivate_location), location_path(location, :location => { :active => true }), method: :put %></td>
+					<% end %>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>

@@ -1,0 +1,7 @@
+<% provide(:title, t(:form_user_edit_title)) %>
+<h1><%= t(:form_user_edit_title) %></h1>
+
+<%= render 'form' %>
+
+<%= link_to t(:resource_show), @user %> |
+<%= link_to t(:resource_back), users_path %>

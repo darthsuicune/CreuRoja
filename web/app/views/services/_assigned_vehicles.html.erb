@@ -1,0 +1,36 @@
+<div id="assigned_vehicles">
+	<strong> <%= link_to t(:form_service_assigned_vehicles), service_vehicles_path(@service) %>: </strong>
+	<table>
+		<thead>
+			<tr>
+				<th><%= t(:form_vehicle_indicative) %></th>
+				<th><%= t(:form_vehicle_license) %></th>
+				<th><%= t(:form_vehicle_brand) %></th>
+				<th><%= t(:form_vehicle_model) %></th>
+				<th><%= t(:form_vehicle_type) %></th>
+				<th><%= t(:form_vehicle_places) %></th>
+				<th></th>
+				<% if current_user.allowed_to?(:assign_vehicle_to_service) %>
+					<th></th>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody>
+		<% @service.vehicles.each do |vehicle| %>
+			<tr>
+				<td><%= vehicle.indicative %></td>
+				<td><%= vehicle.license %></td>
+				<td><%= vehicle.brand %></td>
+				<td><%= vehicle.model %></td>
+				<td><%= vehicle.vehicle_type %></td>
+				<td><%= vehicle.places %></td>
+				<td><%= link_to t(:resource_show), vehicle %></td>
+				<% if current_user.allowed_to?(:assign_vehicle_to_service) %>
+					<% vehicle_service = vehicle.vehicle_services.find_by_service_id(@service.id) %>
+					<td><%= link_to t(:resource_destroy), vehicle_service, method: :delete, data: { confirm: t(:resource_destroy_confirm) } %></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+	</table>
+</div>

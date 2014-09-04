@@ -1,0 +1,249 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+ca:
+   base_title: "Creu Roja Catalunya"
+   contact: "Contacte"
+   about: "Sobre nosaltres"
+   login: "Iniciar sessió"
+   logout: "Tancar sessió"
+   menu_resources: "Administració"
+
+   vehicle: "Vehículo"
+   service: "Servicio"
+   location: "Localización"
+   user: "Usuario"
+   
+   map: "Mapa"
+   user_list_title: "Usuaris"
+   location_list_title: "Locatitzacions"
+   vehicle_list_title: "Vehicles"
+   service_list_title: "Serveis"
+
+   form_errors_found: "impedeix processar el formulari"
+   
+   form_user_show_title: "Usuari"
+   form_user_new_title: "Nou usuari"
+   form_user_edit_title: "Editar usuari"
+   form_user_name: "Nom"
+   form_user_surname: "Cognoms"
+   form_user_email: "Correu electrònic"
+   form_user_password: "Contrasenya"
+   form_user_password_confirmation: "Confirmar contrasenya"
+   form_user_language: "Idioma"
+   form_user_role: "Rol"
+   form_user_phone: "Telèfon"
+   form_user_active: "Actiu"
+   form_user_submit: "Enviar"
+   form_user_assemblies: "Assemblees"
+   reactivate_user: "Activar"
+   deactivate_user: "Desactivar"
+   
+   form_location_show_title: "Localització"
+   form_location_edit_title: "Edita localització"
+   form_location_new: "Nova localització"
+   form_location_name: "Nom"
+   form_location_description: "Descripció"
+   form_location_address: "Direcció"
+   form_location_phone: "Telèfon"
+   form_location_latitude: "Latitud"
+   form_location_longitude: "Longitud"
+   form_location_type: "Tipus"
+   form_location_active: "Actiu"
+   form_location_expiredate: "Data d'expiració"
+   form_location_submit: "Enviar"
+   reactivate_location: "Activar"
+   deactivate_location: "Desactivar"
+   
+   form_vehicle_show_title: "Vehicle"
+   form_vehicle_edit_title: "Edita vehicle"
+   form_vehicle_new: "Nou vehicle"
+   form_vehicle_brand: "Marca"
+   form_vehicle_model: "Model"
+   form_vehicle_license: "Matrícula o llicència"
+   form_vehicle_indicative: "Indicatiu"
+   form_vehicle_type: "Tipus"
+   form_vehicle_places: "Places"
+   form_vehicle_notes: "Notes"
+   form_vehicle_operative: "Operatiu"
+   form_vehicle_submit: "Enviar"
+   
+   form_service_show_title: "Servei"
+   form_service_edit_title: "Edita servei"
+   form_service_new: "Nou servei"
+   form_service_name: "Nom"
+   form_service_description: "Descripció"
+   form_service_assembly: "Assemblea"
+   form_service_assembly_id: "Assembly id"
+   form_service_base_time: "Hora en base o CCA"
+   form_service_start_time: "Hora d'inici"
+   form_service_end_time: "Hora de finalització"
+   form_service_code: "Codi"
+   form_service_submit: "Enviar"
+   
+   form_service_assigned_vehicles: "Vehicles assignats"
+   form_service_assign_vehicle: "Assignar vehicles"
+   
+   vehicle_assigned_to_service: "El vehicle ha estat assignat"
+   
+   form_add_vehicle_to_service_vehicle_id: "Vehicle"
+   form_add_vehicle_to_service_doc: "Metge"
+   form_add_vehicle_to_service_due: "Infermer"
+   form_add_vehicle_to_service_tes: "Tècnic"
+   form_add_vehicle_to_service_ci: "Cap d'instal·lació"
+   form_add_vehicle_to_service_asi: "Socorrista"
+   form_add_vehicle_to_service_btp: "Conductor BTP"
+   form_add_vehicle_to_service_b1: "Conductor B1"
+   form_add_vehicle_to_service_acu: "Aquàtic"
+   form_add_vehicle_to_service_per: "Patró d'embarcacions"
+   form_add_vehicle_to_service_submit: "Afegir"
+   
+   date:
+    abbr_day_names:
+    - "dom"
+    - "lun"
+    - "mar"
+    - "mié"
+    - "jue"
+    - "vie"
+    - "sáb"
+    abbr_month_names:
+    - "ene"
+    - "feb"
+    - "mar"
+    - "abr"
+    - "may"
+    - "jun"
+    - "jul"
+    - "ago"
+    - "sep"
+    - "oct"
+    - "nov"
+    - "dic"
+    day_names:
+    - "domingo"
+    - "lunes"
+    - "martes"
+    - "miércoles"
+    - "jueves"
+    - "viernes"
+    - "sábado"
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%d de %B de %Y'
+      short: ! '%d de %b'
+    month_names:
+    - "january"
+    - "february"
+    - "march"
+    - "april"
+    - "may"
+    - "june"
+    - "july"
+    - "august"
+    - "september"
+    - "october"
+    - "november"
+    - "december"
+    order:
+    - :day
+    - :month
+    - :year
+   
+   field_not_available: "No disponible"
+   
+   issue_status_new: "Nou"
+   issue_status_in_work: "En progrés"
+   issue_status_in_testing: "En proves"
+   issue_status_in_production: "En produccció"
+   issue_status_solved: "Solucionat"
+   
+   issue_severity_normal: "Normal"
+   issue_severity_critical: "Crític"
+   issue_severity_not_important: "Lleu"
+   
+   login_button: "Iniciar sessió"
+   recover_password: "Recuperar contrasenya"
+   password_recovery_submit: "Enviar"
+   password_recovery_email_sent: "T'hem enviat un correu electrònic amb les instruccions per recuperar la teva contrasenya"
+   error_invalid_email: "Correu electrònic incorrecte"
+   form_password_recovery_confirm: "Confirmar"
+   
+   resource_show: "Mostrar"
+   resource_edit: "Editar"
+   resource_destroy: "Eliminar"
+   resource_destroy_confirm: "Estàs segur?"
+   resource_back: "Tornar al llistat"
+   
+   user_created: "El usuari s'ha creat."
+   user_updated: "El usuari s'ha actualitzat."
+   location_created: "La localització s'ha creat."
+   location_updated: "La localització s'ha actualitzat."
+   service_created: "El servei s'ha creat."
+   service_updated: "El servei s'ha actualitzat."
+   vehicle_created: "El vehicle s'ha creat."
+   vehicle_updated: "El vehicle s'ha actualitzat."
+   
+   role_volunteer: "Voluntari"
+   role_technician: "Tècnic"
+   role_admin: "Administrador"
+   
+   asi: "Socorrista"
+   acu: "Aquàtic"
+   tes: "Tècnic"
+   due: "Infermer"
+   doc: "Metge"
+   b1: "Conductor B1"
+   btp: "Conductor BTP"
+   d1: "Conductor D"
+   per: "Patró d'embarcació"
+   ci: "Cap d'instal·lació"
+   
+   lang_catalan: "Català"
+   lang_spanish: "Espanyol"
+   lang_english: "Anglès"
+   
+   location_adaptadas: "Platja adaptada"
+   location_asamblea: "Assemblea"
+   location_bravo: "Bravo"
+   location_cuap: "CUAP"
+   location_gasolinera: "Benzinera"
+   location_hospital: "Hospital"
+   location_maritimo: "Servei preventiu marítim"
+   location_nostrum: "Clau 2"
+   location_salvamento: "Base de salvament"
+   location_terrestre: "Servei preventiu terrestre"
+   
+   vehicle_type_alfa_bravo: "Ambulància de suport vital bàsic"
+   vehicle_type_alfa_mike: "Ambulància de suport vital avançat"
+   vehicle_type_mike: "Embarcació nàutica"
+   vehicle_type_romeo: "Vehicle de rescat"
+   vehicle_type_tango: "Vehicle de transport"
+   
+   error_invalid_login: "Correu electrònic o contrasenya incorrecta"
+   set_your_new_password: "Introdueix la nova contrasenya, recomanem que no sigui la mateixa que la del teu correu electrònic o xarxes socials"
+   password_and_confirmation_must_be_longer: "Contrasenya massa curta, ha de tenir 6 caràcters com a mínim."
+   password_and_confirmation_must_match: "Les contrasenyes no coincideixen"
+   password_recovery_error: "Error en canviar contrasenya"
+   password_recovery: "Recuperació de contrasenya"
+   email_sent: "Correu per canviar contrasenya enviat"
+
+   show_beta: "Aquesta aplicació està en desenvolupament i pot contenir errors."

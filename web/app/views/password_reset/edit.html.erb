@@ -1,0 +1,24 @@
+<%= form_for @user, :url => password_reset_path(params[:id]) do |f| %>
+	<% if @errors && @errors.any? %>
+		<div class="error">
+			<h2><%= t(:password_recovery_error) %></h2>
+			<ul>
+				<% @errors.each do |error| %>
+					<li><%= error %></li>
+				<% end %>
+			</ul>
+		</div>
+	<% end %>
+	<% if notice %>
+		<p class="notice"><%= notice %></p>
+	<% end %>
+	<div class="field">
+		<%= f.label :password, t(:form_user_password) %>
+		<%= f.password_field :password %>
+	</div>
+	<div class="field">
+		<%= f.label :password_confirmation, t(:form_user_password_confirmation) %>
+		<%= f.password_field :password_confirmation %>
+	</div>
+	<%= f.submit t(:form_password_recovery_confirm) %>
+<% end %>

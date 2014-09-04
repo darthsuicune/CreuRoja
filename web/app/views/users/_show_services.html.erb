@@ -1,0 +1,23 @@
+<div id="user_services">
+	<h3><%= t(:user_services) %></h3>
+	<table>
+		<thead>
+			<tr>
+				<th><%= t(:form_service_name) %></th>
+				<th><%= t(:form_service_description) %></th>
+				<th><%= t(:form_service_base_time) %></th>
+				<th><%= t(:form_service_code) %></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @user.services.each do |service| %>
+				<tr>
+					<td><%= service.name %></td>
+					<td><%= service.description %></td>
+					<td><%= service.base_time%></td>
+					<td><%= service.code %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

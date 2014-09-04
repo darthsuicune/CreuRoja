@@ -1,0 +1,47 @@
+<% provide(:title, t(:form_service_show_title)) %>
+<h1> <%= t(:form_service_show_title) %> </h1>
+<% if notice %>
+	<p id="notice"><%= notice %></p>
+<% end %>
+<div id="service_details">
+	<strong><%= t(:form_service_name) %>:</strong>
+	<%= @service.name %>
+	<br>
+	<strong><%= t(:form_service_description) %>:</strong>
+	<%= @service.description %>
+	<br>
+	<strong><%= t(:form_service_assembly) %>:</strong>
+	<%= @service.assembly.name %>
+	<br>
+	<strong><%= t(:form_service_base_time) %>:</strong>
+	<%= @service.base_time %>
+	<br>
+	<strong><%= t(:form_service_start_time) %>:</strong>
+	<%= @service.start_time %>
+	<br>
+	<strong><%= t(:form_service_end_time) %>:</strong>
+	<%= @service.end_time %>
+	<br>
+	<strong><%= t(:form_service_code) %>:</strong>
+	<%= @service.code %>
+	<br>
+	<strong><%= t(:form_service_archived) %>:</strong>
+	<%= @service.archived %>
+	<br>
+	<%= link_to t(:resource_edit), edit_service_path(@service) if current_user.allowed_to?(:manage_services) %> |
+	<%= link_to t(:resource_back), services_path %>
+</div>
+<% unless @service.expired? || @service.archived %>
+<div class="assignments">
+	<%= render 'assigned_locations' %>
+	<%= render 'add_location' if current_user && current_user.allowed_to?(:assign_service_to_location) %>
+
+	<%= render 'assigned_vehicles' unless @service.vehicles.empty? %>
+	<%= render 'add_vehicle' if current_user && current_user.allowed_to?(:assign_vehicle_to_service) %>
+
+	<% unless @service.locations.empty?%>
+		<%= render 'assigned_users' unless @service.users.empty? %>
+		<%= render 'add_user' if current_user && current_user.allowed_to?(:assign_user_to_service) %>
+	<% end %>
+</div>
+<% end %>

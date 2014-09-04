@@ -1,0 +1,35 @@
+<div id="assigned_users">
+	<strong> <%= t(:form_service_assigned_users) %>: </strong>
+	<table>
+		<thead>
+			<tr>
+				<th><%= t(:form_user_name) %></th>
+				<th><%= t(:form_user_email) %></th>
+				<th><%= t(:form_user_phone) %></th>
+				<th><%= t(:form_user_location) %></th>
+				<th><%= t(:form_user_position) %></th>
+				<th></th>
+			</tr>
+		</thead>
+		<tbody>
+		<% @service.users.each do |user| %>
+		<% service_user = ServiceUser.where(service_id: @service.id, user_id: user.id).first %>
+		<% location = service_user.location %>
+		<% vehicle = service_user.vehicle %>
+			<tr>
+				<td><%= "#{user.name} #{user.surname}" %></td>
+				<td><%= user.email %></td>
+				<td><%= user.phone %></td>
+				<%= raw "<td>#{location.name}</td>" if location %>
+				<%= raw "<td>#{vehicle.indicative}</td>" if vehicle %>
+				<td><%= service_user.user_position %></td>
+				<td><%= link_to t(:resource_show), user %></td>
+				<% if current_user.allowed_to?(:assign_user_to_service) %>
+					<% user_service = user.service_users.find_by_service_id(@service.id) %>
+					<td><%= link_to t(:resource_destroy), user_service, method: :delete, data: { confirm: t(:resource_destroy_confirm) } %></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+	</table>
+</div>

@@ -1,0 +1,38 @@
+<header class="header">
+	<div id="logo">
+		<%= link_to image_tag("logomenu.png"), root_url, :title => t(:show_beta) %>
+	</div>
+	<% if signed_in? %>
+	<nav class="nav_menu">
+		<ul class ="nav_menu">
+			<li> <%= link_to t(:map), root_url %> </li>
+			<% if current_user.allowed_to?(:see_user_list) || current_user.allowed_to?(:see_vehicle_list) || current_user.allowed_to?(:see_service_list) || current_user.allowed_to?(:see_location_list) %>
+				<li> <%= t(:menu_resources) %>
+					<ul class="sub_menu">
+						<% if current_user.allowed_to?(:see_user_list) %>
+							<li> <%= link_to t(:user_list_title), users_url %>
+						<% end %>
+						<% if current_user.allowed_to?(:see_vehicle_list) %>
+							<li> <%= link_to t(:vehicle_list_title), vehicles_url %>
+						<% end %>
+						<% if current_user.allowed_to?(:see_service_list) %>
+							<li> <%= link_to t(:service_list_title), services_url %>
+						<% end %>
+						<% if current_user.allowed_to?(:see_location_list) %>
+							<li> <%= link_to t(:location_list_title), locations_url %>
+						<% end %>
+					</ul>
+				</li>
+			<% end %>
+			<li> <%= link_to t(:form_user_show_title), current_user %>
+				<ul class="sub_menu">
+					<li> <%= link_to t(:form_user_show_title), current_user %> </li>
+					<li> <%= link_to t(:contact), contact_url %> </li>
+					<li> <%= link_to t(:logout), logout_url %>
+				</ul>
+			</li>
+			
+		</ul>
+	</nav>
+	<% end %>
+</header>

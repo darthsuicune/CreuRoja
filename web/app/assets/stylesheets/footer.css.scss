@@ -1,0 +1,29 @@
+/* Styling for the footer of the page */
+
+footer {
+	background-color: #ddd;
+	margin-top: 45px;
+	padding-top: 5px;
+	border-top: 1px solid #bbb;
+	color: #bbb;
+	height: 40px;
+
+	.static_links ul {
+		float: right;
+		list-style: none;
+		li {
+			padding: 5px;
+			border-radius: 4px;
+			float: left;
+			margin-left: 10px;
+			a {
+				color: black;
+				background-color: #ddd;
+				text-decoration: none;
+				&:hover {
+					text-decoration: underline;
+				}
+			}
+		}
+	}
+}

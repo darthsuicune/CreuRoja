@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @issue.status %>
+</p>
+
+<p>
+  <strong>Severity:</strong>
+  <%= @issue.severity %>
+</p>
+
+<p>
+  <strong>Short description:</strong>
+  <%= @issue.short_description %>
+</p>
+
+<p>
+  <strong>Long description:</strong>
+  <%= @issue.long_description %>
+</p>
+
+<p>
+  <strong>Component:</strong>
+  <%= @issue.component %>
+</p>
+
+<%= link_to 'Edit', edit_issue_path(@issue) %> |
+<%= link_to 'Back', issues_path %>

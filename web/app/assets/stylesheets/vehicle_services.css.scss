@@ -1,0 +1,25 @@
+/*
+  Place all the styles related to the matching controller here.
+  They will automatically be included in application.css.
+*/
+
+#assigned_vehicles {
+	height: 100px;
+}
+
+#assign_vehicle_to_service {
+	label {
+		text-align: left;
+	}
+	input {
+		width: 40px;
+		.button {
+			margin-left: 20px;
+			padding: 7px;
+		}
+	}
+	#vehicle_service_vehicle_id {
+		margin-right: 20px;
+		width: 150px;
+	}
+}

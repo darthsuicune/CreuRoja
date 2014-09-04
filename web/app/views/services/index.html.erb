@@ -1,0 +1,47 @@
+<% provide(:title, t(:service_list_title)) %>
+<h1><%= t(:service_list_title) %></h1>
+
+<%= link_to t(:form_service_graphic), services_graphic_path %> |
+<%= link_to t(:form_service_new), new_service_path %>
+
+<br><br> 
+
+<div id="services_index">
+	<table>
+		<thead>
+			<tr>
+				<th><%= t(:form_service_name) %></th>
+				<th><%= t(:form_service_description) %></th>
+				<th><%= t(:form_service_assembly) %></th>
+				<th><%= t(:form_service_base_time) %></th>
+				<th><%= t(:form_service_start_time) %></th>
+				<th><%= t(:form_service_finish_time) %></th>
+				<th><%= t(:form_service_code) %></th>
+				<th></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<% @services.each do |service| %>
+				<tr<%= raw " class=\"archived_service\"" if service.archived %>>
+				<td><%= service.name %></td>
+				<td><%= service.description %></td>
+				<td><%= service.assembly.name %></td>
+				<td><%= service.base_time %></td>
+				<td><%= service.start_time %></td>
+				<td><%= service.end_time %></td>
+				<td><%= service.code %></td>
+				<td><%= link_to t(:resource_show), service %></td>
+				<% if current_user.allowed_to?(:manage_services) %>
+					<td><%= link_to t(:resource_edit), edit_service_path(service) %></td>
+					<% if service.expired? && !service.archived %>
+						<td><%= link_to t(:archive_service), service_path(service, :service => { :archived => true }), method: :put, data: { confirm: t(:resource_destroy_confirm) } %></td>
+					<% end %>
+				<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

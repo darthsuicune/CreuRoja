@@ -1,0 +1,249 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+es:
+   base_title: "Cruz Roja Cataluña"
+   contact: "Contacto"
+   about: "Sobre nosotros"
+   login: "Iniciar sesión"
+   logout: "Cerrar sesión"
+   menu_resources: "Administración"
+   
+   vehicle: "Vehículo"
+   service: "Servicio"
+   location: "Localización"
+   user: "Usuario"
+   
+   map: "Mapa"
+   user_list_title: "Usuarios"
+   location_list_title: "Localizaciones"
+   vehicle_list_title: "Vehículos"
+   service_list_title: "Servicios"
+
+   form_errors_found: "impidió procesar el formulario"
+   
+   form_user_show_title: "Usuario"
+   form_user_new_title: "Nuevo usuario"
+   form_user_edit_title: "Editar usuario"
+   form_user_name: "Nombre"
+   form_user_surname: "Apellidos"
+   form_user_email: "Correo electrónico"
+   form_user_password: "Contraseña"
+   form_user_password_confirmation: "Confirmar contraseña"
+   form_user_language: "Idioma"
+   form_user_role: "Rol"
+   form_user_phone: "Teléfono"
+   form_user_active: "Activo"
+   form_user_submit: "Enviar"
+   form_user_assemblies: "Asambleas"
+   reactivate_user: "Activar"
+   deactivate_user: "Desactivar"
+   
+   form_location_show_title: "Localización"
+   form_location_edit_title: "Editar localización"
+   form_location_new: "Nueva localización"
+   form_location_name: "Nombre"
+   form_location_description: "Descripción"
+   form_location_address: "Dirección"
+   form_location_phone: "Teléfono"
+   form_location_latitude: "Latitud"
+   form_location_longitude: "Longitud"
+   form_location_type: "Tipo"
+   form_location_active: "Activo"
+   form_location_expiredate: "Fecha de expiración"
+   form_location_submit: "Enviar"
+   reactivate_location: "Activar"
+   deactivate_location: "Desactivar"
+   
+   form_vehicle_show_title: "Vehículo"
+   form_vehicle_edit_title: "Editar vehículo"
+   form_vehicle_new: "Nuevo vehículo"
+   form_vehicle_brand: "Marca"
+   form_vehicle_model: "Modelo"
+   form_vehicle_license: "Matrícula o licencia"
+   form_vehicle_indicative: "Indicativo"
+   form_vehicle_type: "Tipo"
+   form_vehicle_places: "Plazas"
+   form_vehicle_notes: "Notas"
+   form_vehicle_operative: "Operativo"
+   form_vehicle_submit: "Enviar"
+   
+   form_service_show_title: "Servicio"
+   form_service_edit_title: "Editar servicio"
+   form_service_new: "Nuevo servicio"
+   form_service_name: "Nombre"
+   form_service_description: "Descripción"
+   form_service_assembly: "Asamblea"
+   form_service_assembly_id: "Assembly id"
+   form_service_base_time: "Hora en base o CCA"
+   form_service_start_time: "Hora de inicio"
+   form_service_end_time: "Hora de finalización"
+   form_service_code: "Código"
+   form_service_submit: "Enviar"
+   
+   form_service_assigned_vehicles: "Vehículos asignados"
+   form_service_assign_vehicle: "Asignar vehículos"
+   
+   vehicle_assigned_to_service: "El vehículo ha sido asignado"
+   
+   form_add_vehicle_to_service_vehicle_id: "Vehículo"
+   form_add_vehicle_to_service_doc: "Médico"
+   form_add_vehicle_to_service_due: "Enfermero"
+   form_add_vehicle_to_service_tes: "Técnico"
+   form_add_vehicle_to_service_ci: "Jefe de instalación"
+   form_add_vehicle_to_service_asi: "Socorrista"
+   form_add_vehicle_to_service_btp: "Conductor BTP"
+   form_add_vehicle_to_service_b1: "Conductor B1"
+   form_add_vehicle_to_service_acu: "Acuático"
+   form_add_vehicle_to_service_per: "Patrón de embarcación"
+   form_add_vehicle_to_service_submit: "Añadir"
+   
+   date:
+    abbr_day_names:
+    - "dom"
+    - "lun"
+    - "mar"
+    - "mié"
+    - "jue"
+    - "vie"
+    - "sáb"
+    abbr_month_names:
+    - "ene"
+    - "feb"
+    - "mar"
+    - "abr"
+    - "may"
+    - "jun"
+    - "jul"
+    - "ago"
+    - "sep"
+    - "oct"
+    - "nov"
+    - "dic"
+    day_names:
+    - "domingo"
+    - "lunes"
+    - "martes"
+    - "miércoles"
+    - "jueves"
+    - "viernes"
+    - "sábado"
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%d de %B de %Y'
+      short: ! '%d de %b'
+    month_names:
+    - "enero"
+    - "febrero"
+    - "marzo"
+    - "abril"
+    - "mayo"
+    - "junio"
+    - "julio"
+    - "agosto"
+    - "septiembre"
+    - "octubre"
+    - "noviembre"
+    - "diciembre"
+    order:
+    - :day
+    - :month
+    - :year
+   
+   field_not_available: "No disponible"
+   
+   issue_status_new: "Nuevo"
+   issue_status_in_work: "En progreso"
+   issue_status_in_testing: "En prueba"
+   issue_status_in_production: "En produccción"
+   issue_status_solved: "Solucionado"
+   
+   issue_severity_normal: "Normal"
+   issue_severity_critical: "Crítico"
+   issue_severity_not_important: "Leve"
+   
+   login_button: "Iniciar sesión"
+   recover_password: "Recuperar contraseña"
+   password_recovery_submit: "Enviar"
+   password_recovery_email_sent: "Te hemos enviado un correo electrónico con las instrucciones para recuperar tu contraseña"
+   error_invalid_email: "Correo electrónico incorrecto"
+   form_password_recovery_confirm: "Confirmar"
+
+   resource_show: "Mostrar"
+   resource_edit: "Editar"
+   resource_destroy: "Eliminar"
+   resource_destroy_confirm: "¿Estás seguro?"
+   resource_back: "Volver al listado"
+
+   user_created: "El usuario ha sido creado."
+   user_updated: "El usuario ha sido actualizado."
+   location_created: "La localización ha sido creado."
+   location_updated: "La localización ha sido actualizado."
+   service_created: "El servicio ha sido creado."
+   service_updated: "El servicio ha sido actualizado."
+   vehicle_created: "El vehículo ha sido creado."
+   vehicle_updated: "El vehículo ha sido actualizado."
+
+   role_volunteer: "Voluntario"
+   role_technician: "Técnico"
+   role_admin: "Administrador"
+
+   asi: "Socorrista"
+   acu: "Acuático"
+   tes: "Técnico"
+   due: "Enfermero"
+   doc: "Médico"
+   b1: "Conductor B1"
+   btp: "Conductor BTP"
+   d1: "Conductor D"
+   per: "Patrón de embarcación"
+   ci: "Jefe de instalación"
+
+   lang_catalan: "Catalán"
+   lang_spanish: "Español"
+   lang_english: "Inglés"
+
+   location_adaptadas: "Playa adaptada"
+   location_asamblea: "Asamblea"
+   location_bravo: "Bravo"
+   location_cuap: "CUAP"
+   location_gasolinera: "Gasolinera"
+   location_hospital: "Hospital"
+   location_maritimo: "Servicio preventivo marítimo"
+   location_nostrum: "Clave 2"
+   location_salvamento: "Base de salvamento"
+   location_terrestre: "Servicio preventivo terrestre"
+
+   vehicle_type_alfa_bravo: "Ambulancia de soporte vital básico"
+   vehicle_type_alfa_mike: "Ambulancia de soporte vital avanzado"
+   vehicle_type_mike: "Embarcación náutica"
+   vehicle_type_romeo: "Vehículo de rescate"
+   vehicle_type_tango: "Vehículo de transporte"
+
+   error_invalid_login: "Correo electrónico o contraseña incorrecta"
+   set_your_new_password: "Introduce tu nueva contraseña, recomendamos que no sea la misma que la de tu correo electrónico o redes sociales"
+   password_and_confirmation_must_be_longer: "Contraseña demasiado corta, debe tener 6 caracteres como mínimo."
+   password_and_confirmation_must_match: "Las contraseñas no coinciden."
+   password_recovery_error: "Error al cambiar contraseña"
+   password_recovery: "Recuperación de contraseña"
+   email_sent: "Correu per canviar contrasenya enviat"
+
+   show_beta: "Esta aplicación está en desarrollo y puede contener errores."

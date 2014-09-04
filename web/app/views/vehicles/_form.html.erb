@@ -1,0 +1,55 @@
+<%= form_for(@vehicle) do |f| %>
+  <% if @vehicle.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= "#{pluralize(@vehicle.errors.count, "error")} #{t(:form_errors_found)}:" %></h2>
+
+      <ul>
+      <% @vehicle.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <% available_vehicle = [[t(:vehicle_type_alfa_bravo), 'alfa bravo'],
+			 [t(:vehicle_type_alfa_mike), 'alfa mike'],
+			 [t(:vehicle_type_mike), 'mike'],
+			 [t(:vehicle_type_romeo), 'romeo'],
+			 [t(:vehicle_type_tango), 'tango']] %>
+
+  <div class="field">
+    <%= f.label :brand, t(:form_vehicle_brand) %><br>
+    <%= f.text_field :brand %>
+  </div>
+  <div class="field">
+    <%= f.label :model, t(:form_vehicle_model) %><br>
+    <%= f.text_field :model %>
+  </div>
+  <div class="field">
+    <%= f.label :license, t(:form_vehicle_license) %><br>
+    <%= f.text_field :license %>
+  </div>
+  <div class="field">
+    <%= f.label :indicative, t(:form_vehicle_indicative) %><br>
+    <%= f.text_field :indicative %>
+  </div>
+  <div class="field">
+    <%= f.label :vehicle_type, t(:form_vehicle_type) %><br>
+    <%= f.select :vehicle_type, available_vehicle %>
+  </div>
+  <div class="field">
+    <%= f.label :places, t(:form_vehicle_places) %><br>
+    <%= f.number_field :places %>
+  </div>
+  <div class="field">
+    <%= f.label :notes, t(:form_vehicle_notes) %><br>
+    <%= f.text_field :notes %>
+  </div>
+  <div class="field">
+    <%= f.label :operative, t(:form_vehicle_operative) %>
+    <%= f.check_box :operative, { :checked => @vehicle.operative } %>
+  </div>
+  <div class="actions">
+    <%= f.submit t(:form_vehicle_submit) %>
+  </div>
+<% end %>

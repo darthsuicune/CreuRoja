@@ -1,0 +1,35 @@
+<div id="assigned_locations">
+	<strong> <%= t(:form_service_assigned_locations) %>: </strong>
+	<table>
+		<thead>
+			<tr>
+				<th><%= t(:form_location_name) %></th>
+				<th><%= t(:form_location_description) %></th>
+				<th><%= t(:form_location_address) %></th>
+				<th><%= t(:form_location_phone) %></th>
+				<th><%= t(:form_location_active) %></th>
+				<th></th>
+				<% if current_user.allowed_to?(:assign_service_to_location) %>
+					<th></th>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody>
+		<% @service.locations.each do |location| %>
+			<tr>
+				<td><%= location.name %></td>
+				<td><%= location.description %></td>
+				<td><%= location.address %></td>
+				<td><%= location.phone %></td>
+				<td><%= location.location_type %></td>
+				
+				<td><%= link_to t(:resource_show), location %></td>
+				<% if current_user.allowed_to?(:assign_service_to_location) %>
+					<% service_location = location.location_services.find_by_service_id(@service.id) %>
+					<td><%= link_to t(:resource_destroy), service_location, method: :delete, data: { confirm: t(:resource_destroy_confirm) } %></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+	</table>
+</div>

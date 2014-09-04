@@ -1,0 +1,29 @@
+<% provide(:title, t(:form_user_show_title)) %>
+<% if notice %>
+<p id="notice"><%= notice %></p>
+<% end %>
+<p>
+	<h2><strong><%= "#{@user.name} #{@user.surname}" %></strong></h2>
+</p>
+
+<p>
+	<strong><%= t(:form_user_email) %>:</strong>
+	<%= @user.email %>
+</p>
+
+<p>
+	<strong><%= t(:form_user_language) %>:</strong>
+	<%= @user.language %>
+</p>
+
+<p>
+	<strong><%= t(:form_user_role) %>:</strong>
+	<%= @user.role %>
+</p>
+
+<%= render 'collaborations' unless @user.assemblies.count <= 0 %>
+<%= render 'add_collaboration' if current_user.allowed_to?(:add_to_own_assembly)%>
+<%= render 'show_services' unless @user.services.empty? %>
+
+<%= link_to t(:resource_edit), edit_user_path(@user) if current_user?(@user) || current_user.allowed_to?(:manage_users) %> |
+<%= link_to t(:resource_back), users_path %>

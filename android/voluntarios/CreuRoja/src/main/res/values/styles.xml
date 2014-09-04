@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="LoginFormContainer">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="NoActionBar" parent="android:Theme.NoTitleBar">
+
+    </style>
+
+    <style name="NavigationDrawerSectionHeader">
+        <item name="android:padding">5dp</item>
+        <item name="android:background">#ccc</item>
+    </style>
+
+    <style name="NavigationDrawerToggeableButton">
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+</resources>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:id="@+id/navigation_legend"
+              android:layout_marginLeft="10dp"
+              android:layout_marginStart="10dp">
+
+    <TextView
+        android:id="@+id/navigation_legend_adaptadas"
+        android:text="@string/marker_type_adaptadas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/adaptadas"
+        android:drawableStart="@drawable/adaptadas"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_asamblea"
+        android:text="@string/marker_type_asamblea"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/asamblea"
+        android:drawableStart="@drawable/asamblea"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_bravo"
+        android:text="@string/marker_type_bravo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/bravo"
+        android:drawableStart="@drawable/bravo"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_cuap"
+        android:text="@string/marker_type_cuap"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/cuap"
+        android:drawableStart="@drawable/cuap"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_gasolinera"
+        android:text="@string/marker_type_gasolinera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/gasolinera"
+        android:drawableStart="@drawable/gasolinera"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_hospital"
+        android:text="@string/marker_type_hospital"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/hospital"
+        android:drawableStart="@drawable/hospital"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_maritimo"
+        android:text="@string/marker_type_maritimo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/maritimo"
+        android:drawableStart="@drawable/maritimo"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_nostrum"
+        android:text="@string/marker_type_nostrum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/nostrum"
+        android:drawableStart="@drawable/nostrum"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_salvamento"
+        android:text="@string/marker_type_salvamento"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/salvamento"
+        android:drawableStart="@drawable/salvamento"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+    <TextView
+        android:id="@+id/navigation_legend_terrestre"
+        android:text="@string/marker_type_terrestre"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/terrestre"
+        android:drawableStart="@drawable/terrestre"
+        android:visibility="gone"
+        style="@style/NavigationDrawerToggeableButton"/>
+
+</LinearLayout>

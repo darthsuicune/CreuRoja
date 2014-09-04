@@ -1,0 +1,60 @@
+<% provide :title, t(:map) %>
+
+<h1><%= t(:map) %></h1>
+
+<div id="map">
+</div>
+
+<div id="map-legend">
+	<ul>
+		<% Location.location_types.each do |type| %>
+			<%= raw "<li><img src=\"assets/#{type.location_type}.png\" />#{type.location_type.humanize}</li>" %>
+		<% end %>
+	</ul>
+</div>
+
+<script type="text/javascript">
+function initialize() {
+	var mapOptions = {
+			center: new google.maps.LatLng(41.3958, 2.1739),
+			zoom: 13,
+			disableDefaultUI: true,
+			mapTypeId: google.maps.MapTypeId.ROADMAP,
+	};
+	var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+	var markers = <%= raw @locations.to_json %>;
+	for(i = 0, l = markers.length; i < l; i++) {
+		var content = getMarkerContent(markers[i]);
+		var infoWindow = new google.maps.InfoWindow()
+		var marker = new google.maps.Marker({
+			position: new google.maps.LatLng(markers[i].latitude, markers[i].longitude),
+			map: map,
+			title: markers[i].name,
+			icon: "assets/" + markers[i].location_type + ".png"
+		});
+		(function(marker, content) {
+			google.maps.event.addListener(marker, "click", function() {
+				infoWindow.setContent(content);
+				infoWindow.open(map,marker);
+			});
+		}
+		)(marker, content);
+	}
+}
+
+function getMarkerContent(marker) {
+	var content = "<strong>" + marker.name + "</strong><br>";	
+	if(marker.description != null){
+		content = content + marker.description + "<br>";
+	}
+	if(marker.address != null) {
+		content = content + marker.address + "<br>";
+	}
+	if(marker.phone != null) {
+		content = content + marker.phone + "<br>";
+	}
+	return content;
+}
+//JQuery magic, substitutes "window.onload = loadScript" in the GMaps guide by doing it properly
+$(document).ready(loadScript);
+</script>

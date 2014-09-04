@@ -1,0 +1,50 @@
+<div id="assign_user_to_service" class="add_to_service_form">
+	<% available_users = get_available_users @service %>
+	<% unless available_users.empty? %>
+		<strong> <%= t(:form_service_assign_user) %>: </strong>
+		<%= form_for(@service_user) do |f| %>
+		<% if @service_user.errors.any? %>
+			<div id="error_explanation">
+				<h2><%= "#{pluralize(@service_user.errors.count, "error")} #{t(:form_errors_found)}:" %></h2>
+				<ul>
+				<% @service_user.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+				<% end %>
+				</ul>
+			</div>
+		<% end %>
+		
+		<% available_locations = [] %>
+		<% available_locations << [I18n.t(:user_goes_in_vehicle), -1] %>
+		<% @service.locations.each do |location| %>
+			<% available_locations << [location.name, location.id] %>
+		<% end %>
+		
+		<% available_vehicles = [] %>
+		<% available_vehicles << [I18n.t(:user_goes_to_location), -1] %>
+		<% @service.vehicles.each do |vehicle| %>
+			<% available_vehicles << [vehicle.indicative, vehicle.id] %>
+		<% end %>
+		<%= f.hidden_field :service_id, :value => @service.id %>
+
+		<p id="warning_only_location_or_vehicle">
+		<%= t(:form_add_user_to_service_warning_only_location_or_vehicle) %></p><br>
+		
+		<%= f.label :user_id, t(:form_add_user_to_service_user_id) %>
+		<%= f.select(:user_id, available_users) %>
+		
+		<%= f.label :location_id, t(:form_add_user_to_service_location_id) %>
+		<%= f.select(:location_id, available_locations) %>
+		
+		<%= f.label :vehicle_id, t(:form_add_user_to_service_vehicle_id) %>
+		<%= f.select(:vehicle_id, available_vehicles) %>
+		
+		<%= f.label :doc, t(:form_add_user_to_service_doc) %>
+		<%= f.select :user_position, User.positions %>
+
+		<div class="service_user_user_id">
+			<%= f.submit t(:form_add_user_to_service_submit) %>
+		</div>
+		<% end %>
+	<% end %>
+</div>

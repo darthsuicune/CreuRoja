@@ -1,0 +1,82 @@
+<div id="user_form">
+	<%= form_for(@user) do |f| %>
+		<% if @user.errors.any? %>
+			<div id="error_explanation">
+				<h2><%= "#{pluralize(@user.errors.count, "error")} #{t(:form_errors_found)}" %> :</h2>
+				<ul>
+					<% @user.errors.full_messages.each do |msg| %>
+					<li><%= msg %></li>
+					<% end %>
+				</ul>
+			</div>
+		<% end %>
+
+		<% available_languages = [[t(:lang_catalan), 'ca'], [t(:lang_spanish), 'es'], [t(:lang_english), 'en']] %>
+
+		<% available_roles = [[t(:role_volunteer).humanize, "volunteer"]] %>
+		<% if current_user.allowed_to?(:manage_users) %>
+			<% available_roles << [t(:role_technician).humanize,"technician"] %>
+		<% end %>
+		<% if current_user.allowed_to?(:manage_admin_users) %>
+			<% available_roles << [t(:role_admin).humanize, "admin"] %>
+		<% end %>
+
+		<div class="field">
+			<%= f.label :name, t(:form_user_name) %><br>
+			<%= f.text_field :name %>
+		</div>
+		<div class="field">
+			<%= f.label :surname, t(:form_user_surname) %><br>
+			<%= f.text_field :surname %>
+		</div>
+		<div class="field">
+			<%= f.label :email, t(:form_user_email) %><br>
+			<%= f.email_field :email %>
+		</div>
+		<div class="field">
+			<%= f.label :language, t(:form_user_language) %><br>
+			<%= f.select :language, available_languages %>
+		</div>
+		<% if "admin" == @user.role || "volunteer" == current_user.role %>
+			<div class="field">
+				<%= f.label :role, t(:form_user_role) %><br>
+				<%= f.select :role, available_roles %>
+			</div>
+		<% end %>
+		<div class="field">
+			<%= f.label :phone, t(:form_user_phone) %><br>
+			<%= f.text_field :phone %>
+		</div>
+		<div class="field">
+			<%= f.label :password, t(:form_user_password) %><br>
+			<%= f.password_field :password %>
+		</div>
+		<div class="field">
+			<%= f.label :password_confirmation, t(:form_user_password_confirmation)  %><br>
+			<%= f.password_field :password_confirmation %>
+		</div>
+		<% if current_user.allowed_to?(:manage_users) %>
+			<div class="field">
+				<%= f.label :notes, t(:form_user_notes) %><br>
+				<%= f.text_field :notes %>
+			</div>
+			<div class="field">
+				<%= f.label :user_types, t(:form_user_types) %><br>
+				<% UserType.available_types.each do |usertype,shown| %>
+					<%= f.fields_for :user_types, @user.user_types.new do |type_form| %>
+						<%= type_form.label shown %>
+						<%= type_form.check_box :user_type, {checked: !UserType.where(user_id: @user.id, user_type: usertype).empty?}, usertype %>
+					<% end %>
+				<% end %>
+			</div>
+			<div class="field">
+				<%= f.label :active, t(:form_user_active) %><br>
+				<%= f.check_box :active, { :checked => @user.active } %>
+			</div>
+		<% end %>
+		
+		<div class="actions btn">
+			<%= f.submit t(:form_user_submit) %>
+		</div>
+	<% end %>
+</div>

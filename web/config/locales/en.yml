@@ -1,0 +1,290 @@
+# Files in the config/locales directory are used for internationalization
+# and are automatically loaded by Rails. If you want to use locales other
+# than English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t 'hello'
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t('hello') %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more, please read the Rails Internationalization guide
+# available at http://guides.rubyonrails.org/i18n.html.
+
+en:
+   base_title: "Catalonia Red Cross"
+   contact: "Contact"
+   about: "About"
+   login: "Log in"
+   logout: "Log out"
+   menu_resources: "Administration"
+   
+   vehicle: "Vehicle"
+   service: "Service"
+   location: "Location"
+   user: "User"
+   
+   map: "Map"
+   user_list_title: "Users"
+   location_list_title: "Locations"
+   vehicle_list_title: "Vehicles"
+   service_list_title: "Services"
+
+   form_errors_found: "prevented the form from being processed"
+   
+   form_user_show_title: "User profile"
+   form_user_new_title: "New user"
+   form_user_edit_title: "Edit user"
+   form_user_name: "Name"
+   form_user_surname: "Last name"
+   form_user_email: "E-mail"
+   form_user_password: "Password"
+   form_user_password_confirmation: "Confirm password"
+   form_user_language: "Language"
+   form_user_role: "Role"
+   form_user_phone: "Phone"
+   form_user_active: "Active"
+   form_user_submit: "Submit user"
+   form_user_assemblies: "Assemblies"
+   reactivate_user: "Activate"
+   deactivate_user: "Deactivate"
+   
+   form_location_show_title: "View location"
+   form_location_edit_title: "Edit location"
+   form_location_new: "New location"
+   form_location_name: "Name"
+   form_location_description: "Description"
+   form_location_address: "Address"
+   form_location_phone: "Phone"
+   form_location_latitude: "Latitude"
+   form_location_longitude: "Longitude"
+   form_location_type: "Location type"
+   form_location_active: "Active"
+   form_location_expiredate: "Expire date"
+   form_location_submit: "Submit location"
+   reactivate_location: "Activate"
+   deactivate_location: "Deactivate"
+   
+   form_vehicle_show_title: "View vehicle"
+   form_vehicle_edit_title: "Edit vehicle"
+   form_vehicle_new: "New vehicle"
+   form_vehicle_brand: "Brand"
+   form_vehicle_model: "Model"
+   form_vehicle_license: "License"
+   form_vehicle_indicative: "Indicative"
+   form_vehicle_type: "Type"
+   form_vehicle_places: "Places"
+   form_vehicle_notes: "Notes"
+   form_vehicle_operative: "Operative"
+   form_vehicle_submit: "Submit vehicle"
+   
+   form_service_show_title: "View service"
+   form_service_edit_title: "Edit service"
+   form_service_new: "New service"
+   form_service_name: "Name"
+   form_service_description: "Description"
+   form_service_assembly: "Assembly"
+   form_service_assembly_id: "Assembly id"
+   form_service_base_time: "Base time"
+   form_service_start_time: "Start time"
+   form_service_end_time: "End time"
+   form_service_code: "Code"
+   form_service_submit: "Submit service"
+   
+   form_service_assigned_vehicles: "Assigned vehicles"
+   form_service_assign_vehicle: "Assign vehicle"
+   
+   vehicle_assigned_to_service: "The vehicle was assigned"
+   
+   form_add_vehicle_to_service_vehicle_id: "Vehicle"
+   form_add_vehicle_to_service_doc: "DOC"
+   form_add_vehicle_to_service_due: "DUE"
+   form_add_vehicle_to_service_tes: "TES"
+   form_add_vehicle_to_service_ci: "CI"
+   form_add_vehicle_to_service_asi: "ASI"
+   form_add_vehicle_to_service_btp: "BTP"
+   form_add_vehicle_to_service_b1: "B1"
+   form_add_vehicle_to_service_acu: "ACU"
+   form_add_vehicle_to_service_per: "PER"
+   form_add_vehicle_to_service_submit: "Add"
+   
+   date:
+    abbr_day_names:
+    - "dom"
+    - "lun"
+    - "mar"
+    - "mié"
+    - "jue"
+    - "vie"
+    - "sáb"
+    abbr_month_names:
+    - "ene"
+    - "feb"
+    - "mar"
+    - "abr"
+    - "may"
+    - "jun"
+    - "jul"
+    - "ago"
+    - "sep"
+    - "oct"
+    - "nov"
+    - "dic"
+    day_names:
+    - "domingo"
+    - "lunes"
+    - "martes"
+    - "miércoles"
+    - "jueves"
+    - "viernes"
+    - "sábado"
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%d de %B de %Y'
+      short: ! '%d de %b'
+    month_names:
+    - "january"
+    - "february"
+    - "march"
+    - "april"
+    - "may"
+    - "june"
+    - "july"
+    - "august"
+    - "september"
+    - "october"
+    - "november"
+    - "december"
+    order:
+    - :day
+    - :month
+    - :year
+   
+   field_not_available: "Not available"
+   
+   issue_status_new: "New"
+   issue_status_in_work: "In work"
+   issue_status_in_testing: "In testing"
+   issue_status_in_production: "In production"
+   issue_status_solved: "Solved"
+   
+   issue_severity_normal: "Normal"
+   issue_severity_critical: "Critical"
+   issue_severity_not_important: "Not important"
+   
+   login_button: "Log in"
+   recover_password: "Recover password"
+   password_recovery_submit: "Submit"
+   password_recovery_email_sent: "We've sent you an e-mail with instructions to recover your password"
+   error_invalid_email: "Invalid e-mail"
+   form_password_recovery_confirm: "Confirm"
+   
+   resource_show: "Show"
+   resource_edit: "Edit"
+   resource_destroy: "Remove"
+   resource_destroy_confirm: "Are you sure?"
+   resource_back: "Return to list"
+   
+   user_created: "User was successfully created."
+   user_updated: "User was successfully updated."
+   location_created: "Location was successfully created."
+   location_updated: "Location was successfully updated."
+   service_created: "Service was successfully created."
+   service_updated: "Service was successfully updated."
+   vehicle_created: "Vehicle was successfully created."
+   vehicle_updated: "Vehicle was successfully updated."
+   
+   role_volunteer: "Volunteer"
+   role_technician: "Technician"
+   role_admin: "Admin"
+   
+   asi: "Socorrista"
+   acu: "Acuático"
+   tes: "Técnico"
+   due: "Enfermero"
+   doc: "Médico"
+   b1: "Conductor B1"
+   btp: "Conductor BTP"
+   d1: "Conductor D"
+   per: "Patrón de embarcación"
+   ci: "Jefe de instalación"
+   
+   lang_catalan: "Catalan"
+   lang_spanish: "Spanish"
+   lang_english: "English"
+   
+   location_adaptadas: "Adapted"
+   location_asamblea: "Assembly"
+   location_bravo: "Bravo"
+   location_cuap: "CUAP"
+   location_gasolinera: "Gas station"
+   location_hospital: "Hospital"
+   location_maritimo: "Maritime Preventive Service"
+   location_nostrum: "Nostrum"
+   location_salvamento: "Salvage"
+   location_terrestre: "Terrestrial Preventive Service"
+   
+   vehicle_type_alfa_bravo: "Basic Life Support Ambulance"
+   vehicle_type_alfa_mike: "Advanced Life Support Ambulance"
+   vehicle_type_mike: "Nautical Vessel"
+   vehicle_type_romeo: "Rescue Vehicle"
+   vehicle_type_tango: "Transport Vehicle"
+   
+   error_invalid_login: "Invalid email/password combination"
+   set_your_new_password: "Enter your new password, we recommend that is not the same as your email or social networks"
+   password_and_confirmation_must_be_longer: "Password too short, must be 6 characters minimum."
+   password_and_confirmation_must_match: "Passwords do not match"
+   password_recovery_error: "Failed to change password"
+   password_recovery: "Password recovery"
+   email_sent: "Correu per canviar contrasenya enviat"
+
+   show_beta: "This application is under development and may contain errors."
+
+   form_service_assigned_locations: "Assigned locations"
+   form_service_assigned_users: "Assigned users"
+   form_service_archived: "Archived"
+   form_service_assign_location: "Assign location"
+   form_service_assign_user: "Assign user"
+   form_service_finish_time: "Finish time"
+   form_service_graphic: "View services graphic"
+   form_user_add_collaboration: "Add collaboration"
+   form_user_notes: "Notes"
+   form_user_position: "Position"
+   form_user_types: "User type"
+   password_confirmation_must_be_set: "Password confirmation must be set"
+   password_must_be_set: "Password must be set"
+   position_b1: "B1"
+   position_per: "PER"
+   reactivate_vehicle: "Reactivate vehicle"
+   service_assigned_to_location: "Assigned to location"
+   user_assigned_to_assembly: "Assigned to assembly"
+   user_assigned_to_service: "Assigned to service"
+   user_collaborations: "Collaborations"
+   user_goes_in_vehicle: "Vehicle"
+   user_goes_to_location: "Location"
+   user_services: "Services"
+   form_add_location_to_service_acu: "ACU"
+   form_add_location_to_service_asi: "ASI"
+   form_add_location_to_service_b1: "B1"
+   form_add_location_to_service_btp: "BTP"
+   form_add_location_to_service_ci: "CI"
+   form_add_location_to_service_doc: "DOC"
+   form_add_location_to_service_due: "DUE"
+   form_add_location_to_service_location_id: "Location"
+   form_add_location_to_service_per: "PER"
+   form_add_location_to_service_submit: "Submit"
+   form_add_location_to_service_tes: "TES"
+   form_add_user_to_service_doc: "DOC"
+   form_add_user_to_service_location_id: "Location"
+   form_add_user_to_service_submit: "Submit"
+   form_add_user_to_service_user_id: "User"
+   form_add_user_to_service_vehicle_id: "Vehicle"
+   form_add_user_to_service_warning_only_location_or_vehicle: "Warning: You can only select a location or a vehicle, not both"

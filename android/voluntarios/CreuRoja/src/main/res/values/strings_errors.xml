@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="error_location_unavailable">Localització desconeguda</string>
+    <string name="error_limit_reached">Límit de la API superado</string>
+    <string name="error_no_connection">No hi ha connexió disponible</string>
+    <string name="error_connecting">Error durant la connexió. Torneu-ho de nou més tard</string>
+    <string name="error_invalid_response">Error del servidor</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">Contrasenya incorrecta</string>
+    <string name="error_field_required">Aquest camp és obligatori</string>
+    <string name="error_user_removed">"El usuario ha sido invalidado por el administrador. Si cree que esto es un error, por favor contacte con su oficina mas cercana."</string>
+
+</resources>
