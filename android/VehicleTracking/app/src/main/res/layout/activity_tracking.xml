@@ -6,6 +6,7 @@
     tools:context=".Tracking"
     tools:ignore="MergeRootFrame">
     <fragment
+        android:id="@+id/tracking_fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:name="net.creuroja.android.vehicletracking.fragments.TrackingFragment"/>

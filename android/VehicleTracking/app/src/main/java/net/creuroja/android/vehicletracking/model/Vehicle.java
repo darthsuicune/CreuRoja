@@ -1,5 +1,7 @@
 package net.creuroja.android.vehicletracking.model;
 
+import android.util.Log;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -8,17 +10,28 @@ import org.json.JSONObject;
  */
 public class Vehicle {
 	public static final String INDICATIVE = "indicative";
-	public static final String LICENSE = "license";
 
-	public final String mIndicative;
-	public final String mLicense;
+	public final String indicative;
+	public double latitude;
+	public double longitude;
 
 	public Vehicle(JSONObject json) throws JSONException {
-		mIndicative = json.getString(INDICATIVE);
-		mLicense = json.getString(LICENSE);
+		this.indicative = json.getString(INDICATIVE);
+	}
+	public Vehicle(String indicative) {
+		this.indicative = indicative;
+	}
+
+	public void setPosition(double latitude, double longitude) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+	}
+
+	public void upload() {
+		Log.d("ASDF", "I'm ALIVE!!!" + indicative + " " + this.latitude + " " +this.longitude);
 	}
 
 	public String toString() {
-		return mIndicative + " - " + mLicense;
+		return indicative;
 	}
 }

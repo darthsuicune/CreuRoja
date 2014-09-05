@@ -2,7 +2,6 @@ package net.creuroja.android.vehicletracking.fragments;
 
 import android.app.Activity;
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
@@ -20,7 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import net.creuroja.android.vehicletracking.HeartBeatService;
+import net.creuroja.android.vehicletracking.PositionNotifierService;
 import net.creuroja.android.vehicletracking.R;
 import net.creuroja.android.vehicletracking.activities.OnNotificationReceivedListener;
 import net.creuroja.android.vehicletracking.fragments.loaders.VehicleLoader;
@@ -35,14 +34,12 @@ import java.util.List;
  * Activities that contain this fragment must implement the
  * {@link OnTrackingFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link TrackingFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class TrackingFragment extends Fragment implements OnNotificationReceivedListener {
 	private static final int LOADER_VEHICLES = 1;
-	private static final int REQUEST_TRACKING_SERVICE = 1;
-	public static final int NOTIFICATION_PERMANENT = 1;
-	public static final int NOTIFICATION_FINISHED = 2;
+
+	private static final String IS_TRACKING = "Tracking";
+	private static final int REQUEST_SERVICE = 1;
 
 	private OnTrackingFragmentInteractionListener mListener;
 
@@ -56,17 +53,6 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	private View mMainView;
 
 	private PendingIntent pendingIntent;
-
-	/**
-	 * Use this factory method to create a new instance of
-	 * this fragment using the provided parameters.
-	 *
-	 * @return A new instance of fragment TrackingFragment.
-	 */
-	public static TrackingFragment newInstance() {
-		TrackingFragment fragment = new TrackingFragment();
-		return fragment;
-	}
 
 	public TrackingFragment() {
 		// Required empty public constructor
@@ -87,9 +73,9 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	 * >Communicating with Other Fragments</a> for more information.
 	 */
 	public interface OnTrackingFragmentInteractionListener {
-		public void onTrackingStarted();
+		public void onTrackingStartRequested();
 
-		public void onTrackingStopped();
+		public void onTrackingStopRequested();
 	}
 
 	@Override
@@ -102,9 +88,8 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 					activity.toString() + " must implement OnTrackingFragmentInteractionListener");
 		}
 		prefs = PreferenceManager.getDefaultSharedPreferences(activity);
-		setUpIntent(activity);
+		isStarted = prefs.getBoolean(IS_TRACKING, false);
 		getLoaderManager().restartLoader(LOADER_VEHICLES, null, new VehicleLoaderCallbacks());
-
 	}
 
 	@Override
@@ -133,62 +118,68 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 		if (inProgress) {
 			showProgress(true);
 		}
-		Button button = (Button) v.findViewById(R.id.tracking_button);
-		button.setOnClickListener(new View.OnClickListener() {
+		Button trackingButton = (Button) v.findViewById(R.id.tracking_button);
+		trackingButton.setOnClickListener(new View.OnClickListener() {
 			@Override public void onClick(View view) {
 				if (isStarted) {
 					stopTracking();
 					((Button) view).setText(R.string.start_tracking);
-					mListener.onTrackingStopped();
+					mListener.onTrackingStopRequested();
 				} else {
 					((Button) view).setText(R.string.stop_tracking);
 					startTracking();
-					mListener.onTrackingStarted();
+					mListener.onTrackingStartRequested();
 				}
 				isStarted = !isStarted;
 			}
 		});
-	}
-
-	private void setUpIntent(Activity activity) {
-		Intent intent = new Intent(HeartBeatService.ACTION_BEAT);
-		pendingIntent = PendingIntent.getService(activity, REQUEST_TRACKING_SERVICE, intent,
-				PendingIntent.FLAG_UPDATE_CURRENT);
+		trackingButton.setText((isStarted) ? R.string.stop_tracking : R.string.start_tracking);
 	}
 
 	private void startTracking() {
-		setAlarm();
-		setNotification();
-	}
-
-	private void setAlarm() {
-		AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-		long interval = prefs.getLong(Settings.INTERVAL, Settings.DEFAULT_INTERVAL);
-		manager.setRepeating(AlarmManager.RTC, 0, interval, pendingIntent);
-	}
-
-	private void setNotification() {
-		//Do something
+		startService();
+		mListener.onTrackingStartRequested();
+		prefs.edit().putBoolean(IS_TRACKING, true).apply();
 	}
 
 	private void stopTracking() {
-		AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-		manager.cancel(pendingIntent);
-		changeNotification();
+		stopService();
+		mListener.onTrackingStopRequested();
+		prefs.edit().putBoolean(IS_TRACKING, false).apply();
 	}
 
-	private void changeNotification() {
-		NotificationManager notificationManager =
-				(NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.cancel(NOTIFICATION_PERMANENT);
+	private void startService() {
+		Intent intent = new Intent(PositionNotifierService.ACTION_NOTIFY);
+		Vehicle vehicle = (Vehicle) mVehicleListSpinner.getSelectedItem();
+		intent.putExtra(PositionNotifierService.EXTRA_INDICATIVE, vehicle.indicative);
+		setAlarm(intent, true);
+	}
+
+	private void stopService() {
+		Intent intent = new Intent(PositionNotifierService.ACTION_STOP);
+		setAlarm(intent, false);
+	}
+
+	private void setAlarm(Intent intent, boolean set) {
+		AlarmManager alarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+		if (set) {
+			pendingIntent = PendingIntent.getService(getActivity(), REQUEST_SERVICE, intent,
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			long interval = prefs.getLong(Settings.INTERVAL, Settings.DEFAULT_INTERVAL);
+			alarm.setRepeating(AlarmManager.RTC_WAKEUP, 0, interval, pendingIntent);
+		} else {
+			alarm.cancel(pendingIntent);
+		}
+
 	}
 
 	private void populateList(List<Vehicle> vehicles) {
-		mVehicleListSpinner.setAdapter(new ArrayAdapter<Vehicle>(getActivity(),
-				android.R.layout.simple_spinner_dropdown_item, vehicles));
+		mVehicleListSpinner.setAdapter(
+				new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item,
+						vehicles));
 	}
 
-	private void showProgress(boolean show) {
+	public void showProgress(boolean show) {
 		if (mProgressView != null) {
 			mProgressView.setVisibility((show) ? View.VISIBLE : View.GONE);
 			mMainView.setVisibility((show) ? View.GONE : View.VISIBLE);
@@ -199,7 +190,7 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 		@Override public Loader<List<Vehicle>> onCreateLoader(int i, Bundle bundle) {
 			inProgress = true;
 			showProgress(true);
-			return new VehicleLoader(getActivity());
+			return new VehicleLoader(getActivity(), prefs.getString(Settings.ACCESS_TOKEN, null));
 		}
 
 		@Override public void onLoadFinished(Loader<List<Vehicle>> objectLoader,
@@ -207,7 +198,8 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 			if (vehicleList != null) {
 				populateList(vehicleList);
 			} else {
-				Log.d(HeartBeatService.SERVICE_NAME, "Error while retrieving vehicles");
+				Log.d(PositionNotifierService.SERVICE_NAME, "Error while retrieving vehicles");
+				getLoaderManager().restartLoader(LOADER_VEHICLES, null, this);
 			}
 			showProgress(false);
 		}

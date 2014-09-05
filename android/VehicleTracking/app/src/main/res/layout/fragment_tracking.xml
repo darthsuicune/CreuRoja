@@ -10,17 +10,25 @@
 
     <LinearLayout
         android:id="@+id/progress"
-        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
 
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:indeterminate="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/waiting_for_data"/>
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
+        android:orientation="vertical"
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -28,19 +36,13 @@
         <Spinner
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/vehicle_list_spinner"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:id="@+id/vehicle_list_spinner"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/start_tracking"
-            android:id="@+id/tracking_button"
-            android:layout_below="@+id/spinner"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:id="@+id/tracking_button"/>
     </LinearLayout>
 
 </RelativeLayout>

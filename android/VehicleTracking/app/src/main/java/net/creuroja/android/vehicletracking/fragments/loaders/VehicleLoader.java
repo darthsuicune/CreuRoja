@@ -8,6 +8,7 @@ import net.creuroja.android.vehicletracking.model.Vehicles;
 
 import org.json.JSONException;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -15,23 +16,25 @@ import java.util.List;
  */
 public class VehicleLoader extends AsyncTaskLoader<List<Vehicle>> {
 	List<Vehicle> mList;
-	public VehicleLoader(Context context) {
+	String mToken;
+
+	public VehicleLoader(Context context, String mToken) {
 		super(context);
 	}
 
 	@Override protected void onStartLoading() {
 		super.onStartLoading();
-		if(mList == null) {
+		if (mList == null) {
 			forceLoad();
 		}
 	}
 
 	@Override public List<Vehicle> loadInBackground() {
 		try {
-			return Vehicles.getFromServer();
-		} catch (JSONException e) {
+			return Vehicles.getFromServer(mToken);
+		} catch (JSONException | IOException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return null;
 	}
 }
