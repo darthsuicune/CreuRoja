@@ -32,9 +32,6 @@
         <service
             android:name=".PositionNotifierService"
             android:exported="false" >
-            <intent-filter>
-                <action android:name="net.creuroja.android.vehicletracking.action.NOTIFY" />
-            </intent-filter>
         </service>
 
         <activity
@@ -46,6 +43,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="net.creuroja.android.vehicletracking.activities.TrackingActivity" />
         </activity>
+
+        <service
+            android:name=".PositionUpdaterService"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="net.creuroja.android.vehicletracking.action.NOTIFY" />
+            </intent-filter>
+        </service>
     </application>
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->

@@ -22,8 +22,6 @@ public class Auth {
 	private static final String ARG_EMAIL = "email";
 	private static final String ARG_PASSWORD = "password";
 
-	String token;
-
 	RestWebServiceClient mClient;
 
 	public Auth() {

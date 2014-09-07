@@ -18,8 +18,9 @@ public class VehicleLoader extends AsyncTaskLoader<List<Vehicle>> {
 	List<Vehicle> mList;
 	String mToken;
 
-	public VehicleLoader(Context context, String mToken) {
+	public VehicleLoader(Context context, String token) {
 		super(context);
+		mToken = token;
 	}
 
 	@Override protected void onStartLoading() {

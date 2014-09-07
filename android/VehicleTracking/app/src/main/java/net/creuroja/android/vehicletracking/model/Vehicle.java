@@ -28,7 +28,7 @@ public class Vehicle {
 	}
 
 	public void upload() {
-		Log.d("ASDF", "I'm ALIVE!!!" + indicative + " " + this.latitude + " " +this.longitude);
+		Log.d("ASDF", "I'm ALIVE!!!" + indicative + " " + this.latitude + " " + this.longitude);
 	}
 
 	public String toString() {

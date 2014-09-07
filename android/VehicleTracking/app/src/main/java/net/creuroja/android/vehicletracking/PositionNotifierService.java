@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
@@ -36,6 +37,7 @@ public class PositionNotifierService extends IntentService
 	}
 
 	@Override protected void onHandleIntent(Intent intent) {
+		Log.d("ASDF", "Something");
 		if (intent != null) {
 			if (mLocationClient == null) {
 				mLocationClient = new LocationClient(getApplicationContext(), this, this);
@@ -45,7 +47,12 @@ public class PositionNotifierService extends IntentService
 				if (mVehicle == null) {
 					mVehicle = new Vehicle(intent.getStringExtra(EXTRA_INDICATIVE));
 				}
-				mLocationClient.connect();
+
+				if(!mLocationClient.isConnected()) {
+					mLocationClient.connect();
+				} else {
+					notifyPositionToServer();
+				}
 			} else if (ACTION_STOP.equals(action)) {
 				mLocationClient.disconnect();
 			}
@@ -57,15 +64,12 @@ public class PositionNotifierService extends IntentService
 	 * parameters.
 	 */
 	private void notifyPositionToServer() {
-		Location location = getCurrentLocation();
+		Location location = mLocationClient.getLastLocation();
 		if (location != null) {
+			Log.d("ASDF", "SomethingSomething");
 			mVehicle.setPosition(location.getLatitude(), location.getLongitude());
 			mVehicle.upload();
 		}
-	}
-
-	private Location getCurrentLocation() {
-		return mLocationClient.getLastLocation();
 	}
 
 	@Override public void onConnected(Bundle bundle) {

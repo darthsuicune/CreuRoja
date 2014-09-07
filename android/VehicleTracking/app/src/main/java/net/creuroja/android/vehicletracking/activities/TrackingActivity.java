@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -184,7 +185,7 @@ public class TrackingActivity extends ActionBarActivity
 		}
 
 		// Return a Dialog to the DialogFragment.
-		@Override
+		@Override @NonNull
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			return mDialog;
 		}

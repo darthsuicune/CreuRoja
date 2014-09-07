@@ -49,9 +49,10 @@ public class LoginActivity extends FragmentActivity {
 
         // Set up the login form.
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
-		mEmailView.setText("crvehicles@creuroja.org");
+		mEmailView.setText("crvehicles@creuroja.net");
 
         mPasswordView = (EditText) findViewById(R.id.password);
+		mPasswordView.setText("Lgmf776lpplr&&");
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -185,8 +186,7 @@ public class LoginActivity extends FragmentActivity {
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
+     * Represents an asynchronous login/registration task used to authenticate the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 

@@ -1,9 +1,6 @@
 package net.creuroja.android.vehicletracking.fragments;
 
 import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,7 +36,6 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	private static final int LOADER_VEHICLES = 1;
 
 	private static final String IS_TRACKING = "Tracking";
-	private static final int REQUEST_SERVICE = 1;
 
 	private OnTrackingFragmentInteractionListener mListener;
 
@@ -51,8 +47,6 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	private Spinner mVehicleListSpinner;
 	private View mProgressView;
 	private View mMainView;
-
-	private PendingIntent pendingIntent;
 
 	public TrackingFragment() {
 		// Required empty public constructor
@@ -149,27 +143,15 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	}
 
 	private void startService() {
-		Intent intent = new Intent(PositionNotifierService.ACTION_NOTIFY);
+		Intent intent = new Intent(getActivity(), PositionNotifierService.class);
 		Vehicle vehicle = (Vehicle) mVehicleListSpinner.getSelectedItem();
 		intent.putExtra(PositionNotifierService.EXTRA_INDICATIVE, vehicle.indicative);
-		setAlarm(intent, true);
+		getActivity().startService(intent);
 	}
 
 	private void stopService() {
-		Intent intent = new Intent(PositionNotifierService.ACTION_STOP);
-		setAlarm(intent, false);
-	}
-
-	private void setAlarm(Intent intent, boolean set) {
-		AlarmManager alarm = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-		if (set) {
-			pendingIntent = PendingIntent.getService(getActivity(), REQUEST_SERVICE, intent,
-					PendingIntent.FLAG_UPDATE_CURRENT);
-			long interval = prefs.getLong(Settings.INTERVAL, Settings.DEFAULT_INTERVAL);
-			alarm.setRepeating(AlarmManager.RTC_WAKEUP, 0, interval, pendingIntent);
-		} else {
-			alarm.cancel(pendingIntent);
-		}
+		Intent intent = new Intent(getActivity(), PositionNotifierService.class);
+		getActivity().stopService(intent);
 
 	}
 
