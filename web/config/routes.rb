@@ -37,6 +37,7 @@ CreuRoja::Application.routes.draw do
 	resources :vehicle_services, only: [:create, :update, :destroy]
 	resources :location_users, only: [:create, :update, :destroy]
 	resources :password_reset, only: [:new, :create, :edit, :update]
+	resources :vehicle_positions, only: [:index, :create]
 	resources :issues
 
   # Example resource route with options:

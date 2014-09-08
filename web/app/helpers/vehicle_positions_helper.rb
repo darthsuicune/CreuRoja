@@ -1,0 +1,2 @@
+module VehiclePositionsHelper
+end

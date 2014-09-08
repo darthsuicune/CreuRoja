@@ -22,9 +22,11 @@ class ApplicationController < ActionController::Base
 
 	private
 		def log
-			if (action_name == "create" || action_name == "update" || action_name == "destroy")
-				user_id = (current_user) ? current_user.id : 0
-				Log.log(user_id, controller_name, action_name, request.remote_ip)
+			unless controller_name == "vehicle_positions"
+				if (action_name == "create" || action_name == "update" || action_name == "destroy")
+					user_id = (current_user) ? current_user.id : 0
+					Log.log(user_id, controller_name, action_name, request.remote_ip)
+				end
 			end
 		end
 		

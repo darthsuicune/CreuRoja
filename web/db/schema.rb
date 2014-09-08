@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814125113) do
+ActiveRecord::Schema.define(version: 20140908125933) do
 
   create_table "issues", force: true do |t|
     t.string   "status"
@@ -157,6 +157,17 @@ ActiveRecord::Schema.define(version: 20140814125113) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "vehicle_positions", force: true do |t|
+    t.integer  "vehicle_id"
+    t.string   "indicative"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "vehicle_positions", ["vehicle_id"], name: "index_vehicle_positions_on_vehicle_id", using: :btree
 
   create_table "vehicle_services", force: true do |t|
     t.integer  "vehicle_id"

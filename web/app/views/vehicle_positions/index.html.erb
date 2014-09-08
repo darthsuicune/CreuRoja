@@ -1,0 +1,13 @@
+<% provide :title, t(:map) %>
+
+<table>
+	<% @vehicles.each do |vehicle| %>
+		<tr>
+			<td>
+				<%= vehicle.indicative %>
+				<%= vehicle.latitude %>
+				<%= vehicle.longitude %>
+			</td>
+		</tr>
+	<% end %>
+</table>

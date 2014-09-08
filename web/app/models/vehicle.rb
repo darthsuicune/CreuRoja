@@ -6,6 +6,7 @@ class Vehicle < ActiveRecord::Base
 	has_many :vehicle_assemblies, dependent: :destroy
 	has_many :assemblies, through: :vehicle_assemblies
 	has_many :service_users, dependent: :destroy
+	has_many :vehicle_positions, dependent: :destroy
 
 	validates :indicative, presence: true
 	validates :brand, presence: true
@@ -16,6 +17,10 @@ class Vehicle < ActiveRecord::Base
 	
 	def to_s
 		"#{indicative}"
+	end
+	
+	def self.operative
+		Vehicle.where(operative: true)
 	end
 	
 	def translated_vehicle_type
