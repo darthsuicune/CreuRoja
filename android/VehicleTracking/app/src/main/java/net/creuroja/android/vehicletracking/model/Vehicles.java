@@ -2,6 +2,8 @@ package net.creuroja.android.vehicletracking.model;
 
 import android.text.TextUtils;
 
+import net.creuroja.android.vehicletracking.model.webservice.Auth;
+import net.creuroja.android.vehicletracking.model.webservice.ServerData;
 import net.creuroja.android.vehicletracking.model.webservice.lib.RestWebServiceClient;
 import net.creuroja.android.vehicletracking.model.webservice.lib.WebServiceFormat;
 import net.creuroja.android.vehicletracking.model.webservice.lib.WebServiceOption;
@@ -19,11 +21,6 @@ import java.util.List;
  * Created by lapuente on 04.09.14.
  */
 public class Vehicles {
-	private static final String SERVER_ADDRESS = "creuroja.net";
-
-	private static final String ARG_ACCESS_TOKEN = "Authorization: Token ";
-	private static final String RESOURCE_VEHICLES = "vehicles";
-
 	private List<Vehicle> mVehicleList;
 
 	public Vehicles(String json) throws JSONException {
@@ -31,8 +28,8 @@ public class Vehicles {
 		JSONArray array = new JSONArray(json);
 		for (int i = 0; i < array.length(); i++) {
 			JSONObject item = array.getJSONObject(i);
-			if (!TextUtils.isEmpty(item.getString(Vehicle.INDICATIVE)) &&
-				!item.getString(Vehicle.INDICATIVE).equals("null")) {
+			if (!TextUtils.isEmpty(item.getString(ServerData.INDICATIVE)) &&
+				!item.getString(ServerData.INDICATIVE).equals("null")) {
 				mVehicleList.add(new Vehicle(item));
 			}
 		}
@@ -50,18 +47,18 @@ public class Vehicles {
 	}
 
 	private static String requestVehicleList(String accessToken) throws IOException {
-		RestWebServiceClient client =
-				new RestWebServiceClient(RestWebServiceClient.PROTOCOL_HTTPS, SERVER_ADDRESS);
+		RestWebServiceClient client = new RestWebServiceClient(RestWebServiceClient.PROTOCOL_HTTPS,
+				ServerData.SERVER_ADDRESS);
 		List<WebServiceOption> options = getOptions(accessToken);
-		HttpResponse response = client.get(RESOURCE_VEHICLES, WebServiceFormat.JSON, options);
+		HttpResponse response =
+				client.get(ServerData.RESOURCE_VEHICLES, WebServiceFormat.JSON, options);
 		String json = RestWebServiceClient.getAsString(response);
 		return json;
 	}
 
 	private static List<WebServiceOption> getOptions(String accessToken) {
 		List<WebServiceOption> options = new ArrayList<>();
-		options.add(new WebServiceOption(WebServiceOption.OptionType.HEADER, ARG_ACCESS_TOKEN,
-				"token=\"" + accessToken + "\""));
+		options.add(Auth.getAuthOption(accessToken));
 		return options;
 	}
 }

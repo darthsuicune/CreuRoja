@@ -29,11 +29,6 @@
             android:label="@string/title_activity_settings" >
         </activity>
 
-        <service
-            android:name=".PositionNotifierService"
-            android:exported="false" >
-        </service>
-
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"

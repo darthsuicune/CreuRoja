@@ -52,7 +52,6 @@ public class LoginActivity extends FragmentActivity {
 		mEmailView.setText("crvehicles@creuroja.net");
 
         mPasswordView = (EditText) findViewById(R.id.password);
-		mPasswordView.setText("Lgmf776lpplr&&");
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {

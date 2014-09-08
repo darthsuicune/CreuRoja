@@ -42,24 +42,24 @@ public class TrackingActivity extends ActionBarActivity
 
 	private TrackingFragment mTrackingFragment;
 	private LocationClient mLocationClient;
-	private boolean hasLocation = false;
-	private boolean isConnected = false;
 	private SharedPreferences prefs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		prefs = PreferenceManager.getDefaultSharedPreferences(this);
-		if(prefs.getString(Settings.ACCESS_TOKEN, null) == null) {
+		if (prefs.getString(Settings.ACCESS_TOKEN, null) == null) {
 			startLoginActivity();
 		} else {
 			startTrackingActivity();
 		}
 	}
+
 	private void startLoginActivity() {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivityForResult(intent, REQUEST_LOGIN_ACTIVITY);
 	}
+
 	private void startTrackingActivity() {
 		setFragment();
 		parseNotifications();
@@ -214,9 +214,7 @@ public class TrackingActivity extends ActionBarActivity
 	}
 
 	@Override public void onConnected(Bundle bundle) {
-		if (mLocationClient.getLastLocation() == null) {
-			new LocationAvailabilityTask().execute();
-		}
+		new LocationAvailabilityTask().execute();
 	}
 
 	@Override public void onDisconnected() {
@@ -252,8 +250,8 @@ public class TrackingActivity extends ActionBarActivity
 					e.printStackTrace();
 				}
 			}
-			hasLocation = true;
-			if (isConnected) {
+			mTrackingFragment.hasLocation = true;
+			if (mTrackingFragment.isConnected && !mTrackingFragment.inProgress) {
 				runOnUiThread(new Runnable() {
 					@Override public void run() {
 						mTrackingFragment.showProgress(false);
@@ -273,15 +271,15 @@ public class TrackingActivity extends ActionBarActivity
 				}
 			});
 
-			while (Settings.isConnected(TrackingActivity.this)) {
+			while (!Settings.isConnected(TrackingActivity.this)) {
 				try {
 					Thread.sleep(500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			}
-			isConnected = true;
-			if (hasLocation) {
+			mTrackingFragment.isConnected = true;
+			if (mTrackingFragment.hasLocation && !mTrackingFragment.inProgress) {
 				runOnUiThread(new Runnable() {
 					@Override public void run() {
 						mTrackingFragment.showProgress(false);
