@@ -25,9 +25,7 @@ class VehiclePositionsController < ApplicationController
 	
 	private
 	def vehicle_positions_params
-		params.require(:vehicle_id)
-		params.require(:latitude)
-		params.require(:longitude)
+		params.require(:vehicle_position).permit(:vehicle_id, :latitude, :longitude)
 	end
 	
 	def is_valid_user
