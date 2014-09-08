@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
@@ -65,12 +66,9 @@ public class PositionUpdaterService extends Service
 		Location location = mLocationClient.getLastLocation();
 		if (mVehicle != null && location != null) {
 			mVehicle.setPosition(location.getLatitude(), location.getLongitude());
-			try {
-				mVehicle.upload(prefs.getString(Settings.ACCESS_TOKEN, ""));
-			} catch (IOException e) {
-				Log.d(SERVICE_NAME, "Error connecting to server");
-				e.printStackTrace();
-			}
+			VehicleUploadTask task =
+					new VehicleUploadTask(prefs.getString(Settings.ACCESS_TOKEN, ""));
+			task.execute();
 		}
 	}
 
@@ -89,5 +87,24 @@ public class PositionUpdaterService extends Service
 
 	@Override public void onConnectionFailed(ConnectionResult connectionResult) {
 
+	}
+
+	private class VehicleUploadTask extends AsyncTask<Void, Void, Void> {
+		String mToken;
+
+		public VehicleUploadTask(String token) {
+			mToken = token;
+		}
+
+		@Override protected Void doInBackground(Void... voids) {
+			try {
+				mVehicle.upload(mToken);
+			} catch (IOException e) {
+				Log.d(SERVICE_NAME, "Error connecting to server");
+				e.printStackTrace();
+			}
+
+			return null;
+		}
 	}
 }

@@ -12,7 +12,7 @@ class VehiclePositionsController < ApplicationController
 	end
 
 	def create
-		position = VehiclePosition.new(vehicle_position_params)
+		position = VehiclePosition.new(vehicle_positions_params)
 		position.indicative = position.vehicle.indicative
 		respond_to do |format|
 			if position.save

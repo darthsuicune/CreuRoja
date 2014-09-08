@@ -1,11 +1,14 @@
 package net.creuroja.android.vehicletracking.model;
 
+import android.util.Log;
+
 import net.creuroja.android.vehicletracking.model.webservice.Auth;
 import net.creuroja.android.vehicletracking.model.webservice.ServerData;
 import net.creuroja.android.vehicletracking.model.webservice.lib.RestWebServiceClient;
 import net.creuroja.android.vehicletracking.model.webservice.lib.WebServiceFormat;
 import net.creuroja.android.vehicletracking.model.webservice.lib.WebServiceOption;
 
+import org.apache.http.HttpResponse;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -40,8 +43,17 @@ public class Vehicle {
 	public void upload(String accessToken) throws IOException {
 		RestWebServiceClient client = new RestWebServiceClient(RestWebServiceClient.PROTOCOL_HTTPS,
 				ServerData.SERVER_ADDRESS);
-		client.post(ServerData.RESOURCE_NEW_VEHICLE_POSITION, WebServiceFormat.JSON,
+		HttpResponse response = client.post(ServerData.RESOURCE_NEW_VEHICLE_POSITION, WebServiceFormat.JSON,
 				getOptions(accessToken));
+		switch(response.getStatusLine().getStatusCode()) {
+			case 200:
+				Log.d("Something", "Something, something something");
+				break;
+			default:
+				Log.d("Something", "Something, something");
+				break;
+		}
+
 	}
 
 	private List<WebServiceOption> getOptions(String accessToken) {

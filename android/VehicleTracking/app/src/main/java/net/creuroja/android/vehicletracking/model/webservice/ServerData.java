@@ -12,7 +12,7 @@ public class ServerData {
 	public static final String INDICATIVE = "indicative";
 	public static final String ID = "id";
 	public static final String ARG_VEHICLE_ID = "vehicle_id";
-	public static final String RESOURCE_NEW_VEHICLE_POSITION = "vehicle_position";
+	public static final String RESOURCE_NEW_VEHICLE_POSITION = "vehicle_positions";
 	public static final String ARG_VEHICLE_LATITUDE = "latitude";
 	public static final String ARG_VEHICLE_LONGITUDE = "longitude";
 	public static final String ARG_ACCESS_TOKEN = "Authorization: Token ";
