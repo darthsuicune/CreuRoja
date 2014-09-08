@@ -25,6 +25,8 @@ public class PositionUpdaterService extends Service
 
 	public static final String EXTRA_INDICATIVE =
 			"net.creuroja.android.vehicletracking.extra.EXTRA_INDICATIVE";
+	public static final String EXTRA_VEHICLE_ID =
+			"net.creuroja.android.vehicletracking.extra.EXTRA_VEHICLE_ID";
 
 	private Vehicle mVehicle;
 	private LocationClient mLocationClient;
@@ -48,8 +50,10 @@ public class PositionUpdaterService extends Service
 
 	@Override public int onStartCommand(Intent intent, int flags, int startId) {
 		if (isConnected) {
-			if (intent != null && intent.getExtras() != null && intent.hasExtra(EXTRA_INDICATIVE)) {
-				mVehicle = new Vehicle(intent.getStringExtra(EXTRA_INDICATIVE));
+			if (mVehicle == null && intent != null && intent.getExtras() != null &&
+				intent.hasExtra(EXTRA_INDICATIVE) && intent.hasExtra(EXTRA_VEHICLE_ID)) {
+				mVehicle = new Vehicle(intent.getIntExtra(EXTRA_VEHICLE_ID, 0),
+						intent.getStringExtra(EXTRA_INDICATIVE));
 			}
 			updatePosition();
 		}

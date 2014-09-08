@@ -19,6 +19,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.google.android.gms.internal.id;
+
 import net.creuroja.android.vehicletracking.PositionUpdaterService;
 import net.creuroja.android.vehicletracking.R;
 import net.creuroja.android.vehicletracking.activities.OnNotificationReceivedListener;
@@ -178,6 +180,7 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 			Intent intent = new Intent(getActivity(), PositionUpdaterService.class);
 			if(run) {
 				Vehicle vehicle = (Vehicle) mVehicleListSpinner.getSelectedItem();
+				intent.putExtra(PositionUpdaterService.EXTRA_VEHICLE_ID, vehicle.id);
 				intent.putExtra(PositionUpdaterService.EXTRA_INDICATIVE, vehicle.indicative);
 			}
 			pendingIntent = PendingIntent.getService(getActivity(), REQUEST_NOTIFY_SERVICE, intent,

@@ -20,13 +20,16 @@ public class Vehicle {
 	public final String indicative;
 	public double latitude;
 	public double longitude;
+	public int id;
 
 	public Vehicle(JSONObject json) throws JSONException {
 		this.indicative = json.getString(ServerData.INDICATIVE);
+		this.id = json.getInt(ServerData.ID);
 	}
 
-	public Vehicle(String indicative) {
+	public Vehicle(int id, String indicative) {
 		this.indicative = indicative;
+		this.id = id;
 	}
 
 	public void setPosition(double latitude, double longitude) {
@@ -44,6 +47,8 @@ public class Vehicle {
 	private List<WebServiceOption> getOptions(String accessToken) {
 		List<WebServiceOption> options = new ArrayList<>();
 		options.add(Auth.getAuthOption(accessToken));
+		options.add(new WebServiceOption(WebServiceOption.OptionType.POST,
+				ServerData.ARG_VEHICLE_ID, Integer.toString(id)));
 		options.add(new WebServiceOption(WebServiceOption.OptionType.POST,
 				ServerData.ARG_VEHICLE_LATITUDE, Double.toString(latitude)));
 		options.add(new WebServiceOption(WebServiceOption.OptionType.POST,
