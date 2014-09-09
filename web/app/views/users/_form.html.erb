@@ -47,7 +47,7 @@
 			<%= f.label :phone, t(:form_user_phone) %><br>
 			<%= f.text_field :phone %>
 		</div>
-		<% unless action_name == "edit" %>
+		<% unless action_name == "new" %>
 			<div class="field">
 				<%= f.label :password, t(:form_user_password) %><br>
 				<%= f.password_field :password %>
