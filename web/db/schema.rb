@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 20140908125933) do
     t.boolean  "active",        default: true
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "expiredate",    default: 0
+    t.integer  "expiredate"
   end
 
   add_index "locations", ["address"], name: "index_locations_on_address", using: :btree
@@ -107,7 +107,7 @@ ActiveRecord::Schema.define(version: 20140908125933) do
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "archived",    default: false
+    t.boolean  "archived"
   end
 
   add_index "services", ["assembly_id"], name: "index_services_on_assembly_id", using: :btree
@@ -122,13 +122,24 @@ ActiveRecord::Schema.define(version: 20140908125933) do
   add_index "sessions", ["token"], name: "index_sessions_on_token", unique: true, using: :btree
 
   create_table "user_types", force: true do |t|
-    t.integer  "user_id"
-    t.string   "user_type"
+    t.integer  "user_id",    default: 0,  null: false
+    t.string   "user_type",  default: "", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   add_index "user_types", ["user_id", "user_type"], name: "index_user_types_on_user_id_and_user_type", unique: true, using: :btree
+
+  create_table "user_vehicles", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "service_id"
+    t.integer  "vehicle_id"
+    t.string   "user_position"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "user_vehicles", ["user_id", "service_id"], name: "index_user_vehicles_on_user_id_and_service_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"

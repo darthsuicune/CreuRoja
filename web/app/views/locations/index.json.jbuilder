@@ -1,3 +1,3 @@
 json.array!(@locations) do |location|
-  json.extract! location, :id, :name, :description, :address, :phone, :latitude, :longitude, :location_type, :active, :updated_at
+	json.extract! location, :id, :name, :latitude, :longitude, :description, :address, :phone, :location_type
 end

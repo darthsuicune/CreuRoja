@@ -3,12 +3,19 @@ class VehiclePositionsController < ApplicationController
 	before_filter :is_valid_user
 	
 	def index
-		positions = VehiclePosition.select(:vehicle_id).distinct
-		@vehicles = []
-		positions.each do |position|
-			@vehicles << position.vehicle.vehicle_positions.last
+		respond_to do |format|
+			positions = VehiclePosition.select(:vehicle_id).distinct
+			@vehicles = []
+			positions.each do |position|
+				@vehicles << position.vehicle.vehicle_positions.last
+			end
+			format.html {
+				@vehicles
+			}
+			format.json {
+				@vehicles.to_json
+			}
 		end
-		@vehicles
 	end
 
 	def create

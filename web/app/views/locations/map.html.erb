@@ -22,27 +22,32 @@ function initialize() {
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 	};
 	var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-	var markers = getMarkers();
+	loadMarkers(map);
+}
+function loadMarkers(map) {
+	$.get("locations.json" , {}, function(data) { drawMarkers(map,data); })
+}
+function drawMarkers(map, markers) {
 	for(i = 0, l = markers.length; i < l; i++) {
-		var content = getMarkerContent(markers[i]);
-		var infoWindow = new google.maps.InfoWindow()
-		var marker = new google.maps.Marker({
-			position: new google.maps.LatLng(markers[i].latitude, markers[i].longitude),
-			map: map,
-			title: markers[i].name,
-			icon: "assets/" + markers[i].location_type + ".png"
-		});
-		(function(marker, content) {
-			google.maps.event.addListener(marker, "click", function() {
-				infoWindow.setContent(content);
-				infoWindow.open(map,marker);
-			});
-		}
-		)(marker, content);
+		drawMarker(map, markers[i]);
 	}
 }
-function getMarkers() {
-	return <%= raw @locations.to_json %>;
+function drawMarker(map, location) {
+	var content = getMarkerContent(location);
+	var infoWindow = new google.maps.InfoWindow()
+	var marker = new google.maps.Marker({
+		position: new google.maps.LatLng(location.latitude, location.longitude),
+		map: map,
+		title: location.name,
+		icon: "assets/" + location.location_type + ".png"
+	});
+	(function(marker, content) {
+		google.maps.event.addListener(marker, "click", function() {
+			infoWindow.setContent(content);
+			infoWindow.open(map,marker);
+		});
+	}
+	)(marker, content);
 }
 function getMarkerContent(marker) {
 	var content = "<strong>" + marker.name + "</strong><br>";	

@@ -15,29 +15,32 @@ function initialize() {
 			mapTypeId: google.maps.MapTypeId.ROADMAP,
 	};
 	var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-	var markers = getMarkers();
-	for(i = 0, l = markers.length; i < l; i++) {
-		var content = getMarkerContent(markers[i]);
-		var infoWindow = new google.maps.InfoWindow()
-		var marker = new google.maps.Marker({
-			position: new google.maps.LatLng(markers[i].latitude, markers[i].longitude),
-			map: map,
-			title: markers[i].name
-		});
-		(function(marker, content) {
-			google.maps.event.addListener(marker, "click", function() {
-				infoWindow.setContent(content);
-				infoWindow.open(map,marker);
-			});
-		}
-		)(marker, content);
-	}
+	startTimer(map);
+	
 }
-function getMarkers() {
+
+function startTimer(map) {
+	$.get("../vehicle_positions.json",{}, function(data) { drawVehicles(map, data); })
+}
+
+function retrieveVehicles() {
 	return <%= raw @vehicles.to_json %>;
 }
-function getMarkerContent(marker) {
-	var content = "<strong>" + marker.indicative + "</strong><br>";	
+
+function drawVehicles(map, vehicles) {
+	for(i = 0, l = vehicles.length; i < l; i++) {
+		drawMarker(map, vehicles[i]);
+	}
+}
+
+function drawMarker(map, vehicle) {
+	var infoWindow = new google.maps.InfoWindow()
+	new google.maps.Marker({
+		map: map,
+		position: new google.maps.LatLng(vehicle.latitude, vehicle.longitude),
+		title: vehicle.name,
+		icon: "../assets/vehicles/" + vehicle.indicative + ".png"
+	});
 }
 
 //JQuery magic, substitutes "window.onload = loadScript" in the GMaps guide by doing it properly
