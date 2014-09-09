@@ -47,14 +47,16 @@
 			<%= f.label :phone, t(:form_user_phone) %><br>
 			<%= f.text_field :phone %>
 		</div>
-		<div class="field">
-			<%= f.label :password, t(:form_user_password) %><br>
-			<%= f.password_field :password %>
-		</div>
-		<div class="field">
-			<%= f.label :password_confirmation, t(:form_user_password_confirmation)  %><br>
-			<%= f.password_field :password_confirmation %>
-		</div>
+		<% unless action_name == "edit" %>
+			<div class="field">
+				<%= f.label :password, t(:form_user_password) %><br>
+				<%= f.password_field :password %>
+			</div>
+			<div class="field">
+				<%= f.label :password_confirmation, t(:form_user_password_confirmation)  %><br>
+				<%= f.password_field :password_confirmation %>
+			</div>
+		<% end %>
 		<% if current_user.allowed_to?(:manage_users) %>
 			<div class="field">
 				<%= f.label :notes, t(:form_user_notes) %><br>
