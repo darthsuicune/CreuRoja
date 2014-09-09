@@ -2,6 +2,7 @@ package net.creuroja.android.vehicletracking;
 
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -20,13 +21,14 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
+import net.creuroja.android.vehicletracking.activities.TrackingActivity;
 import net.creuroja.android.vehicletracking.model.Settings;
 import net.creuroja.android.vehicletracking.model.Vehicle;
 
 import java.io.IOException;
 
-public class PositionUpdaterService extends Service implements LocationListener,
-		GooglePlayServicesClient.ConnectionCallbacks,
+public class PositionUpdaterService extends Service
+		implements LocationListener, GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener {
 	public static final String SERVICE_NAME = "PositionUpdaterService";
 
@@ -39,6 +41,8 @@ public class PositionUpdaterService extends Service implements LocationListener,
 	public static final String KEY_FINISHED_NOTIFICATION = "finishedNotification";
 	public static final int NOTIFICATION_PERMANENT = 1;
 	public static final int NOTIFICATION_FINISHED = 2;
+
+	private static final int REQUEST_TRACKING_ACTIVITY = 1;
 
 	private Vehicle mVehicle;
 	private LocationClient mLocationClient;
@@ -77,7 +81,7 @@ public class PositionUpdaterService extends Service implements LocationListener,
 	}
 
 	private void updatePosition() {
-		if(mLocation == null) {
+		if (mLocation == null) {
 			Location location = mLocationClient.getLastLocation();
 			if (location != null) {
 				mVehicle.setPosition(location.getLatitude(), location.getLongitude());
@@ -102,10 +106,12 @@ public class PositionUpdaterService extends Service implements LocationListener,
 				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification notification;
 		int id;
-		if(permanent) {
+		if (permanent) {
 			notification = getPermanentNotification();
 			id = NOTIFICATION_PERMANENT;
+			notification.flags |= Notification.FLAG_NO_CLEAR;
 		} else {
+			notificationManager.cancel(NOTIFICATION_PERMANENT);
 			notification = getFinishedNotification();
 			id = NOTIFICATION_FINISHED;
 		}
@@ -113,19 +119,27 @@ public class PositionUpdaterService extends Service implements LocationListener,
 	}
 
 	private Notification getPermanentNotification() {
-		Notification.Builder builder = new Notification.Builder(this);
-		builder.setOngoing(true);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-			return builder.build();
-		} else {
-			return builder.getNotification();
-		}
+		return loadNotification(false, R.string.notification_permanent_text);
 	}
 
 	private Notification getFinishedNotification() {
+		return loadNotification(false, R.string.notification_finished_text);
+	}
+
+	private Notification loadNotification(boolean ongoing, int text) {
+		Intent intent = new Intent(this, TrackingActivity.class);
+		PendingIntent pendingIntent = PendingIntent
+				.getActivity(this, REQUEST_TRACKING_ACTIVITY, intent,
+						PendingIntent.FLAG_UPDATE_CURRENT);
 		Notification.Builder builder = new Notification.Builder(this);
-		builder.setOngoing(false);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+		builder.setOngoing(ongoing);
+		builder.setContentIntent(pendingIntent);
+		builder.setTicker(getString(R.string.notification_title));
+		builder.setSmallIcon(R.drawable.notification);
+		builder.setAutoCancel(!ongoing);
+		builder.setContentTitle(getString(R.string.notification_title));
+		builder.setContentText(getString(text));
+		if (Build.VERSION.SDK_INT > Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
 			return builder.build();
 		} else {
 			return builder.getNotification();

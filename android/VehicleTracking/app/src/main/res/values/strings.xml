@@ -6,5 +6,8 @@
     <string name="start_tracking">Start tracking</string>
     <string name="stop_tracking">Stop tracking</string>
     <string name="waiting_for_data">Waiting for data and location, make sure you have it activated</string>
+    <string name="notification_title">Vehicle tracking</string>
+    <string name="notification_permanent_text">Tracking vehicle</string>
+    <string name="notification_finished_text">Finished tracking vehicle</string>
 
 </resources>
