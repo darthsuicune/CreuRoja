@@ -7,6 +7,8 @@
 
 
 <script type="text/javascript">
+var markers = [];
+
 function initialize() {
 	var mapOptions = {
 			center: new google.maps.LatLng(41.3958, 2.1739),
@@ -16,18 +18,24 @@ function initialize() {
 	};
 	var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 	startTimer(map);
-	
 }
 
 function startTimer(map) {
-	$.get("../vehicle_positions.json",{}, function(data) { drawVehicles(map, data); })
-}
-
-function retrieveVehicles() {
-	return <%= raw @vehicles.to_json %>;
+	$.get("vehicle_positions.json",{}, function(data) { drawVehicles(map, data); })
+	
+	var interval = window.setInterval(function() {
+		$.get("vehicle_positions.json",{}, function(data) { drawVehicles(map, data); })
+	}, 5000);
+	
 }
 
 function drawVehicles(map, vehicles) {
+	if(markers.length > 0) {
+		for(i = 0, l = markers.length; i < l; i++) {
+			markers[i].setMap(null);
+		}
+	}
+	markers = [];
 	for(i = 0, l = vehicles.length; i < l; i++) {
 		drawMarker(map, vehicles[i]);
 	}
@@ -35,12 +43,13 @@ function drawVehicles(map, vehicles) {
 
 function drawMarker(map, vehicle) {
 	var infoWindow = new google.maps.InfoWindow()
-	new google.maps.Marker({
+	var marker = new google.maps.Marker({
 		map: map,
 		position: new google.maps.LatLng(vehicle.latitude, vehicle.longitude),
 		title: vehicle.name,
-		icon: "../assets/vehicles/" + vehicle.indicative + ".png"
+		icon: "assets/vehicles/" + vehicle.indicative + ".png"
 	});
+	markers.push(marker);
 }
 
 //JQuery magic, substitutes "window.onload = loadScript" in the GMaps guide by doing it properly
