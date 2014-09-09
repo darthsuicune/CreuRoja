@@ -107,6 +107,7 @@ public class PositionUpdaterService extends Service
 		Notification notification;
 		int id;
 		if (permanent) {
+			notificationManager.cancel(NOTIFICATION_FINISHED);
 			notification = getPermanentNotification();
 			id = NOTIFICATION_PERMANENT;
 			notification.flags |= Notification.FLAG_NO_CLEAR;

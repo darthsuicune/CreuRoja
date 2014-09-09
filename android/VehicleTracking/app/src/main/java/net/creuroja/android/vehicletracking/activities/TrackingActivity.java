@@ -24,6 +24,7 @@ import net.creuroja.android.vehicletracking.PositionUpdaterService;
 import net.creuroja.android.vehicletracking.R;
 import net.creuroja.android.vehicletracking.fragments.TrackingFragment;
 import net.creuroja.android.vehicletracking.model.Settings;
+import net.creuroja.android.vehicletracking.model.Vehicle;
 
 
 public class TrackingActivity extends ActionBarActivity
@@ -138,7 +139,7 @@ public class TrackingActivity extends ActionBarActivity
 		startActivity(intent);
 	}
 
-	@Override public void onTrackingStartRequested() {
+	@Override public void onTrackingStartRequested(Vehicle vehicle) {
 	}
 
 	@Override public void onTrackingStopRequested() {}

@@ -61,7 +61,7 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	}
 
 	@Override public void onNotificationReceived(int id) {
-		switch(id) {
+		switch (id) {
 			case PositionUpdaterService.NOTIFICATION_FINISHED:
 				break;
 			case PositionUpdaterService.NOTIFICATION_PERMANENT:
@@ -80,7 +80,7 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	 * >Communicating with Other Fragments</a> for more information.
 	 */
 	public interface OnTrackingFragmentInteractionListener {
-		public void onTrackingStartRequested();
+		public void onTrackingStartRequested(Vehicle vehicle);
 
 		public void onTrackingStopRequested();
 	}
@@ -131,11 +131,9 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 				if (isStarted) {
 					stopTracking();
 					((Button) view).setText(R.string.start_tracking);
-					mListener.onTrackingStopRequested();
 				} else {
 					((Button) view).setText(R.string.stop_tracking);
 					startTracking();
-					mListener.onTrackingStartRequested();
 				}
 				isStarted = !isStarted;
 			}
@@ -144,27 +142,18 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	}
 
 	private void startTracking() {
-		startService();
-		mListener.onTrackingStartRequested();
-		prefs.edit().putBoolean(IS_TRACKING, true).apply();
+		Vehicle vehicle = (Vehicle) mVehicleListSpinner.getSelectedItem();
+		startService(vehicle);
+		mListener.onTrackingStartRequested(vehicle);
+
+		prefs.edit().putBoolean(IS_TRACKING, true)
+				.putString(Settings.DEFAULT_VEHICLE, vehicle.indicative).apply();
+
 	}
 
-	private void stopTracking() {
-		stopService();
-		mListener.onTrackingStopRequested();
-		prefs.edit().putBoolean(IS_TRACKING, false).apply();
-	}
-
-	private void startService() {
-		createPendingIntent(true);
-
+	private void startService(Vehicle vehicle) {
+		createPendingIntent(vehicle, true);
 		setAlarm(true);
-	}
-
-	private void stopService() {
-		setAlarm(false);
-		Intent intent = new Intent(getActivity(), PositionUpdaterService.class);
-		getActivity().stopService(intent);
 	}
 
 	private void setAlarm(boolean run) {
@@ -173,16 +162,27 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 			manager.setRepeating(AlarmManager.RTC_WAKEUP, 0,
 					prefs.getLong(Settings.INTERVAL, Settings.DEFAULT_INTERVAL), pendingIntent);
 		} else {
-			createPendingIntent(run);
+			createPendingIntent(null, run);
 			manager.cancel(pendingIntent);
 		}
 	}
 
-	private void createPendingIntent(boolean run) {
+	private void stopTracking() {
+		stopService();
+		mListener.onTrackingStopRequested();
+		prefs.edit().putBoolean(IS_TRACKING, false).apply();
+	}
+
+	private void stopService() {
+		setAlarm(false);
+		Intent intent = new Intent(getActivity(), PositionUpdaterService.class);
+		getActivity().stopService(intent);
+	}
+
+	private void createPendingIntent(Vehicle vehicle, boolean run) {
 		if (pendingIntent == null) {
 			Intent intent = new Intent(getActivity(), PositionUpdaterService.class);
-			if(run) {
-				Vehicle vehicle = (Vehicle) mVehicleListSpinner.getSelectedItem();
+			if (run) {
 				intent.putExtra(PositionUpdaterService.EXTRA_VEHICLE_ID, vehicle.id);
 				intent.putExtra(PositionUpdaterService.EXTRA_INDICATIVE, vehicle.indicative);
 			}
@@ -198,6 +198,19 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 		mVehicleListSpinner.setAdapter(
 				new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item,
 						vehicles));
+		mVehicleListSpinner.setSelection(
+				findVehicle(vehicles, prefs.getString(Settings.DEFAULT_VEHICLE, "")));
+	}
+
+	private int findVehicle(List<Vehicle> vehicles, String indicative) {
+		int i = 0;
+		for (Vehicle vehicle : vehicles) {
+			if (vehicle.indicative.equals(indicative)) {
+				return i;
+			}
+			i++;
+		}
+		return 0;
 	}
 
 	public void showProgress(boolean show) {
@@ -218,14 +231,14 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 											 List<Vehicle> vehicleList) {
 			if (vehicleList != null) {
 				populateList(vehicleList);
+				if (isConnected && hasLocation) {
+					showProgress(false);
+				}
 			} else {
 				Log.d("Vehicle Tracking", "Error while retrieving vehicles");
 				getLoaderManager().restartLoader(LOADER_VEHICLES, null, this);
 			}
 			inProgress = false;
-			if (isConnected && hasLocation) {
-				showProgress(false);
-			}
 		}
 
 		@Override public void onLoaderReset(Loader<List<Vehicle>> objectLoader) {
