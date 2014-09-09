@@ -1,5 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe "vehicle_positions/index.html.erb", :type => :view do
-  pending "add some examples to (or delete) #{__FILE__}"
+	it "works?" do
+		render 
+		
+		expect(rendered).to match(/Map/)
+		expect(rendered).to match(/<div id="map"/)
+	end
 end

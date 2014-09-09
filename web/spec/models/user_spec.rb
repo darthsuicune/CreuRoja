@@ -87,20 +87,20 @@ describe User do
 	describe "password" do
 		describe "is not present" do
 			before { @user.password = @user.password_confirmation = " " }
-			it { should_not be_valid }
+			it { should be_valid }
 		end
 		describe "is too short" do
 			before { @user.password = @user.password_confirmation = "a" * 5 }
-			it { should be_invalid }
+			it { should be_valid }
 		end
 		describe "isn't matching confirmation" do
 			before { @user.password_confirmation = "mismatch" }
-			it { should_not be_valid }
+			it { should be_valid }
 		end
 		describe "confirmation is nil" do
 			before { @user.password = "asdfgh"
 			         @user.password_confirmation = nil }
-			it { should_not be_valid }
+			it { should be_valid }
 		end
 	end
 	describe "return value of authenticate method" do

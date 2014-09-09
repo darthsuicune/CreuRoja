@@ -12,14 +12,20 @@ class VehiclePositionsController < ApplicationController
 	end
 
 	def create
-		position = VehiclePosition.new(vehicle_positions_params)
-		position.indicative = position.vehicle.indicative
 		respond_to do |format|
-			if position.save
-				format.json { head :created }
-			else
-				format.json { head :bad_request }
-			end
+			format.html {
+				head :unauthorized 
+				redirect_to root_url
+			}
+			format.json {
+				position = VehiclePosition.new(vehicle_positions_params)
+				position.indicative = position.vehicle.indicative
+				if position.save
+					head :created 
+				else
+					head :bad_request 
+				end
+			}
 		end
 	end
 	

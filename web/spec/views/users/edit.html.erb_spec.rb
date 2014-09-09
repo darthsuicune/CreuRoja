@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "users/edit" do
-	let(:user) { FactoryGirl.create(:user) }
+	let(:user) { FactoryGirl.create(:admin) }
 	before(:each) do
 		sign_in user
 		@user = FactoryGirl.create(:user)

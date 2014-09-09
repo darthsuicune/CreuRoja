@@ -15,8 +15,6 @@ describe "users/new" do
 			assert_select "input#user_name[name=?]", "user[name]"
 			assert_select "input#user_surname[name=?]", "user[surname]"
 			assert_select "input#user_email[name=?]", "user[email]"
-			assert_select "input#user_password[name=?]", "user[password]"
-			assert_select "input#user_password_confirmation[name=?]", "user[password_confirmation]"
 			assert_select "select#user_language[name=?]", "user[language]"
 			assert_select "select#user_role[name=?]", "user[role]"
 		end
