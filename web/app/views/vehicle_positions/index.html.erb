@@ -21,12 +21,15 @@ function initialize() {
 }
 
 function startTimer(map) {
-	$.get("vehicle_positions.json",{}, function(data) { drawVehicles(map, data); })
+	loadMarkers(map);
 	
 	var interval = window.setInterval(function() {
-		$.get("vehicle_positions.json",{}, function(data) { drawVehicles(map, data); })
+		loadMarkers(map);
 	}, 5000);
-	
+}
+
+function loadMarkers(map) {
+	$.get("vehicle_positions.json",{}, function(data) { drawVehicles(map, data); })
 }
 
 function drawVehicles(map, vehicles) {
