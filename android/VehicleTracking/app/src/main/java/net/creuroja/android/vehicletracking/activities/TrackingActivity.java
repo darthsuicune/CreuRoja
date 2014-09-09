@@ -3,9 +3,6 @@ package net.creuroja.android.vehicletracking.activities;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
@@ -23,6 +20,7 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.location.LocationClient;
 
+import net.creuroja.android.vehicletracking.PositionUpdaterService;
 import net.creuroja.android.vehicletracking.R;
 import net.creuroja.android.vehicletracking.fragments.TrackingFragment;
 import net.creuroja.android.vehicletracking.model.Settings;
@@ -32,10 +30,6 @@ public class TrackingActivity extends ActionBarActivity
 		implements TrackingFragment.OnTrackingFragmentInteractionListener,
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener {
-	public static final String KEY_PERMANENT_NOTIFICATION = "permanentNotification";
-	private static final String KEY_FINISHED_NOTIFICATION = "finishedNotification";
-	public static final int NOTIFICATION_PERMANENT = 1;
-	public static final int NOTIFICATION_FINISHED = 2;
 
 	private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 	private static final int REQUEST_LOGIN_ACTIVITY = 1;
@@ -61,6 +55,7 @@ public class TrackingActivity extends ActionBarActivity
 	}
 
 	private void startTrackingActivity() {
+		setContentView(R.layout.activity_tracking);
 		setFragment();
 		parseNotifications();
 		new ConnectionAvailabilityTask().execute();
@@ -68,8 +63,6 @@ public class TrackingActivity extends ActionBarActivity
 	}
 
 	private void setFragment() {
-		setContentView(R.layout.activity_tracking);
-
 		mTrackingFragment = (TrackingFragment) getSupportFragmentManager()
 				.findFragmentById(R.id.tracking_fragment);
 	}
@@ -84,10 +77,10 @@ public class TrackingActivity extends ActionBarActivity
 		Bundle extras = getIntent().getExtras();
 		if (extras != null) {
 			OnNotificationReceivedListener listener = mTrackingFragment;
-			if (extras.containsKey(KEY_PERMANENT_NOTIFICATION)) {
-				listener.onNotificationReceived(NOTIFICATION_PERMANENT);
-			} else if (extras.containsKey(KEY_FINISHED_NOTIFICATION)) {
-				listener.onNotificationReceived(NOTIFICATION_FINISHED);
+			if (extras.containsKey(PositionUpdaterService.KEY_PERMANENT_NOTIFICATION)) {
+				listener.onNotificationReceived(PositionUpdaterService.NOTIFICATION_PERMANENT);
+			} else if (extras.containsKey(PositionUpdaterService.KEY_FINISHED_NOTIFICATION)) {
+				listener.onNotificationReceived(PositionUpdaterService.NOTIFICATION_FINISHED);
 			}
 		}
 	}
@@ -109,8 +102,13 @@ public class TrackingActivity extends ActionBarActivity
 						break;
 				}
 			case REQUEST_LOGIN_ACTIVITY:
-				startTrackingActivity();
-				break;
+				switch (resultCode) {
+					case RESULT_OK:
+						startTrackingActivity();
+						break;
+					default:
+						finish();
+				}
 		}
 	}
 
@@ -141,57 +139,35 @@ public class TrackingActivity extends ActionBarActivity
 	}
 
 	@Override public void onTrackingStartRequested() {
-		setNotification(true);
 	}
 
-	@Override public void onTrackingStopRequested() {
-		NotificationManager notificationManager =
-				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		notificationManager.cancel(NOTIFICATION_PERMANENT);
-		setNotification(false);
-	}
+	@Override public void onTrackingStopRequested() {}
 
-	private void setNotification(boolean permanent) {
-		NotificationManager notificationManager =
-				(NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-		Notification notification =
-				(permanent) ? getPermanentNotification() : getFinishedNotification();
-		//notificationManager.notify(NOTIFICATION_PERMANENT, notification);
-		//TODO: Uncomment when implemented notifications
-	}
+		// Define a DialogFragment that displays the error dialog
+		public static class ErrorDialogFragment extends DialogFragment {
+			// Global field to contain the error dialog
+			private Dialog mDialog;
 
-	private Notification getPermanentNotification() {
-		return null;
-	}
+			// Default constructor. Sets the dialog field to null
+			public ErrorDialogFragment() {
+				super();
+				mDialog = null;
+			}
 
-	private Notification getFinishedNotification() {
-		return null;
-	}
+			// Set the dialog to display
+			public void setDialog(Dialog dialog) {
+				mDialog = dialog;
+			}
 
-	// Define a DialogFragment that displays the error dialog
-	public static class ErrorDialogFragment extends DialogFragment {
-		// Global field to contain the error dialog
-		private Dialog mDialog;
-
-		// Default constructor. Sets the dialog field to null
-		public ErrorDialogFragment() {
-			super();
-			mDialog = null;
+			// Return a Dialog to the DialogFragment.
+			@Override @NonNull
+			public Dialog onCreateDialog(Bundle savedInstanceState) {
+				return mDialog;
+			}
 		}
 
-		// Set the dialog to display
-		public void setDialog(Dialog dialog) {
-			mDialog = dialog;
-		}
+		// Check that Google Play services is available
 
-		// Return a Dialog to the DialogFragment.
-		@Override @NonNull
-		public Dialog onCreateDialog(Bundle savedInstanceState) {
-			return mDialog;
-		}
-	}
-
-	// Check that Google Play services is available
 	private boolean servicesConnected() {
 		int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
 

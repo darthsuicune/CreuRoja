@@ -19,8 +19,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-import com.google.android.gms.internal.id;
-
 import net.creuroja.android.vehicletracking.PositionUpdaterService;
 import net.creuroja.android.vehicletracking.R;
 import net.creuroja.android.vehicletracking.activities.OnNotificationReceivedListener;
@@ -63,7 +61,12 @@ public class TrackingFragment extends Fragment implements OnNotificationReceived
 	}
 
 	@Override public void onNotificationReceived(int id) {
-
+		switch(id) {
+			case PositionUpdaterService.NOTIFICATION_FINISHED:
+				break;
+			case PositionUpdaterService.NOTIFICATION_PERMANENT:
+				break;
+		}
 	}
 
 	/**

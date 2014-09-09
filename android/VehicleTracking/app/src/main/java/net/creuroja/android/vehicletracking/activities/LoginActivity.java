@@ -213,6 +213,7 @@ public class LoginActivity extends FragmentActivity {
             showProgress(false);
 
             if (success) {
+				setResult(RESULT_OK);
                 finish();
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
