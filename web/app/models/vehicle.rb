@@ -3,8 +3,8 @@ class Vehicle < ActiveRecord::Base
 	
 	has_many :vehicle_services, dependent: :destroy
 	has_many :services, through: :vehicle_services
-	has_many :vehicle_assemblies, dependent: :destroy
-	has_many :assemblies, through: :vehicle_assemblies
+	has_many :vehicle_assemblies, dependent: :destroy, :source => :location
+	has_many :assemblies, through: :vehicle_assemblies, :source => :location
 	has_many :service_users, dependent: :destroy
 	has_many :vehicle_positions, dependent: :destroy
 

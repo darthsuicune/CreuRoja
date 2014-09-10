@@ -43,5 +43,8 @@
   <%= @vehicle.operative %>
 </p>
 
+<%= render "assemblies" if @vehicle.assemblies.count > 0 %>
+<%= render "add_assemblies" if current_user.allowed_to?(:manage_vehicles) %>
+
 <%= link_to t(:resource_edit), edit_vehicle_path(@vehicle) if current_user.allowed_to?(:manage_vehicles) %> |
 <%= link_to t(:resource_back), vehicles_path %>
