@@ -21,9 +21,7 @@ class User < ActiveRecord::Base
 			uniqueness: { case_sensitive: false }
 	validates :name, presence: true, length: { maximum: 60 }
 	validates :surname, presence: true, length: { maximum: 60 }
-	validates :password, presence: true, length: { minimum: 6 }, on: :create
 	validates :password, length: {minimum: 6 }, on: :update, allow_blank: true
-	validates :password_confirmation, presence: true, length: { minimum: 6 }, on: :create
 	validates :password_confirmation, length: {minimum: 6 }, on: :update, allow_blank: true
   
 	after_validation { self.errors.messages.delete(:password_digest) }
@@ -75,9 +73,9 @@ class User < ActiveRecord::Base
 		end
 	end
 	
-	def create_reset_password_token
+	def create_reset_password_token(time = Time.now)
 		self.resettoken = SecureRandom.urlsafe_base64
-		self.resettime = Time.now
+		self.resettime = time
 		if self.save!
 			UserMailer.password_reset(self).deliver
 		end
@@ -115,5 +113,8 @@ class User < ActiveRecord::Base
 			self.language ||= "ca"
 			self.role ||= "volunteer"
 			self.phone ||= 0
+			pass = SecureRandom.urlsafe_base64
+			self.password = pass
+			self.password_confirmation = pass
 		end
 end

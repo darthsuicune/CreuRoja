@@ -46,7 +46,6 @@ class PasswordResetController < ApplicationController
 			else
 				redirect_to root_url
 			end
-			
 		end
 	end
 end
