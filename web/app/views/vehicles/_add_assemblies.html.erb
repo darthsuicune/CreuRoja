@@ -1,0 +1,15 @@
+<div id="add_vehicle_to_assembly">
+	<h3><%= t(:form_add_vehicle_to_assembly) %></h3>
+	<% assemblies = [] %>
+	<% Location.assemblies.each do |assembly| %>
+		<% assemblies << [assembly.name, assembly.id] unless @vehicle.assemblies.include?(assembly) %>
+	<% end %>
+	<%= form_for(LocationUser.new) do |f| %>
+		<%= f.hidden_field :vehicle_id, value: @vehicle.id %>
+		
+		<%= f.label :location_id, t(:form_vehicle_assemblies) %>
+		<%= f.select :location_id, assemblies %>
+		
+		<%= f.submit t(:form_vehicle_submit) %>
+	<% end %>
+</div>
