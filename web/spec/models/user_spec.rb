@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 describe User do
+	let(:pass) { "foobar" }
 	before { @user = User.new( name: "Example", surname: "Example", email: "user@example.com", 
-										role: "volunteer", password: "foobar", password_confirmation: "foobar" ) }
+										role: "volunteer", password: pass, password_confirmation: pass ) }
 	subject { @user }
 
 	it { should respond_to(:name) }
@@ -87,20 +88,21 @@ describe User do
 	describe "password" do
 		describe "is not present" do
 			before { @user.password = @user.password_confirmation = " " }
-			it { should be_valid }
+			it { should_not be_valid }
 		end
 		describe "is too short" do
-			before { @user.password = @user.password_confirmation = "a" * 5 }
-			it { should be_valid }
+			before { @user.password = @user.password_confirmation = "a" * 5 
+			         @user.save }
+			it { should_not be_valid }
 		end
 		describe "isn't matching confirmation" do
 			before { @user.password_confirmation = "mismatch" }
-			it { should be_valid }
+			it { should_not be_valid }
 		end
 		describe "confirmation is nil" do
 			before { @user.password = "asdfgh"
 			         @user.password_confirmation = nil }
-			it { should be_valid }
+			it { should_not be_valid }
 		end
 	end
 	describe "return value of authenticate method" do
@@ -146,15 +148,29 @@ describe User do
 		end
 	end
 	
-	describe "get_locations" do
+	describe "get_visible_locations" do
 	end
 	
 	describe "create_reset_password_token" do
 	end
 	
 	describe "reset_password(password)" do
-		let(:original_password) { "asdf"*2 }
 		let(:new_password) { "fdsa"*2 }
+		it "resets the password" do
+			expect {
+				@user.reset_password new_password
+			}.to change(@user, :password_digest)
+		end
+		it "authenticates with the new one" do
+			@user.reset_password new_password
+			result = @user.authenticate new_password
+			expect(result).to be @user
+		end
+		it "doesn't authenticate with the old one" do
+			@user.reset_password new_password
+			result = @user.authenticate pass
+			expect(result).to be_falsey
+		end
 	end
 	
 	describe "create_session_token" do
