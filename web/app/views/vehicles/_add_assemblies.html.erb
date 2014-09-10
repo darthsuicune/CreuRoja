@@ -4,7 +4,7 @@
 	<% Location.assemblies.each do |assembly| %>
 		<% assemblies << [assembly.name, assembly.id] unless @vehicle.assemblies.include?(assembly) %>
 	<% end %>
-	<%= form_for(LocationUser.new) do |f| %>
+	<%= form_for(VehicleAssembly.new) do |f| %>
 		<%= f.hidden_field :vehicle_id, value: @vehicle.id %>
 		
 		<%= f.label :location_id, t(:form_vehicle_assemblies) %>
