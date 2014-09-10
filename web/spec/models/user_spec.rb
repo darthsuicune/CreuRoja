@@ -153,6 +153,8 @@ describe User do
 	end
 	
 	describe "reset_password(password)" do
+		let(:original_password) { "asdf"*2 }
+		let(:new_password) { "fdsa"*2 }
 	end
 	
 	describe "create_session_token" do

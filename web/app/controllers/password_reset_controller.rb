@@ -33,7 +33,7 @@ class PasswordResetController < ApplicationController
 			#TODO: Uncomment once Rails gets into production
 			#sign_in @user
 			#redirect_to @user
-			redirect_to "https://creuroja.net"
+			redirect_to root_url
 		else
 			if @user
 				@errors = []
