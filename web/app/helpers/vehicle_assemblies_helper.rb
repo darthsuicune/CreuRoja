@@ -1,0 +1,2 @@
+module VehicleAssembliesHelper
+end

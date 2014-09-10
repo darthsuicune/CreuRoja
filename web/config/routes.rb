@@ -1,4 +1,5 @@
 CreuRoja::Application.routes.draw do
+
 	# The priority is based upon order of creation: first created -> highest priority.
 	# See how all your routes lay out with "rake routes".
 
@@ -34,8 +35,9 @@ CreuRoja::Application.routes.draw do
 	resources :locations
 	resources :service_users, only: [:create, :update, :destroy]
 	resources :location_services, only: [:create, :update, :destroy]
-	resources :vehicle_services, only: [:create, :update, :destroy]
 	resources :location_users, only: [:create, :update, :destroy]
+	resources :vehicle_services, only: [:create, :update, :destroy]
+	resources :vehicle_assemblies, only: [:create, :update, :destroy]
 	resources :password_reset, only: [:new, :create, :edit, :update]
 	resources :vehicle_positions, only: [:index, :create]
 	resources :issues
