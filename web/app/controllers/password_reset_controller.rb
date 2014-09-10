@@ -28,7 +28,8 @@ class PasswordResetController < ApplicationController
 		@user = User.find_by_resettoken!(params[:id])
 		if @user && params[:user][:password] && params[:user][:password_confirmation] && 
 				params[:user][:password] == params[:user][:password_confirmation] && 
-				params[:user][:password].length >= 6 && params[:user][:password_confirmation].length >= 6 && 
+				params[:user][:password].length >= 6 && 
+				params[:user][:password_confirmation].length >= 6 && 
 				@user.resettime >= 4.hours.ago && @user.reset_password(params[:user][:password])
 			#TODO: Uncomment once Rails gets into production
 			#sign_in @user

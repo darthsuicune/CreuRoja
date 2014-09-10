@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
 			self.role ||= "volunteer"
 			self.phone ||= 0
 			pass = SecureRandom.urlsafe_base64
-			self.password = pass
-			self.password_confirmation = pass
+			self.password ||= pass
+			self.password_confirmation ||= pass
 		end
 end
