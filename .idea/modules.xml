@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/CreuRoja.iml" filepath="$PROJECT_DIR$/CreuRoja.iml" />
+      <module fileurl="file://$PROJECT_DIR$/CreuRoja/CreuRoja-CreuRoja.iml" filepath="$PROJECT_DIR$/CreuRoja/CreuRoja-CreuRoja.iml" />
+    </modules>
+  </component>
+</project>
+

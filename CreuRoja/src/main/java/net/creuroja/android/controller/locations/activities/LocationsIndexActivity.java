@@ -40,7 +40,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 	private static final String TAG_LIST = "CreuRojaLocationList";
 	private static final String TAG_CARD = "CreuRojaLocationCard";
 
-	// Fragment managing the behaviors, interactions and presentation of the navigation drawer.
+	// This are the fragments that the activity handles
 	private NavigationDrawerFragment mNavigationDrawerFragment;
 	private MapFragmentHandler mapFragmentHandler;
 	private LocationListFragment listFragment;
@@ -63,7 +63,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 			currentViewMode = ViewMode.getViewMode(preferredMode);
 		}
 		startUi();
-		requestSync();
+		bootSync();
 	}
 
 	@Override
@@ -248,7 +248,7 @@ public class LocationsIndexActivity extends ActionBarActivity
 		//TODO: implement
 	}
 
-	private void requestSync() {
+	private void bootSync() {
 		//TODO: Check for sync preferences
 		performSync();
 	}

@@ -31,7 +31,6 @@ public class Location {
 	public static final String sUpdatedAt = "updated_at";
 	public static final String sActive = "active";
 
-	public final int mId;
 	public final int mRemoteId;
 	public final String mName;
 	public final String mDescription;
@@ -44,7 +43,6 @@ public class Location {
 	public final boolean mActive;
 
 	public Location(JSONObject json) throws JSONException {
-		mId = -1;
 		mRemoteId = json.getInt(sRemoteId);
 		mName = json.getString(sName);
 		mDescription = (json.has(sDescription)) ? json.getString(sDescription) : "";
@@ -58,7 +56,6 @@ public class Location {
 	}
 
 	public Location(Cursor cursor) {
-		mId = cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations._ID));
 		mRemoteId = cursor.getInt(cursor.getColumnIndex(CreuRojaContract.Locations.REMOTE_ID));
 		mName = cursor.getString(cursor.getColumnIndex(CreuRojaContract.Locations.NAME));
 		mDescription =

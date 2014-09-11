@@ -82,7 +82,7 @@ public class RailsLocationList implements LocationList {
 
 	@Override public Location getById(long id) {
 		for(Location location : mLocationList) {
-			if(location.mId == id) {
+			if(location.mRemoteId == id) {
 				return location;
 			}
 		}

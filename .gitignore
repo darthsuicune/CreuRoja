@@ -19,11 +19,14 @@ local.properties
 .classpath
 .project
 .settings
-.idea
-*.iml
 
+# Intellij IDEA project files
+.idea/workspace.xml
+.idea/libraries
+
+# Build directories
 CreuRoja/build/
-.gradle/
-gradle/*
-gradle*
 build/
+
+#Gradle folder
+.gradle
