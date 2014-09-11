@@ -89,8 +89,7 @@ class User < ActiveRecord::Base
 	end
 
 	def create_session_token
-		session = self.sessions.build(token: SecureRandom.urlsafe_base64)
-		session.save
+		self.sessions.create(token: SecureRandom.urlsafe_base64)
 	end
 	
 	def translated_role

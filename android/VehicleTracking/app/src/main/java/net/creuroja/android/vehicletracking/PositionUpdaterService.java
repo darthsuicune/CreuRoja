@@ -156,8 +156,8 @@ public class PositionUpdaterService extends Service
 		isConnected = true;
 		LocationRequest request = LocationRequest.create();
 		request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-		request.setInterval(5000);
-		request.setFastestInterval(5000);
+		request.setInterval(1500);
+		request.setFastestInterval(1000);
 		mLocationClient.requestLocationUpdates(request, this);
 	}
 
@@ -170,7 +170,10 @@ public class PositionUpdaterService extends Service
 	}
 
 	@Override public void onLocationChanged(Location location) {
-		mLocation = location;
+		if(mLocation != null && location.getAccuracy() < 10) {
+			mLocation = location;
+			Log.d("ASDF", "Better location registered");
+		}
 	}
 
 	private class VehicleUploadTask extends AsyncTask<Void, Void, Void> {

@@ -152,6 +152,21 @@ describe User do
 	end
 	
 	describe "create_reset_password_token" do
+		let(:user) { FactoryGirl.create(:user) }
+		before { user.create_reset_password_token }
+		it "creates a token" do
+			expect {
+				user.create_reset_password_token
+			}.to change(user, :resettoken)
+		end
+		it "sets the resettime to now" do
+			expect(user.resettime).to be_within(5.seconds).of(Time.now)
+		end
+		it "can create tokens that last further" do
+			expect {
+				user.create_reset_password_token(1.year.from_now)
+			}
+		end
 	end
 	
 	describe "reset_password(password)" do
@@ -174,6 +189,12 @@ describe User do
 	end
 	
 	describe "create_session_token" do
+		let(:user) { FactoryGirl.create(:user) }
+		it "creates a session" do
+			expect {
+				user.create_session_token
+			}.to change(Session, :count).by(1)
+		end
 	end
 	
 	

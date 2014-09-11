@@ -8,18 +8,15 @@ class LocationsController < ApplicationController
 	def index
 		#This next piece has a retard as its ideological author. Don't blame my hands for it.
 		respond_to do |format|
-			format.html { 
-				if current_user.allowed_to?(:manage_locations)
-					@locations = Location.all 
-				else
-					redirect_to root_url
-				end
+			format.html {
+				redirect_to root_url unless current_user.allowed_to?(:manage_locations)
+				@locations = Location.all 
 			}
 			format.json {
 				@locations = if params[:updated_at]
 					Location.all.where("updated_at > ?", params[:updated_at])
 				else
-					Location.all.where(:active => true)
+					Location.active_locations
 				end
 			}
 		end

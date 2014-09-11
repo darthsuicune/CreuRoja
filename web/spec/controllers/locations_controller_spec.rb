@@ -66,11 +66,11 @@ describe LocationsController do
 	describe "signed in" do
 		describe "as admin" do
 			let(:user) { FactoryGirl.create(:admin) }
+			let(:location) { FactoryGirl.create(:location) }
 			before { sign_in user }
 
 			describe "GET index" do
 				it "assigns all locations as @locations" do
-					location = Location.create! valid_attributes
 					get :index, {}, valid_session
 					expect(assigns(:locations)).to match_array([location])
 				end
@@ -78,7 +78,6 @@ describe LocationsController do
 
 			describe "GET show" do
 				it "assigns the requested location as @location" do
-					location = Location.create! valid_attributes
 					get :show, {:id => location.to_param}, valid_session
 					expect(assigns(:location)).to eq(location)
 				end
@@ -93,7 +92,6 @@ describe LocationsController do
 
 			describe "GET edit" do
 				it "assigns the requested location as @location" do
-					location = Location.create! valid_attributes
 					get :edit, {:id => location.to_param}, valid_session
 					expect(assigns(:location)).to eq(location)
 				end
@@ -236,34 +234,54 @@ describe LocationsController do
 		describe "as normal user" do
 			let(:location) { FactoryGirl.create(:location) }
 			let(:user) { FactoryGirl.create(:user) }
-			before { sign_in user }
+			before { 
+				sign_in user
+				location.save
+			}
 			
-			describe "GET index" do
-				it "assigns all locations as @locations" do
-					get :index, {}, valid_session
-					expect(response.status).to eq(302)
+			describe "as JSON" do
+				describe "index" do
+					before { get :index, { format: :json } }
+					it "status is correct" do
+						expect(response.status).to eq(200)
+					end
+					it "has the json header" do
+						expect(response.header["Content-Type"]).to include("application/json")
+					end
+					it "assigns the locations to @locations" do
+						expect(assigns(:locations)).to eq(Location.active_locations)
+					end
 				end
 			end
-			describe "GET map" do
-				let(:location1) { FactoryGirl.create(:location) }
-				it "shows the map" do
-					get :map
-					expect(response.status).to eq(200)
+			
+			describe "as web" do
+				describe "GET index" do
+					it "assigns all locations as @locations" do
+						get :index, {}, valid_session
+						expect(response.status).to eq(302)
+					end
 				end
-				
-				it "assigns all locations as @locations" do
-					get :map, {}, valid_session
-					expect(assigns(:locations)).to eq([location, location1])
+				describe "GET map" do
+					let(:location1) { FactoryGirl.create(:location) }
+					it "shows the map" do
+						get :map
+						expect(response.status).to eq(200)
+					end
+					
+					it "assigns all locations as @locations" do
+						get :map, {}, valid_session
+						expect(assigns(:locations)).to eq([location, location1])
+					end
 				end
-			end
-			describe "GET show" do
-				it "does not assign the location" do
-					get :show, {id: location.id}, valid_session
-					expect(assigns(:location)).not_to eq(location)
-				end
-				it "redirects to map" do
-					get :show, {id: location.id}, valid_session
-					expect(response).to redirect_to(root_url)
+				describe "GET show" do
+					it "does not assign the location" do
+						get :show, {id: location.id}, valid_session
+						expect(assigns(:location)).not_to eq(location)
+					end
+					it "redirects to map" do
+						get :show, {id: location.id}, valid_session
+						expect(response).to redirect_to(root_url)
+					end
 				end
 			end
 		end
